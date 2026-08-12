@@ -4,11 +4,14 @@
   "private": true,
   "description": "José Luis Pizarro — portfolio. SYX foundation: primitives → semantic → component.",
   "scripts": {
-    "build": "sass scss/portfolio.scss css/portfolio.css --style=expanded --no-source-map",
+    "build": "node scripts/build-timeline.mjs && sass scss/portfolio.scss css/portfolio.css --style=expanded --no-source-map",
     "build:min": "sass scss/portfolio.scss css/portfolio.css --style=compressed --no-source-map",
-    "watch": "sass --watch scss/portfolio.scss:css/portfolio.css --style=expanded --no-source-map"
+    "watch": "sass --watch scss/portfolio.scss:css/portfolio.css --style=expanded --no-source-map",
+    "build:timeline": "node scripts/build-timeline.mjs"
   },
   "devDependencies": {
+    "d3-scale": "^4.0.2",
+    "d3-shape": "^3.2.0",
     "sass": "^1.102.0"
   }
 }

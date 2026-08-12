@@ -1,11 +1,4 @@
 @layer syx.molecules{
-.mol-role-path--timeline{counter-reset:step;}
-.mol-role-path--timeline article time{font:600 .56rem/1 var(--v22-ui);letter-spacing:.09em;text-transform:uppercase;opacity:.5;margin-bottom:.7rem}
-.mol-role-path--timeline article em{font:500 .62rem/1.35 var(--v22-ui);font-style:normal;opacity:.72;margin-top:.65rem;max-width:18ch}
-.mol-role-path--timeline .mol-role-path__line path{stroke-dasharray:1400;stroke-dashoffset:1400;animation:role-path-draw 2s cubic-bezier(.2,.7,.2,1) .2s forwards}
-.mol-role-path--timeline .mol-role-path__line circle{opacity:0;animation:role-node-in .35s ease forwards}
-.mol-role-path--timeline .mol-role-path__line circle:nth-of-type(1){animation-delay:.45s}.mol-role-path--timeline .mol-role-path__line circle:nth-of-type(2){animation-delay:.75s}.mol-role-path--timeline .mol-role-path__line circle:nth-of-type(3){animation-delay:1.05s}.mol-role-path--timeline .mol-role-path__line circle:nth-of-type(4){animation-delay:1.35s}.mol-role-path--timeline .mol-role-path__line circle:nth-of-type(5){animation-delay:1.65s}
-@keyframes role-path-draw{to{stroke-dashoffset:0}}@keyframes role-node-in{to{opacity:1}}
 /* The measure lives on the element that sets the font-size. It used to sit on
    this wrapper, where 21ch resolved against the inherited 16px instead of the
    86px of the <strong> inside — which rendered the whole sentence as a column
@@ -21,8 +14,7 @@
 }
 @layer syx.utilities{
 @media(min-width:768px){
-.mol-role-path--timeline article{min-height:13.5rem!important}.mol-role-path--timeline article em{margin-top:.8rem}.mol-role-thesis{margin-top:5rem}
+.mol-role-thesis{margin-top:5rem}
 }
 /* No desktop override needed: the size token is already fluid. */
-@media(prefers-reduced-motion:reduce){.mol-role-path--timeline .mol-role-path__line path,.mol-role-path--timeline .mol-role-path__line circle{animation:none;stroke-dashoffset:0;opacity:1}}
 }
