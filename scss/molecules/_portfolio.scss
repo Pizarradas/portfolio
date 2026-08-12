@@ -1217,6 +1217,17 @@
   // go when the sheet has to fit a card half the width of the page. Nothing
   // measured is lost; the table still carries all four rows.
   @container work-frame (max-width: 44rem) {
+    // Four cells of eighty pixels each is not four cells. The foundation strip
+    // folds to two, which is the layout it already uses on a phone — the frame
+    // is a container, so this follows the frame and not the window.
+    .mol-evidence-system__foundation {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .mol-evidence-system__foundation span:nth-child(2n) {
+      border-right: 0;
+    }
+
     // A narrow frame is also a short one — the ratio is fixed — so the sheet
     // tightens its own spacing rather than growing past the bottom edge and
     // losing the last row, which is the row the study exists to show.

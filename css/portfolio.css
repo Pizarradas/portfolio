@@ -1603,6 +1603,13 @@
     }
   }
   @container work-frame (max-width: 44rem) {
+    .mol-evidence-system__foundation {
+      -ms-grid-columns: (minmax(0, 1fr))[2];
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .mol-evidence-system__foundation span:nth-child(2n) {
+      border-right: 0;
+    }
     .mol-evidence-study {
       padding: var(--primitive-space-2xs);
     }
@@ -2539,28 +2546,30 @@
       padding-top: var(--primitive-space-sm);
       border-top: var(--semantic-border-width-strong) solid var(--semantic-color-text);
     }
-    .syx-span-full .org-project-grid {
+  }
+  @media (min-width: 62.625rem) {
+    .org-work .org-project-grid {
       -ms-grid-columns: minmax(0, 1fr);
       grid-template-columns: minmax(0, 1fr);
       gap: var(--semantic-space-block);
       margin-top: var(--semantic-space-block);
     }
-    .syx-span-full .org-project-grid .mol-project-card {
-      -ms-grid-columns: minmax(0, 1.4fr) 0 minmax(26rem, 1fr);
-      grid-template-columns: minmax(0, 1.4fr) minmax(26rem, 1fr);
+    .org-work .mol-project-card {
+      -ms-grid-columns: minmax(0, 1.4fr) 0 minmax(24rem, 1fr);
+      grid-template-columns: minmax(0, 1.4fr) minmax(24rem, 1fr);
       gap: 0;
-      min-height: var(--component-work-row-min-height);
+      min-height: var(--component-register-min-height);
       border: var(--semantic-border-width) solid var(--semantic-color-border);
       background: var(--semantic-color-surface);
     }
-    .syx-span-full .org-project-grid .mol-project-card__frame {
+    .org-work .mol-project-card__frame {
       height: 100%;
       aspect-ratio: auto;
       border: 0;
       -webkit-border-end: var(--semantic-border-width) solid var(--semantic-color-border);
               border-inline-end: var(--semantic-border-width) solid var(--semantic-color-border);
     }
-    .syx-span-full .org-project-grid .mol-project-card__body {
+    .org-work .mol-project-card__body {
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
@@ -2570,18 +2579,27 @@
               flex-direction: column;
       padding: var(--component-register-pad);
     }
-    .syx-span-full .org-project-grid .mol-project-card__takeaway {
+    .org-work .mol-evidence-system {
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+    }
+    .org-work .mol-evidence-system__meta {
+      -webkit-box-flex: 0;
+          -ms-flex: none;
+              flex: none;
+    }
+    .org-work .mol-project-card--featured .mol-project-card__body h3 {
+      font-size: var(--semantic-font-size-title);
+    }
+    .org-work .mol-project-card__takeaway {
       margin-top: auto;
     }
-    .syx-span-full .mol-evidence-study__panel {
-      max-width: 78rem;
-      margin-inline: auto;
+    .org-work .org-project-grid .mol-project-card:nth-of-type(odd) {
+      -ms-grid-columns: minmax(24rem, 1fr) minmax(0, 1.4fr);
+      grid-template-columns: minmax(24rem, 1fr) minmax(0, 1.4fr);
     }
-    .syx-span-full .org-project-grid .mol-project-card:nth-of-type(odd) {
-      -ms-grid-columns: minmax(26rem, 1fr) minmax(0, 1.4fr);
-      grid-template-columns: minmax(26rem, 1fr) minmax(0, 1.4fr);
-    }
-    .syx-span-full .org-project-grid .mol-project-card:nth-of-type(odd) .mol-project-card__frame {
+    .org-work .org-project-grid .mol-project-card:nth-of-type(odd) .mol-project-card__frame {
       -webkit-box-ordinal-group: 3;
           -ms-flex-order: 2;
               order: 2;
@@ -2589,19 +2607,6 @@
               border-inline-end: 0;
       -webkit-border-start: var(--semantic-border-width) solid var(--semantic-color-border);
               border-inline-start: var(--semantic-border-width) solid var(--semantic-color-border);
-    }
-    .syx-span-full .mol-project-card--featured .mol-project-card__frame {
-      aspect-ratio: auto;
-    }
-    .syx-span-full .mol-project-card--featured .mol-project-card__body {
-      -ms-grid-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 1fr);
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 1fr);
-    }
-    .syx-span-full .mol-project-card--featured .mol-project-card__body h3 {
-      grid-row: auto;
-    }
-    .syx-span-full .mol-project-card--featured .mol-project-card__body p {
-      grid-column: auto;
     }
   }
   @media (max-width: 47.9375rem) {
