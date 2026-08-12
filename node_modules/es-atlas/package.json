@@ -1,0 +1,38 @@
+{
+  "name": "es-atlas",
+  "version": "0.6.0",
+  "description": "Pre-built TopoJSON from the Spanish National Geographic Institute",
+  "scripts": {
+    "prepare": "bash prepublish",
+    "postpublish": "git push && git push --tags"
+  },
+  "config": {
+    "simplification": 0.0001,
+    "quantization": 10000,
+    "autonomous_regions": "all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/martgnz/es-atlas.git"
+  },
+  "keywords": [
+    "topojson",
+    "geojson",
+    "shapefile",
+    "spain"
+  ],
+  "author": {
+    "name": "Martín González",
+    "url": "https://martingonzalez.net"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "d3-dsv": "^1.1.1",
+    "d3-geo-projection": "^2.7.0",
+    "ndjson-cli": "^0.3.1",
+    "shapefile": "^0.6.6",
+    "topojson-client": "^3.0.0",
+    "topojson-server": "^3.0.0",
+    "topojson-simplify": "^3.0.2"
+  }
+}

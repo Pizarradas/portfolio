@@ -8,22 +8,50 @@
   :root {
     --semantic-space-gutter: var(--primitive-gutter);
 
-    // 112rem is the cap the v22 sections already used and the one that read
-    // best in the wide render, so it becomes the site-wide content width
-    // instead of one of three competing answers.
+    // WIDTH REGISTERS
+    //
+    // A section's width is decided by what the reader does with it, not by
+    // where it falls on the page. Three registers, and a section belongs to
+    // exactly one:
+    //
+    //   read    62rem   continuous prose. Past roughly this width a line of
+    //                   body copy stops being comfortable to return from.
+    //   scan    90rem   a heading plus a grid of cards or rows: the eye jumps
+    //                   between a handful of items rather than reading through.
+    //   survey  112rem  data surfaces — the career chart, the map figure, the
+    //                   project visuals. These carry their meaning in the
+    //                   spatial relationship between parts and need the room.
+    //
+    // The background still bleeds to the viewport edge; only the content is
+    // capped. That is what makes a wide band feel wide without the text inside
+    // it running to 2400px, which is what the blue map section was doing.
+    --semantic-width-read: var(--primitive-width-md);
+    --semantic-width-scan: var(--primitive-width-xl);
+    --semantic-width-survey: var(--primitive-width-2xl);
+
+    --semantic-pad-read: max(
+      var(--semantic-space-gutter),
+      calc((100% - var(--semantic-width-read)) / 2)
+    );
+    --semantic-pad-scan: max(
+      var(--semantic-space-gutter),
+      calc((100% - var(--semantic-width-scan)) / 2)
+    );
+    --semantic-pad-survey: max(
+      var(--semantic-space-gutter),
+      calc((100% - var(--semantic-width-survey)) / 2)
+    );
+
+    // Names the existing stylesheets already reference. They keep the values
+    // they had, so nothing shifts implicitly: a section changes width when it
+    // is given a register in the markup, and only then.
     --semantic-width-prose: var(--primitive-width-xs);
     --semantic-width-narrow: var(--primitive-width-lg);
-    --semantic-width-content: var(--primitive-width-2xl);
-    --semantic-width-wide: var(--primitive-width-2xl);
+    --semantic-width-content: var(--semantic-width-survey);
+    --semantic-width-wide: var(--semantic-width-survey);
 
-    --semantic-pad-content: max(
-      var(--semantic-space-gutter),
-      calc((100% - var(--semantic-width-content)) / 2)
-    );
-    --semantic-pad-wide: max(
-      var(--semantic-space-gutter),
-      calc((100% - var(--semantic-width-wide)) / 2)
-    );
+    --semantic-pad-content: var(--semantic-pad-survey);
+    --semantic-pad-wide: var(--semantic-pad-survey);
     --semantic-pad-narrow: max(
       var(--semantic-space-gutter),
       calc((100% - var(--semantic-width-narrow)) / 2)

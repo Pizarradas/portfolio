@@ -4,16 +4,22 @@
   "private": true,
   "description": "José Luis Pizarro — portfolio. SYX foundation: primitives → semantic → component.",
   "scripts": {
-    "build": "node scripts/build-timeline.mjs && sass scss/portfolio.scss css/portfolio.css --style=expanded --no-source-map",
+    "build": "node scripts/build-timeline.mjs && node scripts/build-map-process.mjs && sass scss/portfolio.scss css/portfolio.css --style=expanded --no-source-map",
     "build:min": "sass scss/portfolio.scss css/portfolio.css --style=compressed --no-source-map",
     "watch": "sass --watch scss/portfolio.scss:css/portfolio.css --style=expanded --no-source-map",
     "build:timeline": "node scripts/build-timeline.mjs",
-    "vendor": "node -e \"['gsap.min.js','ScrollTrigger.min.js'].forEach(f=>require('fs').copyFileSync('node_modules/gsap/dist/'+f,'js/vendor/'+f))\""
+    "vendor": "node -e \"['gsap.min.js','ScrollTrigger.min.js'].forEach(f=>require('fs').copyFileSync('node_modules/gsap/dist/'+f,'js/vendor/'+f))\"",
+    "build:map": "node scripts/build-map-process.mjs"
   },
   "devDependencies": {
+    "d3-composite-projections": "^2.0.0",
+    "d3-geo": "^3.1.1",
     "d3-scale": "^4.0.2",
     "d3-shape": "^3.2.0",
-    "sass": "^1.102.0"
+    "es-atlas": "^0.6.0",
+    "sass": "^1.102.0",
+    "topojson-client": "^3.1.0",
+    "topojson-simplify": "^3.0.3"
   },
   "dependencies": {
     "gsap": "^3.15.0"

@@ -9,12 +9,12 @@
       --pe-section:clamp(5rem,8vw,7rem);
     }
 
-    .org-site-header{padding-inline:var(--pe-inline)}
+    /* inline padding removed: the width registers own the horizontal axis now */
 
     /* Home hero: regain presence without desktop excess */
     .org-hero{
       min-height:calc(88svh - var(--component-header-height));
-      padding:clamp(5.5rem,9vw,8rem) var(--pe-inline) clamp(3.5rem,6vw,5rem);
+      padding-block:clamp(5.5rem,9vw,8rem) clamp(3.5rem,6vw,5rem);
       gap:clamp(3rem,6vw,5rem)
     }
     .org-hero h1{
@@ -24,9 +24,9 @@
     }
     .org-hero__footer{grid-template-columns:minmax(0,34rem) auto;gap:2rem}
     .org-hero .atom-lede{font-size:clamp(1.15rem,1.7vw,1.45rem);line-height:1.45}
-    .org-hero::before{display:block;right:var(--pe-inline)}
+    .org-hero::before{display:block;right:var(--semantic-pad-survey)}
 
-    .org-work,.org-selected-work,.org-new-work,.org-tools,.org-case-index{padding:var(--pe-section) var(--pe-inline)}
+    .org-work,.org-selected-work,.org-new-work,.org-tools,.org-case-index{padding-block:var(--pe-section)}
     .mol-section-heading{grid-template-columns:3.5rem minmax(0,1.2fr) minmax(16rem,.8fr);gap:1.5rem;align-items:start}
     .mol-section-heading p:last-child{grid-column:auto}
     .mol-section-heading h2{font-size:clamp(2.8rem,5vw,4.5rem)}
@@ -66,12 +66,12 @@
       --pe-content-max:108rem;
     }
 
-    .org-site-header{padding-inline:var(--pe-inline)}
+    /* inline padding removed: the width registers own the horizontal axis now */
 
     /* Hero: editorial scale returns */
     .org-hero{
       min-height:calc(94svh - var(--component-header-height));
-      padding:clamp(7rem,9vw,10rem) var(--pe-inline) clamp(4rem,7vw,7rem);
+      padding-block:clamp(7rem,9vw,10rem) clamp(4rem,7vw,7rem);
       gap:clamp(4rem,7vw,7rem)
     }
     .org-hero h1{
@@ -86,14 +86,14 @@
       align-items:end
     }
     .org-hero .atom-lede{font-size:clamp(1.35rem,1.45vw,1.8rem);line-height:1.45}
-    .org-hero::before{display:block;right:var(--pe-inline);top:calc(var(--component-header-height) + 3rem)}
+    .org-hero::before{display:block;right:var(--semantic-pad-survey);top:calc(var(--component-header-height) + 3rem)}
 
     /* Capability strip should read as one deliberate horizontal system */
     /* Section rhythm */
     .org-work,.org-selected-work,.org-new-work,.org-tools,.org-case-index{
-      padding:var(--pe-section) var(--pe-inline)
+      padding-block:var(--pe-section)
     }
-    .org-work>*,.org-new-work>*,.org-tools>*,.org-case-index>*{max-width:var(--pe-content-max);margin-left:auto;margin-right:auto}
+    /* inner 108rem cap removed: the section register is the only container */
     .mol-section-heading{
       grid-template-columns:4rem minmax(0,1.2fr) minmax(20rem,.65fr);
       gap:2rem;
@@ -174,9 +174,11 @@
     .mol-worldcup-stage,.mol-atlas-architecture{min-height:38rem;padding:clamp(3rem,5vw,5rem)}
   }
 
-  /* LARGE DESKTOP: stop uncontrolled stretching */
-  @media (min-width:1720px){
-    .org-hero{padding-left:var(--semantic-pad-content);padding-right:var(--semantic-pad-content)}
-    .org-work,.org-new-work,.org-tools,.org-case-index{padding-left:var(--semantic-pad-content);padding-right:var(--semantic-pad-content)}
-  }
+  /* LARGE DESKTOP: stop uncontrolled stretching.
+     Superseded by the width registers (.syx-span-read / -scan / -survey) in the
+     foundation, which cap every section at every width instead of only past
+     1720px, and which let a section be narrower than the survey cap. Kept as a
+     note because this block used to force .org-work, .org-tools and
+     .org-case-index to the widest cap and would have overridden their register:
+     it sits in the same layer and is linked after portfolio.css. */
 }

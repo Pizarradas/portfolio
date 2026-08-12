@@ -13,6 +13,46 @@
     border: 0;
   }
 
+  // Width registers, declared on the section itself.
+  //
+  // These live in the utilities layer for two reasons. One, the register is a
+  // decision about the section, so it should be readable in the markup rather
+  // than buried in whichever of the twenty-odd stylesheets happens to own that
+  // organism. Two, the layer wins on cascade position alone, so a legacy rule
+  // setting `padding: … var(--semantic-space-page-inline)` no longer decides
+  // how wide a section is just by being linked later in <head>.
+  //
+  // Vertical padding is left to the section: this only ever sets the inline
+  // axis, so nothing about the section's rhythm changes when its width does.
+  .syx-span-read {
+    padding-inline: var(--semantic-pad-read);
+  }
+
+  .syx-span-scan {
+    padding-inline: var(--semantic-pad-scan);
+  }
+
+  .syx-span-survey {
+    padding-inline: var(--semantic-pad-survey);
+  }
+
+  // In the read register there is room for one column of content, not two.
+  //
+  // About splits its heading and its copy into separate grid columns, which is
+  // right at survey width and wrong at 62rem: the copy column fell to about 27
+  // characters a line — narrower than the register exists to protect. The label
+  // stays out in the margin and everything else stacks beneath a single
+  // measure, which is the shape Contact already had.
+  @include from($bp-md) {
+    .syx-span-read.org-about {
+      grid-template-columns: minmax(2rem, 7rem) minmax(0, 1fr);
+    }
+
+    .syx-span-read.org-about > div {
+      grid-column: 2;
+    }
+  }
+
   // Measure helpers. They belong on the element that sets the font-size:
   // ch resolves against the element's own type, so putting a measure on a
   // wrapper and the size on a child is what collapsed the manifesto quote

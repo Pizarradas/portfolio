@@ -292,6 +292,35 @@
     }
   }
 
+  // Interactive media map — product decision
+  //
+  // The brand-blue ground comes from `.syx-on-brand` on the section rather than
+  // from a background declared here, which is why nothing inside needs a dark
+  // variant of its own.
+  .org-map-process {
+    padding: var(--semantic-space-section) var(--semantic-space-page-inline);
+  }
+
+  .org-map-process__intro h2 {
+    max-width: 20ch;
+    margin: var(--primitive-space-sm) 0 var(--primitive-space-md);
+    font-size: var(--semantic-font-size-hero);
+    line-height: var(--semantic-line-height-display);
+    letter-spacing: var(--semantic-letter-spacing-hero);
+    text-wrap: balance;
+  }
+
+  .org-map-process__intro > p:last-child {
+    max-width: 46ch;
+    font-size: var(--semantic-font-size-lede);
+    line-height: var(--semantic-line-height-body);
+    color: var(--semantic-color-text-secondary);
+  }
+
+  .org-map-process__transformation {
+    margin-top: var(--semantic-space-block);
+  }
+
   @include until($bp-sm) {
     .org-hero {
       min-height: 84svh;

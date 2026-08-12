@@ -1,0 +1,84 @@
+#!/bin/bash
+
+# Set path to installed node modules to run the script without npm
+PATH=$PATH:./node_modules/.bin
+
+# Default variables
+NDJSONMAP_ARGS="(delete d.properties, d)"
+NDJSONFILTER_ARGS='d'
+SIMPLIFICATION=$npm_package_config_simplification
+QUANTIZATION=$npm_package_config_quantization
+AUTONOMOUS_REGIONS_IDS=$npm_package_config_autonomous_regions
+
+if [ $AUTONOMOUS_REGIONS_IDS != all ]; then
+  NDJSONFILTER_ARGS="'${AUTONOMOUS_REGIONS_IDS}'.split(',').includes(d.properties.NATCODE.slice(2, 4))"
+
+  # Change default quantization and simplification to have a sharper map
+  if [ $SIMPLIFICATION = 0.0001 ]; then
+    SIMPLIFICATION=1e-5
+  fi
+  if [ $QUANTIZATION = 10000 ]; then
+    QUANTIZATION=1e5
+  fi
+fi
+
+echo "Autonomous regions: $AUTONOMOUS_REGIONS_IDS"
+echo "Simplification: $SIMPLIFICATION"
+echo "Quantization: $QUANTIZATION"
+
+rm -rvf es
+mkdir -p es
+
+if [ ! -d build ]; then
+  mkdir build
+  curl "https://centrodedescargas.cnig.es/CentroDescargas/descargaDir" -k --compressed --data "secuencialDescDir=9000029&aceptCodsLicsDD_0=15" > build/lineas_limite.zip
+  unzip -jod build build/lineas_limite.zip \
+    SHP_ETRS89/\*/recintos_autonomicas\* \
+    SHP_ETRS89/\*/recintos_provinciales\* \
+    SHP_ETRS89/\*/recintos_municipales\* \
+    SHP_REGCAN95/\*/recintos_autonomicas\* \
+    SHP_REGCAN95/\*/recintos_provinciales\* \
+    SHP_REGCAN95/\*/recintos_municipales\*
+fi
+
+geo2topo -n autonomous_regions=<( \
+    shp2json --encoding utf8 -n build/recintos_autonomicas_inspire_peninbal_etrs89.shp \
+      | ndjson-filter "$NDJSONFILTER_ARGS" \
+      | ndjson-map '(d.id = d.properties.NATCODE.slice(2, 4), d)'
+    shp2json --encoding utf8 -n build/recintos_autonomicas_inspire_canarias_regcan95.shp \
+      | ndjson-filter "$NDJSONFILTER_ARGS" \
+      | ndjson-map '(d.id = d.properties.NATCODE.slice(2, 4), d)') \
+  | toposimplify -f -p $SIMPLIFICATION \
+  | topoquantize $QUANTIZATION \
+  | topomerge border=autonomous_regions \
+  | node ./properties.js \
+  > es/autonomous_regions.json
+
+geo2topo -n provinces=<( \
+    shp2json --encoding utf8 -n build/recintos_provinciales_inspire_peninbal_etrs89.shp \
+      | ndjson-filter "$NDJSONFILTER_ARGS" \
+      | ndjson-map '(d.id = d.properties.NATCODE.slice(4, 6), d)'
+    shp2json --encoding utf8 -n build/recintos_provinciales_inspire_canarias_regcan95.shp \
+      | ndjson-filter "$NDJSONFILTER_ARGS" \
+      | ndjson-map '(d.id = d.properties.NATCODE.slice(4, 6), d)') \
+  | toposimplify -f -p $SIMPLIFICATION \
+  | topoquantize $QUANTIZATION \
+  | topomerge autonomous_regions=provinces -k 'd.properties.NATCODE.slice(2, 4)' \
+  | topomerge border=autonomous_regions \
+  | node ./properties.js \
+  > es/provinces.json
+
+geo2topo -n municipalities=<( \
+    shp2json --encoding utf8 -n build/recintos_municipales_inspire_peninbal_etrs89.shp \
+      | ndjson-filter "$NDJSONFILTER_ARGS" \
+      | ndjson-map '(d.id = d.properties.NATCODE.slice(6, 11), d)'
+    shp2json --encoding utf8 -n build/recintos_municipales_inspire_canarias_regcan95.shp \
+      | ndjson-filter "$NDJSONFILTER_ARGS" \
+      | ndjson-map '(d.id = d.properties.NATCODE.slice(6, 11), d)') \
+  | toposimplify -f -p $SIMPLIFICATION \
+  | topoquantize $QUANTIZATION \
+  | topomerge provinces=municipalities -k 'd.properties.NATCODE.slice(4, 6)' \
+  | topomerge autonomous_regions=municipalities -k 'd.properties.NATCODE.slice(2, 4)' \
+  | topomerge border=autonomous_regions \
+  | node ./properties.js \
+  > es/municipalities.json
