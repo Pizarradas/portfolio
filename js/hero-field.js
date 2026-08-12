@@ -1,4 +1,4 @@
-/* Hero field — a network that keeps making connections, and fires when touched.
+/* Hero field — a network that keeps making connections, and answers to touch.
  *
  * The claim under it is that one profile reaches across product design, design
  * systems, front-end and AI, so the texture behind it is not a decorative dust
@@ -6,19 +6,30 @@
  * close and drop it when they are not. Connections form and dissolve
  * continuously and nothing about the picture is fixed — which is the point.
  *
- * Two states, and only two:
+ * Three states:
  *
- *   at rest   the network drifts and turns, and a charge crosses a link every
- *             half second or so. Alive, but quiet enough to read over.
+ *   at rest     the network drifts and turns, and a charge crosses a link every
+ *               half second or so. Alive, but quiet enough to read over.
  *
- *   on press  a chain reaction. A front expands from the point of contact and
- *             every node it passes lights up and passes it on, and a figure is
- *             drawn between the nodes nearest the contact — a ring, a fan or a
- *             web, chosen at random, so no two presses draw the same thing.
+ *   on press    a chain reaction. A front expands from the point of contact and
+ *               every node it passes lights up and passes it on, and a figure
+ *               is drawn between the nearest nodes — a ring, a fan or a web,
+ *               chosen at random, so no two presses draw the same thing.
+ *
+ *   held        the reaction compounds. The longer the button is down, the
+ *               harder the field is drawn toward the point, the more often
+ *               figures form and the more nodes each one takes in — so the
+ *               shapes group into larger and denser constellations over the
+ *               contact. Releasing does not cut it off: the pull eases out and
+ *               the network drifts back to exactly what it was.
  *
  * The reaction is deliberately not on hover. Following the pointer everywhere
  * meant the field was permanently reacting, which is noise; making it answer to
  * a press means the reaction is an event, and an event can be emphatic.
+ *
+ * The hold displaces where a node is drawn and never where it is, so nothing
+ * accumulates and "back to the initial state" needs no bookkeeping: when the
+ * power reaches zero the drawn position is the real one again.
  *
  * It is still decoration and it still behaves like it:
  *   - the ink comes from CSS (`color` on the canvas), so the field follows the
@@ -26,6 +37,8 @@
  *   - the loop only runs while the hero is on screen
  *   - under prefers-reduced-motion it draws the network once, at rest, and a
  *     press does nothing: the picture survives, the motion does not
+ *   - the link pass has a hard budget, so a dense cluster cannot turn one frame
+ *     into tens of thousands of strokes
  *   - it never paints if the canvas has no 2D context
  *
  * There is no fallback to write: with no JS the hero is exactly what it was.
@@ -48,6 +61,7 @@
   const DEFAULT_REACH = 170; // px — how far a node can hold a link
 
   const MAX_NODES = 190; // the pair loop is O(n²); this is where it stops
+  const LINK_BUDGET = 2800; // strokes per frame, whatever the density
   const SPEED_MIN = 9; // px per second
   const SPEED_MAX = 27;
   const TURN_MAX = 0.32; // rad per second — how much a path can curve
@@ -60,11 +74,19 @@
   const FRONT_SPEED = 1000; // px per second the chain reaction travels
   const FRONT_BAND = 80; // px — how wide the front is
   const CHARGE_DECAY = 1.5; // per second — how fast a lit node goes out
-  const MAX_FRONTS = 3;
+  const MAX_FRONTS = 6;
+
   const FIGURE_LIFE = 1700; // ms a figure takes to arrive and go
   const FIGURE_MIN = 3; // nodes in the smallest figure
-  const FIGURE_MAX = 6;
-  const MAX_FIGURES = 4;
+  const FIGURE_MAX = 6; // nodes in a figure from a plain press
+  const FIGURE_MAX_HELD = 11; // nodes in a figure at full hold
+
+  const HOLD_RAMP = 2.6; // s of holding to reach full power
+  const HOLD_RELEASE = 1.2; // s to fall back to nothing
+  const HOLD_RANGE = 620; // px the hold is felt across
+  const HOLD_GRAB = 0.72; // most of the distance a node gives up to the point
+  const HOLD_FIGURE_EVERY = 460; // ms between figures at low power
+  const HOLD_FRONT_EVERY = 900; // ms between fronts at low power
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -84,6 +106,22 @@
   let fronts = [];
   let figures = [];
   let nextPulse = PULSE_EVERY;
+
+  // The hold. `power` is the only thing that ramps: everything the hold does
+  // reads off it, so there is one number to reason about and one number to
+  // bring back to zero.
+  const hold = {
+    on: false,
+    x: 0,
+    y: 0,
+    power: 0,
+    nextFigure: 0,
+    nextFront: 0,
+  };
+
+  // Ease the pull rather than the counter, so a linear ramp still arrives and
+  // leaves softly.
+  const smooth = p => p * p * (3 - 2 * p);
 
   function build() {
     const rect = canvas.getBoundingClientRect();
@@ -131,13 +169,22 @@
         // network has to read as one surface, not as three layers of dots.
         weight: 0.55 + Math.random() * 0.45,
         charge: 0,
+        // Where it is drawn this frame. Equal to x/y unless the hold is on.
+        px: 0,
+        py: 0,
       });
     }
 
+    // The transients go: they hold node indices, and the nodes have just been
+    // rebuilt. The hold does not — the reader has not let go of the button
+    // because the window changed size — so it keeps its power and only has its
+    // point clamped back inside the new box.
     pulses = [];
     fronts = [];
     figures = [];
     nextPulse = PULSE_EVERY;
+    hold.x = Math.min(Math.max(hold.x, 0), width);
+    hold.y = Math.min(Math.max(hold.y, 0), height);
     return true;
   }
 
@@ -169,6 +216,36 @@
     }
   }
 
+  // Where each node is drawn. The hold pulls a node a fraction of its own
+  // distance toward the contact — closer nodes give up more of it — so the
+  // field gathers into a dense centre that thins outward instead of collapsing
+  // onto a single spot. It is recomputed from the current distance every frame
+  // and never written back, which is what makes the release exact.
+  function place() {
+    const grab = smooth(hold.power) * HOLD_GRAB;
+
+    for (let i = 0; i < nodes.length; i += 1) {
+      const n = nodes[i];
+      n.px = n.x;
+      n.py = n.y;
+      if (grab <= 0) continue;
+
+      const dx = n.x - hold.x;
+      const dy = n.y - hold.y;
+      const d = Math.hypot(dx, dy);
+      if (d < 1 || d > HOLD_RANGE) continue;
+
+      const pull = grab * (1 - d / HOLD_RANGE) ** 1.5;
+      n.px -= dx * pull;
+      n.py -= dy * pull;
+
+      // The gathered nodes glow with the hold, so the cluster reads as charged
+      // and not merely crowded.
+      const lit = hold.power * (1 - d / HOLD_RANGE) * 0.55;
+      if (lit > n.charge) n.charge = lit;
+    }
+  }
+
   // The chain reaction. The front is a ring of radius r expanding from the
   // point of contact; any node it sweeps past is charged, and a charged node is
   // brighter and lights the links it holds. That is the whole propagation —
@@ -188,7 +265,7 @@
       const energy = 1 - f.r / span;
       for (let j = 0; j < nodes.length; j += 1) {
         const n = nodes[j];
-        const d = Math.hypot(n.x - f.x, n.y - f.y);
+        const d = Math.hypot(n.px - f.x, n.py - f.y);
         if (Math.abs(d - f.r) < FRONT_BAND && n.charge < energy) {
           n.charge = energy;
         }
@@ -196,18 +273,21 @@
     }
   }
 
-  // A figure between the nodes nearest the contact. Three kinds, picked at
-  // random: the ring closes a polygon through all of them, the fan runs from
-  // the nearest node to the rest, the web joins every pair. The nodes keep
-  // drifting underneath, so the shape deforms while it fades — it is drawn on
-  // the network, not on top of it.
-  function makeFigure(x, y) {
-    if (nodes.length < FIGURE_MIN || figures.length >= MAX_FIGURES) return;
+  // A figure between the nodes nearest a point. Three kinds, picked at random:
+  // the ring closes a polygon through all of them, the fan runs from the
+  // nearest node to the rest, the web joins every pair. Under a hold the count
+  // climbs with the power, so the shapes grow from a triangle to a dense
+  // constellation. The nodes keep drifting underneath, so a figure deforms
+  // while it fades — it is drawn on the network, not on top of it.
+  function makeFigure(x, y, power) {
+    const cap = 4 + Math.round(power * 7);
+    if (nodes.length < FIGURE_MIN || figures.length >= cap) return;
 
-    const size =
-      FIGURE_MIN + Math.floor(Math.random() * (FIGURE_MAX - FIGURE_MIN + 1));
+    const top = FIGURE_MAX + Math.round(power * (FIGURE_MAX_HELD - FIGURE_MAX));
+    const size = FIGURE_MIN + Math.floor(Math.random() * (top - FIGURE_MIN + 1));
+
     const ids = nodes
-      .map((n, i) => [i, Math.hypot(n.x - x, n.y - y)])
+      .map((n, i) => [i, Math.hypot(n.px - x, n.py - y)])
       .sort((a, b) => a[1] - b[1])
       .slice(0, Math.min(size, nodes.length))
       .map(pair => pair[0]);
@@ -223,15 +303,15 @@
       let cx = 0;
       let cy = 0;
       ids.forEach(id => {
-        cx += nodes[id].x;
-        cy += nodes[id].y;
+        cx += nodes[id].px;
+        cy += nodes[id].py;
       });
       cx /= ids.length;
       cy /= ids.length;
       ids.sort(
         (a, b) =>
-          Math.atan2(nodes[a].y - cy, nodes[a].x - cx) -
-          Math.atan2(nodes[b].y - cy, nodes[b].x - cx)
+          Math.atan2(nodes[a].py - cy, nodes[a].px - cx) -
+          Math.atan2(nodes[b].py - cy, nodes[b].px - cx)
       );
     }
 
@@ -240,6 +320,38 @@
     });
 
     figures.push({ ids, kind, t: 0 });
+  }
+
+  // While the button is down the power climbs, and everything the hold does
+  // climbs with it: figures arrive more often, take in more nodes and land
+  // closer to the contact, and fronts leave more frequently.
+  function sustain(dt) {
+    if (hold.on) hold.power = Math.min(1, hold.power + dt / HOLD_RAMP);
+    else hold.power = Math.max(0, hold.power - dt / HOLD_RELEASE);
+
+    if (!hold.on) return;
+
+    const p = hold.power;
+
+    hold.nextFigure -= dt * 1000;
+    if (hold.nextFigure <= 0) {
+      // The scatter closes in as the power rises: shapes that started out
+      // around the contact end up stacked on it.
+      const spread = (1 - p) * 190;
+      makeFigure(
+        hold.x + (Math.random() * 2 - 1) * spread,
+        hold.y + (Math.random() * 2 - 1) * spread,
+        p
+      );
+      hold.nextFigure = HOLD_FIGURE_EVERY / (0.5 + p * 2.2);
+    }
+
+    hold.nextFront -= dt * 1000;
+    if (hold.nextFront <= 0) {
+      if (fronts.length >= MAX_FRONTS) fronts.shift();
+      fronts.push({ x: hold.x, y: hold.y, r: 0 });
+      hold.nextFront = HOLD_FRONT_EVERY / (0.5 + p * 1.6);
+    }
   }
 
   function drawFigures(dt) {
@@ -263,24 +375,24 @@
         const a = nodes[f.ids[0]];
         for (let j = 1; j < f.ids.length; j += 1) {
           const b = nodes[f.ids[j]];
-          ctx.moveTo(a.x, a.y);
-          ctx.lineTo(b.x, b.y);
+          ctx.moveTo(a.px, a.py);
+          ctx.lineTo(b.px, b.py);
         }
       } else if (f.kind === 'web') {
         for (let j = 0; j < f.ids.length; j += 1) {
           for (let k = j + 1; k < f.ids.length; k += 1) {
             const a = nodes[f.ids[j]];
             const b = nodes[f.ids[k]];
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
+            ctx.moveTo(a.px, a.py);
+            ctx.lineTo(b.px, b.py);
           }
         }
       } else {
         for (let j = 0; j < f.ids.length; j += 1) {
           const a = nodes[f.ids[j]];
           const b = nodes[f.ids[(j + 1) % f.ids.length]];
-          ctx.moveTo(a.x, a.y);
-          ctx.lineTo(b.x, b.y);
+          ctx.moveTo(a.px, a.py);
+          ctx.lineTo(b.px, b.py);
         }
       }
 
@@ -296,31 +408,39 @@
     ctx.fillStyle = ink;
     ctx.lineWidth = 1;
 
-    const reach2 = reach * reach;
+    // The reach closes as the field gathers. Without this a cluster is a solid
+    // black mass — every pair inside it is within range — and the pattern the
+    // hold is supposed to build disappears into ink.
+    const r = reach * (1 - 0.55 * smooth(hold.power));
+    const r2 = r * r;
+    let budget = LINK_BUDGET;
 
     // Links first, so every node sits on top of its own connections.
-    for (let i = 0; i < nodes.length; i += 1) {
+    for (let i = 0; i < nodes.length && budget > 0; i += 1) {
       const a = nodes[i];
       for (let j = i + 1; j < nodes.length; j += 1) {
         const b = nodes[j];
-        const dx = a.x - b.x;
-        const dy = a.y - b.y;
+        const dx = a.px - b.px;
+        const dy = a.py - b.py;
         const d2 = dx * dx + dy * dy;
-        if (d2 > reach2) continue;
+        if (d2 > r2) continue;
 
         // The closer the pair, the more of the link is there. A connection
         // arrives and leaves; it never switches on. A charged pair carries the
         // chain reaction along the link they already had.
-        const strength = 1 - Math.sqrt(d2) / reach;
+        const strength = 1 - Math.sqrt(d2) / r;
         const lit = (a.charge + b.charge) * 0.5;
         ctx.globalAlpha = Math.min(
           1,
           ink0 * strength * strength * (0.55 * a.weight * b.weight + lit * 2.2)
         );
         ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
+        ctx.moveTo(a.px, a.py);
+        ctx.lineTo(b.px, b.py);
         ctx.stroke();
+
+        budget -= 1;
+        if (budget <= 0) break;
       }
     }
 
@@ -329,7 +449,7 @@
       const weight = n.weight + n.charge * 1.4;
       ctx.globalAlpha = Math.min(1, ink0 * weight);
       ctx.beginPath();
-      ctx.arc(n.x, n.y, NODE_RADIUS * Math.min(2, weight), 0, Math.PI * 2);
+      ctx.arc(n.px, n.py, NODE_RADIUS * Math.min(2, weight), 0, Math.PI * 2);
       ctx.fill();
     }
 
@@ -347,7 +467,7 @@
     let bestD = reach;
     for (let j = 0; j < nodes.length; j += 1) {
       if (j === from) continue;
-      const d = Math.hypot(a.x - nodes[j].x, a.y - nodes[j].y);
+      const d = Math.hypot(a.px - nodes[j].px, a.py - nodes[j].py);
       if (d < bestD) {
         bestD = d;
         best = j;
@@ -377,8 +497,8 @@
       ctx.globalAlpha = Math.min(1, ink0 * 2.6) * fade;
       ctx.beginPath();
       ctx.arc(
-        a.x + (b.x - a.x) * p.t,
-        a.y + (b.y - a.y) * p.t,
+        a.px + (b.px - a.px) * p.t,
+        a.py + (b.py - a.py) * p.t,
         NODE_RADIUS * 1.5,
         0,
         Math.PI * 2
@@ -396,6 +516,8 @@
     last = time;
 
     step(dt);
+    sustain(dt);
+    place();
     advance(dt);
     drawNetwork();
     drawFigures(dt);
@@ -411,6 +533,7 @@
   }
 
   function drawStill() {
+    place();
     drawNetwork();
   }
 
@@ -468,6 +591,11 @@
     window.addEventListener('resize', rebuild);
   }
 
+  function pointAt(event) {
+    const rect = canvas.getBoundingClientRect();
+    return { x: event.clientX - rect.left, y: event.clientY - rect.top };
+  }
+
   // The press. Every pointer type, because a tap is a press: the reaction is
   // the one thing here a phone can have too.
   hero.addEventListener(
@@ -475,22 +603,59 @@
     event => {
       if (reduceMotion.matches || !nodes.length) return;
 
-      const rect = canvas.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-      if (x < 0 || y < 0 || x > width || y > height) return;
+      const p = pointAt(event);
+      if (p.x < 0 || p.y < 0 || p.x > width || p.y > height) return;
+
+      hold.on = true;
+      hold.x = p.x;
+      hold.y = p.y;
+      hold.nextFigure = 0;
+      hold.nextFront = 0;
 
       if (fronts.length >= MAX_FRONTS) fronts.shift();
-      fronts.push({ x, y, r: 0 });
-      makeFigure(x, y);
+      fronts.push({ x: p.x, y: p.y, r: 0 });
+      makeFigure(p.x, p.y, 0);
     },
     { passive: true }
   );
+
+  // Dragging while held moves the centre of the phenomenon with the pointer.
+  // Tracked only during a hold, so hovering the hero costs nothing.
+  hero.addEventListener(
+    'pointermove',
+    event => {
+      if (!hold.on) return;
+      const p = pointAt(event);
+      hold.x = p.x;
+      hold.y = p.y;
+    },
+    { passive: true }
+  );
+
+  // On the window, so a release outside the hero still ends the hold. The pull
+  // is not cut: `power` falls over HOLD_RELEASE and the drawn positions walk
+  // back to the real ones, which are the ones the network had all along.
+  const release = () => {
+    if (!hold.on) return;
+    hold.on = false;
+    // What was gathered disperses: one last front leaves the point, but only
+    // if there was something to disperse — a plain click already had its own.
+    if (hold.power > 0.35) {
+      if (fronts.length >= MAX_FRONTS) fronts.shift();
+      fronts.push({ x: hold.x, y: hold.y, r: 0 });
+    }
+  };
+
+  window.addEventListener('pointerup', release, { passive: true });
+  window.addEventListener('pointercancel', release, { passive: true });
+  window.addEventListener('blur', release);
 
   // A reader can turn reduced motion on while the page is open.
   const onMotionChange = () => {
     stop();
     if (reduceMotion.matches) {
+      hold.on = false;
+      hold.power = 0;
       fronts = [];
       figures = [];
       pulses = [];
