@@ -1,0 +1,11 @@
+@layer syx.reset, syx.base, syx.tokens, syx.atoms, syx.molecules, syx.organisms, syx.utilities;
+
+@layer syx.tokens {
+  @import "abstracts/tokens/primitives/portfolio";
+  @import "abstracts/tokens/semantic/portfolio";
+  @import "abstracts/tokens/components/portfolio";
+}
+
+// The compiled prototype lives in /css/portfolio.css.
+// The source layout follows SYX: primitives → semantic → component tokens,
+// then atoms → molecules → organisms → utilities.

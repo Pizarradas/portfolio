@@ -1,0 +1,18 @@
+:root {
+  --semantic-color-surface-page: var(--primitive-color-paper-50);
+  --semantic-color-surface-soft: var(--primitive-color-paper-100);
+  --semantic-color-surface-inverse: var(--primitive-color-ink-950);
+  --semantic-color-content-primary: var(--primitive-color-ink-950);
+  --semantic-color-content-secondary: var(--primitive-color-stone-700);
+  --semantic-color-content-muted: var(--primitive-color-stone-500);
+  --semantic-color-content-inverse: var(--primitive-color-paper-50);
+  --semantic-color-border-subtle: var(--primitive-color-stone-200);
+  --semantic-color-accent: var(--primitive-color-acid-400);
+  --semantic-color-accent-hover: var(--primitive-color-acid-500);
+  --semantic-space-page-inline: clamp(1.25rem, 4vw, 4.5rem);
+  --semantic-space-section: clamp(5rem, 9vw, 10rem);
+  --semantic-space-section-compact: clamp(3.5rem, 7vw, 7rem);
+  --semantic-font-body: var(--primitive-font-family-sans);
+  --semantic-font-display: var(--primitive-font-family-display);
+  --semantic-measure-copy: 46rem;
+}

@@ -1,0 +1,11 @@
+:root {
+  --component-header-height: 4.25rem;
+  --component-header-bg: color-mix(in srgb, var(--semantic-color-surface-page) 90%, transparent);
+  --component-header-border: var(--semantic-color-border-subtle);
+  --component-card-radius: var(--primitive-radius-2);
+  --component-card-visual-bg: var(--semantic-color-surface-soft);
+  --component-chip-radius: 999px;
+  --component-chip-border: currentColor;
+  --component-metric-bg: var(--semantic-color-accent);
+  --component-metric-color: var(--semantic-color-content-primary);
+}
