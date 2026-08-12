@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="42DS case study — multi-brand design system architecture, front-end implementation and AI-operable workflows." name="description"/>
+<title>42DS — José Luis Pizarro</title>
+<link href="css/portfolio.css" rel="stylesheet"/>
+<link href="css/brand-jlp.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="css/typography-jlp.css" rel="stylesheet"/>
+<link href="css/visual-jlp.css" rel="stylesheet"/>
+<link href="css/case-study.css" rel="stylesheet"/>
+<link href="css/portfolio-v12.css" rel="stylesheet"/>
+<link href="css/case-42ds-v13.css" rel="stylesheet"/>
+<script defer="True" src="https://cdn.jsdelivr.net/npm/echarts@6.1.0/dist/echarts.min.js"></script><link href="css/case-42ds-v14.css" rel="stylesheet"/><link href="css/case-42ds-v15.css" rel="stylesheet"/><link href="css/case-42ds-v16.css" rel="stylesheet"/><link href="css/case-42ds-v17.css" rel="stylesheet"/><link href="css/case-42ds-v18.css" rel="stylesheet"/><link href="css/mobile-first-v19.css" rel="stylesheet"/><link href="css/progressive-enhancement-v20.css" rel="stylesheet"/></head>
+<body class="syx syx--portfolio">
+<a class="atom-skip-link" href="#main">Skip to content</a>
+<header class="org-site-header">
+<a class="atom-wordmark" href="index.html">JLP<span>.</span></a>
+<nav aria-label="Primary navigation" class="mol-nav"><a href="index.html#work">Work</a><a href="index.html#about">About</a><a href="jose-luis-pizarro-feo-cv-2026.pdf">CV</a></nav>
+</header>
+<main id="main">
+<article class="org-case42">
+<header class="org-case42-hero">
+<p class="atom-eyebrow">FLAGSHIP CASE · PRENSA IBÉRICA · 2023—2026</p>
+<h1>42DS — From shared foundations to an AI-operable design system.</h1>
+<p class="org-case42-hero__lede">Prensa Ibérica needed one system that could support different brands, technologies and editorial needs without freezing the business. 42DS became the shared architecture that connected design, front-end, development and, later, AI-assisted workflows.</p>
+<dl class="mol-case-facts">
+<div><dt>My role</dt><dd>Design / Front-End → Product Designer</dd></div>
+<div><dt>System</dt><dd>Figma · SCSS · HTML · JS · Storybook · Vue hand-off</dd></div>
+<div><dt>Architecture</dt><dd>134 component families · 3 composition levels</dd></div>
+<div><dt>AI layer</dt><dd>13 specialised modes + governance</dd></div>
+</dl>
+</header>
+<section aria-label="42DS architecture at a glance" class="org-case42-overview">
+<div class="mol-architecture-stack js-reveal">
+<div><span>01</span><strong>Foundations</strong><small>variables · mixins · maps · functions</small></div>
+<i>↓</i><div><span>02</span><strong>Base</strong><small>reset · helpers · dark mode</small></div>
+<i>↓</i><div><span>03</span><strong>Brand</strong><small>typography · colour · behaviour</small></div>
+<i>↓</i><div><span>04</span><strong>Layout</strong><small>grid · responsive structure</small></div>
+<i>↓</i><div><span>05</span><strong>Components</strong><small>atoms → molecules → organisms</small></div>
+</div>
+<div class="mol-case42-thesis"><p>The story of 42DS is a progression:</p><strong>standardise the foundations → compose reusable product patterns → make the system understandable to people and AI.</strong></div>
+</section><section aria-labelledby="architecture-atlas-title" class="org-architecture-atlas js-reveal">
+<div class="org-architecture-atlas__intro">
+<p class="atom-eyebrow">Architecture at a glance</p>
+<h2 id="architecture-atlas-title">One core. Multiple layers of composition and delivery.</h2>
+<p>42DS is easier to understand as a system of relationships: foundations feed reusable components, brand configuration changes expression, and production targets consume the same shared logic.</p>
+</div>
+<div aria-label="42DS architecture diagram from foundations through component composition, brand configuration and production targets." class="mol-system-map" role="img">
+<div class="mol-system-map__rail mol-system-map__rail--foundations">
+<span class="atom-system-node atom-system-node--primary"><small>01 / Core</small><b>Foundations</b><em>variables · maps · mixins · functions</em></span>
+<i aria-hidden="true"></i>
+</div>
+<div class="mol-system-map__rail mol-system-map__rail--base">
+<span class="atom-system-node"><small>02 / Rules</small><b>Base</b><em>reset · typography · helpers</em></span>
+<i aria-hidden="true"></i>
+</div>
+<div class="mol-system-map__split">
+<div>
+<span class="atom-system-node"><small>03A / Context</small><b>Brand setup</b><em>colour · type · identity</em></span>
+</div>
+<div>
+<span class="atom-system-node"><small>03B / Composition</small><b>Components</b><em>atoms · molecules · organisms</em></span>
+</div>
+</div>
+<div aria-hidden="true" class="mol-system-map__connector"><i></i><i></i><i></i></div>
+<div class="mol-system-map__targets">
+<span class="atom-system-node atom-system-node--target"><small>04 / Delivery</small><b>HTML5</b></span>
+<span class="atom-system-node atom-system-node--target"><small>04 / Delivery</small><b>AMP</b></span>
+<span class="atom-system-node atom-system-node--target"><small>04 / Delivery</small><b>Piano</b></span>
+<span class="atom-system-node atom-system-node--target"><small>04 / Delivery</small><b>Legacy</b></span>
+</div>
+</div>
+</section><section aria-labelledby="hierarchy-title" class="org-hierarchy-diagram js-reveal">
+<div class="org-hierarchy-diagram__copy">
+<p class="atom-eyebrow">Composition hierarchy</p>
+<h2 id="hierarchy-title">Small primitives become editorial products.</h2>
+<p>The hierarchy communicates scale without treating Atomic Design as dogma. Lower-level primitives are composed into increasingly contextual product patterns.</p>
+</div>
+<div aria-label="Hierarchy diagram showing foundations, atoms, molecules, organisms and product experiences." class="mol-hierarchy-pyramid" role="img">
+<div class="mol-hierarchy-pyramid__row mol-hierarchy-pyramid__row--5"><span><small>Experience</small><b>Product patterns</b></span></div>
+<div class="mol-hierarchy-pyramid__row mol-hierarchy-pyramid__row--4"><span><small>32</small><b>Organisms</b></span></div>
+<div class="mol-hierarchy-pyramid__row mol-hierarchy-pyramid__row--3"><span><small>71</small><b>Molecules</b></span></div>
+<div class="mol-hierarchy-pyramid__row mol-hierarchy-pyramid__row--2"><span><small>31</small><b>Atoms</b></span></div>
+<div class="mol-hierarchy-pyramid__row mol-hierarchy-pyramid__row--1"><span><small>Core</small><b>Foundations</b></span></div>
+</div>
+</section><section aria-labelledby="operating-title" class="org-operating-model js-reveal">
+<div class="org-operating-model__header">
+<p class="atom-eyebrow">Operating model</p>
+<h2 id="operating-title">The same system connects design, code, delivery and AI.</h2>
+</div>
+<div aria-label="Operating model showing 42DS at the centre connected to Figma, front-end, Storybook, Vue and AI Mind System." class="mol-orbit-system" role="img">
+<div class="atom-orbit-core"><small>Shared architecture</small><b>42DS</b></div>
+<span class="atom-orbit-node atom-orbit-node--1"><small>Design</small><b>Figma</b></span>
+<span class="atom-orbit-node atom-orbit-node--2"><small>Canonical layer</small><b>HTML / SCSS / JS</b></span>
+<span class="atom-orbit-node atom-orbit-node--3"><small>Documentation</small><b>Storybook</b></span>
+<span class="atom-orbit-node atom-orbit-node--4"><small>Integration</small><b>Vue</b></span>
+<span class="atom-orbit-node atom-orbit-node--5"><small>Context + governance</small><b>AI Mind System</b></span>
+<svg aria-hidden="true" class="mol-orbit-system__lines" preserveaspectratio="none" viewbox="0 0 1000 560">
+<path d="M500 280 L160 100"></path><path d="M500 280 L500 60"></path><path d="M500 280 L840 100"></path>
+<path d="M500 280 L210 470"></path><path d="M500 280 L790 470"></path>
+</svg>
+</div>
+</section>
+<section class="org-case42-section org-case42-section--split" data-act="01 · Context">
+<div class="org-case42-section__heading"><p class="atom-index">01</p><p class="atom-eyebrow">The business problem</p><h2>Unify without stopping the company.</h2></div>
+<div class="org-case42-section__content"><p>Prensa Ibérica had grown into a multi-brand ecosystem with different technologies, identities and legacy decisions. Unification had to happen while BAU work — fixes, sponsorships, visual changes and editorial requests — continued.</p><p>So the first job was not “design the new system”. It was understand the existing one: audit performance and CSS complexity, learn the legacy and identify what could become shared.</p></div>
+</section>
+<section class="org-case42-section org-case42-section--dark" data-act="02 · System">
+<div class="org-case42-section__heading"><p class="atom-index">02</p><p class="atom-eyebrow">Foundations</p><h2>Separate what is global from what is brand-specific.</h2></div>
+<div class="org-case42-section__content">
+<div class="mol-foundation-map js-reveal">
+<div><b>ABSTRACTS</b><span>variables</span><span>mixins</span><span>maps</span><span>functions</span></div>
+<div><b>BASE</b><span>reset</span><span>helpers</span><span>dark</span></div>
+<div><b>BRANDS</b><span>setup</span><span>typography</span><span>colour</span><span>behaviours</span></div>
+<div><b>LAYOUT</b><span>grid</span><span>breakpoints</span></div>
+<div><b>FOURTIES</b><span>atoms</span><span>molecules</span><span>organisms</span></div>
+</div>
+<p class="mol-case42-caption">Shared foundations first. Brand configuration and component composition sit on top.</p>
+</div>
+</section>
+<section aria-labelledby="code-gallery-title" class="org-code-gallery js-reveal">
+<div class="org-code-gallery__intro">
+<p class="atom-eyebrow">Design foundations · rebuilt in code</p>
+<h2 id="code-gallery-title">Show the system, not the Figma cover.</h2>
+<p>Instead of showing file thumbnails, the portfolio reconstructs the underlying design decisions as live front-end visuals: tokens, controls, forms and navigation.</p>
+</div>
+<article class="mol-code-visual mol-code-visual--tokens">
+<div class="mol-code-visual__head"><span>01 / TOKENS</span><strong>Primitive → Semantic → Component</strong></div>
+<div aria-label="Design token flow from primitive values to semantic aliases and component tokens." class="mol-token-flow" role="img">
+<div>
+<small>Primitive</small>
+<span><i style="--c:#1E3AFF"></i><b>brand-500</b><em>#1E3AFF</em></span>
+<span><i style="--c:#080F1A"></i><b>ink-1000</b><em>#080F1A</em></span>
+<span><i style="--c:#EEF1F6"></i><b>gray-100</b><em>#EEF1F6</em></span>
+</div>
+<i>→</i>
+<div>
+<small>Semantic</small>
+<span><b>color-primary</b><em>brand-500</em></span>
+<span><b>text-primary</b><em>ink-1000</em></span>
+<span><b>surface-muted</b><em>gray-100</em></span>
+</div>
+<i>→</i>
+<div>
+<small>Component</small>
+<span><b>button-bg</b><em>color-primary</em></span>
+<span><b>heading-color</b><em>text-primary</em></span>
+<span><b>card-bg</b><em>surface-muted</em></span>
+</div>
+</div>
+</article>
+<article class="mol-code-visual mol-code-visual--buttons">
+<div class="mol-code-visual__head"><span>02 / BUTTONS</span><strong>Same semantics. Different states.</strong></div>
+<div aria-label="Live button system showing primary, secondary, disabled and icon button states." class="mol-button-system">
+<button type="button">Primary action</button>
+<button class="is-secondary" type="button">Secondary</button>
+<button disabled="" type="button">Disabled</button>
+<button aria-label="Add item" class="is-icon" type="button">+</button>
+</div>
+<div class="mol-component-anatomy"><span>label</span><span>padding</span><span>radius</span><span>focus</span><span>state</span></div>
+</article>
+<article class="mol-code-visual mol-code-visual--forms">
+<div class="mol-code-visual__head"><span>03 / FORMS</span><strong>Structure, states and accessibility.</strong></div>
+<form class="mol-form-system" onsubmit="return false">
+<label>Search
+        <input placeholder="Search content" type="search"/>
+</label>
+<label>Publication
+        <select><option>Choose a brand</option><option>SPORT</option><option>El Periódico</option></select>
+</label>
+<label class="mol-form-system__check"><input checked="" type="checkbox"/> Include regional editions</label>
+<button type="button">Apply</button>
+</form>
+</article>
+<article class="mol-code-visual mol-code-visual--navigation">
+<div class="mol-code-visual__head"><span>04 / NAVIGATION</span><strong>Information architecture becomes a reusable pattern.</strong></div>
+<nav aria-label="Example publication navigation" class="mol-nav-system">
+<div class="mol-nav-system__brand">42DS</div>
+<a href="#!">News</a><a href="#!">Sport</a><a href="#!">Economy</a><a href="#!">Culture</a>
+<button aria-label="Open menu" type="button">☰</button>
+</nav>
+<div aria-hidden="true" class="mol-nav-system__mobile">
+<span>42DS</span><i></i><i></i><i></i>
+</div>
+</article>
+</section><section aria-labelledby="foundation-showcase-title" class="org-foundation-showcase js-reveal">
+<div class="org-foundation-showcase__intro">
+<p class="atom-eyebrow">Foundations · live system</p>
+<h2 id="foundation-showcase-title">Tokens define the identity. The grid defines the rhythm.</h2>
+<p>These visuals are reconstructed from the 42DS SCSS architecture: CSS custom properties for brand context and a 12-column responsive grid with real breakpoints and spacing rules.</p>
+</div>
+<article aria-labelledby="token-lab-title" class="mol-token-lab">
+<div class="mol-token-lab__header">
+<div><span>01 / BRAND TOKENS</span><h3 id="token-lab-title">One semantic API, different brands.</h3></div>
+<div aria-label="Choose brand token example" class="mol-token-lab__switcher" role="group">
+<button class="is-active" data-brand="ep" type="button">El Periódico</button>
+<button data-brand="sport" type="button">SPORT</button>
+<button data-brand="epe" type="button">EPE</button>
+<button data-brand="regionales" type="button">Regionales</button>
+</div>
+</div>
+<div class="mol-token-lab__stage" data-token-brand="ep">
+<div class="mol-token-hero">
+<small>semantic token</small>
+<code>--color-primary</code>
+<strong class="js-token-color-label">#f53036</strong>
+<i aria-hidden="true" class="js-token-color-swatch"></i>
+</div>
+<div class="mol-token-groups">
+<section>
+<small>Colour</small>
+<div class="mol-token-row"><code>--color-primary</code><span class="js-token-primary">#f53036</span></div>
+<div class="mol-token-row"><code>--color-black</code><span>#000 / shared</span></div>
+<div class="mol-token-row"><code>--color-white</code><span>#fff / shared</span></div>
+</section>
+<section>
+<small>Typography</small>
+<div class="mol-token-row"><code>--font-stack</code><span>system sans-serif stack</span></div>
+<div class="mol-token-row"><code>--font-primary</code><span>brand context</span></div>
+<div class="mol-token-row"><code>--font-size-basis</code><span class="js-token-font-size">1.6rem</span></div>
+<div class="mol-token-row"><code>--font-height-basis</code><span class="js-token-line-height">2rem</span></div>
+</section>
+<section>
+<small>Layout</small>
+<div class="mol-token-row"><code>$max-width-grid</code><span>1680px</span></div>
+<div class="mol-token-row"><code>$max-width-grid-p-less</code><span>1920px</span></div>
+<div class="mol-token-row"><code>column</code><span>8.333333%</span></div>
+</section>
+</div>
+<div class="mol-token-application">
+<small>Same component / token-driven identity</small>
+<div class="mol-token-demo-card">
+<span class="js-brand-kicker">EL PERIÓDICO</span>
+<h4>Shared structure. Brand context changes the expression.</h4>
+<p>The component does not need a brand-specific rewrite.</p>
+<button type="button">Read story</button>
+</div>
+</div>
+</div>
+</article>
+<article aria-labelledby="grid-lab-title" class="mol-grid-lab">
+<div class="mol-grid-lab__header">
+<div><span>02 / RESPONSIVE GRID</span><h3 id="grid-lab-title">12 columns. Four responsive contexts.</h3></div>
+<div aria-label="Choose grid breakpoint" class="mol-grid-lab__switcher" role="group">
+<button data-grid="xs" type="button">XS <small>&lt;768</small></button>
+<button data-grid="sm" type="button">SM <small>≥768</small></button>
+<button class="is-active" data-grid="md" type="button">MD <small>≥1002</small></button>
+<button data-grid="lg" type="button">LG <small>≥1280</small></button>
+</div>
+</div>
+<div class="mol-grid-lab__viewport" data-grid-mode="md">
+<div class="mol-grid-ruler"><span>0</span><span class="js-grid-width">1002+</span><span>1680 max</span></div>
+<div aria-label="Twelve-column grid visualization" class="mol-grid-columns">
+<i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+<div class="mol-grid-content mol-grid-content--hero"><small>hero</small><b>8 cols</b></div>
+<div class="mol-grid-content mol-grid-content--aside"><small>aside</small><b>4 cols</b></div>
+<div class="mol-grid-content mol-grid-content--card1"><small>card</small><b>4</b></div>
+<div class="mol-grid-content mol-grid-content--card2"><small>card</small><b>4</b></div>
+<div class="mol-grid-content mol-grid-content--card3"><small>card</small><b>4</b></div>
+</div>
+<div class="mol-grid-lab__metrics">
+<span><small>Columns</small><b>12</b></span>
+<span><small>Column unit</small><b>8.333%</b></span>
+<span><small>XS gutter</small><b>0.8rem</b></span>
+<span><small>≥768 gutter</small><b>1.1rem</b></span>
+</div>
+</div>
+</article>
+</section>
+<section aria-labelledby="component-anatomy-title" class="org-component-anatomy js-reveal">
+<div class="org-component-anatomy__copy">
+<p class="atom-eyebrow">Component anatomy</p>
+<h2 id="component-anatomy-title">A component is a contract, not just a drawing.</h2>
+<p>Each piece connects design intent, reusable structure and implementation behaviour. This makes the hand-off understandable to both designers and developers.</p>
+</div>
+<div aria-label="Annotated editorial card component showing media, metadata, title, byline and interaction areas." class="mol-anatomy-card" role="img">
+<div class="mol-anatomy-card__visual"><span>media</span></div>
+<div class="mol-anatomy-card__content">
+<small>category · metadata</small>
+<strong>Headline becomes reusable content structure</strong>
+<p>Optional supporting text lives inside the same semantic component.</p>
+<em>byline / time</em>
+</div>
+<i class="mol-anatomy-pin mol-anatomy-pin--1">atom</i>
+<i class="mol-anatomy-pin mol-anatomy-pin--2">molecule</i>
+<i class="mol-anatomy-pin mol-anatomy-pin--3">responsive</i>
+<i class="mol-anatomy-pin mol-anatomy-pin--4">accessible</i>
+</div>
+</section><section class="org-case42-section" data-act="03 · Scale">
+<div class="org-case42-section__heading"><p class="atom-index">03</p><p class="atom-eyebrow">Composition</p><h2>Reuse before create.</h2></div>
+<div class="org-case42-section__content">
+<div class="mol-inventory-visual js-reveal">
+<div class="mol-inventory-visual__summary">
+<span><b class="js-count" data-count="134">134</b><small>component families</small></span>
+<p>Three composition levels make the inventory easier to reason about and reuse.</p>
+</div>
+<div aria-label="Animated bar chart showing 31 atoms, 71 molecules and 32 organisms in the 42DS SCSS architecture." class="atom-echart" id="chart-component-inventory" role="img">
+<div class="atom-echart__fallback">
+<span style="--value:43.7%"><b>31</b>Atoms</span>
+<span style="--value:100%"><b>71</b>Molecules</span>
+<span style="--value:45.1%"><b>32</b>Organisms</span>
+</div>
+</div>
+</div>
+<p>The useful rule was not the Atomic Design label. It was the decision model: reuse first, extend when structure stays compatible, and create a new component only when semantics or architecture really change.</p>
+</div>
+</section>
+<section class="org-case42-section org-case42-section--brand" data-act="03 · Scale">
+<div class="org-case42-section__heading"><p class="atom-index">04</p><p class="atom-eyebrow">Multi-brand</p><h2>One core. Different identities.</h2></div>
+<div class="org-case42-section__content">
+<div class="mol-brand-tree js-reveal"><div class="mol-brand-tree__core">42DS CORE</div><div class="mol-brand-tree__branches"><span>SPORT<small>sport-setup</small></span><span>EL PERIÓDICO<small>ep-setup</small></span><span>EPE<small>epe-setup</small></span><span>REGIONALES<small>regionales-setup</small></span><span>REVISTAS<small>revistas-setup</small></span></div></div>
+<p>Brand setups control typography, colour, helpers and specific behaviour. Components consume that context instead of duplicating the whole implementation.</p>
+</div>
+</section>
+<section aria-labelledby="header-system-title" class="org-header-system js-reveal">
+<div class="org-header-system__intro">
+<p class="atom-eyebrow">Use case · headers</p>
+<h2 id="header-system-title">One structure. Many identities.</h2>
+<p>The header was a strong stress test: one information architecture and semantic structure, then brand expression through logos, typography, colour and selected variants.</p>
+</div>
+<div aria-label="Header system architecture showing a shared semantic structure feeding different brand identities." class="mol-header-architecture" role="img">
+<div class="mol-header-architecture__core">
+<small>Shared semantic core</small>
+<strong>Header architecture</strong>
+<div><span>logo slot</span><span>primary nav</span><span>secondary nav</span><span>actions</span><span>responsive states</span></div>
+</div>
+<div aria-hidden="true" class="mol-header-architecture__connector"><i></i><i></i><i></i><i></i></div>
+<div class="mol-header-architecture__brands">
+<article class="mol-brand-header mol-brand-header--ep">
+<div class="mol-brand-header__bar"><strong>elPeriódico</strong><nav><span>News</span><span>Economy</span><span>Culture</span></nav><button aria-label="Open menu" type="button">☰</button></div>
+<div class="mol-brand-header__meta"><span>Identity</span><b>Red · editorial</b><small>same structure</small></div>
+</article>
+<article class="mol-brand-header mol-brand-header--sport">
+<div class="mol-brand-header__bar"><strong>SPORT</strong><nav><span>Football</span><span>Barça</span><span>Results</span></nav><button aria-label="Open menu" type="button">☰</button></div>
+<div class="mol-brand-header__meta"><span>Identity</span><b>Sport red · dense nav</b><small>same structure</small></div>
+</article>
+<article class="mol-brand-header mol-brand-header--regional">
+<div class="mol-brand-header__bar"><strong>Regional</strong><nav><span>Local</span><span>Opinion</span><span>Services</span></nav><button aria-label="Open menu" type="button">☰</button></div>
+<div class="mol-brand-header__meta"><span>Identity</span><b>Blue · local news</b><small>same structure</small></div>
+</article>
+<article class="mol-brand-header mol-brand-header--magazine">
+<div class="mol-brand-header__bar"><strong>Magazine</strong><nav><span>Style</span><span>Culture</span><span>People</span></nav><button aria-label="Open menu" type="button">☰</button></div>
+<div class="mol-brand-header__meta"><span>Identity</span><b>Neutral · lifestyle</b><small>same structure</small></div>
+</article>
+</div>
+</div>
+<div aria-label="Shared header design rules" class="mol-header-rule-strip">
+<span><b>1</b><small>semantic DOM</small></span>
+<span><b>1</b><small>information architecture</small></span>
+<span><b>N</b><small>brand expressions</small></span>
+<span><b>AA</b><small>accessibility target</small></span>
+</div>
+</section>
+<section class="org-case42-section org-case42-section--targets" data-act="04 · Reality">
+<div class="org-case42-section__heading"><p class="atom-index">05</p><p class="atom-eyebrow">Production reality</p><h2>A design system built for imperfect constraints.</h2></div>
+<div class="org-case42-section__content">
+<div class="mol-targets js-reveal"><span><b>HTML5</b><small>brand cores + header extensions</small></span><span><b>AMP</b><small>parallel abstracts, mixins and brand setups</small></span><span><b>PIANO</b><small>paywall-specific core bundles</small></span><span><b>LEGACY</b><small>migration + compatibility while BAU continued</small></span></div>
+<p>42DS had to support parallel AMP entry points, brand bundles, paywall variants and legacy compatibility. The architecture was designed for a live business, not a clean-room rebuild.</p>
+</div>
+</section>
+<section class="org-case42-section" data-act="04 · Reality">
+<div class="org-case42-section__heading"><p class="atom-index">06</p><p class="atom-eyebrow">Design ↔ engineering</p><h2>The hand-off is part of the system.</h2></div>
+<div class="org-case42-section__content">
+<div class="mol-pipeline js-reveal"><span><b>Figma</b><small>foundations · variants · states</small></span><i>→</i><span><b>HTML / SCSS / JS</b><small>canonical implementation</small></span><i>→</i><span><b>Storybook</b><small>documentation · testing · shared language</small></span><i>→</i><span><b>Vue</b><small>Tech integration</small></span></div>
+<p>A component was not finished when it looked right in Figma. It also needed a canonical implementation, documentation and a clear path into Vue.</p>
+</div>
+</section>
+<section aria-labelledby="ai-architecture-title" class="org-ai-architecture js-reveal">
+<div class="org-ai-architecture__copy">
+<p class="atom-eyebrow">Human + AI architecture</p>
+<h2 id="ai-architecture-title">AI sits on top of the system — not outside it.</h2>
+<p>The Mind System adds specialised modes and governance while 42DS remains the source of reusable product rules. That keeps AI-assisted execution connected to the same architecture used by the team.</p>
+</div>
+<div aria-label="Layered diagram showing 42DS knowledge feeding specialised AI modes, governance and execution." class="mol-ai-layers" role="img">
+<div class="mol-ai-layers__layer mol-ai-layers__layer--knowledge">
+<small>Source of truth</small><b>42DS knowledge</b><em>components · conventions · architecture</em>
+</div>
+<div aria-hidden="true" class="mol-ai-layers__arrow">↓</div>
+<div class="mol-ai-layers__layer mol-ai-layers__layer--modes">
+<small>13 specialised modes</small>
+<div><span>UX</span><span>UI</span><span>42DS</span><span>SCSS</span><span>JS</span><span>Storybook</span><span>Docs</span></div>
+</div>
+<div aria-hidden="true" class="mol-ai-layers__arrow">↓</div>
+<div class="mol-ai-layers__layer mol-ai-layers__layer--governance">
+<small>Decision layer</small><b>Governance</b><em>domain ownership · execution order · conflict resolution</em>
+</div>
+<div aria-hidden="true" class="mol-ai-layers__arrow">↓</div>
+<div class="mol-ai-layers__layer mol-ai-layers__layer--output">
+<small>Default principle</small><b>REUSE-FIRST</b><em>inspect → compose → extend → create</em>
+</div>
+</div>
+</section><section class="org-case42-section org-case42-section--ai" data-act="05 · Evolution">
+<div class="org-case42-section__heading"><p class="atom-index">07</p><p class="atom-eyebrow">AI-operable architecture</p><h2>Then the system had to become understandable to AI.</h2></div>
+<div class="org-case42-section__content">
+<div class="mol-ai-metrics js-reveal">
+<span><b class="js-count" data-count="13">13</b><small>specialised modes</small></span>
+<span><b>1</b><small>governance layer</small></span>
+<span><b>REUSE-FIRST</b><small>default design-system principle</small></span>
+</div><div class="mol-ai-system js-reveal">
+<div class="mol-ai-system__knowledge"><b>KNOWLEDGE</b><span>UX</span><span>UI</span><span>Front</span><span>42DS</span><span>Storybook</span></div>
+<i>↓</i>
+<div class="mol-ai-system__modes"><b>MODES</b><span>UX</span><span>UI</span><span>42DS+HF</span><span>REUSE-FIRST</span><span>42DS+SCSS</span><span>42DS+JS</span><span>DOC</span><span>STORYBOOK</span></div>
+<i>↓</i>
+<div class="mol-ai-system__governance"><b>GOVERNANCE</b><span>domain ownership · execution order · conflict resolution</span></div>
+</div>
+<p>What began as AI support for isolated JavaScript tasks became a portable mind-system. Each mode owns a domain; governance defines execution order and conflict resolution, so AI can work with the real 42DS rules instead of inventing around them.</p>
+<aside class="mol-case42-principle js-reveal"><strong>REUSE-FIRST</strong><span>AI should inspect the real design-system inventory before inventing a new solution.</span></aside>
+</div>
+</section>
+<section aria-labelledby="enabled-title" class="org-case42-enabled js-reveal">
+<div>
+<p class="atom-eyebrow">What the architecture enables</p>
+<h2 id="enabled-title">One system, several kinds of work.</h2>
+</div>
+<div class="org-case42-enabled__grid">
+<span><b>Shared patterns</b><small>Design and front-end speak the same component language.</small></span>
+<span><b>Brand independence</b><small>Identity changes without rebuilding the whole structure.</small></span>
+<span><b>Production paths</b><small>HTML5, AMP, Piano and legacy can coexist.</small></span>
+<span><b>AI reuse</b><small>Agents inspect and compose the existing system before inventing.</small></span>
+</div>
+</section><section class="org-case42-section org-case42-section--closing" data-act="06 · Role">
+<div class="org-case42-section__heading"><p class="atom-index">08</p><p class="atom-eyebrow">What changed</p><h2>The architecture grew. My role grew with it.</h2></div>
+<div class="org-case42-section__content"><p>I joined mainly as a designer/front-end profile inside the architecture. As the system expanded, my role moved toward end-to-end Product Design and AI-assisted execution.</p><blockquote>The most important evolution was not adding more components. It was turning implicit knowledge into an explicit system — first for people, and eventually for AI.</blockquote></div>
+</section>
+<nav class="org-case-next"><a href="index.html#work"><span>Back</span><strong>Selected work</strong></a><a href="case-sport.html"><span>Next case</span><strong>SPORT Cards →</strong></a></nav>
+</article>
+</main>
+<footer class="org-footer"><p>José Luis Pizarro · Madrid</p><p>Built with SYX.</p></footer>
+<script src="js/case-42ds-v14.js"></script><script src="js/case-42ds-v18.js"></script></body>
+</html>
