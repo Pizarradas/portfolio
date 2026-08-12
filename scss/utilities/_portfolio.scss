@@ -24,16 +24,73 @@
   //
   // Vertical padding is left to the section: this only ever sets the inline
   // axis, so nothing about the section's rhythm changes when its width does.
+  // Each register also publishes its cap as a plain length, which is what the
+  // band grid below needs. The padding token cannot be reused for that: it is
+  // built on `100%`, and a percentage resolves against whichever element reads
+  // it — inside the section that is the already-padded box, so a child asking
+  // for the same token gets zero and cancels itself out.
   .syx-span-read {
+    --syx-register-width: var(--semantic-width-read);
+
     padding-inline: var(--semantic-pad-read);
   }
 
   .syx-span-scan {
+    --syx-register-width: var(--semantic-width-scan);
+
     padding-inline: var(--semantic-pad-scan);
   }
 
   .syx-span-survey {
+    --syx-register-width: var(--semantic-width-survey);
+
     padding-inline: var(--semantic-pad-survey);
+  }
+
+  // Band host — a section whose opener runs the full width of the page.
+  //
+  // The register stops being padding and becomes three grid tracks: gutter,
+  // content, gutter. Same measurements, but now a child can be placed against
+  // the outer edges instead of the inner ones, exactly, with no viewport units
+  // and nothing to go wrong when a scrollbar takes 15px off the window.
+  //
+  // A register caps the content because a grid of cards or a column of prose
+  // stops working past a certain width. A section title has no such problem,
+  // and on a wide display the opener was announcing the section from inside a
+  // 112rem box with 700px of empty page either side of it.
+  // Gated at the last register, and deliberately: below it the padding already
+  // is the page gutter, so an opener has nowhere to go. Engaging the band any
+  // earlier only produced the eight pixels of bleed a scan section has at
+  // 1600px — which reads as a block that failed to line up rather than as a
+  // block that runs the width of the page.
+  @include from($bp-2xl) {
+    .syx-band {
+      display: grid;
+      grid-template-columns:
+        [full-start] minmax(var(--semantic-space-gutter), 1fr)
+        [content-start] minmax(0, var(--syx-register-width))
+        [content-end] minmax(var(--semantic-space-gutter), 1fr)
+        [full-end];
+      padding-inline: 0;
+    }
+
+    .syx-band > * {
+      grid-column: content;
+    }
+
+    .syx-band > .syx-bleed {
+      grid-column: full;
+      padding-inline: var(--semantic-space-gutter);
+    }
+
+    // Grid items do not collapse their margins, and the opener already owns the
+    // space under it. Without this the one block that carries a top margin of
+    // its own — the case index grid — would add it to the opener's instead of
+    // overlapping with it, and that section alone would open wider than the
+    // rest.
+    .syx-band > .syx-bleed + * {
+      margin-block-start: 0;
+    }
   }
 
   // In the read register there is room for one column of content, not two.
@@ -67,6 +124,62 @@
 
   .syx-measure-prose {
     max-width: var(--semantic-measure-prose);
+  }
+
+  // The opener as a band.
+  //
+  // Once it runs the full width, the three parts stop sharing the width in
+  // proportion and take their place on the page instead: the index in the left
+  // margin, the title with all the room, the standfirst against the right edge
+  // at its own measure. A newspaper section head, which is the right reference
+  // for a page about editorial systems.
+  //
+  // Specificity, not order: these have to beat the desktop rules in
+  // progressive-enhancement-v20.css, which sit in this same layer and load
+  // after the compiled stylesheet.
+  @include from($bp-2xl) {
+    // A band, not a stretched row.
+    //
+    // Widening the opener without redesigning it just moved the same three
+    // items further apart. What makes a wide section head read is being closed
+    // on both sides: a rule above, a rule below, and enough air inside that the
+    // space between the title and the standfirst is obviously the composition
+    // rather than a gap left over from the layout.
+    .mol-section-heading.syx-bleed {
+      // The index track is fixed, so every section title on the page starts on
+      // the same vertical — an auto track would put "Work" and "Self-directed"
+      // at two different left edges.
+      grid-template-columns: 10rem minmax(0, 1fr) auto;
+      column-gap: var(--semantic-space-block);
+      padding-block: var(--primitive-space-2xl) var(--primitive-space-3xl);
+      border-bottom: var(--semantic-border-width) solid
+        var(--semantic-color-border);
+    }
+
+    // At 4rem the index column was narrow enough to break "Self-directed" over
+    // two lines in the margin of the page.
+    .mol-section-heading.syx-bleed .atom-index {
+      white-space: nowrap;
+    }
+
+    // The title takes the width it has been given, on a gentle slope. A plain
+    // vw size tuned for "Selected work" put the longest title in the set —
+    // "From system thinking to AI-native execution." — onto three lines of
+    // 130px type, which is a hero, not a section head. This curve keeps every
+    // title in the set to two lines at any width in the band range, and still
+    // stops short of the hero, which is the one thing allowed to be bigger.
+    .mol-section-heading.syx-bleed h2 {
+      font-size: clamp(5.8rem, 2.9vw + 2.4rem, 8.5rem);
+    }
+
+    // A rule of its own over the standfirst: the right end of the band gets a
+    // top edge to sit on, so it reads as the second element of a composition
+    // instead of a paragraph that drifted to the far side of the page.
+    .mol-section-heading.syx-bleed p:last-child {
+      padding-top: var(--primitive-space-sm);
+      border-top: var(--semantic-border-width-strong) solid
+        var(--semantic-color-text);
+    }
   }
 
   @include until($bp-md) {
