@@ -30,7 +30,39 @@
     // were 645px and 580px, so the two headlines started 65px apart and the
     // row read as two unrelated cards rather than one comparison.
     --component-work-frame-ratio: 16 / 10;
-    --component-work-frame-ratio-featured: 16 / 9;
+    // Wide, because the flagship frame is four stacked mastheads and the band
+    // height decides how much of each screenshot survives the crop. At 16/9 the
+    // bands were tall enough to show the advertising under every header; at
+    // 16/7 each band is the header itself, at roughly the proportion the real
+    // page has.
+    --component-work-frame-ratio-featured: 16 / 7;
+    // From a laptop up the frame runs the full width of the page, so the same
+    // four bands need less height to stay in proportion with it.
+    --component-work-frame-ratio-featured-lg: 16 / 6;
+    // The flagship frame stacks four full-width mastheads. A phone has no width
+    // to trade for band height, so the frame turns square: tall enough that the
+    // four bands read as four headers, short enough that they stay headers
+    // rather than four slices of newspaper homepage.
+    --component-work-frame-ratio-featured-sm: 1 / 1;
+
+    // One hover state for the whole card: the veil, the chip and the accent
+    // rule are declared once here so the three cards cannot drift apart.
+    --component-work-veil: color-mix(
+      in srgb,
+      var(--semantic-color-surface-night) 34%,
+      transparent
+    );
+    --component-work-enter-bg: var(--semantic-color-text);
+    --component-work-enter-fg: var(--semantic-color-text-inverse);
+    --component-work-lift: -0.25rem;
+
+    // The measurement field behind the study panel.
+    --component-work-field-line: color-mix(
+      in srgb,
+      var(--semantic-color-border) 65%,
+      transparent
+    );
+    --component-work-field-step: 2.25rem;
 
     --component-chip-radius: var(--semantic-radius-pill);
     --component-chip-border: currentColor;

@@ -298,7 +298,23 @@
     --component-register-pad: clamp(1.25rem, 0.814516129rem + 1.935483871vw, 2.75rem);
     --component-register-min-height: clamp(21rem, 17.5161290323rem + 15.4838709677vw, 33rem);
     --component-work-frame-ratio: 16 / 10;
-    --component-work-frame-ratio-featured: 16 / 9;
+    --component-work-frame-ratio-featured: 16 / 7;
+    --component-work-frame-ratio-featured-lg: 16 / 6;
+    --component-work-frame-ratio-featured-sm: 1 / 1;
+    --component-work-veil: color-mix(
+      in srgb,
+      var(--semantic-color-surface-night) 34%,
+      transparent
+    );
+    --component-work-enter-bg: var(--semantic-color-text);
+    --component-work-enter-fg: var(--semantic-color-text-inverse);
+    --component-work-lift: -0.25rem;
+    --component-work-field-line: color-mix(
+      in srgb,
+      var(--semantic-color-border) 65%,
+      transparent
+    );
+    --component-work-field-step: 2.25rem;
     --component-chip-radius: var(--semantic-radius-pill);
     --component-chip-border: currentColor;
     --component-metric-bg: var(--semantic-color-primary);
@@ -540,19 +556,21 @@
   .mol-project-card__body {
     display: grid;
     gap: var(--primitive-space-sm);
+    align-content: start;
   }
   .mol-project-card__body h3 a {
     text-decoration: none;
-  }
-  .mol-project-card__body h3 a:hover {
-    text-decoration: underline;
     text-decoration-thickness: 0.06em;
     text-underline-offset: 0.12em;
+  }
+  .mol-project-card:is(:hover, :focus-within) .mol-project-card__body h3 a {
+    text-decoration: underline;
   }
   .mol-project-card__body p {
     color: var(--semantic-color-text-secondary);
   }
   .mol-project-card__meta {
+    position: relative;
     display: flex;
     justify-content: space-between;
     gap: var(--primitive-space-md);
@@ -563,6 +581,26 @@
     text-transform: uppercase;
     letter-spacing: var(--primitive-letter-spacing-wide);
     color: var(--semantic-color-text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .mol-project-card__meta::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: calc(-1 * var(--semantic-border-width-strong));
+    width: 100%;
+    height: var(--semantic-border-width-strong);
+    background: var(--component-card-accent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform var(--semantic-duration-transition) var(--semantic-ease-emphasis);
+  }
+  .mol-project-card:is(:hover, :focus-within) .mol-project-card__meta::before {
+    transform: scaleX(1);
+  }
+  .mol-project-card__meta b {
+    margin-right: var(--primitive-space-3xs);
+    color: var(--semantic-color-primary);
   }
   .mol-process {
     display: flex;
@@ -952,6 +990,7 @@
     }
   }
   .mol-project-card__frame {
+    container: work-frame/inline-size;
     position: relative;
     display: block;
     overflow: hidden;
@@ -961,12 +1000,78 @@
     border: var(--semantic-border-width) solid var(--semantic-color-border);
     text-decoration: none;
     color: inherit;
+    transition: border-color var(--semantic-duration-hover) var(--semantic-ease), box-shadow var(--semantic-duration-transition) var(--semantic-ease), transform var(--semantic-duration-transition) var(--semantic-ease);
+  }
+  .mol-project-card:is(:hover, :focus-within) .mol-project-card__frame {
+    transform: translateY(var(--component-work-lift));
+    border-color: var(--semantic-color-border-strong);
+    box-shadow: var(--semantic-shadow-overlay);
   }
   .mol-project-card--featured .mol-project-card__frame {
     aspect-ratio: var(--component-work-frame-ratio-featured);
   }
-  .mol-project-card__frame > * {
+  .mol-project-card__frame > *:not(.mol-project-card__enter) {
     height: 100%;
+    transition: transform var(--semantic-duration-reveal) var(--semantic-ease-emphasis);
+  }
+  .mol-project-card:is(:hover, :focus-within) .mol-project-card__frame > *:not(.mol-project-card__enter) {
+    transform: scale(1.015);
+  }
+  .mol-project-card__frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    background: var(--component-work-veil);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--semantic-duration-transition) var(--semantic-ease);
+  }
+  .mol-project-card:is(:hover, :focus-within) .mol-project-card__frame::after {
+    opacity: 1;
+  }
+  .mol-project-card__enter {
+    position: absolute;
+    z-index: 4;
+    left: 50%;
+    top: 50%;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--primitive-space-xs);
+    padding: var(--primitive-space-xs) var(--primitive-space-md);
+    background: var(--component-work-enter-bg);
+    color: var(--component-work-enter-fg);
+    border-radius: var(--semantic-radius-pill);
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-eyebrow);
+    font-weight: var(--primitive-font-weight-bold);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 0.6rem));
+    transition: opacity var(--semantic-duration-transition) var(--semantic-ease), transform var(--semantic-duration-transition) var(--semantic-ease-emphasis);
+  }
+  .mol-project-card:is(:hover, :focus-within) .mol-project-card__enter {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  .mol-project-card__enter i {
+    font-style: normal;
+    transition: transform var(--semantic-duration-hover) var(--semantic-ease);
+  }
+  .mol-project-card:is(:hover, :focus-within) .mol-project-card__enter i {
+    transform: translateX(0.2rem);
+  }
+  @media (hover: none) {
+    .mol-project-card__enter {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+    .mol-project-card__frame::after {
+      content: none;
+    }
   }
   .mol-project-card__proof {
     display: grid;
@@ -1009,7 +1114,7 @@
   .mol-evidence-system__meta {
     display: grid;
     gap: var(--primitive-space-3xs);
-    padding: var(--primitive-space-sm) var(--primitive-space-md);
+    padding: var(--primitive-space-md);
     border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
     background: var(--semantic-color-surface);
   }
@@ -1022,27 +1127,28 @@
   }
   .mol-evidence-system__meta strong {
     font-family: var(--semantic-font-family-display);
-    font-size: var(--semantic-font-size-ui);
+    font-size: var(--semantic-font-size-title-sm);
+    line-height: var(--semantic-line-height-display);
     letter-spacing: var(--semantic-letter-spacing-display);
   }
   .mol-evidence-system__stack {
     flex: 1;
     min-height: 0;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(4, minmax(0, 1fr));
   }
   .mol-evidence-system__stack figure {
     position: relative;
-    display: flex;
-    flex-direction: column;
     min-height: 0;
     margin: 0;
-    border-right: var(--semantic-border-width) solid var(--semantic-color-border);
-    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
     overflow: hidden;
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
   }
   .mol-evidence-system__stack figcaption {
-    order: 2;
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    top: 0;
     padding: var(--primitive-space-3xs) var(--primitive-space-2xs);
     background: var(--semantic-color-surface);
     font-family: var(--semantic-font-family-ui);
@@ -1050,15 +1156,15 @@
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
     color: var(--semantic-color-text-muted);
-    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+    border-left: var(--semantic-border-width) solid var(--semantic-color-border);
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
   }
   .mol-evidence-system__stack img {
-    order: 1;
-    flex: 1;
-    min-height: 0;
+    display: block;
     width: 100%;
+    height: 100%;
     object-fit: cover;
-    object-position: top center;
+    object-position: left top;
   }
   .mol-evidence-system__foundation {
     display: grid;
@@ -1069,7 +1175,7 @@
     display: flex;
     align-items: center;
     gap: var(--primitive-space-2xs);
-    padding: var(--primitive-space-2xs) var(--primitive-space-sm);
+    padding: var(--primitive-space-sm) var(--primitive-space-md);
     border-right: var(--semantic-border-width) solid var(--semantic-color-border);
     border-top: var(--semantic-border-width) solid var(--semantic-color-border);
     font-family: var(--semantic-font-family-ui);
@@ -1099,15 +1205,17 @@
   .mol-evidence-study {
     display: flex;
     flex-direction: column;
-    background: var(--semantic-color-surface-alt);
-    padding: var(--primitive-space-md);
+    padding: var(--primitive-space-sm);
+    background-color: var(--semantic-color-surface-alt);
+    background-image: repeating-linear-gradient(to right, var(--component-work-field-line) 0 1px, transparent 1px var(--component-work-field-step)), repeating-linear-gradient(to bottom, var(--component-work-field-line) 0 1px, transparent 1px var(--component-work-field-step));
   }
   .mol-evidence-study__panel {
     display: flex;
     flex-direction: column;
+    flex: 1;
+    min-height: 0;
     width: 100%;
-    margin: auto;
-    max-width: 44rem;
+    max-width: none;
     border: var(--semantic-border-width) solid var(--semantic-color-border);
     background: var(--semantic-color-surface);
     box-shadow: var(--semantic-shadow-floating);
@@ -1117,7 +1225,7 @@
     justify-content: space-between;
     align-items: baseline;
     gap: var(--primitive-space-sm);
-    padding: var(--primitive-space-sm);
+    padding: var(--primitive-space-sm) var(--primitive-space-md);
     border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
   }
   .mol-evidence-study__head span {
@@ -1129,10 +1237,12 @@
   }
   .mol-evidence-study__head strong {
     font-family: var(--semantic-font-family-display);
-    font-size: var(--semantic-font-size-title-sm);
+    font-size: var(--semantic-font-size-title);
+    line-height: var(--semantic-line-height-display);
     letter-spacing: var(--semantic-letter-spacing-display);
   }
   .mol-evidence-study table {
+    flex: 1;
     width: 100%;
     border-collapse: collapse;
     font-family: var(--semantic-font-family-ui);
@@ -1140,7 +1250,7 @@
   }
   .mol-evidence-study th,
   .mol-evidence-study td {
-    padding: var(--primitive-space-2xs) var(--primitive-space-sm);
+    padding: var(--primitive-space-xs) var(--primitive-space-md);
     text-align: left;
     border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
   }
@@ -1159,12 +1269,19 @@
     font-size: var(--semantic-font-size-body);
     color: var(--semantic-color-primary);
   }
+  .mol-evidence-study tbody tr:last-child {
+    background: var(--semantic-color-primary-soft);
+  }
+  .mol-evidence-study tbody tr:last-child td {
+    border-bottom-color: var(--semantic-color-primary-subtle);
+  }
   .mol-evidence-study__bars {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--primitive-space-sm);
-    padding: var(--primitive-space-sm);
+    gap: var(--primitive-space-md);
+    padding: var(--primitive-space-sm) var(--primitive-space-md);
     background: var(--semantic-color-surface-alt);
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
   }
   .mol-evidence-study__bars span {
     display: grid;
@@ -1173,6 +1290,13 @@
     font-size: var(--semantic-font-size-caption);
     font-weight: var(--primitive-font-weight-bold);
     font-variant-numeric: tabular-nums;
+  }
+  .mol-evidence-study__bars small {
+    font-size: var(--semantic-font-size-eyebrow);
+    font-weight: var(--primitive-font-weight-regular);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    color: var(--semantic-color-text-muted);
   }
   .mol-evidence-study__bars i {
     display: block;
@@ -1192,6 +1316,7 @@
     align-items: center;
     justify-content: space-between;
     gap: var(--primitive-space-sm);
+    max-width: none;
     padding: var(--primitive-space-2xs) var(--primitive-space-sm);
     background: var(--semantic-color-surface-alt);
     border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
@@ -1201,14 +1326,9 @@
     text-transform: uppercase;
     color: var(--semantic-color-text-muted);
   }
-  .mol-evidence-live__chrome a {
+  .mol-evidence-live__chrome b {
     flex: none;
     color: var(--semantic-color-primary);
-    text-decoration: none;
-  }
-  .mol-evidence-live__chrome a:hover {
-    text-decoration: underline;
-    text-underline-offset: 0.25em;
   }
   .mol-evidence-live__viewport {
     position: relative;
@@ -1225,6 +1345,7 @@
   .mol-evidence-live__overlay {
     position: absolute;
     z-index: 2;
+    max-width: none;
     left: var(--primitive-space-sm);
     bottom: var(--primitive-space-sm);
     padding: var(--primitive-space-3xs) var(--primitive-space-2xs);
@@ -1234,25 +1355,100 @@
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
+    transition: opacity var(--semantic-duration-hover) var(--semantic-ease);
+  }
+  .mol-project-card:is(:hover, :focus-within) .mol-evidence-live__overlay {
+    opacity: 0;
   }
   @media (min-width: 48rem) {
     .mol-evidence-system__foundation {
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
-    .mol-evidence-system__stack figure:nth-child(2n) {
-      border-right: 0;
-    }
     .mol-evidence-system__foundation span:last-child {
       border-right: 0;
     }
+    .mol-evidence-system__stack {
+      flex: none;
+      grid-template-rows: none;
+    }
+    .mol-evidence-system__stack figure {
+      aspect-ratio: 1920/110;
+    }
+    .mol-evidence-system__meta {
+      flex: 1;
+      align-content: center;
+    }
+  }
+  @media (min-width: 62.625rem) {
+    .mol-project-card--featured .mol-project-card__frame {
+      aspect-ratio: var(--component-work-frame-ratio-featured-lg);
+    }
+    .mol-project-card--featured .mol-project-card__body {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      column-gap: var(--semantic-space-block);
+    }
+    .mol-project-card--featured .mol-project-card__proof,
+    .mol-project-card--featured .mol-project-card__meta {
+      grid-column: 1/-1;
+    }
+    .mol-project-card--featured .mol-project-card__body h3 {
+      grid-column: 1;
+      grid-row: span 2;
+    }
+    .mol-project-card--featured .mol-project-card__body p {
+      grid-column: 2;
+      align-self: start;
+    }
+    .mol-project-card--featured .mol-project-card__takeaway {
+      margin-top: 0;
+    }
   }
   @media (max-width: 47.9375rem) {
+    .mol-project-card--featured .mol-project-card__frame {
+      aspect-ratio: var(--component-work-frame-ratio-featured-sm);
+    }
+  }
+  @container work-frame (max-width: 44rem) {
+    .mol-evidence-study {
+      padding: var(--primitive-space-2xs);
+    }
+    .mol-evidence-study__head {
+      flex-direction: column;
+      align-items: start;
+      gap: var(--primitive-space-3xs);
+      padding: var(--primitive-space-2xs) var(--primitive-space-sm);
+    }
+    .mol-evidence-study__head strong {
+      font-size: var(--semantic-font-size-title-sm);
+    }
+    .mol-evidence-study th,
+    .mol-evidence-study td {
+      padding: var(--primitive-space-3xs) var(--primitive-space-sm);
+    }
     .mol-evidence-study__bars {
-      grid-template-columns: minmax(0, 1fr);
+      display: none;
     }
     .mol-evidence-study th:nth-child(2),
     .mol-evidence-study td:nth-child(2) {
       display: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mol-project-card__frame,
+    .mol-project-card__frame > *,
+    .mol-project-card__frame::after,
+    .mol-project-card__enter,
+    .mol-project-card__enter i,
+    .mol-project-card__meta::before {
+      transition: none;
+    }
+    .mol-project-card:is(:hover, :focus-within) .mol-project-card__frame,
+    .mol-project-card:is(:hover, :focus-within) .mol-project-card__frame > *:not(.mol-project-card__enter),
+    .mol-project-card:is(:hover, :focus-within) .mol-project-card__enter i {
+      transform: none;
+    }
+    .mol-project-card__enter {
+      transform: translate(-50%, -50%);
     }
   }
   .mol-register {

@@ -88,19 +88,20 @@
     .mol-section-heading p:last-child{grid-column:auto;font-size:1rem;line-height:1.55}
     .mol-section-heading h2{font-size:clamp(3.5rem,4.8vw,5.8rem);line-height:.94}
 
-    /* Main work card: avoid enormous dead white space */
+    /* Main work card: the evidence is a banner, not a column.
+       This used to be a 1.35fr / .65fr split. The frame is four stacked
+       mastheads with a fixed ratio, so the taller the copy column got — and a
+       .65fr column gets tall — the more empty page sat under the frame. Full
+       width for the evidence, the copy in two columns underneath it: the
+       placement of that copy is in scss/molecules/_portfolio.scss. */
     .mol-project-card--featured{
       display:grid;
-      grid-template-columns:minmax(0,1.35fr) minmax(22rem,.65fr);
+      grid-template-columns:minmax(0,1fr);
       border-top:1px solid var(--semantic-color-border);
       padding-top:1.5rem;
-      gap:clamp(2rem,4vw,4rem)
+      gap:clamp(1.5rem,2.5vw,2.5rem)
     }
-    .mol-project-card--featured .mol-project-card__body{
-      align-self:end;
-      padding-bottom:1rem
-    }
-    .mol-project-card--featured .mol-project-card__body h3{font-size:clamp(2.7rem,3vw,4.2rem);line-height:.95}
+    .mol-project-card--featured .mol-project-card__body h3{font-size:clamp(3rem,3.4vw,4.6rem);line-height:.95}
 
     .org-project-grid{grid-template-columns:1fr 1fr;gap:clamp(2rem,3vw,3.5rem);margin-top:clamp(5rem,7vw,8rem)}
     .mol-project-card__body h3{font-size:clamp(2rem,2.4vw,3.2rem)}

@@ -55,23 +55,31 @@
   .mol-project-card__body {
     display: grid;
     gap: var(--primitive-space-sm);
+    align-content: start;
   }
 
   .mol-project-card__body h3 a {
     text-decoration: none;
-  }
-
-  .mol-project-card__body h3 a:hover {
-    text-decoration: underline;
     text-decoration-thickness: 0.06em;
     text-underline-offset: 0.12em;
+  }
+
+  // The headline answers to the whole card, not just to itself. Hovering the
+  // evidence is the same gesture as hovering the title, so it produces the
+  // same feedback — otherwise the image and the words read as two components.
+  .mol-project-card:is(:hover, :focus-within) .mol-project-card__body h3 a {
+    text-decoration: underline;
   }
 
   .mol-project-card__body p {
     color: var(--semantic-color-text-secondary);
   }
 
+  // The meta row is the card's top rule. The accent draws across it on hover:
+  // one line of movement, at the width of the card, is what tells the eye
+  // which of the three cards is live.
   .mol-project-card__meta {
+    position: relative;
     display: flex;
     justify-content: space-between;
     gap: var(--primitive-space-md);
@@ -82,6 +90,32 @@
     text-transform: uppercase;
     letter-spacing: var(--primitive-letter-spacing-wide);
     color: var(--semantic-color-text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mol-project-card__meta::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: calc(-1 * var(--semantic-border-width-strong));
+    width: 100%;
+    height: var(--semantic-border-width-strong);
+    background: var(--component-card-accent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform var(--semantic-duration-transition)
+      var(--semantic-ease-emphasis);
+  }
+
+  .mol-project-card:is(:hover, :focus-within) .mol-project-card__meta::before {
+    transform: scaleX(1);
+  }
+
+  // The index is the section's spine — 01, 02, 03 — so it is set as a figure
+  // in the accent colour rather than buried in a string of small caps.
+  .mol-project-card__meta b {
+    margin-right: var(--primitive-space-3xs);
+    color: var(--semantic-color-primary);
   }
 
   .mol-process {
@@ -577,7 +611,13 @@
   // whole token architecture exists to keep.
   //
   // Now: one frame with one ratio, one body, three kinds of evidence inside.
+  // The frame is a container, because what fits inside it is decided by the
+  // frame's width and not by the window's. The same card is 745px wide on a
+  // desktop and 380px in the two-column grid of a tablet, so a viewport query
+  // set the study table to its roomy layout at exactly the width where the
+  // card had least room — and the last row was clipped by the frame.
   .mol-project-card__frame {
+    container: work-frame / inline-size;
     position: relative;
     display: block;
     overflow: hidden;
@@ -587,14 +627,111 @@
     border: var(--semantic-border-width) solid var(--semantic-color-border);
     text-decoration: none;
     color: inherit;
+    transition: border-color var(--semantic-duration-hover) var(--semantic-ease),
+      box-shadow var(--semantic-duration-transition) var(--semantic-ease),
+      transform var(--semantic-duration-transition) var(--semantic-ease);
+  }
+
+  .mol-project-card:is(:hover, :focus-within) .mol-project-card__frame {
+    transform: translateY(var(--component-work-lift));
+    border-color: var(--semantic-color-border-strong);
+    box-shadow: var(--semantic-shadow-overlay);
   }
 
   .mol-project-card--featured .mol-project-card__frame {
     aspect-ratio: var(--component-work-frame-ratio-featured);
   }
 
-  .mol-project-card__frame > * {
+  // The evidence itself pushes in slightly under the pointer. The frame clips,
+  // so the movement reads as depth rather than as the layout shifting. The
+  // affordance is excluded: it is chrome on top of the frame, not evidence in
+  // it, so it neither fills the height nor scales with the visual.
+  .mol-project-card__frame > *:not(.mol-project-card__enter) {
     height: 100%;
+    transition: transform var(--semantic-duration-reveal)
+      var(--semantic-ease-emphasis);
+  }
+
+  .mol-project-card:is(:hover, :focus-within)
+    .mol-project-card__frame
+    > *:not(.mol-project-card__enter) {
+    transform: scale(1.015);
+  }
+
+  // A veil, not a curtain: the evidence has to stay legible underneath, since
+  // the whole argument of this section is that the visual is the proof.
+  .mol-project-card__frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    background: var(--component-work-veil);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--semantic-duration-transition)
+      var(--semantic-ease);
+  }
+
+  .mol-project-card:is(:hover, :focus-within) .mol-project-card__frame::after {
+    opacity: 1;
+  }
+
+  // One affordance, one position, three cards. Centred, because every one of
+  // these frames has its own furniture along the edges — a foundation strip, a
+  // summary band, a map credit — and the middle is the only place the same
+  // chip can land on all three without covering one of them.
+  .mol-project-card__enter {
+    position: absolute;
+    z-index: 4;
+    left: 50%;
+    top: 50%;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--primitive-space-xs);
+    padding: var(--primitive-space-xs) var(--primitive-space-md);
+    background: var(--component-work-enter-bg);
+    color: var(--component-work-enter-fg);
+    border-radius: var(--semantic-radius-pill);
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-eyebrow);
+    font-weight: var(--primitive-font-weight-bold);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 0.6rem));
+    transition: opacity var(--semantic-duration-transition)
+        var(--semantic-ease),
+      transform var(--semantic-duration-transition)
+        var(--semantic-ease-emphasis);
+  }
+
+  .mol-project-card:is(:hover, :focus-within) .mol-project-card__enter {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+
+  .mol-project-card__enter i {
+    font-style: normal;
+    transition: transform var(--semantic-duration-hover) var(--semantic-ease);
+  }
+
+  .mol-project-card:is(:hover, :focus-within) .mol-project-card__enter i {
+    transform: translateX(0.2rem);
+  }
+
+  // Touch has no hover to reveal anything with, so the affordance is simply
+  // there — and the veil, which only exists to support it, is not.
+  @media (hover: none) {
+    .mol-project-card__enter {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+
+    .mol-project-card__frame::after {
+      content: none;
+    }
   }
 
   // Flagship strip. The single most useful line in the section — what the work
@@ -653,7 +790,7 @@
   .mol-evidence-system__meta {
     display: grid;
     gap: var(--primitive-space-3xs);
-    padding: var(--primitive-space-sm) var(--primitive-space-md);
+    padding: var(--primitive-space-md);
     border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
     background: var(--semantic-color-surface);
@@ -667,34 +804,46 @@
     color: var(--semantic-color-primary);
   }
 
+  // The claim the frame has to prove, so it is set at the scale of a claim.
   .mol-evidence-system__meta strong {
     font-family: var(--semantic-font-family-display);
-    font-size: var(--semantic-font-size-ui);
+    font-size: var(--semantic-font-size-title-sm);
+    line-height: var(--semantic-line-height-display);
     letter-spacing: var(--semantic-letter-spacing-display);
   }
 
+  // Four bands, not a 2×2 grid of thumbnails.
+  //
+  // The source images are 1920×290 strips: a masthead, its navigation and the
+  // first centimetre of the page. Half-width cells cropped them to a fragment,
+  // which is how the flagship visual ended up showing a car advert cut through
+  // the middle of a word. Stacked full-width, each band is a complete masthead,
+  // the four line up on the same left edge, and the claim above the frame —
+  // one architecture, four identities — is something the eye can verify.
   .mol-evidence-system__stack {
     flex: 1;
     min-height: 0;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(4, minmax(0, 1fr));
   }
 
   .mol-evidence-system__stack figure {
     position: relative;
-    display: flex;
-    flex-direction: column;
     min-height: 0;
     margin: 0;
-    border-right: var(--semantic-border-width) solid
-      var(--semantic-color-border);
+    overflow: hidden;
     border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
-    overflow: hidden;
   }
 
+  // The name sits on the band as an annotation. It lands on the right, over
+  // the subscribe furniture every one of these headers carries, so it never
+  // covers the logo — which is the part doing the work.
   .mol-evidence-system__stack figcaption {
-    order: 2;
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    top: 0;
     padding: var(--primitive-space-3xs) var(--primitive-space-2xs);
     background: var(--semantic-color-surface);
     font-family: var(--semantic-font-family-ui);
@@ -702,17 +851,20 @@
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
     color: var(--semantic-color-text-muted);
-    border-top: var(--semantic-border-width) solid
+    border-left: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+    border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
   }
 
   .mol-evidence-system__stack img {
-    order: 1;
-    flex: 1;
-    min-height: 0;
+    display: block;
     width: 100%;
+    height: 100%;
     object-fit: cover;
-    object-position: top center;
+    // Left, so the masthead is the thing that survives the crop at every
+    // width. Top, so the crop always eats page content and never the header.
+    object-position: left top;
   }
 
   // The foundation the four share, stated as the four things a token
@@ -727,7 +879,7 @@
     display: flex;
     align-items: center;
     gap: var(--primitive-space-2xs);
-    padding: var(--primitive-space-2xs) var(--primitive-space-sm);
+    padding: var(--primitive-space-sm) var(--primitive-space-md);
     border-right: var(--semantic-border-width) solid
       var(--semantic-color-border);
     border-top: var(--semantic-border-width) solid
@@ -762,19 +914,36 @@
   }
 
   // EVIDENCE 02 — the measured study
+  //
+  // The panel used to be capped at 44rem and centred inside a 16/10 frame, so
+  // on a desktop card it floated in a field of grey with a third of the frame
+  // empty below it. Now the sheet fills the frame and the grey behind it is
+  // ruled like graph paper: the same amount of ink, reading as a measurement
+  // surface rather than as space nobody found a use for.
   .mol-evidence-study {
     display: flex;
     flex-direction: column;
-    background: var(--semantic-color-surface-alt);
-    padding: var(--primitive-space-md);
+    padding: var(--primitive-space-sm);
+    background-color: var(--semantic-color-surface-alt);
+    background-image: repeating-linear-gradient(
+        to right,
+        var(--component-work-field-line) 0 1px,
+        transparent 1px var(--component-work-field-step)
+      ),
+      repeating-linear-gradient(
+        to bottom,
+        var(--component-work-field-line) 0 1px,
+        transparent 1px var(--component-work-field-step)
+      );
   }
 
   .mol-evidence-study__panel {
     display: flex;
     flex-direction: column;
+    flex: 1;
+    min-height: 0;
     width: 100%;
-    margin: auto;
-    max-width: 44rem;
+    max-width: none;
     border: var(--semantic-border-width) solid var(--semantic-color-border);
     background: var(--semantic-color-surface);
     box-shadow: var(--semantic-shadow-floating);
@@ -785,7 +954,7 @@
     justify-content: space-between;
     align-items: baseline;
     gap: var(--primitive-space-sm);
-    padding: var(--primitive-space-sm);
+    padding: var(--primitive-space-sm) var(--primitive-space-md);
     border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
   }
@@ -798,13 +967,17 @@
     color: var(--semantic-color-primary);
   }
 
+  // The sample size is the headline of this card, so it is set at title scale
+  // rather than as one more figure inside the table.
   .mol-evidence-study__head strong {
     font-family: var(--semantic-font-family-display);
-    font-size: var(--semantic-font-size-title-sm);
+    font-size: var(--semantic-font-size-title);
+    line-height: var(--semantic-line-height-display);
     letter-spacing: var(--semantic-letter-spacing-display);
   }
 
   .mol-evidence-study table {
+    flex: 1;
     width: 100%;
     border-collapse: collapse;
     font-family: var(--semantic-font-family-ui);
@@ -813,7 +986,7 @@
 
   .mol-evidence-study th,
   .mol-evidence-study td {
-    padding: var(--primitive-space-2xs) var(--primitive-space-sm);
+    padding: var(--primitive-space-xs) var(--primitive-space-md);
     text-align: left;
     border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
@@ -837,12 +1010,24 @@
     color: var(--semantic-color-primary);
   }
 
+  // The last row is the finding — the 16:9 alternative that kept the framing
+  // in every case — so it is the one row that is tinted. Four identical rows
+  // made the reader do the comparison the study had already done.
+  .mol-evidence-study tbody tr:last-child {
+    background: var(--semantic-color-primary-soft);
+  }
+
+  .mol-evidence-study tbody tr:last-child td {
+    border-bottom-color: var(--semantic-color-primary-subtle);
+  }
+
   .mol-evidence-study__bars {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--primitive-space-sm);
-    padding: var(--primitive-space-sm);
+    gap: var(--primitive-space-md);
+    padding: var(--primitive-space-sm) var(--primitive-space-md);
     background: var(--semantic-color-surface-alt);
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   .mol-evidence-study__bars span {
@@ -852,6 +1037,16 @@
     font-size: var(--semantic-font-size-caption);
     font-weight: var(--primitive-font-weight-bold);
     font-variant-numeric: tabular-nums;
+  }
+
+  // Each bar says what it measured. Three unlabelled percentages repeated the
+  // last column of the table; labelled, they are the summary of it.
+  .mol-evidence-study__bars small {
+    font-size: var(--semantic-font-size-eyebrow);
+    font-weight: var(--primitive-font-weight-regular);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    color: var(--semantic-color-text-muted);
   }
 
   // The bar is the number. Width comes from --value on the element, which is
@@ -873,11 +1068,16 @@
     background: var(--semantic-color-surface-night);
   }
 
+  // The chrome is a paragraph, and paragraphs are capped at the prose measure
+  // by the base layer — so on a desktop card the bar stopped two thirds of the
+  // way across and the navy body of the card showed through as a block in the
+  // top right corner. A bar that spans is not prose; it opts out of the cap.
   .mol-evidence-live__chrome {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--primitive-space-sm);
+    max-width: none;
     padding: var(--primitive-space-2xs) var(--primitive-space-sm);
     background: var(--semantic-color-surface-alt);
     border-bottom: var(--semantic-border-width) solid
@@ -889,15 +1089,12 @@
     color: var(--semantic-color-text-muted);
   }
 
-  .mol-evidence-live__chrome a {
+  // The right end of the bar used to be a second link to the same case, inside
+  // a frame that is now itself the link. It states what the preview is instead:
+  // this is the original code running, not a screenshot of it.
+  .mol-evidence-live__chrome b {
     flex: none;
     color: var(--semantic-color-primary);
-    text-decoration: none;
-  }
-
-  .mol-evidence-live__chrome a:hover {
-    text-decoration: underline;
-    text-underline-offset: 0.25em;
   }
 
   .mol-evidence-live__viewport {
@@ -917,6 +1114,10 @@
   .mol-evidence-live__overlay {
     position: absolute;
     z-index: 2;
+    // Bottom left, because the demo carries its own credit line there and the
+    // card's label has to sit over it rather than beside a duplicate. The
+    // Leaflet zoom controls own the top left corner.
+    max-width: none;
     left: var(--primitive-space-sm);
     bottom: var(--primitive-space-sm);
     padding: var(--primitive-space-3xs) var(--primitive-space-2xs);
@@ -926,6 +1127,13 @@
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
+    transition: opacity var(--semantic-duration-hover) var(--semantic-ease);
+  }
+
+  // The card's own label steps aside for the affordance instead of the two
+  // stacking up in the same corner.
+  .mol-project-card:is(:hover, :focus-within) .mol-evidence-live__overlay {
+    opacity: 0;
   }
 
   @include from($bp-md) {
@@ -933,25 +1141,138 @@
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
-    .mol-evidence-system__stack figure:nth-child(2n) {
+    .mol-evidence-system__foundation span:last-child {
       border-right: 0;
     }
 
-    .mol-evidence-system__foundation span:last-child {
-      border-right: 0;
+    // The crop is pinned to the header instead of being whatever is left after
+    // the other two rows have taken their share. Each band shows the top 130px
+    // of a 1920×290 screenshot — the masthead and its navigation — at every
+    // width, so widening the frame never lets the advertising back in.
+    .mol-evidence-system__stack {
+      flex: none;
+      grid-template-rows: none;
+    }
+
+    .mol-evidence-system__stack figure {
+      aspect-ratio: 1920 / 110;
+    }
+
+    // The height the bands no longer take goes to the claim they support.
+    .mol-evidence-system__meta {
+      flex: 1;
+      align-content: center;
+    }
+  }
+
+  // The flagship copy, once the frame above it is full width. Two columns: the
+  // argument on the left at headline scale, the detail on the right — so a
+  // 1400px measure never happens and the block keeps the section's rhythm.
+  @include from($bp-lg) {
+    .mol-project-card--featured .mol-project-card__frame {
+      aspect-ratio: var(--component-work-frame-ratio-featured-lg);
+    }
+
+    .mol-project-card--featured .mol-project-card__body {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      column-gap: var(--semantic-space-block);
+    }
+
+    .mol-project-card--featured .mol-project-card__proof,
+    .mol-project-card--featured .mol-project-card__meta {
+      grid-column: 1 / -1;
+    }
+
+    // The headline spans both text rows so the two paragraphs beside it stay
+    // together: the lede and the takeaway are one column of reading, not two
+    // blocks parked at the top and bottom of a three-line title.
+    .mol-project-card--featured .mol-project-card__body h3 {
+      grid-column: 1;
+      grid-row: span 2;
+    }
+
+    .mol-project-card--featured .mol-project-card__body p {
+      grid-column: 2;
+      align-self: start;
+    }
+
+    .mol-project-card--featured .mol-project-card__takeaway {
+      margin-top: 0;
     }
   }
 
   @include until($bp-md) {
-    .mol-evidence-study__bars {
-      grid-template-columns: minmax(0, 1fr);
+    // Portrait frame: four full-width mastheads need height, and a phone has
+    // no width to trade for it.
+    .mol-project-card--featured .mol-project-card__frame {
+      aspect-ratio: var(--component-work-frame-ratio-featured-sm);
     }
 
-    // The sample column repeats the same figure on every row, so it is the one
-    // to drop when the table has to fit a phone.
+  }
+
+  // Narrow frame: the panel keeps the finding and drops the repetition.
+  //
+  // The sample column prints the same figure on every row of a test, and the
+  // summary band is a second reading of the RESULT column — so those are what
+  // go when the sheet has to fit a card half the width of the page. Nothing
+  // measured is lost; the table still carries all four rows.
+  @container work-frame (max-width: 44rem) {
+    // A narrow frame is also a short one — the ratio is fixed — so the sheet
+    // tightens its own spacing rather than growing past the bottom edge and
+    // losing the last row, which is the row the study exists to show.
+    .mol-evidence-study {
+      padding: var(--primitive-space-2xs);
+    }
+
+    .mol-evidence-study__head {
+      flex-direction: column;
+      align-items: start;
+      gap: var(--primitive-space-3xs);
+      padding: var(--primitive-space-2xs) var(--primitive-space-sm);
+    }
+
+    .mol-evidence-study__head strong {
+      font-size: var(--semantic-font-size-title-sm);
+    }
+
+    .mol-evidence-study th,
+    .mol-evidence-study td {
+      padding: var(--primitive-space-3xs) var(--primitive-space-sm);
+    }
+
+    .mol-evidence-study__bars {
+      display: none;
+    }
+
     .mol-evidence-study th:nth-child(2),
     .mol-evidence-study td:nth-child(2) {
       display: none;
+    }
+  }
+
+  // Nothing here carries meaning through movement: the veil, the lift and the
+  // scale are emphasis. The affordance stays visible, which is the only part
+  // that has to survive.
+  @include reduced-motion {
+    .mol-project-card__frame,
+    .mol-project-card__frame > *,
+    .mol-project-card__frame::after,
+    .mol-project-card__enter,
+    .mol-project-card__enter i,
+    .mol-project-card__meta::before {
+      transition: none;
+    }
+
+    .mol-project-card:is(:hover, :focus-within) .mol-project-card__frame,
+    .mol-project-card:is(:hover, :focus-within)
+      .mol-project-card__frame
+      > *:not(.mol-project-card__enter),
+    .mol-project-card:is(:hover, :focus-within) .mol-project-card__enter i {
+      transform: none;
+    }
+
+    .mol-project-card__enter {
+      transform: translate(-50%, -50%);
     }
   }
 
