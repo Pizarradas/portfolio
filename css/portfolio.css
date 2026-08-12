@@ -325,8 +325,9 @@
     --component-link-hover-color: var(--semantic-color-primary);
     --component-text-link-rule: var(--semantic-color-border);
     --component-text-link-offset: var(--primitive-space-3xs);
-    --component-hero-field-module: 46;
-    --component-hero-field-ink: 0.16;
+    --component-hero-field-module: 132;
+    --component-hero-field-ink: 0.34;
+    --component-hero-field-reach: 170;
     --component-eyebrow-color: var(--semantic-color-primary);
     --component-wordmark-accent: var(--semantic-color-primary);
     --component-selection-bg: var(--semantic-color-primary);
