@@ -1,0 +1,879 @@
+<!doctype html><html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Crónicas Prensa Ibérica — Interactive map demo</title>
+<link rel="stylesheet" href="https://estaticos-cdn.elperiodico.com/statics/42DS/externals/leaftlet/leaflet.css" crossorigin="">
+<style>
+:root{--jlp-blue:#1E3AFF;--ink:#08101f;--paper:#eef1f4}*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--paper);font-family:Arial,Helvetica,sans-serif}
+#hiperlocalmapURLFullWidthSpain{width:100%;height:100%}#hiperlocalmapURLFullWidthSpain .leaflet-tile{filter:grayscale(100%) brightness(1.08) contrast(.95) sepia(10%);opacity:.88}
+.leaflet-touch .leaflet-control-attribution{display:none}.leaflet-control-custom button{border:1px solid rgba(8,16,31,.22)!important;background:rgba(255,255,255,.94)!important;color:var(--ink);padding:.55rem .7rem!important;font:600 11px/1 Arial!important}
+.popup-title{margin:0 0 .35rem;font:700 14px/1.2 Arial}.popup-text{margin:0;font:12px/1.4 Arial}.popup-text a{color:var(--jlp-blue);font-weight:700}
+.map-demo-label{position:absolute;z-index:500;left:1rem;bottom:1rem;pointer-events:none;padding:.55rem .7rem;background:rgba(8,16,31,.9);color:#fff;font:700 10px/1 Arial;letter-spacing:.08em;text-transform:uppercase}
+@media(max-width:767px){.leaflet-top.leaflet-right{display:none}.map-demo-label{left:.65rem;bottom:.65rem;font-size:9px}}
+</style>
+<script src="https://estaticos-cdn.elperiodico.com/statics/42DS/externals/leaftlet/leaflet.js" crossorigin=""></script>
+</head><body>
+<div id="hiperlocalmapURLFullWidthSpain" aria-label="Mapa interactivo de Crónicas Prensa Ibérica"></div>
+<div class="map-demo-label" aria-hidden="true">Leaflet · IGN · original project data</div>
+<script>
+                    /*!
+                   * Leaflet 1.9.4 (https://leafletjs.com)
+                   * (c) 2010-2024 Vladimir Agafonkin
+                   * Licensed under BSD-2-Clause
+                   * https://opensource.org/licenses/BSD-2-Clause
+                   */
+                    document.addEventListener("DOMContentLoaded", function () {
+                      // 1️⃣ Coordenadas de referencia para centrar el mapa
+                      var referencia = { lat: 40.3167, lng: -3.7038 };
+
+                      // 2️⃣ Inicializar el mapa sin centrado fijo
+                      var map = L.map('hiperlocalmapURLFullWidthSpain', {
+                        minZoom: 5,
+                        maxZoom: 16,
+                        maxBounds: [
+                          [26.5, -19.0], // suroeste (más allá de Canarias)
+                          [45.5, 6.5]    // noreste (más allá de Cataluña y Baleares)
+                        ],
+                        maxBoundsViscosity: 0.8
+                      });
+
+                      // 3️⃣ Agregar capa base (OpenStreetMap)
+                      L.tileLayer(
+                        'https://www.ign.es/wmts/ign-base?layer=IGNBaseTodo&style=default&tilematrixset=GoogleMapsCompatible&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image/jpeg&TileMatrix={z}&TileRow={y}&TileCol={x}',
+                        {
+                          tileSize: 256,
+                          minZoom: 0,
+                          maxZoom: 18,
+                          detectRetina: true,
+                          attribution: '&copy; <a href="https://www.ign.es/">IGN España</a>'
+                        }
+                      ).addTo(map);
+
+
+                      // 4️⃣ Agrupar todos los marcadores
+                      var boundsArray = [];
+                      var markersLayer = L.featureGroup().addTo(map);
+
+                      // 4️⃣ ICONOS
+                      var icons = {
+                        "Andalucía": {
+                          "diario-cordoba": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--diario-cordoba.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          }),
+                          "el-correo-de-andalucia": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--el-correo-de-andalucia.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          }),
+                          "la-opinion-de-malaga": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--la-opinion-de-malaga.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          })
+                        },
+                        "Aragón": {
+                          "el-periodico-de-aragon": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--el-periodico-de-aragon.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          })
+                        },
+                        "Asturias": {
+                          "la-nueva-espana": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--la-nueva-espana.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          }),
+                          "cronica-la-corredoria": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--la-nueva-espana--lacorredoria.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          })
+                        },
+                        "Castilla-La Mancha": {
+                          "ft-brand-epe": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--epe.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          })
+                        },
+                        "Castilla y León": {
+                          "la-opinion-correo-de-zamora": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--la-opinion-correo-de-zamora.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          }),
+                          "benavente": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--la-opinion-correo-de-zamora--benavente.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          })
+                        },
+                        "Cataluña": {
+                          "diari-de-girona": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--diari-de-girona.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          }),
+                          "emporda": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--emporda.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          }),
+                          "ft-brand-ep": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--ep.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          }),
+                          "regio7": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--regio7.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          })
+                        },
+                        "España": {
+                          "ft-brand-epe": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--epe.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          })
+                        },
+                        "Extremadura": {
+                          "el-periodico-extremadura": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--el-periodico-extremadura.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          })
+                        },
+                        "Galicia": {
+                          "el-correo-gallego": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--el-correo-gallego.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          }),
+                          "faro-de-vigo": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--faro-de-vigo.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          })
+                        },
+                        "Islas Baleares": {
+                          "diario-de-ibiza": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--diario-de-ibiza.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          }),
+                          "diario-de-mallorca": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--diario-de-mallorca.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          })
+                        },
+                        "Islas Canarias": {
+                          "el-dia-la-opinion-de-tenerife": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--el-dia-la-opinion-de-tenerife.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          })
+                        },
+                        "Madrid": {
+                          "ft-brand-epe": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--epe.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          })
+                        },
+                        "Murcia": {
+                          "la-opinion-de-murcia": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--la-opinion-de-murcia.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          })
+                        },
+                        "Valencia": {
+                          "el-periodico-mediterraneo": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--el-periodico-mediterraneo.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          }),
+                          "diario-informacion": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--diario-informacion.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          }),
+                          "levante-el-mercantil-valenciano": L.icon({
+                            iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--levante-el-mercantil-valenciano.svg',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 32],
+                            popupAnchor: [0, -30]
+                          })
+                        },
+                        "Default": L.icon({
+                          iconUrl: 'https://estaticos-cdn.elperiodico.com/statics/42DS/img/logos/pin-maps/logo-cr--epe.svg',
+                          iconSize: [32, 32],
+                          iconAnchor: [16, 32],
+                          popupAnchor: [0, -30]
+                        })
+                      };
+
+
+                      // ICONOS CUSTOM: para casos particulares
+                      var customIconsMapping = {
+                        "Crónica de La Corredoria": icons["Asturias"]["cronica-la-corredoria"]
+                      };
+
+                      // 5️⃣ LOCALIZACIONES
+                      var locations = {
+                        "Andalucía": {
+                          "diario-cordoba": [
+                            {
+                              "lat": 38.02619171142578,
+                              "lng": -4.521584987640381,
+                              "title": "Crónica de Alto Guadalquivir",
+                              "info": "<a href=\"https://www.diariocordoba.com/alto-guadalquivir/\" title=\"Ir a Crónica de Alto Guadalquivir\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 37.4725,
+                              "lng": -4.425931,
+                              "title": "Crónica de Cabra",
+                              "info": "<a href=\"https://www.diariocordoba.com/cordoba/cabra/\" title=\"Ir a Crónica de Cabra\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 37.8845813,
+                              "lng": -4.7760138,
+                              "title": "Crónica de Centro",
+                              "info": "<a href=\"https://www.diariocordoba.com/cronica-del-centro/\" title=\"Ir a Crónica de Centro\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 37.4088,
+                              "lng": -4.4856,
+                              "title": "Crónica de Lucena",
+                              "info": "<a href=\"https://www.diariocordoba.com/cordoba/lucena/\" title=\"Ir a Crónica de Lucena\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 37.5862,
+                              "lng": -4.638,
+                              "title": "Crónica de Montilla",
+                              "info": "<a href=\"https://www.diariocordoba.com/cordoba/montilla/\" title=\"Ir a Crónica de Montilla\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 37.7,
+                              "lng": -5.2833,
+                              "title": "Crónica de Palma del Río",
+                              "info": "<a href=\"https://www.diariocordoba.com/cordoba/palma-rio/\" title=\"Ir a Crónica de Palma del Río\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 38.379,
+                              "lng": -4.8486,
+                              "title": "Crónica de Pozoblanco",
+                              "info": "<a href=\"https://www.diariocordoba.com/cordoba/pozoblanco/\" title=\"Ir a Crónica de Pozoblanco\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 37.3892,
+                              "lng": -4.766,
+                              "title": "Crónica de Puente Genil",
+                              "info": "<a href=\"https://www.diariocordoba.com/cordoba/puente-genil/\" title=\"Ir a Crónica de Puente Genil\" target=\"_blank\">Ver crónica</a>"
+                            }
+                          ]
+                        },
+                        "Aragón": {
+                          "el-periodico-de-aragon": [
+                            {
+                              "lat": 41.3,
+                              "lng": -0.75,
+                              "title": "Crónica de Campo de Belchite",
+                              "info": "<a href=\"https://www.elperiodicodearagon.com/zaragoza/campo-de-belchite/\" title=\"Ir a Crónica de Campo de Belchite\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 41.8333,
+                              "lng": -1.5333,
+                              "title": "Crónica de Campo de Borja",
+                              "info": "<a href=\"https://www.elperiodicodearagon.com/aragon/campo-de-borja/\" title=\"Ir a Crónica de Campo de Borja\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 41.3333,
+                              "lng": -1.2333,
+                              "title": "Crónica de Campo de Cariñena",
+                              "info": "<a href=\"https://www.elperiodicodearagon.com/aragon/campo-de-carinena/\" title=\"Ir a Crónica de Campo de Cariñena\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 40.8332985,
+                              "lng": -0.7990373,
+                              "title": "Crónica de Cuencas Mineras",
+                              "info": "<a href=\"https://www.elperiodicodearagon.com/aragon/cuencas-mineras/\" title=\"Ir a Crónica de Cuencas Mineras\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 42.125,
+                              "lng": -1.135,
+                              "title": "Crónica de Ejea y sus Pueblos",
+                              "info": "<a href=\"https://www.elperiodicodearagon.com/aragon/ejea-pueblos/\" title=\"Ir a Crónica de Ejea y sus Pueblos\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 42.1401,
+                              "lng": -0.4089,
+                              "title": "Crónica de Huesca",
+                              "info": "<a href=\"https://www.elperiodicodearagon.com/aragon/huesca/\" title=\"Ir a Crónica de Huesca\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 41.550000,
+                              "lng": -1.300000,
+                              "title": "Crónica de La Crónica de Valdejalón",
+                              "info": "<a href=\"https://www.elperiodicodearagon.com/zaragoza/valdejalon/\" title=\"Ir a Crónica de La Crónica de Valdejalón\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 41.8012866,
+                              "lng": -1.221153,
+                              "title": "Crónica de Ribera Alta del Ebro",
+                              "info": "<a href=\"https://www.elperiodicodearagon.com/zaragoza/ribera-alta-del-ebro/\" title=\"Ir a Crónica de Ribera Alta del Ebro\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 42.414971,
+                              "lng": 0.142688,
+                              "title": "Crónica de Comarca Central",
+                              "info": "<a href=\"https://www.elperiodicodearagon.com/aragon/comarca-central/\" title=\"Ir a Crónica de Ribera Alta del Ebro\" target=\"_blank\">Ver crónica</a>"
+                            }
+                          ]
+                        },
+                        "Asturias": {
+                          "la-nueva-espana": [
+                            {
+                              "lat": 43.5333,
+                              "lng": -5.7,
+                              "title": "Crónica de La Calzada",
+                              "info": "<a href=\"https://www.lne.es/gijon/gijon-oeste/la-calzada/\" title=\"Ir a Crónica de La Calzada\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 43.3888553,
+                              "lng": -6.069462,
+                              "title": "Crónica de Grado",
+                              "info": "<a href=\"https://www.lne.es/grado/\" title=\"Ir a Crónica de Grado\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 43.3778,
+                              "lng": -5.8194,
+                              "title": "Crónica de La Corredoria",
+                              "info": "<a href=\"https://www.lne.es/oviedo/la-corredoria/\" title=\"Ir a Crónica de La Corredoria\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 43.4333,
+                              "lng": -5.85,
+                              "title": "Crónica de Llanera",
+                              "info": "<a href=\"https://www.lne.es/llanera/\" title=\"Ir a Crónica de Llanera\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 43.304672,
+                              "lng": -5.9104677,
+                              "title": "Crónica de Ribera de Arriba",
+                              "info": "<a href=\"https://www.lne.es/ribera-de-arriba/\" title=\"Ir a Crónica de Ribera de Arriba\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 43.4,
+                              "lng": -6.2667,
+                              "title": "Crónica de Salas",
+                              "info": "<a href=\"https://www.lne.es/salas/\" title=\"Ir a Crónica de Salas\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 43.4,
+                              "lng": -5.6333,
+                              "title": "Crónica de Siero",
+                              "info": "<a href=\"https://www.lne.es/siero/\" title=\"Ir a Crónica de Siero\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 43.4833,
+                              "lng": -5.4333,
+                              "title": "Crónica de Villaviciosa",
+                              "info": "<a href=\"https://www.lne.es/villaviciosa/\" title=\"Ir a Crónica de Villaviciosa\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 43.561020,
+                              "lng": -5.976470,
+                              "title": "Crónica de Castrillón",
+                              "info": "<a href=\"https://www.lne.es/tags/castrillon/\" title=\"Ir a Crónica de Castrillón\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 43.540081,
+                              "lng": -6.723210,
+                              "title": "Crónica de Navia",
+                              "info": "<a href=\"https://www.lne.es/tags/navia/\" title=\"Ir a Crónica de Navia\" target=\"_blank\">Ver crónica</a>"
+                            }
+                          ]
+                        },
+                        "Cataluña": {
+                          "emporda": [
+                            {
+                              "lat": 42.26,
+                              "lng": 3.075,
+                              "title": "Crónica de Castelló d'Empúries",
+                              "info": "<a href=\"https://www.emporda.info/comarca/castello-d-empuries/\" title=\"Ir a Crónica de Castelló d'Empúries\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 42.125,
+                              "lng": 3.1333,
+                              "title": "Crónica de l'Escala",
+                              "info": "<a href=\"https://www.emporda.info/comarca/l-escala/\" title=\"Ir a Crónica de l'Escala\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 42.2611,
+                              "lng": 3.1769,
+                              "title": "Crónica de Roses",
+                              "info": "<a href=\"https://www.emporda.info/comarca/roses/\" title=\"Ir a Crónica de Roses\" target=\"_blank\">Ver crónica</a>"
+                            }
+                          ],
+                          "diari-de-girona": [
+                            {
+                              "lat": 41.777012,
+                              "lng": 2.732641,
+                              "title": "Crónica de La Selva",
+                              "info": "<a href=\"https://www.diaridegirona.cat/selva/\" title=\"Ir a Crónica de Castelló d'Empúries\" target=\"_blank\">Ver crónica</a>"
+                            },
+                          ],
+                          "ft-brand-ep": [
+                            {
+                              "lat": 41.433333,
+                              "lng": 2.233333,
+                              "title": "Crónica de Badalona",
+                              "info": "<a href=\"https://www.elperiodico.com/es/badalona/\" title=\"Ir a Crónica de Badalona\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 41.355,
+                              "lng": 2.071111,
+                              "title": "Crónica de Cornellá",
+                              "info": "<a href=\"https://www.elperiodico.com/es/cornella/\" title=\"Ir a Crónica de Cornellá\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 41.376667,
+                              "lng": 2.085833,
+                              "title": "Crónica de Esplugues",
+                              "info": "<a href=\"https://www.elperiodico.com/es/esplugues/\" title=\"Ir a Crónica de Esplugues\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 41.307222,
+                              "lng": 2.003889,
+                              "title": "Crónica de Gavà",
+                              "info": "<a href=\"https://www.elperiodico.com/es/gava/\" title=\"Ir a Crónica de Gavà\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 41.608333,
+                              "lng": 2.288889,
+                              "title": "Crónica de Granollers",
+                              "info": "<a href=\"https://www.elperiodico.com/es/granollers/\" title=\"Ir a Crónica de Granollers\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 41.358889,
+                              "lng": 2.099167,
+                              "title": "Crónica de Hospitalet",
+                              "info": "<a href=\"https://www.elperiodico.com/es/hospitalet/\" title=\"Ir a Crónica de Hospitalet\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 41.533333,
+                              "lng": 2.45,
+                              "title": "Crónica de Mataró",
+                              "info": "<a href=\"https://www.elperiodico.com/es/mataro/\" title=\"Ir a Crónica de Mataró\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 41.535556,
+                              "lng": 2.210833,
+                              "title": "Crónica de Mollet del Vallès",
+                              "info": "<a href=\"https://www.elperiodico.com/es/mollet-del-valles/\" title=\"Ir a Crónica de Mollet del Vallès\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 41.573333,
+                              "lng": 2.233611,
+                              "title": "Crónica de Parets",
+                              "info": "<a href=\"https://www.elperiodico.com/es/parets/\" title=\"Ir a Crónica de Parets\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 41.493333,
+                              "lng": 2.0325,
+                              "title": "Crónica de Rubí",
+                              "info": "<a href=\"https://www.elperiodico.com/es/rubi/\" title=\"Ir a Crónica de Rubí\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 41.548333,
+                              "lng": 2.1075,
+                              "title": "Crónica de Sabadell",
+                              "info": "<a href=\"https://www.elperiodico.com/es/sabadell/\" title=\"Ir a Crónica de Sabadell\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 41.345833,
+                              "lng": 2.041667,
+                              "title": "Crónica de Sant Boi",
+                              "info": "<a href=\"https://www.elperiodico.com/es/sant-boi/\" title=\"Ir a Crónica de Sant Boi\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 41.1175,
+                              "lng": 1.252778,
+                              "title": "Crónica de Tarragona",
+                              "info": "<a href=\"https://www.elperiodico.com/es/tarragona/\" title=\"Ir a Crónica de Tarragona\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 41.315833,
+                              "lng": 2.019444,
+                              "title": "Crónica de Viladecans",
+                              "info": "<a href=\"https://www.elperiodico.com/es/viladecans/\" title=\"Ir a Crónica de Viladecans\" target=\"_blank\">Ver crónica</a>"
+                            }
+                          ]
+                        },
+                        "Extremadura": {
+                          "el-periodico-extremadura": [
+                            {
+                              "lat": 38.6833,
+                              "lng": -6.4167,
+                              "title": "Crónica de Almendralejo",
+                              "info": "<a href=\"https://www.elperiodicoextremadura.com/almendralejo/\" title=\"Ir a Crónica de Almendralejo\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 38.8794,
+                              "lng": -6.9706,
+                              "title": "Crónica de Badajoz",
+                              "info": "<a href=\"https://www.elperiodicoextremadura.com/badajoz/\" title=\"Ir a Crónica de Badajoz\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 39.4458422,
+                              "lng": -6.5046747,
+                              "title": "Crónica de Malpartida de Cáceres",
+                              "info": "<a href=\"https://www.elperiodicoextremadura.com/caceres/malpartida-de-caceres/\" title=\"Ir a Crónica de Malpartida de Cáceres\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 39.4259437,
+                              "lng": -6.6395985,
+                              "title": "Crónica de Tajo-Salor",
+                              "info": "<a href=\"https://www.elperiodicoextremadura.com/tags/tajo-salor/\" title=\"Ir a Crónica de Tajo-Salor\" target=\"_blank\">Ver crónica</a>"
+                            }
+                          ]
+                        },
+                        "Castilla-La Mancha": {
+                          "ft-brand-epe": [
+                            {
+                              "lat": 39.856758,
+                              "lng": -4.02453,
+                              "title": "Crónica de Toledo",
+                              "info": "<a href=\"https://www.epe.es/es/toledo/\" title=\"Ir a Crónica de Toledo\" target=\"_blank\">Ver crónica</a>"
+                            }
+                          ]
+                        },
+                        "Castilla y León": {
+                          "la-opinion-correo-de-zamora": [
+                            {
+                              "lat": 42.0032,
+                              "lng": -5.6786,
+                              "title": "Crónica de Benavente",
+                              "info": "<a href=\"https://www.laopiniondezamora.es/benavente/\" title=\"Ir a Crónica de Benavente\" target=\"_blank\">Ver crónica</a>"
+                            }
+                          ]
+                        },
+                        "Galicia": {
+                          "el-correo-gallego": [
+                            {
+                              "lat": 42.556253,
+                              "lng": -8.995526,
+                              "title": "Crónica de Barbaza",
+                              "info": "<a href=\"https://www.elcorreogallego.es/barbanza/\" title=\"Ir a Crónica de Barbaza\" target=\"_blank\">Ver crónica</a>"
+                            }
+                          ]
+                        },
+                        "Islas Baleares": {
+                          "diario-de-ibiza": [
+                            {
+                              "lat": 38.7,
+                              "lng": 1.4167,
+                              "title": "Crónica de Formentera",
+                              "info": "<a href=\"https://www.diariodeibiza.es/formentera/\" title=\"Ir a Crónica de Formentera\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 39.570798,
+                              "lng": 2.421365,
+                              "title": "Crónica de Andratx",
+                              "info": "<a href=\"https://www.diariodeibiza.es/tags/andratx/\" title=\"Ir a Crónica de Andratx\" target=\"_blank\">Ver crónica</a>"
+                            }
+                          ]
+                        },
+                        "Islas Canarias": {
+                          "el-dia-la-opinion-de-tenerife": [
+                            {
+                              "lat": 28.060251,
+                              "lng": -15.475211,
+                              "title": "Crónica de La Palma",
+                              "info": "<a href=\"https://www.eldia.es/tags/palma/\" title=\"Ir a La Crónica de San Javier\" target=\"_blank\">Ver crónica</a>"
+                            },
+                          ]
+                        },
+                        "Madrid": {
+                          "ft-brand-epe": [
+                            {
+                              "lat": 40.481944,
+                              "lng": -3.364167,
+                              "title": "Crónica de Alcalá de Henares",
+                              "info": "<a href=\"https://www.epe.es/es/madrid/alcala-de-henares/\" title=\"Ir a Crónica de Alcalá de Henares\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 40.407669,
+                              "lng": -3.709640,
+                              "title": "Crónica de Arganzuela",
+                              "info": "<a href=\"https://www.epe.es/es/madrid/arganzuela/\" title=\"Ir a Crónica de Arganzuela\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 40.383611,
+                              "lng": -3.728056,
+                              "title": "Crónica de Carabanchel",
+                              "info": "<a href=\"https://www.epe.es/es/madrid/carabanchel/\" title=\"Ir a Crónica de Carabanchel\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 40.4025,
+                              "lng": -3.741389,
+                              "title": "Crónica de Latina",
+                              "info": "<a href=\"https://www.epe.es/es/madrid/latina/\" title=\"Ir a Crónica de Latina\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 40.440833,
+                              "lng": -3.814722,
+                              "title": "Crónica de Pozuelo de Alarcón",
+                              "info": "<a href=\"https://www.epe.es/es/madrid/pozuelo-de-alarcon/\" title=\"Ir a Crónica de Pozuelo de Alarcón\" target=\"_blank\">Ver crónica</a>"
+                            }
+                          ]
+                        },
+                        "Murcia": {
+                          "la-opinion-de-murcia": [
+                            {
+                              "lat": 37.805698,
+                              "lng": -0.834550,
+                              "title": "Crónica de San Javier",
+                              "info": "<a href=\"https://www.laopiniondemurcia.es/municipios/san-javier/\" title=\"Ir a La Crónica de San Javier\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 38.6100,
+                              "lng": -1.1144,
+                              "title": "Crónica de Yecla",
+                              "info": "<a href=\"https://www.laopiniondemurcia.es/municipios/yecla/\" title=\"Ir a La Crónica de Yecla\" target=\"_blank\">Ver crónica</a>"
+                            },
+                          ]
+                        },
+                        "Toledo": {
+                          "el-periodico-de-espana": [
+                            {
+                              "lat": 41.652805,
+                              "lng": -83.537865,
+                              "title": "Crónica de Toledo",
+                              "info": "<a href=\"https://www.epe.es/es/lugares/toledo-1855294/\" title=\"Ir a La Crónica de Toledo\" target=\"_blank\">Ver crónica</a>"
+                            }
+                          ]
+                        },
+                        "Valencia": {
+                          "el-periodico-mediterraneo": [
+                            {
+                              "lat": 40.0667,
+                              "lng": -0.2333,
+                              "title": "Crónica de L’Alcora",
+                              "info": "<a href=\"https://www.elperiodicomediterraneo.com/castello/lalcora/\" title=\"Ir a Crónica de L’Alcora\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 39.75,
+                              "lng": -0.2167,
+                              "title": "Crónica de Almenara",
+                              "info": "<a href=\"https://www.elperiodicomediterraneo.com/tags/almenara/\" title=\"Ir a Crónica de Almenara\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 39.9167,
+                              "lng": -0.5833,
+                              "title": "Crónica de Alto Palancia",
+                              "info": "<a href=\"https://www.elperiodicomediterraneo.com/alto-palancia/\" title=\"Ir a Crónica de Alto Palancia\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 40.05,
+                              "lng": 0.0667,
+                              "title": "Crónica de Benicasim La Centinela",
+                              "info": "<a href=\"https://www.elperiodicomediterraneo.com/castello/benicassim/\" title=\"Ir a Crónica de Benicasim La Centinela\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 39.9833,
+                              "lng": -0.0333,
+                              "title": "Crónica de Castelló Ciutat",
+                              "info": "<a href=\"https://www.elperiodicomediterraneo.com/castello/\" title=\"Ir a Crónica de Castelló Ciutat\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 39.9667,
+                              "lng": 0.0167,
+                              "title": "Crónica de Grao de Castellón",
+                              "info": "<a href=\"https://www.elperiodicomediterraneo.com/tags/grao-de-castellon/\" title=\"Ir a Crónica de Grao de Castellón\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 39.8,
+                              "lng": -0.15,
+                              "title": "Crónica de Moncofa",
+                              "info": "<a href=\"https://www.elperiodicomediterraneo.com/tags/moncofa/\" title=\"Ir a Crónica de Moncofa\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 39.85,
+                              "lng": -0.1667,
+                              "title": "Crónica de Nules",
+                              "info": "<a href=\"https://www.elperiodicomediterraneo.com/tags/nules/\" title=\"Ir a Crónica de Nules\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 39.823611,
+                              "lng": -0.231667,
+                              "title": "La Vall d'Uixó",
+                              "info": "<a href=\"https://www.elperiodicomediterraneo.com/castello/la-vall-duixo/\" title=\"Ir a Crónica de La Vall d'Uixó\" target=\"_blank\">Ver crónica</a>"
+                            }
+                          ],
+                          "levante-el-mercantil-valenciano": [
+                            {
+                              "lat": 39.6667,
+                              "lng": -0.55,
+                              "title": "Crónica de Camp de Túria",
+                              "info": "<a href=\"https://www.levante-emv.com/comunitat-valenciana/camp-de-turia/\" title=\"Ir a Crónica de Camp de Túria\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 39.6833,
+                              "lng": -0.2667,
+                              "title": "Crónica de El Camp de Morvedre",
+                              "info": "<a href=\"https://www.levante-emv.com/morvedre/\" title=\"Ir a Crónica de El Camp de Morvedre\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 39.5,
+                              "lng": -0.4,
+                              "title": "Crónica de L'Horta",
+                              "info": "<a href=\"https://www.levante-emv.com/horta/\" title=\"Ir a Crónica de L'Horta\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 38.145814,
+                              "lng": -0.645573,
+                              "title": "Crónica de La Marina",
+                              "info": "<a href=\"https://www.levante-emv.com/marina/\" title=\"Ir a Crónica de La Marina\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 38.9615238,
+                              "lng": -0.1488153,
+                              "title": "Crónica de La Safor",
+                              "info": "<a href=\"https://www.levante-emv.com/safor/\" title=\"Ir a Crónica de La Safor\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 39.5667,
+                              "lng": -1.2,
+                              "title": "Crónica de Requena - Utiel",
+                              "info": "<a href=\"https://www.levante-emv.com/comunitat-valenciana/requena-utiel/\" title=\"Ir a Crónica de Requena - Utiel\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 39.492187,
+                              "lng": -0.401856,
+                              "title": "Crónica de Vall d’Albaida",
+                              "info": "<a href=\"https://www.levante-emv.com/tags/vall-d-albaida/\" title=\"Ir a Crónica de Vall d’Albaida\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 38.995988,
+                              "lng": -0.557138,
+                              "title": "Crónica de La Costera",
+                              "info": "<a href=\"https://www.levante-emv.com/tags/la-costera/\" title=\"Ir a Crónica de La Costera\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 39.384935,
+                              "lng": -0.785496,
+                              "title": "Crónica de Hoya de Buñol",
+                              "info": "<a href=\"https://www.levante-emv.com/tags/hoya-de-bunol/\" title=\"Ir a Crónica de Hoya de Buñol\" target=\"_blank\">Ver crónica</a>"
+                            }
+                          ],
+                          "diario-informacion": [
+                            {
+                              "lat": 38.345997,
+                              "lng": -0.490686,
+                              "title": "Crónica de L'Alacantí",
+                              "info": "<a href=\"https://www.informacion.es/la-cronica-de-alacanti/\" title=\"Ir a La Crónica de L'Alacantí\" target=\"_blank\">Ver crónica</a>"
+                            },
+                            {
+                              "lat": 38.158896,
+                              "lng": -0.800844,
+                              "title": "Crónica de Vega Baja",
+                              "info": "<a href=\"https://www.informacion.es/vega-baja/\" title=\"Ir a La Crónica de L'Alacantí\" target=\"_blank\">Ver crónica</a>"
+                            },
+                          ]
+                        },
+                      };
+
+
+                      // 5️⃣ Iterar sobre ubicaciones y agregar marcadores
+                      Object.entries(locations).forEach(([region, subgroups]) => {
+                        Object.entries(subgroups).forEach(([subgroup, places]) => {
+                          places.forEach(location => {
+                            var selectedIcon = customIconsMapping[location.title] ?? icons[region]?.[subgroup] ?? icons["Default"];
+                            L.marker([location.lat, location.lng], { icon: selectedIcon })
+                              .addTo(markersLayer)
+                              .bindPopup(`<div class='popup-custom'><h3 class='popup-title'>${location.title}</h3><p class='popup-text'>${location.info}</p></div>`)
+                              .bindTooltip(location.title, { permanent: false, direction: "top" });
+                            boundsArray.push([location.lat, location.lng]);
+                          });
+                        });
+                      });
+
+                      // 🗺️ Centrar inicialmente en toda España incluyendo Canarias
+                      var fullSpainBounds = L.latLngBounds([
+                        [26.5, -19.0], // Suroeste (Islas Canarias)
+                        [45.5, 6.5]    // Noreste (Cataluña, Baleares)
+                      ]);
+                      map.fitBounds(fullSpainBounds, { padding: [80, 80], maxZoom: 6 });
+
+
+                      // 7️⃣ Botón "Ver toda España"
+                      var bounds = L.latLngBounds(boundsArray);
+
+                      // 📍 Aseguramos zonas clave
+                      bounds.extend([26.5, -20]);   // Canarias
+                      bounds.extend([44.2, 3.3]);   // Cataluña (noreste)
+
+                      var resetButton = L.control({ position: 'topright' });
+                      resetButton.onAdd = function () {
+                        var div = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+                        div.innerHTML = '<button style="background:#fff; border:1px solid #ccc; padding:5px; cursor:pointer;">Ver toda España</button>';
+                        div.onclick = function () {
+                          map.fitBounds(bounds, {
+                            padding: [100, 100],
+                            maxZoom: 6
+                          });
+                        };
+                        return div;
+                      };
+                      resetButton.addTo(map);
+
+                      // 🎨 Estilo visual neutro sobre la capa base
+                      const mapContainer = document.getElementById("hiperlocalmapURLFullWidthSpain");
+
+                      if (mapContainer) {
+                        const observer = new MutationObserver(() => {
+                          const tiles = mapContainer.querySelectorAll(".leaflet-tile");
+
+                          tiles.forEach(tile => {
+                            tile.style.filter = "grayscale(100%) brightness(1.08) contrast(0.95) sepia(10%)";
+                            tile.style.opacity = "0.88";
+                          });
+                        });
+
+                        observer.observe(mapContainer, { childList: true, subtree: true });
+                      }
+
+
+                    });
+                  </script>
+</body></html>

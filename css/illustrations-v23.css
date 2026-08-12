@@ -1,0 +1,67 @@
+
+@layer syx.tokens{
+:root{--ill-red:#ef1632;--ill-ink:#08101f;--ill-paper:#f7f8fb;--ill-line:#dfe4ec}
+}
+@layer syx.molecules{
+.mol-ill-card,.mol-ill-case-card{margin:0;background:#fff;border:1px solid var(--ill-line);overflow:hidden;opacity:0;transform:translateY(18px);transition:opacity .55s ease var(--delay),transform .55s ease var(--delay)}
+.js-ill-gallery.is-visible .mol-ill-card,.js-ill-gallery.is-visible .mol-ill-case-card{opacity:1;transform:none}
+.mol-ill-card__art,.mol-ill-case-card>div{display:grid;place-items:center;background:#fff;min-height:14rem;padding:1rem;overflow:hidden}
+.mol-ill-card__art img,.mol-ill-case-card img{display:block;max-width:100%;max-height:100%;object-fit:contain}
+.mol-ill-card figcaption,.mol-ill-case-card figcaption{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:.7rem .8rem;border-top:1px solid var(--ill-line);font:.6rem/1.2 var(--semantic-font-family-ui);text-transform:uppercase;letter-spacing:.07em}
+.mol-ill-card figcaption span,.mol-ill-case-card figcaption span{color:var(--semantic-color-primary)}
+.mol-ill-card figcaption b,.mol-ill-case-card figcaption b{font-weight:600;text-align:right}
+.mol-ill-principles{display:grid;gap:1px;background:var(--ill-line);border:1px solid var(--ill-line)}
+.mol-ill-principles article{background:#fff;padding:1rem;min-height:10rem;display:flex;flex-direction:column}
+.mol-ill-principles article>b{font:.58rem/1 var(--semantic-font-family-ui);color:var(--semantic-color-primary)}
+.mol-ill-principles strong{font:600 1.35rem/1 var(--semantic-font-family-display);letter-spacing:-.035em;margin:auto 0 .5rem}
+.mol-ill-principles p{font:.75rem/1.45 var(--semantic-font-family-ui);color:var(--semantic-color-text-secondary);margin:0}
+}
+@layer syx.organisms{
+.org-illustration-showcase{display:grid;gap:2rem;padding:clamp(4rem,8vw,8rem) var(--semantic-space-page-inline);background:#fff;border-bottom:1px solid var(--ill-line)}
+.org-illustration-showcase__intro h2{font:600 clamp(3rem,10vw,5.8rem)/.9 var(--semantic-font-family-display);letter-spacing:-.06em;margin:.6rem 0 1.2rem}
+.org-illustration-showcase__intro>p:last-of-type{max-width:42rem;color:var(--semantic-color-text-secondary)}
+.org-illustration-showcase__gallery{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.org-illustration-showcase__gallery .mol-ill-card--large{grid-column:1/-1}
+.org-illustration-showcase__gallery .mol-ill-card--large .mol-ill-card__art{min-height:22rem}
+.org-illustration-showcase__gallery .mol-ill-card--tall .mol-ill-card__art{min-height:20rem}
+
+.org-illustration-case__hero{padding:clamp(5rem,10vw,10rem) var(--semantic-space-page-inline) clamp(3rem,6vw,6rem)}
+.org-illustration-case__hero h1{font:600 clamp(3.4rem,10vw,8rem)/.88 var(--semantic-font-family-display);letter-spacing:-.065em;max-width:12ch;margin:.6rem 0 1.5rem}
+.org-illustration-case__hero>p:not(.atom-eyebrow){max-width:48rem;margin-left:auto;font-size:1.05rem;line-height:1.5}
+.org-illustration-case__statement{display:grid;gap:1rem;padding:clamp(4rem,8vw,8rem) var(--semantic-space-page-inline);background:var(--semantic-color-primary);color:#fff}
+.org-illustration-case__statement>span{font:.58rem/1 var(--semantic-font-family-ui);letter-spacing:.1em}
+.org-illustration-case__statement h2{font:600 clamp(3rem,9vw,6.5rem)/.9 var(--semantic-font-family-display);letter-spacing:-.06em;margin:0;max-width:13ch}
+.org-illustration-case__statement p{max-width:42rem;opacity:.78}
+.org-illustration-case__mosaic{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--ill-line);padding:1px}
+.org-illustration-case__mosaic .mol-ill-case-card--feature{grid-column:1/-1}
+.org-illustration-case__mosaic .mol-ill-case-card--feature>div{min-height:26rem}
+.org-illustration-case__system{display:grid;gap:2rem;padding:clamp(4rem,8vw,8rem) var(--semantic-space-page-inline);background:var(--ill-paper)}
+.org-illustration-case__system h2{font:600 clamp(3rem,8vw,5.5rem)/.92 var(--semantic-font-family-display);letter-spacing:-.06em;margin:.5rem 0 0}
+.org-illustration-case__closing{padding:clamp(4rem,8vw,8rem) var(--semantic-space-page-inline);background:#08101f;color:#fff}
+.org-illustration-case__closing blockquote{font:600 clamp(3rem,9vw,7rem)/.9 var(--semantic-font-family-display);letter-spacing:-.06em;max-width:15ch;margin:1rem 0 0 auto}
+}
+@layer syx.utilities{
+@media(min-width:768px){
+ .org-illustration-showcase{grid-template-columns:.65fr 1.35fr;gap:clamp(2rem,5vw,6rem);align-items:start}
+ .org-illustration-showcase__intro{position:sticky;top:6rem}
+ .org-illustration-showcase__gallery{grid-template-columns:repeat(3,1fr)}
+ .org-illustration-showcase__gallery .mol-ill-card--large{grid-column:span 2}
+ .org-illustration-showcase__gallery .mol-ill-card--large .mol-ill-card__art{min-height:28rem}
+ .org-illustration-showcase__gallery .mol-ill-card--tall{grid-row:span 2}
+ .org-illustration-showcase__gallery .mol-ill-card--tall .mol-ill-card__art{height:100%}
+ .org-illustration-case__statement{grid-template-columns:.35fr 1.2fr .8fr;align-items:start}
+ .org-illustration-case__statement h2{grid-column:2}
+ .org-illustration-case__statement p{grid-column:3}
+ .org-illustration-case__mosaic{grid-template-columns:repeat(4,1fr)}
+ .org-illustration-case__mosaic .mol-ill-case-card--feature{grid-column:span 2;grid-row:span 2}
+ .org-illustration-case__system{grid-template-columns:.7fr 1.3fr;gap:4rem}
+ .mol-ill-principles{grid-template-columns:1fr 1fr}
+}
+@media(min-width:1200px){
+ .org-illustration-showcase,.org-illustration-case__hero,.org-illustration-case__statement,.org-illustration-case__system,.org-illustration-case__closing{padding-left:max(4rem,calc((100vw - 112rem)/2));padding-right:max(4rem,calc((100vw - 112rem)/2))}
+ .org-illustration-showcase__gallery{grid-template-columns:repeat(4,1fr)}
+ .org-illustration-showcase__gallery .mol-ill-card--large{grid-column:span 2}
+ .org-illustration-case__mosaic{grid-template-columns:repeat(5,1fr)}
+}
+@media(prefers-reduced-motion:reduce){.mol-ill-card,.mol-ill-case-card{opacity:1!important;transform:none!important;transition:none!important}}
+}

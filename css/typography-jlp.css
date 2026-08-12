@@ -1,0 +1,59 @@
+/* JLP Typography System v2
+   SYX: Primitive → Semantic → Component
+   Instrument Sans communicates. Inter explains. */
+@layer syx.tokens {
+  :root {
+    --primitive-font-family-instrument:"Instrument Sans","Helvetica Neue",Arial,sans-serif;
+    --primitive-font-family-inter:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --primitive-font-family-mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+
+    --primitive-font-weight-regular:400;
+    --primitive-font-weight-medium:500;
+    --primitive-font-weight-semibold:600;
+    --primitive-font-weight-bold:700;
+
+    --semantic-font-family-display:var(--primitive-font-family-instrument);
+    --semantic-font-family-body:var(--primitive-font-family-inter);
+    --semantic-font-family-ui:var(--primitive-font-family-inter);
+    --semantic-font-family-code:var(--primitive-font-family-mono);
+
+    --component-hero-title-font-family:var(--semantic-font-family-display);
+    --component-hero-title-font-weight:var(--primitive-font-weight-semibold);
+    --component-hero-title-line-height:.94;
+    --component-hero-title-letter-spacing:-.052em;
+
+    --component-section-title-font-family:var(--semantic-font-family-display);
+    --component-section-title-font-weight:var(--primitive-font-weight-semibold);
+    --component-section-title-line-height:1;
+    --component-section-title-letter-spacing:-.04em;
+
+    --component-metric-font-family:var(--semantic-font-family-display);
+    --component-metric-font-weight:var(--primitive-font-weight-semibold);
+    --component-metric-letter-spacing:-.05em;
+
+    --component-body-font-family:var(--semantic-font-family-body);
+    --component-body-font-weight:var(--primitive-font-weight-regular);
+    --component-body-line-height:1.62;
+    --component-ui-font-family:var(--semantic-font-family-ui);
+    --component-code-font-family:var(--semantic-font-family-code);
+  }
+}
+@layer syx.base {
+  html,body{font-family:var(--component-body-font-family);font-weight:var(--component-body-font-weight);line-height:var(--component-body-line-height);text-rendering:optimizeLegibility}
+  button,input,textarea,select{font:inherit}
+  code,pre,kbd,samp{font-family:var(--component-code-font-family)}
+}
+@layer syx.atoms {
+  .atom-wordmark,.atom-eyebrow,.atom-index,.mol-nav,.mol-tag,.atom-tag,button,[class*="button"]{font-family:var(--component-ui-font-family)}
+  .atom-wordmark{font-weight:700;letter-spacing:-.04em}
+  .atom-eyebrow,.atom-index{font-weight:600;letter-spacing:.13em}
+}
+@layer syx.molecules {
+  .mol-project-card__body h3{font-family:var(--semantic-font-family-display);font-weight:600;letter-spacing:-.035em;line-height:1.02}
+}
+@layer syx.organisms {
+  .org-hero h1,.org-case-hero h1{font-family:var(--component-hero-title-font-family);font-weight:var(--component-hero-title-font-weight);line-height:var(--component-hero-title-line-height);letter-spacing:var(--component-hero-title-letter-spacing)}
+  .org-case-section__heading h2,.org-work h2,.org-about h2,.org-case-snippet h2,.org-system-story h2{font-family:var(--component-section-title-font-family);font-weight:var(--component-section-title-font-weight);line-height:var(--component-section-title-line-height);letter-spacing:var(--component-section-title-letter-spacing)}
+  .org-system-story blockquote,.org-case-section--outcome blockquote,.mol-quote{font-family:var(--semantic-font-family-display);font-weight:600;letter-spacing:-.045em}
+  .atom-metric span,.org-metrics strong,[class*="metric"] strong{font-family:var(--component-metric-font-family);font-weight:var(--component-metric-font-weight);letter-spacing:var(--component-metric-letter-spacing)}
+}

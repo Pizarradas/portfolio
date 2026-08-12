@@ -1,0 +1,79 @@
+
+/* Storytelling, data-viz and tool-system layer.
+   SYX rule: component styles consume semantic/component tokens. */
+@layer syx.tokens {
+  :root {
+    --component-story-max: 90rem;
+    --component-tool-icon-size: 1.55rem;
+    --component-chart-height: 25rem;
+    --component-chart-bg: var(--semantic-color-surface);
+    --component-chart-border: var(--semantic-color-border);
+    --component-evidence-bg: var(--semantic-color-surface-alt);
+  }
+}
+@layer syx.atoms {
+  .atom-source-note,.atom-data-note{font-size:.75rem;line-height:1.5;color:var(--semantic-color-text-muted)}
+  .atom-chart{width:100%;height:var(--component-chart-height)}
+  .atom-chart--compact{height:17rem}
+  .atom-chart__fallback{display:grid;gap:1rem;padding:2rem 0}
+  .atom-chart__fallback span{position:relative;display:grid;grid-template-columns:5rem 1fr;gap:1rem;align-items:center;font-size:.85rem}
+  .atom-chart__fallback span::after{content:"";grid-column:2;height:.8rem;width:var(--v);background:var(--semantic-color-primary);border-radius:.15rem}
+}
+@layer syx.molecules {
+  .mol-tool-group{border-top:1px solid var(--semantic-color-border);padding-top:1.2rem}
+  .mol-tool-group__heading{display:flex;gap:.7rem;align-items:center;margin-bottom:1.5rem}
+  .mol-tool-group__heading svg{width:1.1rem;height:1.1rem;color:var(--semantic-color-primary);stroke-width:1.8}
+  .mol-tool-group__heading h3{font-family:var(--semantic-font-family-display);font-size:1.15rem;letter-spacing:-.025em}
+  .mol-tool-list{display:grid;gap:.6rem}
+  .mol-tool{display:flex;align-items:center;gap:.8rem;min-height:3.4rem;padding:.5rem .65rem;border:1px solid transparent;border-radius:.25rem;transition:border-color .18s ease,background .18s ease}
+  .mol-tool:hover{border-color:var(--semantic-color-border);background:var(--semantic-color-surface-alt)}
+  .mol-tool img{width:var(--component-tool-icon-size);height:var(--component-tool-icon-size);object-fit:contain}
+  .mol-tool span{font-size:.9rem;font-weight:500}
+
+  .mol-evidence-frame{position:relative;margin:0;background:var(--component-evidence-bg);border:1px solid var(--semantic-color-border);padding:clamp(1rem,2vw,2rem)}
+  .mol-evidence-frame img{width:100%;max-height:46rem;object-fit:contain;background:#fff}
+  .mol-evidence-frame figcaption{margin-top:.8rem;font-size:.75rem;color:var(--semantic-color-text-muted)}
+
+  .mol-stat-strip{display:grid;grid-template-columns:repeat(4,1fr);margin-top:2.5rem;border-top:1px solid var(--semantic-color-border);border-left:1px solid var(--semantic-color-border)}
+  .mol-stat-strip div{min-height:8rem;padding:1rem;border-right:1px solid var(--semantic-color-border);border-bottom:1px solid var(--semantic-color-border);display:flex;flex-direction:column;justify-content:space-between}
+  .mol-stat-strip strong{font-family:var(--semantic-font-family-display);font-size:clamp(2rem,4vw,4rem);letter-spacing:-.055em}
+  .mol-stat-strip span{font-size:.75rem;color:var(--semantic-color-text-muted)}
+
+  .mol-chart-card{margin:2.5rem 0;border:1px solid var(--component-chart-border);background:var(--component-chart-bg);padding:clamp(1rem,2vw,2rem)}
+  .mol-chart-card__head{display:flex;justify-content:space-between;gap:1rem;padding-bottom:1.25rem;margin-bottom:.5rem;border-bottom:1px solid var(--semantic-color-border)}
+  .mol-chart-card__head div{display:grid;gap:.25rem}
+  .mol-chart-card__head span,.mol-chart-card__head small{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--semantic-color-text-muted)}
+  .mol-chart-card__head strong{font-family:var(--semantic-font-family-display);font-size:1.25rem;letter-spacing:-.025em}
+
+  .mol-card-anatomy{display:grid;grid-template-columns:minmax(7rem,34%) 1fr;grid-template-rows:1fr auto;min-height:15rem;border:1px solid rgba(255,255,255,.28);position:relative}
+  .mol-card-anatomy__image{display:grid;place-items:center;background:rgba(255,255,255,.08);font-size:.7rem;color:rgba(255,255,255,.7)}
+  .mol-card-anatomy__image--square{aspect-ratio:1/1;align-self:start}
+  .mol-card-anatomy__image--wide{aspect-ratio:16/9;align-self:start}
+  .mol-card-anatomy__copy{padding:1.2rem;display:flex;flex-direction:column;gap:.5rem}
+  .mol-card-anatomy__copy i{font-size:.7rem;color:rgba(255,255,255,.55);font-style:normal}
+  .mol-card-anatomy__copy b{font-family:var(--semantic-font-family-display);font-size:1.2rem;line-height:1.05}
+  .mol-card-anatomy>strong{grid-column:1/-1;padding:.75rem 1rem;border-top:1px solid rgba(255,255,255,.28);font-size:.7rem;letter-spacing:.12em}
+}
+@layer syx.organisms {
+  .org-tools{padding:var(--semantic-space-section) var(--semantic-space-page-inline);border-bottom:1px solid var(--semantic-color-border)}
+  .org-tool-groups{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(1.5rem,3vw,3rem)}
+  .org-tools>.atom-source-note{margin-top:2.5rem}
+
+  .org-sport-opening{max-width:var(--component-story-max);margin-inline:auto;padding:clamp(4rem,8vw,8rem) var(--semantic-space-page-inline);display:grid;grid-template-columns:1.25fr .75fr;gap:clamp(2rem,6vw,7rem);align-items:center;border-bottom:1px solid var(--semantic-color-border)}
+  .org-sport-opening__copy h2{font-family:var(--semantic-font-family-display);font-size:clamp(2.5rem,5vw,5.5rem);line-height:.98;letter-spacing:-.045em;margin:.5rem 0 2rem}
+  .org-sport-opening__copy p:not(.atom-eyebrow){font-size:1.05rem;color:var(--semantic-color-text-secondary);margin-top:1rem}
+  .org-card-comparison{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:2.5rem 0}
+  .org-case-section--chart{background:var(--semantic-color-surface-alt)}
+}
+@layer syx.utilities {
+  @media (max-width:900px){
+    .org-tool-groups{grid-template-columns:1fr 1fr}
+    .org-sport-opening{grid-template-columns:1fr}
+    .mol-stat-strip{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:560px){
+    .org-tool-groups,.org-card-comparison,.mol-stat-strip{grid-template-columns:1fr}
+    .mol-chart-card__head{flex-direction:column}
+  }
+  @media (prefers-reduced-motion:reduce){.mol-tool{transition:none}}
+}

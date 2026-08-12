@@ -1,0 +1,105 @@
+/* JLP Brand System v2 — SYX philosophy
+   Primitive → Semantic → Component
+   Primary: #1E3AFF
+   Complementaries are accents, never dominant surfaces. */
+@layer syx.tokens {
+  :root {
+    /* Primitive — Brand blue */
+    --primitive-color-brand-50:#F4F6FF;
+    --primitive-color-brand-100:#E9EDFF;
+    --primitive-color-brand-200:#CCD5FF;
+    --primitive-color-brand-300:#A3B2FF;
+    --primitive-color-brand-400:#7187FF;
+    --primitive-color-brand-500:#1E3AFF;
+    --primitive-color-brand-600:#1932DC;
+    --primitive-color-brand-700:#1429B7;
+    --primitive-color-brand-800:#10208E;
+    --primitive-color-brand-900:#0C1869;
+    --primitive-color-brand-950:#080F2F;
+
+    /* Primitive — Complementaries */
+    --primitive-color-cyan-500:#00C8FF;
+    --primitive-color-violet-500:#7861FF;
+    --primitive-color-fuchsia-500:#FF3D94;
+
+    /* Primitive — Neutral foundation */
+    --primitive-color-ink-1000:#080F1A;
+    --primitive-color-ink-900:#111827;
+    --primitive-color-ink-700:#374151;
+    --primitive-color-gray-500:#6B7280;
+    --primitive-color-gray-300:#CBD2DD;
+    --primitive-color-gray-200:#DCE1EA;
+    --primitive-color-gray-100:#EEF1F6;
+    --primitive-color-gray-50:#F7F8FB;
+    --primitive-color-white:#FFFFFF;
+
+    /* Semantic */
+    --semantic-color-primary:var(--primitive-color-brand-500);
+    --semantic-color-primary-hover:var(--primitive-color-brand-600);
+    --semantic-color-primary-soft:var(--primitive-color-brand-50);
+    --semantic-color-primary-subtle:var(--primitive-color-brand-100);
+    --semantic-color-on-primary:var(--primitive-color-white);
+
+    --semantic-color-accent-cyan:var(--primitive-color-cyan-500);
+    --semantic-color-accent-violet:var(--primitive-color-violet-500);
+    --semantic-color-accent-fuchsia:var(--primitive-color-fuchsia-500);
+
+    --semantic-color-text:var(--primitive-color-ink-1000);
+    --semantic-color-text-secondary:var(--primitive-color-ink-700);
+    --semantic-color-text-muted:var(--primitive-color-gray-500);
+    --semantic-color-surface:var(--primitive-color-white);
+    --semantic-color-surface-alt:var(--primitive-color-gray-50);
+    --semantic-color-surface-muted:var(--primitive-color-gray-100);
+    --semantic-color-surface-inverse:var(--primitive-color-ink-1000);
+    --semantic-color-border:var(--primitive-color-gray-200);
+    --semantic-color-focus:var(--semantic-color-primary);
+
+    /* Compatibility aliases for existing portfolio components */
+    --semantic-color-content-primary:var(--semantic-color-text);
+    --semantic-color-content-secondary:var(--semantic-color-text-secondary);
+    --semantic-color-content-muted:var(--semantic-color-text-muted);
+    --semantic-color-content-inverse:var(--semantic-color-on-primary);
+    --semantic-color-border-subtle:var(--semantic-color-border);
+    --semantic-color-accent:var(--semantic-color-primary);
+
+    /* Component aliases */
+    --component-link-color:var(--semantic-color-text);
+    --component-link-hover-color:var(--semantic-color-primary);
+    --component-eyebrow-color:var(--semantic-color-primary);
+    --component-wordmark-accent:var(--semantic-color-primary);
+    --component-selection-bg:var(--semantic-color-primary);
+    --component-selection-fg:var(--semantic-color-on-primary);
+    --component-card-accent:var(--semantic-color-primary);
+    --component-metric-bg:var(--semantic-color-primary);
+    --component-metric-color:var(--semantic-color-on-primary);
+    --component-case-dark-bg:var(--primitive-color-brand-950);
+    --component-case-dark-fg:var(--semantic-color-on-primary);
+    --component-case-accent-bg:var(--semantic-color-primary);
+    --component-case-accent-fg:var(--semantic-color-on-primary);
+  }
+}
+@layer syx.base {
+  html{accent-color:var(--semantic-color-primary)}
+  body{background:var(--semantic-color-surface);color:var(--semantic-color-text)}
+  ::selection{background:var(--component-selection-bg);color:var(--component-selection-fg)}
+  :focus-visible{outline:3px solid var(--semantic-color-focus);outline-offset:4px}
+}
+@layer syx.atoms {
+  .atom-wordmark span,.atom-eyebrow{color:var(--semantic-color-primary)}
+  .atom-index{color:var(--semantic-color-primary)}
+  a:hover{color:var(--component-link-hover-color)}
+  .atom-metric{background:var(--semantic-color-primary)!important;color:var(--semantic-color-on-primary)!important}
+}
+@layer syx.molecules {
+  .mol-project-card__visual{background:var(--semantic-color-surface-alt)}
+  .mol-project-card__visual--map{background:var(--primitive-color-brand-950);color:var(--semantic-color-on-primary)}
+}
+@layer syx.organisms {
+  .org-hero::before{background:var(--semantic-color-primary)!important}
+  .org-system-story{background:var(--primitive-color-brand-950)!important;color:var(--semantic-color-on-primary)}
+  .org-case-snippet--map{background:var(--semantic-color-primary)!important;color:var(--semantic-color-on-primary)}
+  .org-case-snippet--map .atom-eyebrow{color:var(--semantic-color-on-primary)}
+  .org-case-section--dark{background:var(--primitive-color-brand-950);color:var(--semantic-color-on-primary)}
+  .org-case-section--accent{background:var(--semantic-color-primary);color:var(--semantic-color-on-primary)}
+  .org-case-section--accent .atom-eyebrow,.org-case-section--accent .atom-index{color:var(--semantic-color-on-primary)}
+}

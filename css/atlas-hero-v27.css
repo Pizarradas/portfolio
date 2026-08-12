@@ -1,0 +1,98 @@
+
+@layer syx.molecules{
+  .mol-project-hero-v27{
+    display:grid;
+    grid-template-columns:1fr;
+    border:1px solid var(--semantic-color-border);
+    background:#fff;
+    overflow:hidden;
+  }
+  .mol-project-hero-v27__visual{min-width:0;background:#090a0c}
+  .mol-project-hero-v27__chrome{
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    min-height:2.5rem;padding:.65rem .8rem;background:#f5f7fa;
+    border-bottom:1px solid var(--semantic-color-border);
+    font:600 .54rem/1 var(--semantic-font-family-ui);
+    letter-spacing:.08em;text-transform:uppercase
+  }
+  .mol-project-hero-v27__chrome span{color:var(--semantic-color-text-muted)}
+  .mol-project-hero-v27__chrome a{color:var(--semantic-color-primary);text-decoration:none}
+  .mol-project-hero-v27__viewport{
+    position:relative;
+    aspect-ratio:16/9;
+    overflow:hidden;
+    background:#090a0c
+  }
+  .mol-project-hero-v27__viewport iframe{
+    position:absolute;z-index:2;left:0;top:0;
+    width:1440px;height:900px;border:0;pointer-events:none;
+    transform-origin:0 0;background:#090a0c
+  }
+  .mol-project-hero-v27__fallback{
+    position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;
+    justify-content:flex-end;padding:1.2rem;color:#fff
+  }
+  .mol-project-hero-v27__fallback strong{
+    font:600 clamp(2.6rem,8vw,5rem)/.85 var(--semantic-font-family-display);
+    letter-spacing:-.055em
+  }
+  .mol-project-hero-v27__fallback small{
+    font:.58rem/1 var(--semantic-font-family-ui);
+    letter-spacing:.08em;text-transform:uppercase
+  }
+  .mol-project-hero-v27__copy{
+    display:flex;flex-direction:column;justify-content:center;
+    padding:clamp(1.4rem,5vw,3rem)
+  }
+  .mol-project-hero-v27__copy h3{
+    font:600 clamp(2.6rem,8vw,4.8rem)/.92 var(--semantic-font-family-display);
+    letter-spacing:-.055em;margin:.55rem 0 1rem;max-width:12ch;
+    text-decoration:none!important;border:0!important
+  }
+  .mol-project-hero-v27__copy>p:not(.atom-eyebrow,.atom-proof-line){
+    max-width:42rem;color:var(--semantic-color-text-secondary);
+    font-size:.95rem;line-height:1.55
+  }
+}
+@layer syx.organisms{
+  /* Override the previous two-column card grid:
+     every major experience gets its own editorial row. */
+  .org-new-work__grid{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:clamp(1.5rem,3vw,3rem)!important;
+  }
+  .org-new-work__grid>.mol-new-project--worldcup{
+    grid-column:auto!important;
+  }
+}
+@layer syx.utilities{
+  @media(min-width:768px){
+    .mol-project-hero-v27{
+      grid-template-columns:minmax(0,1.35fr) minmax(19rem,.65fr);
+      min-height:34rem
+    }
+    .mol-project-hero-v27--reverse{
+      grid-template-columns:minmax(19rem,.65fr) minmax(0,1.35fr)
+    }
+    .mol-project-hero-v27--reverse .mol-project-hero-v27__visual{order:2}
+    .mol-project-hero-v27--reverse .mol-project-hero-v27__copy{order:1}
+    .mol-project-hero-v27__viewport{
+      height:100%;
+      min-height:34rem;
+      aspect-ratio:auto
+    }
+  }
+  @media(min-width:1200px){
+    .mol-project-hero-v27{
+      grid-template-columns:minmax(0,1.45fr) minmax(25rem,.55fr);
+      min-height:42rem
+    }
+    .mol-project-hero-v27--reverse{
+      grid-template-columns:minmax(25rem,.55fr) minmax(0,1.45fr)
+    }
+    .mol-project-hero-v27__viewport{min-height:42rem}
+    .mol-project-hero-v27__copy{padding:clamp(2rem,4vw,4rem)}
+    .mol-project-hero-v27__copy h3{font-size:clamp(3.5rem,4vw,5.2rem)}
+  }
+}
