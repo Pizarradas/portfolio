@@ -1,0 +1,62 @@
+@layer syx.tokens {
+  // SEMANTIC — colour
+  //
+  // The only layer a component should ever read. Every name says what the colour
+  // is for, not what it looks like, so a theme change never touches a component.
+  //
+  // This file merges what used to be two separate :root blocks — the acid set in
+  // portfolio.css and the blue set in brand-jlp.css — both of which wrote to the
+  // same names. Computed values are unchanged: blue always won by load order.
+
+  :root {
+    // Brand
+    --semantic-color-primary: var(--primitive-color-brand-500);
+    --semantic-color-primary-hover: var(--primitive-color-brand-600);
+    --semantic-color-primary-active: var(--primitive-color-brand-700);
+    --semantic-color-primary-soft: var(--primitive-color-brand-50);
+    --semantic-color-primary-subtle: var(--primitive-color-brand-100);
+    --semantic-color-on-primary: var(--primitive-color-white);
+
+    --semantic-color-accent-cyan: var(--primitive-color-cyan-500);
+    --semantic-color-accent-violet: var(--primitive-color-violet-500);
+    --semantic-color-accent-fuchsia: var(--primitive-color-fuchsia-500);
+
+    // Surfaces
+    --semantic-color-surface: var(--primitive-color-white);
+    --semantic-color-surface-alt: var(--primitive-color-gray-50);
+    --semantic-color-surface-muted: var(--primitive-color-gray-100);
+    --semantic-color-surface-sunken: var(--primitive-color-gray-200);
+    --semantic-color-surface-inverse: var(--primitive-color-ink-1000);
+    --semantic-color-surface-brand: var(--primitive-color-brand-500);
+    --semantic-color-surface-night: var(--primitive-color-brand-950);
+
+    // Content
+    --semantic-color-text: var(--primitive-color-ink-1000);
+    --semantic-color-text-secondary: var(--primitive-color-ink-700);
+    --semantic-color-text-muted: var(--primitive-color-gray-500);
+    --semantic-color-text-inverse: var(--primitive-color-white);
+
+    // Lines
+    --semantic-color-border: var(--primitive-color-gray-200);
+    --semantic-color-border-strong: var(--primitive-color-gray-300);
+    --semantic-color-focus: var(--semantic-color-primary);
+
+    // State
+    --semantic-color-positive: var(--primitive-color-positive-600);
+    --semantic-color-caution: var(--primitive-color-caution-600);
+    --semantic-color-critical: var(--primitive-color-critical-600);
+
+    // Aliases kept because 27 stylesheets still read these names. They are not a
+    // second vocabulary: each one points at a canonical token above, so removing
+    // a consumer never leaves an orphan definition behind.
+    --semantic-color-surface-page: var(--semantic-color-surface);
+    --semantic-color-surface-soft: var(--semantic-color-surface-alt);
+    --semantic-color-content-primary: var(--semantic-color-text);
+    --semantic-color-content-secondary: var(--semantic-color-text-secondary);
+    --semantic-color-content-muted: var(--semantic-color-text-muted);
+    --semantic-color-content-inverse: var(--semantic-color-text-inverse);
+    --semantic-color-border-subtle: var(--semantic-color-border);
+    --semantic-color-accent: var(--semantic-color-primary);
+    --semantic-color-accent-hover: var(--semantic-color-primary-hover);
+  }
+}

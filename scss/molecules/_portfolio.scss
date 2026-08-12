@@ -1,0 +1,224 @@
+@use "../abstracts/breakpoints" as *;
+
+@layer syx.molecules {
+  .mol-nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(var(--primitive-space-md), 3vw, var(--primitive-space-xl));
+    font-size: var(--semantic-font-size-ui);
+  }
+
+  .mol-nav a {
+    position: relative;
+    text-decoration: none;
+  }
+
+  .mol-nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 100%;
+    bottom: -0.3rem;
+    height: var(--semantic-border-width);
+    background: currentColor;
+    transition: right var(--semantic-duration-hover) var(--semantic-ease);
+  }
+
+  .mol-nav a:hover::after {
+    right: 0;
+  }
+
+  .mol-section-heading {
+    display: grid;
+    grid-template-columns: minmax(2rem, 7rem) minmax(0, 1fr) minmax(16rem, 28rem);
+    gap: var(--primitive-space-lg);
+    align-items: start;
+    padding-top: var(--primitive-space-md);
+    margin-bottom: var(--semantic-space-block);
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+  }
+
+  .mol-section-heading h2 {
+    font-size: var(--semantic-font-size-title-lg);
+  }
+
+  .mol-section-heading p:last-child {
+    color: var(--semantic-color-text-secondary);
+  }
+
+  .mol-project-card {
+    display: grid;
+    gap: var(--primitive-space-md);
+  }
+
+  .mol-project-card__visual {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    background: var(--component-card-visual-bg);
+    border-radius: var(--component-card-radius);
+    aspect-ratio: var(--component-card-ratio);
+    box-shadow: 0 0 0 var(--semantic-border-width)
+      color-mix(in srgb, var(--semantic-color-border) 65%, transparent);
+  }
+
+  .mol-project-card__visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: var(--semantic-border-width) solid var(--primitive-alpha-dark-08);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  .mol-project-card__visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--semantic-duration-reveal) var(--semantic-ease);
+  }
+
+  .mol-project-card__visual:hover img {
+    transform: scale(1.018);
+  }
+
+  .mol-project-card--featured .mol-project-card__visual {
+    aspect-ratio: var(--component-card-ratio-featured);
+  }
+
+  .mol-project-card__body {
+    display: grid;
+    gap: var(--primitive-space-sm);
+  }
+
+  .mol-project-card__body h3 a {
+    text-decoration: none;
+  }
+
+  .mol-project-card__body h3 a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 0.06em;
+    text-underline-offset: 0.12em;
+  }
+
+  .mol-project-card__body p {
+    color: var(--semantic-color-text-secondary);
+  }
+
+  .mol-project-card__meta {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--primitive-space-md);
+    padding-top: var(--primitive-space-sm);
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+    font-size: var(--semantic-font-size-caption);
+    font-weight: var(--primitive-font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: var(--primitive-letter-spacing-wide);
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-project-card__visual--report img {
+    object-position: center top;
+    filter: saturate(0.72) contrast(0.98);
+  }
+
+  .mol-project-card__visual--map {
+    background: var(--semantic-color-surface-inverse);
+    color: var(--semantic-color-text-inverse);
+  }
+
+  .mol-process {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--primitive-space-xs);
+  }
+
+  .mol-process span {
+    padding: var(--primitive-space-xs) var(--primitive-space-sm);
+    border: var(--semantic-border-width) solid var(--component-chip-border);
+    border-radius: var(--component-chip-radius);
+    font-size: var(--semantic-font-size-ui);
+    font-weight: var(--primitive-font-weight-bold);
+  }
+
+  // About — factual key/value rows
+  .mol-about-facts {
+    display: grid;
+    margin-top: var(--primitive-space-lg);
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+  }
+
+  .mol-about-facts div {
+    display: grid;
+    grid-template-columns: minmax(6rem, 9rem) minmax(0, 1fr);
+    gap: var(--primitive-space-3xs) var(--primitive-space-md);
+    padding: var(--primitive-space-sm) 0;
+    border-bottom: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+  }
+
+  .mol-about-facts dt {
+    padding-top: 0.15rem;
+    font-size: var(--semantic-font-size-caption);
+    font-weight: var(--primitive-font-weight-black);
+    text-transform: uppercase;
+    letter-spacing: var(--primitive-letter-spacing-wider);
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-about-facts dd {
+    font-size: var(--semantic-font-size-ui);
+    line-height: var(--semantic-line-height-ui);
+  }
+
+  // Contact — the page's only real call to action
+  .mol-contact-list {
+    list-style: none;
+    margin: var(--primitive-space-3xs) 0 0;
+    padding: 0;
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+  }
+
+  .mol-contact-list li {
+    border-bottom: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+  }
+
+  .mol-contact-list a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--component-contact-row-gap);
+    padding: var(--primitive-space-md) 0;
+    font-size: var(--semantic-font-size-title-sm);
+    font-weight: var(--primitive-font-weight-black);
+    letter-spacing: var(--primitive-letter-spacing-display);
+    text-decoration: none;
+  }
+
+  .mol-contact-list a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 0.07em;
+    text-underline-offset: 0.22em;
+  }
+
+  @include until($bp-sm) {
+    .mol-about-facts div {
+      grid-template-columns: 1fr;
+    }
+
+    .mol-contact-list a {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--primitive-space-3xs);
+    }
+  }
+
+  @include reduced-motion {
+    .mol-project-card__visual img,
+    .mol-nav a::after {
+      transition: none;
+    }
+  }
+}

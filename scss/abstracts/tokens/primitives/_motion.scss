@@ -1,0 +1,20 @@
+@layer syx.tokens {
+  // PRIMITIVE — motion
+  //
+  // Durations and easings were previously written inline per component
+  // (.2s, .35s, .45s, 2s and four different cubic-beziers). These are the set.
+
+  :root {
+    --primitive-duration-instant: 90ms;
+    --primitive-duration-fast: 160ms;
+    --primitive-duration-base: 260ms;
+    --primitive-duration-slow: 450ms;
+    --primitive-duration-slower: 900ms;
+    --primitive-duration-draw: 2000ms;
+
+    --primitive-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+    --primitive-ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --primitive-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    --primitive-ease-emphasis: cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+}

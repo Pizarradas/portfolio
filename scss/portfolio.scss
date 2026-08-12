@@ -1,11 +1,41 @@
-@layer syx.reset, syx.base, syx.tokens, syx.atoms, syx.molecules, syx.organisms, syx.utilities;
+// ---------------------------------------------------------------------------
+// SYX foundation — José Luis Pizarro portfolio
+//
+// GENERATED OUTPUT: css/portfolio.css. Do not edit that file by hand.
+//   npm run build     compile once
+//   npm run watch     recompile on save
+// (Prepros watches this entry too.)
+//
+// Token flow, in this order and no other:
+//   primitives  raw values, referenced only by the semantic layer
+//   semantic    named roles, the only layer a component may read
+//   component   per-component knobs, built from semantic tokens
+//
+// Layer order is declared first, so cascade position stops depending on the
+// order of <link> tags — which is how the project ended up needing 90
+// !important declarations.
+// ---------------------------------------------------------------------------
 
-@layer syx.tokens {
-  @import "abstracts/tokens/primitives/portfolio";
-  @import "abstracts/tokens/semantic/portfolio";
-  @import "abstracts/tokens/components/portfolio";
-}
+@use "abstracts/layers";
 
-// The compiled prototype lives in /css/portfolio.css.
-// The source layout follows SYX: primitives → semantic → component tokens,
-// then atoms → molecules → organisms → utilities.
+@use "abstracts/tokens/primitives/color" as primitive-color;
+@use "abstracts/tokens/primitives/type" as primitive-type;
+@use "abstracts/tokens/primitives/space" as primitive-space;
+@use "abstracts/tokens/primitives/layout" as primitive-layout;
+@use "abstracts/tokens/primitives/shape" as primitive-shape;
+@use "abstracts/tokens/primitives/motion" as primitive-motion;
+
+@use "abstracts/tokens/semantic/color" as semantic-color;
+@use "abstracts/tokens/semantic/type" as semantic-type;
+@use "abstracts/tokens/semantic/layout" as semantic-layout;
+@use "abstracts/tokens/semantic/shape" as semantic-shape;
+
+@use "abstracts/tokens/components/portfolio" as component-portfolio;
+
+@use "base/reset";
+@use "base/elements";
+@use "atoms/portfolio" as atoms-portfolio;
+@use "molecules/portfolio" as molecules-portfolio;
+@use "organisms/portfolio" as organisms-portfolio;
+@use "utilities/portfolio" as utilities-portfolio;
+@use "abstracts/contexts";

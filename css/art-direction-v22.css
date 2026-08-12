@@ -37,7 +37,7 @@
  .mol-before-after{grid-template-columns:1fr auto 1fr;align-items:stretch}.mol-map-pipeline{grid-template-columns:repeat(5,1fr)}.mol-map-pipeline li{display:flex;flex-direction:column;min-height:8rem;border-right:1px solid rgba(255,255,255,.18);padding:1rem}.mol-map-pipeline b{margin-top:auto}.mol-map-pipeline small{margin-top:.35rem}
 }
 @media(min-width:1200px){
- .org-role-evolution-v22,.org-sport-evidence-v22,.org-map-process-v22{padding-left:max(4rem,calc((100vw - 112rem)/2));padding-right:max(4rem,calc((100vw - 112rem)/2))}
+ .org-role-evolution-v22,.org-sport-evidence-v22,.org-map-process-v22{padding-left:var(--semantic-pad-content);padding-right:var(--semantic-pad-content)}
  .org-role-evolution-v22__conclusion blockquote{font-size:clamp(4rem,4.6vw,6rem)}
  .mol-project-context-v22{min-height:27rem}.mol-project-context-v22__viewport iframe{transform:scale(.46)}.mol-project-context-v22__split{height:27rem}.mol-project-context-v22__split iframe{transform:scale(.29)}
  .org-sport-evidence-v22__story h2,.org-map-process-v22__intro h2{font-size:clamp(4.5rem,5vw,6.5rem)}

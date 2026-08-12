@@ -1,0 +1,190 @@
+@use "../abstracts/breakpoints" as *;
+
+@layer syx.organisms {
+  // Every full-bleed section uses the same padding token, so content lines up
+  // across the page and stops widening past the cap. This replaces the old mix
+  // of 90rem, 112rem and no cap at all, which read as three different sites
+  // stacked on top of each other on a wide display.
+  .org-site-header,
+  .org-hero,
+  .org-work,
+  .org-about,
+  .org-contact,
+  .org-footer {
+    padding-inline: var(--semantic-pad-content);
+  }
+
+  .org-site-header {
+    position: sticky;
+    top: 0;
+    z-index: var(--semantic-z-sticky);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: var(--component-header-height);
+    background: var(--component-header-bg);
+    backdrop-filter: blur(16px);
+    border-bottom: var(--semantic-border-width) solid
+      color-mix(in srgb, var(--component-header-border) 72%, transparent);
+  }
+
+  .org-hero {
+    position: relative;
+    min-height: calc(96svh - var(--component-header-height));
+    padding-block: var(--semantic-space-section-compact)
+      var(--semantic-space-section-compact);
+    padding-top: var(--primitive-space-6xl);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--semantic-space-section-compact);
+  }
+
+  .org-hero::before {
+    content: "";
+    position: absolute;
+    right: var(--semantic-pad-content);
+    top: var(--primitive-space-4xl);
+    width: clamp(3.5rem, 8vw, 8rem);
+    height: 0.55rem;
+    background: var(--semantic-color-primary);
+  }
+
+  .org-hero__footer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--primitive-space-xl);
+    align-items: end;
+  }
+
+  .org-work {
+    padding-block: var(--semantic-space-section);
+  }
+
+  .org-project-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--semantic-space-block);
+    margin-top: var(--semantic-space-section-compact);
+  }
+
+  .org-about {
+    padding-block: var(--semantic-space-section);
+    display: grid;
+    grid-template-columns: minmax(2rem, 7rem) 1.35fr 1fr;
+    gap: var(--semantic-space-block);
+    align-items: start;
+  }
+
+  .org-about h2 {
+    font-size: var(--semantic-font-size-title-lg);
+    margin-top: var(--primitive-space-3xs);
+  }
+
+  .org-about__copy {
+    display: grid;
+    gap: var(--primitive-space-lg);
+    max-width: var(--semantic-measure-prose);
+    color: var(--semantic-color-text-secondary);
+    font-size: var(--semantic-font-size-body-lg);
+  }
+
+  .org-contact {
+    padding-block: var(--semantic-space-section-compact)
+      var(--semantic-space-section);
+    display: grid;
+    grid-template-columns: minmax(2rem, 7rem) minmax(0, 1fr);
+    gap: var(--semantic-space-block);
+    align-items: start;
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+  }
+
+  .org-contact__body {
+    display: grid;
+    gap: var(--primitive-space-md);
+    max-width: var(--primitive-width-sm);
+  }
+
+  .org-contact h2 {
+    font-size: var(--semantic-font-size-title-lg);
+    margin-top: var(--primitive-space-3xs);
+  }
+
+  .org-contact__lede {
+    color: var(--semantic-color-text-secondary);
+    font-size: var(--semantic-font-size-body-lg);
+    max-width: var(--semantic-measure-lede);
+  }
+
+  .org-footer {
+    padding-block: var(--primitive-space-xl);
+    display: flex;
+    justify-content: space-between;
+    gap: var(--primitive-space-md);
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+    color: var(--semantic-color-text-muted);
+    font-size: var(--semantic-font-size-ui);
+  }
+
+  .org-footer__contact {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--primitive-space-3xs) var(--primitive-space-lg);
+    max-width: none;
+  }
+
+  .org-footer__contact a {
+    text-decoration: none;
+    border-bottom: var(--semantic-border-width) solid currentColor;
+    padding-bottom: 0.12rem;
+  }
+
+  .org-footer__contact a:hover {
+    border-bottom-width: var(--semantic-border-width-strong);
+  }
+
+  @include until($bp-md) {
+    .org-hero__footer,
+    .org-project-grid,
+    .org-about,
+    .org-contact {
+      grid-template-columns: 1fr;
+    }
+
+    .org-project-grid {
+      gap: var(--semantic-space-section-compact);
+    }
+
+    .org-about > .atom-index,
+    .org-contact > .atom-index {
+      display: none;
+    }
+
+    .org-footer {
+      flex-direction: column;
+    }
+
+    .mol-project-card--featured .mol-project-card__visual {
+      aspect-ratio: var(--component-card-ratio);
+    }
+  }
+
+  @include until($bp-sm) {
+    .org-hero {
+      min-height: 84svh;
+    }
+
+    .org-hero::before {
+      display: none;
+    }
+
+    .mol-project-card__meta {
+      flex-direction: column;
+    }
+
+    .atom-metric {
+      max-width: 8rem;
+    }
+  }
+}

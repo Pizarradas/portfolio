@@ -1,0 +1,65 @@
+// CONTEXTS
+//
+// A context reassigns the semantic layer for a region of the page, so the
+// components inside it need no dark variants of their own.
+//
+// This is what the system was missing. Every dark section currently re-invents
+// its own palette inline — rgba(255,255,255,.16) for hairlines, #aaa89f for
+// muted text, opacity:.55 for labels — which is why the same hairline has four
+// different values across four stylesheets. Put a context on the section and
+// the components inside read the right colours automatically.
+//
+// Usage:  <section class="syx-on-night"> … </section>
+
+@mixin on-dark {
+  --semantic-color-surface-alt: var(--primitive-alpha-light-04);
+  --semantic-color-surface-muted: var(--primitive-alpha-light-08);
+  --semantic-color-surface-sunken: var(--primitive-alpha-light-08);
+
+  --semantic-color-text: var(--primitive-color-white);
+  --semantic-color-text-secondary: var(--primitive-alpha-light-78);
+  --semantic-color-text-muted: var(--primitive-alpha-light-60);
+  --semantic-color-text-inverse: var(--primitive-color-ink-1000);
+
+  --semantic-color-border: var(--primitive-alpha-light-16);
+  --semantic-color-border-strong: var(--primitive-alpha-light-24);
+  --semantic-color-focus: var(--primitive-color-white);
+
+  --semantic-color-primary: var(--primitive-color-white);
+
+  // Aliases have to be re-pointed too: they were resolved against the
+  // light-mode values in :root and do not follow automatically.
+  --semantic-color-content-primary: var(--semantic-color-text);
+  --semantic-color-content-secondary: var(--semantic-color-text-secondary);
+  --semantic-color-content-muted: var(--semantic-color-text-muted);
+  --semantic-color-border-subtle: var(--semantic-color-border);
+  --semantic-color-accent: var(--semantic-color-primary);
+
+  background: var(--semantic-color-surface);
+  color: var(--semantic-color-text);
+}
+
+@layer syx.utilities {
+  .syx-on-night {
+    @include on-dark;
+
+    --semantic-color-surface: var(--semantic-color-surface-night);
+    --semantic-color-on-primary: var(--primitive-color-brand-950);
+  }
+
+  .syx-on-ink {
+    @include on-dark;
+
+    --semantic-color-surface: var(--semantic-color-surface-inverse);
+    --semantic-color-on-primary: var(--primitive-color-ink-1000);
+  }
+
+  // Brand-blue ground. Same idea, different surface.
+  .syx-on-brand {
+    @include on-dark;
+
+    --semantic-color-surface: var(--semantic-color-surface-brand);
+    --semantic-color-border: var(--primitive-alpha-light-24);
+    --semantic-color-on-primary: var(--primitive-color-brand-500);
+  }
+}

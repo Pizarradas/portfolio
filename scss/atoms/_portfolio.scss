@@ -1,0 +1,102 @@
+@layer syx.atoms {
+  .atom-skip-link {
+    position: fixed;
+    left: var(--primitive-space-md);
+    top: var(--primitive-space-md);
+    z-index: var(--semantic-z-skip);
+    transform: translateY(-180%);
+    padding: var(--primitive-space-sm) var(--primitive-space-md);
+    background: var(--semantic-color-primary);
+    color: var(--semantic-color-on-primary);
+    font-weight: var(--semantic-font-weight-display);
+    text-decoration: none;
+    border-radius: var(--semantic-radius-control);
+  }
+
+  .atom-skip-link:focus {
+    transform: none;
+  }
+
+  .atom-wordmark {
+    font-size: var(--semantic-font-size-body-lg);
+    font-weight: var(--primitive-font-weight-black);
+    letter-spacing: -0.07em;
+    text-decoration: none;
+  }
+
+  .atom-wordmark span {
+    color: var(--component-wordmark-accent);
+  }
+
+  .atom-eyebrow,
+  .atom-index {
+    font-size: var(--semantic-font-size-eyebrow);
+    font-weight: var(--primitive-font-weight-black);
+    text-transform: uppercase;
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+  }
+
+  .atom-eyebrow {
+    color: var(--component-eyebrow-color);
+  }
+
+  .atom-index {
+    font-variant-numeric: tabular-nums;
+    color: var(--component-eyebrow-color);
+  }
+
+  .atom-lede {
+    font-size: var(--semantic-font-size-lede);
+    line-height: var(--semantic-line-height-title);
+    color: var(--semantic-color-text-secondary);
+    // ch resolves against this element's own font-size, which is the whole
+    // point of setting the measure here and not on a wrapper.
+    max-width: var(--semantic-measure-lede);
+  }
+
+  .atom-text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--primitive-space-xs);
+    font-weight: var(--primitive-font-weight-black);
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.3em;
+    transition: text-decoration-thickness var(--semantic-duration-hover)
+      var(--semantic-ease);
+  }
+
+  .atom-text-link:hover {
+    text-decoration-thickness: 0.16em;
+  }
+
+  .atom-metric {
+    position: absolute;
+    left: var(--primitive-space-md);
+    bottom: var(--primitive-space-md);
+    z-index: var(--primitive-z-raised);
+    max-width: 10rem;
+    padding: var(--primitive-space-md);
+    background: var(--component-metric-bg);
+    color: var(--component-metric-color);
+    font-size: var(--semantic-font-size-ui);
+    font-weight: var(--primitive-font-weight-black);
+    line-height: var(--primitive-line-height-tight);
+    border-radius: var(--semantic-radius-control);
+  }
+
+  .atom-metric span {
+    display: block;
+    font-size: var(--semantic-font-size-title);
+    line-height: var(--primitive-line-height-flat);
+    letter-spacing: var(--semantic-letter-spacing-hero);
+  }
+
+  .atom-outcome-line {
+    margin-top: var(--primitive-space-3xs);
+    max-width: var(--semantic-measure-lede);
+    font-size: var(--semantic-font-size-body-lg);
+    font-weight: var(--primitive-font-weight-black);
+    line-height: var(--semantic-line-height-title);
+    letter-spacing: var(--primitive-letter-spacing-tight);
+  }
+}

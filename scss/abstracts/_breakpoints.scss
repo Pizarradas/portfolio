@@ -1,0 +1,30 @@
+// Breakpoints.
+//
+// The codebase mixed 520 / 768 / 800 / 900 / 1002 / 1200 / 1280 / 1720 with no
+// rule about which meant what. These five are the only ones this system uses.
+// They are Sass variables, not custom properties, because media queries cannot
+// read custom properties.
+
+$bp-sm: 30rem !default; //  480px — large phone
+$bp-md: 48rem !default; //  768px — tablet / first real layout upgrade
+$bp-lg: 62.625rem !default; // 1002px — small laptop (kept from the 42DS grid)
+$bp-xl: 80rem !default; // 1280px — desktop
+$bp-2xl: 107.5rem !default; // 1720px — large desktop, content stops widening
+
+@mixin from($bp) {
+  @media (min-width: $bp) {
+    @content;
+  }
+}
+
+@mixin until($bp) {
+  @media (max-width: ($bp - 0.0625rem)) {
+    @content;
+  }
+}
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}

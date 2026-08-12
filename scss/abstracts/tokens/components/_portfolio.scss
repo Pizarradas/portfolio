@@ -1,11 +1,44 @@
-:root {
-  --component-header-height: 4.25rem;
-  --component-header-bg: color-mix(in srgb, var(--semantic-color-surface-page) 90%, transparent);
-  --component-header-border: var(--semantic-color-border-subtle);
-  --component-card-radius: var(--primitive-radius-2);
-  --component-card-visual-bg: var(--semantic-color-surface-soft);
-  --component-chip-radius: 999px;
-  --component-chip-border: currentColor;
-  --component-metric-bg: var(--semantic-color-accent);
-  --component-metric-color: var(--semantic-color-content-primary);
+@layer syx.tokens {
+  // COMPONENT — portfolio shell
+  //
+  // Only tokens owned by components defined in this file. Case-study, media
+  // viewer and typography components keep their own component tokens in their
+  // own stylesheets until they are migrated.
+
+  :root {
+    --component-header-height: 4.25rem;
+    --component-header-bg: color-mix(
+      in srgb,
+      var(--semantic-color-surface) 90%,
+      transparent
+    );
+    --component-header-border: var(--semantic-color-border);
+
+    --component-card-radius: var(--semantic-radius-surface);
+    --component-card-visual-bg: var(--semantic-color-surface-alt);
+    --component-card-ratio: 4 / 3;
+    --component-card-ratio-featured: 16 / 8.2;
+
+    --component-chip-radius: var(--semantic-radius-pill);
+    --component-chip-border: currentColor;
+
+    --component-metric-bg: var(--semantic-color-primary);
+    --component-metric-color: var(--semantic-color-on-primary);
+
+    --component-link-color: var(--semantic-color-text);
+    --component-link-hover-color: var(--semantic-color-primary);
+    --component-eyebrow-color: var(--semantic-color-primary);
+    --component-wordmark-accent: var(--semantic-color-primary);
+    --component-selection-bg: var(--semantic-color-primary);
+    --component-selection-fg: var(--semantic-color-on-primary);
+    --component-card-accent: var(--semantic-color-primary);
+
+    // Consumed on pages that do not load case-study.css
+    --component-case-dark-bg: var(--semantic-color-surface-night);
+    --component-case-dark-fg: var(--semantic-color-on-primary);
+    --component-case-accent-bg: var(--semantic-color-primary);
+    --component-case-accent-fg: var(--semantic-color-on-primary);
+
+    --component-contact-row-gap: var(--primitive-space-md);
+  }
 }

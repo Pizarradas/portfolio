@@ -1,0 +1,30 @@
+@use "../../fluid" as *;
+
+@layer syx.tokens {
+  // PRIMITIVE — layout
+  //
+  // The page had no container system: some sections capped at 90rem, the v22
+  // family capped at 112rem, and the rest ran edge to edge. On an ultra-wide
+  // display that reads as three different websites stacked on top of each other.
+
+  :root {
+    --primitive-width-xs: 34rem; //  544px
+    --primitive-width-sm: 48rem; //  768px
+    --primitive-width-md: 62rem; //  992px
+    --primitive-width-lg: 78rem; // 1248px
+    --primitive-width-xl: 90rem; // 1440px
+    --primitive-width-2xl: 112rem; // 1792px
+
+    --primitive-gutter: #{fluid(1.25, 4.5)};
+
+    // Measures are expressed in ch and must be applied to the element that
+    // carries the font-size. Applying them to a wrapper resolves ch against the
+    // inherited size, which is what collapsed the manifesto quote into a
+    // one-character-wide column.
+    --primitive-measure-display: 16ch;
+    --primitive-measure-lede: 42ch;
+    --primitive-measure-prose: 66ch;
+
+    --primitive-grid-columns: 12;
+  }
+}

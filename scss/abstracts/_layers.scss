@@ -1,0 +1,8 @@
+// Cascade layers, declared once for the whole system.
+//
+// This is the first thing the compiled stylesheet emits, so later rules opt
+// into a layer and cascade position stops depending on the order of <link>
+// tags — which is exactly how the project ended up needing 90 !important.
+
+@layer syx.reset, syx.base, syx.tokens, syx.atoms, syx.molecules, syx.organisms,
+  syx.utilities;

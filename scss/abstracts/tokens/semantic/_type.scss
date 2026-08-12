@@ -1,0 +1,47 @@
+@layer syx.tokens {
+  // SEMANTIC — typography
+  //
+  // Named roles, so a component asks for "the section title size" rather than
+  // picking a clamp() out of the air.
+
+  :root {
+    --semantic-font-family-display: var(--primitive-font-family-display);
+    --semantic-font-family-body: var(--primitive-font-family-sans);
+    --semantic-font-family-ui: var(--primitive-font-family-sans);
+    --semantic-font-family-code: var(--primitive-font-family-mono);
+    // Was consumed by typography-jlp.css but defined nowhere: a silent fallback
+    // to the browser default in every place that used it.
+    --semantic-font-family-mono: var(--primitive-font-family-mono);
+
+    // Roles
+    --semantic-font-size-caption: var(--primitive-font-size-2xs);
+    --semantic-font-size-eyebrow: var(--primitive-font-size-xs);
+    --semantic-font-size-ui: var(--primitive-font-size-sm);
+    --semantic-font-size-body: var(--primitive-font-size-md);
+    --semantic-font-size-body-lg: var(--primitive-font-size-lg);
+    --semantic-font-size-lede: var(--primitive-font-size-xl);
+
+    --semantic-font-size-title-sm: var(--primitive-font-size-display-sm);
+    --semantic-font-size-title: var(--primitive-font-size-display-md);
+    --semantic-font-size-title-lg: var(--primitive-font-size-display-lg);
+    --semantic-font-size-section: var(--primitive-font-size-display-xl);
+    --semantic-font-size-hero: var(--primitive-font-size-display-2xl);
+
+    --semantic-line-height-display: var(--primitive-line-height-tight);
+    --semantic-line-height-title: var(--primitive-line-height-snug);
+    --semantic-line-height-body: var(--primitive-line-height-relaxed);
+    --semantic-line-height-ui: var(--primitive-line-height-normal);
+
+    --semantic-letter-spacing-hero: var(--primitive-letter-spacing-display-2xl);
+    --semantic-letter-spacing-display: var(--primitive-letter-spacing-display);
+    --semantic-letter-spacing-eyebrow: var(--primitive-letter-spacing-wider);
+
+    --semantic-font-weight-body: var(--primitive-font-weight-regular);
+    --semantic-font-weight-emphasis: var(--primitive-font-weight-semibold);
+    --semantic-font-weight-display: var(--primitive-font-weight-black);
+
+    // Aliases used by the existing stylesheets
+    --semantic-font-body: var(--semantic-font-family-body);
+    --semantic-font-display: var(--semantic-font-family-display);
+  }
+}

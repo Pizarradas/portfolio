@@ -1,0 +1,31 @@
+@use "sass:math";
+
+// Fluid interpolation between two rem values.
+//
+// The portfolio used to carry 163 distinct hand-written clamp() expressions,
+// each one inventing its own slope. Every fluid token in this system is
+// generated from this single function instead, so the whole page scales on
+// one curve.
+//
+// The value equals $min at $min-vw and $max at $max-vw, and is clamped outside.
+
+$fluid-min-vw: 22.5 !default; // 360px — smallest supported viewport
+$fluid-max-vw: 100 !default; // 1600px — where the scale stops growing
+
+@function fluid($min, $max, $min-vw: $fluid-min-vw, $max-vw: $fluid-max-vw) {
+  @if $min == $max {
+    @return #{$min}rem;
+  }
+
+  // A rem length equals 100vw when the viewport is that many rem wide, so the
+  // straight line through (min-vw, min) and (max-vw, max) can be expressed as
+  // intercept + slope * 100vw.
+  $slope: math.div($max - $min, $max-vw - $min-vw);
+  $intercept: $min - $slope * $min-vw;
+
+  @return clamp(
+    #{$min}rem,
+    #{$intercept}rem + #{$slope * 100}vw,
+    #{$max}rem
+  );
+}

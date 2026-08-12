@@ -6,8 +6,12 @@
 .mol-role-path--timeline .mol-role-path__line circle{opacity:0;animation:role-node-in .35s ease forwards}
 .mol-role-path--timeline .mol-role-path__line circle:nth-of-type(1){animation-delay:.45s}.mol-role-path--timeline .mol-role-path__line circle:nth-of-type(2){animation-delay:.75s}.mol-role-path--timeline .mol-role-path__line circle:nth-of-type(3){animation-delay:1.05s}.mol-role-path--timeline .mol-role-path__line circle:nth-of-type(4){animation-delay:1.35s}.mol-role-path--timeline .mol-role-path__line circle:nth-of-type(5){animation-delay:1.65s}
 @keyframes role-path-draw{to{stroke-dashoffset:0}}@keyframes role-node-in{to{opacity:1}}
-.mol-role-thesis{grid-column:1/-1;margin:3.5rem 0 0 auto;max-width:21ch}
-.mol-role-thesis strong{display:block;font:600 clamp(2.6rem,8vw,5.4rem)/.9 var(--v22-display);letter-spacing:-.06em}
+/* The measure lives on the element that sets the font-size. It used to sit on
+   this wrapper, where 21ch resolved against the inherited 16px instead of the
+   86px of the <strong> inside — which rendered the whole sentence as a column
+   roughly one character wide, and stretched the section to match. */
+.mol-role-thesis{grid-column:1/-1;margin:3.5rem 0 0 auto}
+.mol-role-thesis strong{display:block;max-width:var(--semantic-measure-display);font:var(--semantic-font-weight-display) var(--semantic-font-size-section)/var(--semantic-line-height-display) var(--v22-display);letter-spacing:var(--semantic-letter-spacing-hero)}
 .mol-role-thesis p{margin:1.2rem 0 0;max-width:42rem;font:.8rem/1.5 var(--v22-ui);opacity:.58}
 }
 @layer syx.organisms{
@@ -19,6 +23,6 @@
 @media(min-width:768px){
 .mol-role-path--timeline article{min-height:13.5rem!important}.mol-role-path--timeline article em{margin-top:.8rem}.mol-role-thesis{margin-top:5rem}
 }
-@media(min-width:1200px){.mol-role-thesis strong{font-size:clamp(4.2rem,4.6vw,6rem)}}
+/* No desktop override needed: the size token is already fluid. */
 @media(prefers-reduced-motion:reduce){.mol-role-path--timeline .mol-role-path__line path,.mol-role-path--timeline .mol-role-path__line circle{animation:none;stroke-dashoffset:0;opacity:1}}
 }

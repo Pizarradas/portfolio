@@ -1,0 +1,14 @@
+{
+  "name": "jlp-portfolio",
+  "version": "8.0.0",
+  "private": true,
+  "description": "José Luis Pizarro — portfolio. SYX foundation: primitives → semantic → component.",
+  "scripts": {
+    "build": "sass scss/portfolio.scss css/portfolio.css --style=expanded --no-source-map",
+    "build:min": "sass scss/portfolio.scss css/portfolio.css --style=compressed --no-source-map",
+    "watch": "sass --watch scss/portfolio.scss:css/portfolio.css --style=expanded --no-source-map"
+  },
+  "devDependencies": {
+    "sass": "^1.102.0"
+  }
+}

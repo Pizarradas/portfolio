@@ -1,0 +1,57 @@
+@layer syx.base {
+  html {
+    background: var(--semantic-color-surface);
+  }
+
+  body {
+    background: var(--semantic-color-surface);
+    color: var(--semantic-color-text);
+    font-family: var(--semantic-font-family-body);
+    font-size: var(--semantic-font-size-body);
+    font-weight: var(--semantic-font-weight-body);
+    line-height: var(--semantic-line-height-body);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--component-selection-bg);
+    color: var(--component-selection-fg);
+  }
+
+  // Headings share one ramp. Each level picks a step from the type scale
+  // instead of inventing its own clamp(), and tracking tightens as size grows.
+  h1,
+  h2,
+  h3 {
+    font-family: var(--semantic-font-family-display);
+    font-weight: var(--semantic-font-weight-display);
+    line-height: var(--semantic-line-height-display);
+    text-wrap: balance;
+  }
+
+  h1 {
+    font-size: var(--semantic-font-size-hero);
+    letter-spacing: var(--semantic-letter-spacing-hero);
+    max-width: var(--semantic-measure-display);
+  }
+
+  h2 {
+    font-size: var(--semantic-font-size-section);
+    letter-spacing: var(--semantic-letter-spacing-hero);
+  }
+
+  h3 {
+    font-size: var(--semantic-font-size-title-lg);
+    letter-spacing: var(--semantic-letter-spacing-display);
+  }
+
+  p {
+    max-width: var(--semantic-measure-prose);
+  }
+
+  :focus-visible {
+    outline: var(--semantic-focus-width) solid var(--semantic-color-focus);
+    outline-offset: var(--semantic-focus-offset);
+  }
+}

@@ -1,0 +1,49 @@
+@layer syx.tokens {
+  // SEMANTIC — layout and space
+  //
+  // One container system for the whole site. `--semantic-pad-*` are complete
+  // padding-inline values: they hold the gutter on small screens and centre the
+  // content once the viewport is wider than the cap, with no wrapper element.
+
+  :root {
+    --semantic-space-gutter: var(--primitive-gutter);
+
+    // 112rem is the cap the v22 sections already used and the one that read
+    // best in the wide render, so it becomes the site-wide content width
+    // instead of one of three competing answers.
+    --semantic-width-prose: var(--primitive-width-xs);
+    --semantic-width-narrow: var(--primitive-width-lg);
+    --semantic-width-content: var(--primitive-width-2xl);
+    --semantic-width-wide: var(--primitive-width-2xl);
+
+    --semantic-pad-content: max(
+      var(--semantic-space-gutter),
+      calc((100% - var(--semantic-width-content)) / 2)
+    );
+    --semantic-pad-wide: max(
+      var(--semantic-space-gutter),
+      calc((100% - var(--semantic-width-wide)) / 2)
+    );
+    --semantic-pad-narrow: max(
+      var(--semantic-space-gutter),
+      calc((100% - var(--semantic-width-narrow)) / 2)
+    );
+
+    // Vertical rhythm between blocks. Tighter than the old
+    // clamp(5rem, 9vw, 10rem): the wide render was mostly empty space.
+    --semantic-space-section: var(--primitive-space-5xl);
+    --semantic-space-section-compact: var(--primitive-space-4xl);
+    --semantic-space-block: var(--primitive-space-3xl);
+    --semantic-space-stack: var(--primitive-space-lg);
+    --semantic-space-inline: var(--primitive-space-sm);
+
+    // Measures. Apply to the element that sets the font-size, never to a wrapper.
+    --semantic-measure-display: var(--primitive-measure-display);
+    --semantic-measure-lede: var(--primitive-measure-lede);
+    --semantic-measure-prose: var(--primitive-measure-prose);
+
+    // Alias used by the existing stylesheets
+    --semantic-space-page-inline: var(--semantic-space-gutter);
+    --semantic-measure-copy: var(--semantic-measure-prose);
+  }
+}

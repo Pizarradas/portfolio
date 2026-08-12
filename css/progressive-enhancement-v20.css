@@ -186,8 +186,8 @@
 
   /* LARGE DESKTOP: stop uncontrolled stretching */
   @media (min-width:1720px){
-    .org-hero{padding-left:max(var(--pe-inline),calc((100vw - 112rem)/2));padding-right:max(var(--pe-inline),calc((100vw - 112rem)/2))}
-    .org-recruiter-scan{padding-left:max(0px,calc((100vw - 112rem)/2));padding-right:max(0px,calc((100vw - 112rem)/2))}
-    .org-work,.org-new-work,.org-tools,.org-case-index{padding-left:max(var(--pe-inline),calc((100vw - 112rem)/2));padding-right:max(var(--pe-inline),calc((100vw - 112rem)/2))}
+    .org-hero{padding-left:var(--semantic-pad-content);padding-right:var(--semantic-pad-content)}
+    .org-recruiter-scan{padding-left:var(--semantic-pad-content);padding-right:var(--semantic-pad-content)}
+    .org-work,.org-new-work,.org-tools,.org-case-index{padding-left:var(--semantic-pad-content);padding-right:var(--semantic-pad-content)}
   }
 }

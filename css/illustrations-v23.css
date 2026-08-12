@@ -18,7 +18,10 @@
 }
 @layer syx.organisms{
 .org-illustration-showcase{display:grid;gap:2rem;padding:clamp(4rem,8vw,8rem) var(--semantic-space-page-inline);background:#fff;border-bottom:1px solid var(--ill-line)}
-.org-illustration-showcase__intro h2{font:600 clamp(3rem,10vw,5.8rem)/.9 var(--semantic-font-family-display);letter-spacing:-.06em;margin:.6rem 0 1.2rem}
+/* This heading sits in a narrow sticky column, so it takes the title step and
+   not the full section step: at 10vw the word "recognisable" was wider than the
+   column and broke mid-word on anything below ~1800px. */
+.org-illustration-showcase__intro h2{font:var(--semantic-font-weight-display) var(--semantic-font-size-title-lg)/var(--semantic-line-height-display) var(--semantic-font-family-display);letter-spacing:var(--semantic-letter-spacing-hero);margin:.6rem 0 1.2rem}
 .org-illustration-showcase__intro>p:last-of-type{max-width:42rem;color:var(--semantic-color-text-secondary)}
 .org-illustration-showcase__gallery{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
 .org-illustration-showcase__gallery .mol-ill-card--large{grid-column:1/-1}
@@ -58,7 +61,7 @@
  .mol-ill-principles{grid-template-columns:1fr 1fr}
 }
 @media(min-width:1200px){
- .org-illustration-showcase,.org-illustration-case__hero,.org-illustration-case__statement,.org-illustration-case__system,.org-illustration-case__closing{padding-left:max(4rem,calc((100vw - 112rem)/2));padding-right:max(4rem,calc((100vw - 112rem)/2))}
+ .org-illustration-showcase,.org-illustration-case__hero,.org-illustration-case__statement,.org-illustration-case__system,.org-illustration-case__closing{padding-left:var(--semantic-pad-content);padding-right:var(--semantic-pad-content)}
  .org-illustration-showcase__gallery{grid-template-columns:repeat(4,1fr)}
  .org-illustration-showcase__gallery .mol-ill-card--large{grid-column:span 2}
  .org-illustration-case__mosaic{grid-template-columns:repeat(5,1fr)}
