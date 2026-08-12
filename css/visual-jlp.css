@@ -8,28 +8,10 @@
     --component-rule-color:var(--semantic-color-border);
   }
 }
-@layer syx.atoms {
-  .atom-media-label{
-    position:absolute;z-index:4;left:1rem;top:1rem;display:flex;gap:.75rem;align-items:center;
-    padding:.5rem .65rem;background:var(--component-media-label-bg);color:var(--component-media-label-color);
-    border:1px solid var(--component-media-border);font-family:var(--semantic-font-family-ui);font-size:.66rem;line-height:1;
-    letter-spacing:.06em;text-transform:uppercase;backdrop-filter:blur(10px)
-  }
-  .atom-media-label b{font-weight:700;color:var(--semantic-color-primary)}
-  .atom-media-label span{color:var(--semantic-color-text-muted)}
-  .atom-media-label--inverse{background:rgba(8,15,47,.78);border-color:rgba(255,255,255,.22);color:#fff}
-  .atom-media-label--inverse b{color:#fff}.atom-media-label--inverse span{color:rgba(255,255,255,.65)}
-}
 @layer syx.molecules {
   .mol-project-card__visual{border-radius:var(--component-media-radius)!important;box-shadow:none!important;border:1px solid var(--component-media-border)}
   .mol-project-card__visual::after{display:none!important}
   .mol-project-card__visual img{filter:none!important}
-  .mol-project-card__visual--report{background:var(--semantic-color-surface-alt)}
-  .map-visual{background:linear-gradient(145deg,var(--primitive-color-brand-950),var(--primitive-color-ink-1000))!important}
-  .map-visual__country{color:var(--semantic-color-on-primary)}
-  .map-pin{background:var(--semantic-color-primary)!important;box-shadow:0 0 0 .34rem rgba(30,58,255,.16)!important}
-  .map-pin--2{background:var(--semantic-color-accent-cyan)!important}
-  .map-pin--4{background:var(--semantic-color-accent-violet)!important}
 }
 @layer syx.organisms {
   /* The header surface now comes from the glass mixin in the foundation.
@@ -37,15 +19,9 @@
      plain 92% tint with no blur tint or sheen. */
   .org-hero{min-height:92svh}
   .org-hero h1{max-width:14ch;font-size:clamp(4rem,8.2vw,8.6rem)}
-  .org-hero::before{width:clamp(2.75rem,5vw,5rem);height:.22rem}
-  .org-system-story::after{color:rgba(255,255,255,.022)}
-  .org-case-snippet--map{background:var(--semantic-color-primary)!important}
-  .org-case-snippet--map .mol-process span{border-color:rgba(255,255,255,.45);color:#fff}
-  .org-case-snippet--map .atom-eyebrow,.org-case-snippet--map h2{color:#fff}
-  .org-metrics strong{color:var(--semantic-color-text)}
+  .org-hero::before{width:clamp(2.75rem,5vw,5rem);height:.22rem}.org-case-snippet--map .atom-eyebrow{color:#fff}
   .org-case-hero h1{max-width:13ch}
-  .mol-case-hero-visual{background:var(--primitive-color-brand-950)!important}
 }
 @layer syx.utilities {
-  @media (max-width:700px){.atom-media-label{left:.65rem;top:.65rem}.org-hero h1{font-size:clamp(3.3rem,14vw,5.4rem)}}
+  @media (max-width:700px){.org-hero h1{font-size:clamp(3.3rem,14vw,5.4rem)}}
 }

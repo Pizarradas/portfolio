@@ -7,20 +7,7 @@
   }
 }
 @layer syx.molecules {
-  .mol-visual-proof{margin-top:3rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.22)}
-  .mol-visual-proof__intro{display:grid;grid-template-columns:8rem 1fr;gap:1rem;margin-bottom:1.3rem;align-items:start}
-  .mol-visual-proof__intro span{font:600 .65rem/1 var(--semantic-font-family-ui);letter-spacing:.12em;color:var(--semantic-color-primary);text-transform:uppercase}
   .org-case-section--dark .mol-visual-proof__intro span{color:#fff}
-  .mol-visual-proof__intro strong{font-family:var(--semantic-font-family-display);font-size:1.25rem;line-height:1.1}
-  .mol-header-strip-grid{display:grid;gap:.65rem}
-  .mol-header-strip-grid figure{margin:0;background:#fff;border:1px solid rgba(255,255,255,.2);overflow:hidden}
-  .mol-header-strip-grid figcaption{padding:.45rem .6rem;color:#111827;font:600 .62rem/1 var(--semantic-font-family-ui);text-transform:uppercase;letter-spacing:.09em;background:#fff;border-bottom:1px solid #e6e8ef}
-  .mol-header-strip-grid img{display:block;width:100%;height:auto}
-  .mol-storybook-detail{margin:0;border:1px solid var(--semantic-color-border);background:var(--semantic-color-surface-alt);padding:.8rem}
-  .mol-storybook-detail img{display:block;width:100%;max-height:36rem;object-fit:contain;background:#fff}
-  .mol-storybook-detail figcaption{padding-top:.6rem;font-size:.7rem;color:var(--semantic-color-text-muted)}
-  .mol-source-evidence{margin-top:1rem;border-top:1px solid var(--semantic-color-border)}
-  .mol-source-evidence summary{cursor:pointer;padding:1rem 0;font:600 .75rem/1 var(--semantic-font-family-ui);color:var(--semantic-color-primary);text-transform:uppercase;letter-spacing:.08em}
 }
 @layer syx.organisms {
   .org-system-preview{position:relative;width:100%;background:var(--component-system-preview-bg);border:1px solid var(--component-system-preview-border);padding:clamp(.8rem,1.8vw,1.4rem);overflow:hidden}
@@ -38,20 +25,13 @@
   .org-system-preview__foundation i{display:inline-block;width:1rem;height:1rem;border-radius:50%;background:var(--semantic-color-primary)}
   .org-system-preview__foundation i:nth-child(2){background:var(--semantic-color-accent-cyan)}
   .org-system-preview__foundation i:nth-child(3){background:var(--semantic-color-accent-violet)}
-  .org-case-system-hero{padding:clamp(1.25rem,4vw,4rem);background:var(--primitive-color-brand-950)}
   .org-case-system-hero .org-system-preview{max-width:90rem;margin:auto;background:#fff}
-  .org-implementation-proof{margin-top:4rem;display:grid;grid-template-columns:minmax(13rem,.55fr) minmax(0,1.45fr);gap:2rem;padding-top:2rem;border-top:1px solid var(--semantic-color-border)}
-  .org-implementation-proof__copy h3{font-family:var(--semantic-font-family-display);font-size:clamp(1.7rem,2.8vw,2.8rem);line-height:1;letter-spacing:-.04em;margin:.5rem 0 1rem}
-  .org-implementation-proof__copy p:last-child{font-size:.9rem;color:var(--semantic-color-text-secondary)}
-  .org-implementation-proof .mol-source-evidence{grid-column:1/-1}
 }
 @layer syx.utilities {
   @media(max-width:800px){
     .org-system-preview__stack{grid-template-columns:1fr}
     .org-system-preview__foundation{grid-template-columns:1fr 1fr}
     .org-system-preview__foundation>span:nth-child(2){border-right:0}
-    .org-implementation-proof{grid-template-columns:1fr}
-    .mol-visual-proof__intro{grid-template-columns:1fr}
   }
   @media(max-width:480px){.org-system-preview__foundation{grid-template-columns:1fr}.org-system-preview__foundation>span{border-right:0;border-bottom:1px solid var(--semantic-color-border)}}
 }

@@ -68,10 +68,6 @@
   .org-case-section{grid-template-columns:1fr;gap:1rem;padding:var(--mf-section) var(--mf-inline)}
   .org-case-section__heading h2{font-size:var(--mf-h2);line-height:.98}
   .org-case-section__content{grid-column:auto;font-size:.98rem;line-height:1.6;min-width:0}
-  .org-case-flow li{grid-template-columns:2.2rem 1fr}
-  .org-case-flow small{grid-column:2}
-  .org-bridge{grid-template-columns:1fr}
-  .org-ai-evolution{grid-template-columns:1fr}
   .org-case-next{grid-template-columns:1fr}
   .org-case-next a{min-height:8rem;padding:1.25rem var(--mf-inline);border-right:0;border-bottom:1px solid var(--component-case-rule)}
   .org-case-next a:last-child{text-align:left}
@@ -158,21 +154,15 @@
   /* Home */
   .org-hero{min-height:auto;padding:4.5rem var(--mf-inline) 3rem;gap:2rem}
   .org-hero h1{max-width:100%;font-size:var(--mf-title);line-height:.92}
-  .org-hero__footer{grid-template-columns:1fr;gap:1.5rem}
-  .org-selected-work,.org-new-work,.org-tools,.org-case-index{padding:var(--mf-section) var(--mf-inline)}
-  .org-selected-work__secondary,.org-new-work__grid,.org-tool-groups,.org-case-index__grid,.org-visual-craft{grid-template-columns:1fr}
+  .org-hero__footer{grid-template-columns:1fr;gap:1.5rem}.org-new-work,.org-tools,.org-case-index{padding:var(--mf-section) var(--mf-inline)}.org-case-index__grid{grid-template-columns:1fr}
   .org-system-preview__stack{grid-template-columns:1fr}
   .org-system-preview__foundation{grid-template-columns:1fr 1fr}
-  .mol-new-project{grid-template-rows:minmax(15rem,65vw) auto}
-  .mol-new-project__body h3{font-size:2rem}
-  .org-visual-craft__intro h2{font-size:var(--mf-h2)}
 
   /* Other case coded heroes */
   .org-coded-hero{padding:1rem}
   .mol-worldcup-stage,.mol-atlas-architecture{min-height:22rem;padding:1.25rem}
   .mol-worldcup-stage>strong{font-size:clamp(6rem,34vw,9rem)}
   .mol-atlas-architecture>strong{font-size:2.5rem}
-  .mol-map-proof__flow{grid-template-columns:1fr}.mol-map-proof__flow i{transform:rotate(90deg);justify-self:center}
 }
 
 /* Progressive enhancement from tablet upward */

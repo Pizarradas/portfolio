@@ -20,25 +20,13 @@
   a:hover { color: var(--component-link-hover-color); }
 }
 
-@layer syx.molecules {
-  /* Deliberately the deep brand navy, not the neutral ink the foundation
-     uses for inverse surfaces. */
-  .mol-project-card__visual--map {
+@layer syx.molecules {/* Deliberately the deep brand navy{
     background: var(--semantic-color-surface-night);
     color: var(--semantic-color-on-primary);
   }
 }
 
 @layer syx.organisms {
-  .org-system-story {
-    background: var(--semantic-color-surface-night) !important;
-    color: var(--semantic-color-on-primary);
-  }
-
-  .org-case-snippet--map {
-    background: var(--semantic-color-primary) !important;
-    color: var(--semantic-color-on-primary);
-  }
 
   .org-case-snippet--map .atom-eyebrow { color: var(--semantic-color-on-primary); }
 

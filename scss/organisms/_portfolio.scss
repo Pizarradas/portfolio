@@ -292,6 +292,17 @@
     }
   }
 
+  // Self-directed registers — one per row
+  //
+  // This grid had six definitions across five stylesheets. Four of them said
+  // two columns, and the newest forced one column back with three !important
+  // declarations. One rule, no !important: each register is a full row because
+  // each one carries a live preview that has to stay legible.
+  .org-new-work__grid {
+    display: grid;
+    gap: var(--primitive-space-lg);
+  }
+
   // Interactive media map — product decision
   //
   // The brand-blue ground comes from `.syx-on-brand` on the section rather than

@@ -8,26 +8,12 @@
     --component-media-viewer-height: clamp(25rem, 58vw, 52rem);
   }
 }
-@layer syx.atoms {
-  .atom-media-action {
-    appearance:none;border:1px solid var(--semantic-color-border);background:var(--semantic-color-surface);
-    color:var(--semantic-color-text-secondary);font:600 .68rem/1 var(--semantic-font-family-ui);
-    padding:.48rem .62rem;border-radius:.2rem;cursor:pointer;transition:.15s ease;
-  }
-  .atom-media-action:hover,.atom-media-action:focus-visible{border-color:var(--semantic-color-primary);color:var(--semantic-color-primary)}
-}
 @layer syx.molecules {
   .mol-media-viewer{
     position:relative;display:grid;grid-template-rows:auto 1fr;width:100%;
     border:1px solid var(--component-media-viewer-border);border-radius:var(--component-media-viewer-radius);
     overflow:hidden;background:var(--component-media-viewer-bg);box-shadow:0 1.25rem 4rem rgba(8,15,26,.06);
   }
-  .mol-media-viewer__toolbar{
-    display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:2.8rem;padding:.55rem .7rem;
-    background:var(--component-media-viewer-toolbar-bg);border-bottom:1px solid var(--component-media-viewer-border);
-    font:600 .67rem/1 var(--semantic-font-family-ui);letter-spacing:.08em;text-transform:uppercase;color:var(--semantic-color-text-muted)
-  }
-  .mol-media-viewer__actions{display:flex;gap:.35rem}
   .mol-media-viewer__viewport{
     width:100%;height:var(--component-media-viewer-height);overflow:auto;overscroll-behavior:contain;
     display:grid;place-items:start center;padding:clamp(.75rem,1.8vw,1.5rem);background:var(--component-media-viewer-bg);
@@ -56,7 +42,6 @@
     .mol-media-viewer__viewport{place-items:start left}
     .mol-media-viewer.is-fit .mol-media-viewer__viewport img{width:100%!important}
     .mol-media-viewer.is-actual .mol-media-viewer__viewport img{width:1000px!important}
-    .mol-media-viewer__toolbar>span{max-width:11rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   }
-  @media (prefers-reduced-motion:reduce){.mol-media-viewer__viewport img,.atom-media-action{transition:none}}
+  @media (prefers-reduced-motion:reduce){.mol-media-viewer__viewport img{transition:none}}
 }

@@ -1,25 +1,15 @@
 
 @layer syx.atoms{
-.atom-tool-mark{display:grid;place-items:center;width:1.6rem;height:1.6rem;border:1px solid var(--semantic-color-border);border-radius:.18rem;background:var(--semantic-color-surface-alt);color:var(--semantic-color-text);font:700 .52rem/1 var(--semantic-font-family-ui);letter-spacing:-.02em;flex:0 0 auto}
 .atom-case-link{display:inline-flex;margin-top:1.25rem;color:var(--semantic-color-primary);font:600 .74rem/1 var(--semantic-font-family-ui);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:.18rem}
 .atom-research-table{width:100%;border-collapse:collapse;font:500 clamp(.56rem,.76vw,.72rem)/1.25 var(--semantic-font-family-ui);background:#fff}
 .atom-research-table th,.atom-research-table td{padding:.7rem .6rem;text-align:left;border-bottom:1px solid var(--semantic-color-border)}
 .atom-research-table th{font-size:.55rem;text-transform:uppercase;letter-spacing:.08em;color:var(--semantic-color-text-muted)}
 .atom-research-table td:last-child{text-align:right}.atom-research-table b{font-family:var(--semantic-font-family-display);font-size:1rem;color:var(--semantic-color-primary)}
 }
-@layer syx.molecules{
-.mol-project-card__visual--research-coded,.mol-project-card__visual--map-coded{display:grid!important;place-items:center;padding:clamp(.8rem,2vw,1.5rem)!important;background:var(--semantic-color-surface-alt)!important;text-decoration:none!important}
-.mol-research-proof{width:100%;max-width:44rem;border:1px solid var(--semantic-color-border);background:#fff;box-shadow:0 1rem 3rem rgba(8,15,26,.05)}
-.mol-research-proof__head,.mol-map-proof__head{display:flex;justify-content:space-between;gap:1rem;align-items:baseline;padding:.8rem;border-bottom:1px solid var(--semantic-color-border)}
-.mol-research-proof__head span,.mol-map-proof__head span{font:600 .56rem/1 var(--semantic-font-family-ui);letter-spacing:.1em;color:var(--semantic-color-primary)}
-.mol-research-proof__head strong,.mol-map-proof__head strong{font-family:var(--semantic-font-family-display);font-size:1.12rem;letter-spacing:-.03em}
+@layer syx.molecules{.mol-project-card__visual--research-coded{display:grid!important;place-items:center;padding:clamp(.8rem,2vw,1.5rem)!important;background:var(--semantic-color-surface-alt)!important;text-decoration:none!important}
+.mol-research-proof{width:100%;max-width:44rem;border:1px solid var(--semantic-color-border);background:#fff;box-shadow:0 1rem 3rem rgba(8,15,26,.05)}.mol-research-proof__head{display:flex;justify-content:space-between;gap:1rem;align-items:baseline;padding:.8rem;border-bottom:1px solid var(--semantic-color-border)}.mol-research-proof__head span{font:600 .56rem/1 var(--semantic-font-family-ui);letter-spacing:.1em;color:var(--semantic-color-primary)}.mol-research-proof__head strong{font-family:var(--semantic-font-family-display);font-size:1.12rem;letter-spacing:-.03em}
 .mol-research-bars{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;padding:.8rem;background:var(--semantic-color-surface-alt)}
 .mol-research-bars span{display:grid;gap:.3rem;font:600 .66rem/1 var(--semantic-font-family-ui)}.mol-research-bars i{display:block;width:var(--value);max-width:100%;height:.32rem;background:var(--semantic-color-primary)}
-.mol-map-proof{width:100%;max-width:47rem;border:1px solid rgba(255,255,255,.2);background:#080f2f;color:#fff}
-.mol-map-proof__head{border-bottom-color:rgba(255,255,255,.15)}.mol-map-proof__head span{color:#fff}.mol-map-proof__head strong{color:#fff}
-.mol-map-proof__flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;align-items:center;gap:.5rem;padding:1rem;border-bottom:1px solid rgba(255,255,255,.15)}
-.mol-map-proof__flow span{display:flex;flex-direction:column;font:600 .7rem/1.25 var(--semantic-font-family-ui)}.mol-map-proof__flow b{color:#7187ff;font-size:.6rem}.mol-map-proof__flow small{opacity:.55;font-size:.58rem}.mol-map-proof__flow i{font-style:normal;opacity:.45}
-.mol-map-proof__canvas{position:relative;height:12rem;overflow:hidden;background:radial-gradient(circle at 50% 50%,rgba(30,58,255,.12),transparent 55%)}.mol-map-proof__canvas .map-shape{position:absolute;left:8%;top:5%;font:700 8rem/.8 var(--semantic-font-family-display);color:rgba(255,255,255,.055)}.mol-map-proof__canvas>i{position:absolute;left:var(--x);top:var(--y);width:.55rem;height:.55rem;border-radius:50%;background:#1e3aff;box-shadow:0 0 0 .35rem rgba(30,58,255,.14)}.mol-map-proof__canvas>i:nth-of-type(even){background:#00c8ff}
 }
 @layer syx.organisms{
 .org-case-index{padding:var(--semantic-space-section) var(--semantic-space-page-inline);border-bottom:1px solid var(--semantic-color-border)}
@@ -31,9 +21,8 @@
 .mol-worldcup-stage,.mol-atlas-architecture{max-width:90rem;min-height:32rem;margin:auto;padding:clamp(2rem,5vw,5rem);background:#080f2f;color:#fff;display:flex;flex-direction:column;justify-content:space-between}
 .mol-worldcup-stage>span{font:600 .65rem/1 var(--semantic-font-family-ui);letter-spacing:.15em}.mol-worldcup-stage>strong{font-family:var(--semantic-font-family-display);font-size:clamp(8rem,20vw,20rem);line-height:.65;letter-spacing:-.08em}.mol-worldcup-stage>p{max-width:38ch;font-size:1.15rem}.mol-worldcup-stage__tech{display:flex;gap:.5rem;flex-wrap:wrap}.mol-worldcup-stage__tech b{padding:.5rem .65rem;border:1px solid rgba(255,255,255,.28);font:600 .62rem/1 var(--semantic-font-family-ui)}
 .mol-atlas-architecture{background:#0b0b0d;align-items:center;text-align:center;justify-content:center;gap:1.4rem}.mol-atlas-architecture>span{font:700 1rem/1 var(--semantic-font-family-ui);letter-spacing:.2em;color:#7187ff}.mol-atlas-architecture>strong{font-family:var(--semantic-font-family-display);font-size:clamp(2.8rem,6vw,6rem);letter-spacing:-.05em}.mol-atlas-architecture>i{font-style:normal;font-size:2rem;opacity:.4}.mol-atlas-architecture>div{display:flex;gap:.7rem}.mol-atlas-architecture>div b{border:1px solid rgba(255,255,255,.3);padding:.7rem 1rem;letter-spacing:.1em}.mol-atlas-architecture>small{opacity:.6}
-.org-coded-hero--illustrations{background:var(--semantic-color-primary)}.org-coded-hero--illustrations figure{max-width:90rem;margin:auto;background:#fff;padding:1rem}.org-coded-hero--illustrations img{display:block;width:100%;height:auto;image-rendering:auto}.org-coded-hero--illustrations figcaption{padding-top:.7rem;font-size:.7rem;color:var(--semantic-color-text-muted)}
 }
 @layer syx.utilities{
-@media(max-width:850px){.org-case-index__grid{grid-template-columns:1fr 1fr}.mol-map-proof__flow{grid-template-columns:1fr}.mol-map-proof__flow i{transform:rotate(90deg);justify-self:center}}
+@media(max-width:850px){.org-case-index__grid{grid-template-columns:1fr 1fr}}
 @media(max-width:520px){.org-case-index__grid{grid-template-columns:1fr}.atom-research-table th:nth-child(2),.atom-research-table td:nth-child(2){display:none}.mol-research-bars{grid-template-columns:1fr}}
 }

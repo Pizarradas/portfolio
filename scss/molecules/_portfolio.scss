@@ -618,6 +618,266 @@
     }
   }
 
+  // Self-directed registers — one module for all three
+  //
+  // These three articles were three different components: the World Cup one
+  // was `.mol-new-project` (defined across eight stylesheets) wrapping
+  // `.mol-live-preview`, the other two were `.mol-project-hero-v27`. Same kind
+  // of content, two layout engines, so the space each one used was decided by
+  // whichever generation happened to win the cascade.
+  //
+  // The visible cost was the previews: only the v21 family was ever scaled by
+  // JS, so the v27 frames rendered their iframe at a fixed 1440x900 and simply
+  // clipped it — which is why two of the three showed a headline cut through
+  // the middle of a word. One module, one scaling contract, one rhythm.
+  .mol-register {
+    display: grid;
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
+    background: var(--semantic-color-surface);
+  }
+
+  .mol-register__media {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    min-width: 0;
+    background: var(--semantic-color-surface-inverse);
+  }
+
+  // The chrome states where the preview comes from. It is a real address, not
+  // a decorative browser bar, so it is set in mono and the link works.
+  .mol-register__chrome {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--primitive-space-sm);
+    padding: var(--primitive-space-2xs) var(--primitive-space-sm);
+    background: var(--semantic-color-surface-alt);
+    border-bottom: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+    font-family: var(--semantic-font-family-mono);
+    font-size: var(--semantic-font-size-caption);
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-register__chrome a {
+    flex: none;
+    color: var(--semantic-color-primary);
+    text-decoration: none;
+    font-family: var(--semantic-font-family-ui);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+  }
+
+  .mol-register__chrome a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+
+  .mol-register__frame {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: var(--component-register-ratio);
+    background: var(--semantic-color-surface-inverse);
+  }
+
+  // Scaled from JS: the iframe renders the source page at its real 1440px and
+  // is transformed down to fit, so the preview is the page rather than a crop
+  // of its top-left corner.
+  .mol-register__frame iframe {
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    border: 0;
+    transform-origin: 0 0;
+    pointer-events: none;
+    background: var(--semantic-color-surface-inverse);
+  }
+
+  .mol-register__fallback {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: var(--primitive-space-3xs);
+    margin: 0;
+    padding: var(--primitive-space-md);
+    color: var(--semantic-color-on-primary);
+  }
+
+  .mol-register__fallback strong {
+    font-family: var(--semantic-font-family-display);
+    font-size: var(--semantic-font-size-title);
+    line-height: var(--semantic-line-height-display);
+    letter-spacing: var(--semantic-letter-spacing-display);
+  }
+
+  .mol-register__fallback small {
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-eyebrow);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  .mol-register__copy {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: var(--component-register-pad);
+  }
+
+  // The reference is structural: these are numbered registers, and the number
+  // is how the section above refers to them. Set as a figure with its kind
+  // beside it rather than buried in an eyebrow string.
+  .mol-register__ref {
+    display: flex;
+    align-items: baseline;
+    gap: var(--primitive-space-xs);
+    margin: 0 0 var(--primitive-space-sm);
+    padding-bottom: var(--primitive-space-xs);
+    border-bottom: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+  }
+
+  .mol-register__ref b {
+    font-family: var(--semantic-font-family-display);
+    font-size: var(--semantic-font-size-title-sm);
+    line-height: 1;
+    letter-spacing: var(--semantic-letter-spacing-display);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mol-register__ref span {
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-eyebrow);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-register__copy h3 {
+    max-width: 15ch;
+    margin: 0 0 var(--primitive-space-sm);
+    font-size: var(--semantic-font-size-title);
+    line-height: var(--semantic-line-height-title);
+    letter-spacing: var(--semantic-letter-spacing-display);
+  }
+
+  .mol-register__copy h3 a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .mol-register__copy h3 a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 0.05em;
+    text-underline-offset: 0.12em;
+  }
+
+  .mol-register__lede {
+    max-width: var(--semantic-measure-prose);
+    margin: 0;
+    color: var(--semantic-color-text-secondary);
+    line-height: var(--semantic-line-height-body);
+  }
+
+  // Everything below the argument is pushed to the bottom of the column, so
+  // the copy meets the base of the preview instead of stopping two thirds of
+  // the way up and leaving the module half empty. This is the whole reason the
+  // section looked like it was wasting space.
+  .mol-register__foot {
+    display: grid;
+    gap: var(--primitive-space-md);
+    margin-top: auto;
+    padding-top: var(--primitive-space-lg);
+  }
+
+  // A spec list, not a row of pills. Four unlabelled chips said less than two
+  // labelled rows, and rows survive being read out of order.
+  .mol-register__spec {
+    margin: 0;
+    display: grid;
+    gap: var(--primitive-space-2xs);
+    border-top: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+    padding-top: var(--primitive-space-sm);
+  }
+
+  .mol-register__spec > div {
+    display: grid;
+    grid-template-columns: minmax(5rem, 7rem) minmax(0, 1fr);
+    gap: var(--primitive-space-sm);
+    align-items: baseline;
+  }
+
+  .mol-register__spec dt {
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-eyebrow);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-register__spec dd {
+    margin: 0;
+    font-size: var(--semantic-font-size-caption);
+    line-height: var(--semantic-line-height-body);
+  }
+
+  .mol-register__proof {
+    margin: 0;
+    font-size: var(--semantic-font-size-caption);
+    line-height: var(--semantic-line-height-body);
+    color: var(--semantic-color-text-secondary);
+  }
+
+  .mol-register__proof strong {
+    display: block;
+    color: var(--semantic-color-text);
+  }
+
+  .mol-register__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--primitive-space-md);
+    margin: 0;
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-ui);
+  }
+
+  .mol-register__links a {
+    text-decoration: none;
+    border-bottom: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+    padding-bottom: var(--primitive-space-3xs);
+  }
+
+  .mol-register__links a:hover {
+    border-bottom-color: currentColor;
+  }
+
+  @include from($bp-md) {
+    .mol-register {
+      grid-template-columns: minmax(0, 1.4fr) minmax(21rem, 1fr);
+      min-height: var(--component-register-min-height);
+    }
+
+    .mol-register__frame {
+      height: 100%;
+      aspect-ratio: auto;
+    }
+
+    // Alternate which side the evidence sits on. With three registers the
+    // middle one flips, which is enough to read as a rhythm without turning
+    // into a zigzag.
+    .mol-register:nth-of-type(even) .mol-register__media {
+      order: 2;
+    }
+  }
+
   // Interactive media map — the maintenance model, drawn twice
   //
   // Both panels hold the same country and the same 82 locations: on the left

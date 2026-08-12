@@ -24,24 +24,16 @@
     }
     .org-hero__footer{grid-template-columns:minmax(0,34rem) auto;gap:2rem}
     .org-hero .atom-lede{font-size:clamp(1.15rem,1.7vw,1.45rem);line-height:1.45}
-    .org-hero::before{display:block;right:var(--semantic-pad-survey)}
-
-    .org-work,.org-selected-work,.org-new-work,.org-tools,.org-case-index{padding-block:var(--pe-section)}
+    .org-hero::before{display:block;right:var(--semantic-pad-survey)}.org-work,.org-new-work,.org-tools,.org-case-index{padding-block:var(--pe-section)}
     .mol-section-heading{grid-template-columns:3.5rem minmax(0,1.2fr) minmax(16rem,.8fr);gap:1.5rem;align-items:start}
     .mol-section-heading p:last-child{grid-column:auto}
-    .mol-section-heading h2{font-size:clamp(2.8rem,5vw,4.5rem)}
-
-    .org-project-grid,.org-new-work__grid{grid-template-columns:1fr 1fr;gap:1.5rem}
+    .mol-section-heading h2{font-size:clamp(2.8rem,5vw,4.5rem)}.org-project-grid{grid-template-columns:1fr 1fr;gap:1.5rem}
     .org-case-index__grid{grid-template-columns:repeat(2,1fr)}
-    .org-visual-craft{grid-template-columns:.8fr 1.2fr}
 
     .org-system-preview__stack{grid-template-columns:1fr 1fr}
     .org-system-preview__foundation{grid-template-columns:repeat(4,1fr)}
     .mol-project-card__visual{min-height:28rem}
     .mol-project-card--featured .mol-project-card__visual{aspect-ratio:16/8.8}
-
-    .mol-new-project{grid-template-rows:minmax(22rem,42vw) auto}
-    .mol-new-project__body h3{font-size:clamp(2rem,3.2vw,3rem)}
 
     /* Case pages */
     .org-case42-hero h1{max-width:11ch;font-size:clamp(4.8rem,8vw,7.5rem)}
@@ -86,11 +78,9 @@
       align-items:end
     }
     .org-hero .atom-lede{font-size:clamp(1.35rem,1.45vw,1.8rem);line-height:1.45}
-    .org-hero::before{display:block;right:var(--semantic-pad-survey);top:calc(var(--component-header-height) + 3rem)}
-
-    /* Capability strip should read as one deliberate horizontal system */
+    .org-hero::before{display:block;right:var(--semantic-pad-survey);top:calc(var(--component-header-height) + 3rem)}/* Capability strip should read as one deliberate horizontal system */
     /* Section rhythm */
-    .org-work,.org-selected-work,.org-new-work,.org-tools,.org-case-index{
+    .org-work,.org-new-work,.org-tools,.org-case-index{
       padding-block:var(--pe-section)
     }
     /* inner 108rem cap removed: the section register is the only container */
@@ -130,12 +120,6 @@
     .org-project-grid{grid-template-columns:1fr 1fr;gap:clamp(2rem,3vw,3.5rem);margin-top:clamp(5rem,7vw,8rem)}
     .org-project-grid .mol-project-card__visual{min-height:31rem}
     .mol-project-card__body h3{font-size:clamp(2rem,2.4vw,3.2rem)}
-
-    .org-new-work__grid{grid-template-columns:1fr 1fr;gap:clamp(1.5rem,2.5vw,2.5rem)}
-    .mol-new-project{grid-template-rows:minmax(30rem,34vw) auto}
-    .mol-new-project__body h3{font-size:clamp(2.8rem,3.2vw,4.5rem)}
-
-    .org-visual-craft{grid-template-columns:.7fr 1.3fr;min-height:42rem}
     .org-case-index__grid{grid-template-columns:repeat(3,1fr)}
 
     /* 42DS: restore intentional two-column editorial layouts */
