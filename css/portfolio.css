@@ -238,6 +238,7 @@
       var(--semantic-space-gutter),
       calc((100% - var(--semantic-width-survey)) / 2)
     );
+    --semantic-pad-full: var(--semantic-space-gutter);
     --semantic-width-prose: var(--primitive-width-xs);
     --semantic-width-narrow: var(--primitive-width-lg);
     --semantic-width-content: var(--semantic-width-survey);
@@ -298,6 +299,7 @@
     --component-register-pad: clamp(1.25rem, 0.814516129rem + 1.935483871vw, 2.75rem);
     --component-register-min-height: clamp(21rem, 17.5161290323rem + 15.4838709677vw, 33rem);
     --component-work-frame-ratio: 16 / 10;
+    --component-work-row-min-height: clamp(30rem, 26vw, 44rem);
     --component-work-frame-ratio-featured: 16 / 7;
     --component-work-frame-ratio-featured-lg: 16 / 6;
     --component-work-frame-ratio-featured-sm: 1 / 1;
@@ -2474,6 +2476,10 @@
     --syx-register-width: var(--semantic-width-survey);
     padding-inline: var(--semantic-pad-survey);
   }
+  .syx-span-full {
+    --syx-register-width: calc(100% - 2 * var(--semantic-space-gutter));
+    padding-inline: var(--semantic-pad-full);
+  }
   @media (min-width: 107.5rem) {
     .syx-band {
       display: -ms-grid;
@@ -2532,6 +2538,70 @@
     .mol-section-heading.syx-bleed p:last-child {
       padding-top: var(--primitive-space-sm);
       border-top: var(--semantic-border-width-strong) solid var(--semantic-color-text);
+    }
+    .syx-span-full .org-project-grid {
+      -ms-grid-columns: minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--semantic-space-block);
+      margin-top: var(--semantic-space-block);
+    }
+    .syx-span-full .org-project-grid .mol-project-card {
+      -ms-grid-columns: minmax(0, 1.4fr) 0 minmax(26rem, 1fr);
+      grid-template-columns: minmax(0, 1.4fr) minmax(26rem, 1fr);
+      gap: 0;
+      min-height: var(--component-work-row-min-height);
+      border: var(--semantic-border-width) solid var(--semantic-color-border);
+      background: var(--semantic-color-surface);
+    }
+    .syx-span-full .org-project-grid .mol-project-card__frame {
+      height: 100%;
+      aspect-ratio: auto;
+      border: 0;
+      -webkit-border-end: var(--semantic-border-width) solid var(--semantic-color-border);
+              border-inline-end: var(--semantic-border-width) solid var(--semantic-color-border);
+    }
+    .syx-span-full .org-project-grid .mol-project-card__body {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+          -ms-flex-direction: column;
+              flex-direction: column;
+      padding: var(--component-register-pad);
+    }
+    .syx-span-full .org-project-grid .mol-project-card__takeaway {
+      margin-top: auto;
+    }
+    .syx-span-full .mol-evidence-study__panel {
+      max-width: 78rem;
+      margin-inline: auto;
+    }
+    .syx-span-full .org-project-grid .mol-project-card:nth-of-type(odd) {
+      -ms-grid-columns: minmax(26rem, 1fr) minmax(0, 1.4fr);
+      grid-template-columns: minmax(26rem, 1fr) minmax(0, 1.4fr);
+    }
+    .syx-span-full .org-project-grid .mol-project-card:nth-of-type(odd) .mol-project-card__frame {
+      -webkit-box-ordinal-group: 3;
+          -ms-flex-order: 2;
+              order: 2;
+      -webkit-border-end: 0;
+              border-inline-end: 0;
+      -webkit-border-start: var(--semantic-border-width) solid var(--semantic-color-border);
+              border-inline-start: var(--semantic-border-width) solid var(--semantic-color-border);
+    }
+    .syx-span-full .mol-project-card--featured .mol-project-card__frame {
+      aspect-ratio: auto;
+    }
+    .syx-span-full .mol-project-card--featured .mol-project-card__body {
+      -ms-grid-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 1fr);
+    }
+    .syx-span-full .mol-project-card--featured .mol-project-card__body h3 {
+      grid-row: auto;
+    }
+    .syx-span-full .mol-project-card--featured .mol-project-card__body p {
+      grid-column: auto;
     }
   }
   @media (max-width: 47.9375rem) {

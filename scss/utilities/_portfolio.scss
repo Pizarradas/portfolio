@@ -47,6 +47,15 @@
     padding-inline: var(--semantic-pad-survey);
   }
 
+  // No cap. A section in this register needs no band host either: its opener is
+  // already the width of the page, so `.syx-bleed` on the heading only has to
+  // carry the band's own styling and has nothing left to break out of.
+  .syx-span-full {
+    --syx-register-width: calc(100% - 2 * var(--semantic-space-gutter));
+
+    padding-inline: var(--semantic-pad-full);
+  }
+
   // Band host — a section whose opener runs the full width of the page.
   //
   // The register stops being padding and becomes three grid tracks: gutter,
@@ -179,6 +188,110 @@
       padding-top: var(--primitive-space-sm);
       border-top: var(--semantic-border-width-strong) solid
         var(--semantic-color-text);
+    }
+
+    // THE WORK MOSAIC
+    //
+    // One case per row, evidence on one side and the argument on the other,
+    // alternating — the shape the self-directed registers already use. Two
+    // cards side by side made the two smaller cases share a row and read as a
+    // pair of thumbnails; a row each gives every case the width of the page and
+    // gives the section one rhythm instead of two.
+    //
+    // Specificity again — v20 says `1fr 1fr` for this grid from the same layer,
+    // and loads after the compiled stylesheet.
+    .syx-span-full .org-project-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--semantic-space-block);
+      margin-top: var(--semantic-space-block);
+    }
+
+    .syx-span-full .org-project-grid .mol-project-card {
+      grid-template-columns: minmax(0, 1.4fr) minmax(26rem, 1fr);
+      gap: 0;
+      min-height: var(--component-work-row-min-height);
+      border: var(--semantic-border-width) solid var(--semantic-color-border);
+      background: var(--semantic-color-surface);
+    }
+
+    // The frame stops carrying a ratio and fills the row. Its own border drops
+    // to the single edge that faces the copy: the card owns the outline now.
+    .syx-span-full .org-project-grid .mol-project-card__frame {
+      height: 100%;
+      aspect-ratio: auto;
+      border: 0;
+      border-inline-end: var(--semantic-border-width) solid
+        var(--semantic-color-border);
+    }
+
+    .syx-span-full .org-project-grid .mol-project-card__body {
+      display: flex;
+      flex-direction: column;
+      padding: var(--component-register-pad);
+    }
+
+    // The outcome sits at the foot of the column, so the copy meets the base of
+    // the evidence beside it instead of stopping two thirds of the way up.
+    .syx-span-full .org-project-grid .mol-project-card__takeaway {
+      margin-top: auto;
+    }
+
+    // The study sheet stops growing before its columns do.
+    //
+    // The map is a surface and uses every pixel; the study is a document, and
+    // at 1800px its four columns stood a metre apart with the result stranded
+    // at the far edge. It takes the width a table of four columns can hold and
+    // the ruled field carries the rest — which is what the field was drawn for.
+    .syx-span-full .mol-evidence-study__panel {
+      max-width: 78rem;
+      margin-inline: auto;
+    }
+
+    // Alternate which side the evidence sits on. With the flagship banner above
+    // running the full width, flipping the first of the two rows is what turns
+    // three blocks into a rhythm.
+    //
+    // The track sizes flip with it. Reordering alone moved the evidence into
+    // the narrow column and handed the wide one to four lines of copy, which is
+    // the wrong way round: the evidence is the argument in this section.
+    .syx-span-full .org-project-grid .mol-project-card:nth-of-type(odd) {
+      grid-template-columns: minmax(26rem, 1fr) minmax(0, 1.4fr);
+    }
+
+    .syx-span-full
+      .org-project-grid
+      .mol-project-card:nth-of-type(odd)
+      .mol-project-card__frame {
+      order: 2;
+      border-inline-end: 0;
+      border-inline-start: var(--semantic-border-width) solid
+        var(--semantic-color-border);
+    }
+
+    // The flagship frame is the four mastheads and the two strips that box
+    // them: at full width that is already a fixed height, and a ratio on top of
+    // it would only inflate the claim panel to fill the difference.
+    .syx-span-full .mol-project-card--featured .mol-project-card__frame {
+      aspect-ratio: auto;
+    }
+
+    // Three columns under the flagship, not two.
+    //
+    // The two-column version put the lede in the middle and the takeaway under
+    // it, and both are capped at the prose measure — so at full width the right
+    // third of the card was empty. Title, argument and outcome each take a
+    // column and the row fills: the same three pieces of text, laid out as the
+    // three things they are.
+    .syx-span-full .mol-project-card--featured .mol-project-card__body {
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .syx-span-full .mol-project-card--featured .mol-project-card__body h3 {
+      grid-row: auto;
+    }
+
+    .syx-span-full .mol-project-card--featured .mol-project-card__body p {
+      grid-column: auto;
     }
   }
 

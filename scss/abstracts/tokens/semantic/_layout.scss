@@ -42,6 +42,13 @@
       calc((100% - var(--semantic-width-survey)) / 2)
     );
 
+    // A fourth register, and the only one with no cap: the page itself, minus
+    // its gutter. For a section whose content is the spatial relationship
+    // between whole blocks rather than anything to be read — the work mosaic —
+    // where the cap was leaving 700px of empty page either side on a wide
+    // display and making three cases look like three small cards.
+    --semantic-pad-full: var(--semantic-space-gutter);
+
     // Names the existing stylesheets already reference. They keep the values
     // they had, so nothing shifts implicitly: a section changes width when it
     // is given a register in the markup, and only then.
