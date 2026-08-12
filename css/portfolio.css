@@ -621,6 +621,83 @@
     font-size: var(--semantic-font-size-ui);
     line-height: var(--semantic-line-height-ui);
   }
+  .mol-practice-list {
+    list-style: none;
+    margin: var(--primitive-space-md) 0 0;
+    padding: 0;
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+  }
+  .mol-practice-list li {
+    padding: var(--primitive-space-md) 0;
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
+  }
+  .mol-practice-list b {
+    display: block;
+    font-family: var(--semantic-font-family-display);
+    font-size: var(--semantic-font-size-title-sm);
+    font-weight: var(--semantic-font-weight-display);
+    letter-spacing: var(--primitive-letter-spacing-tight);
+    line-height: var(--semantic-line-height-title);
+  }
+  .mol-practice-list span {
+    display: block;
+    margin-top: var(--primitive-space-3xs);
+    max-width: var(--semantic-measure-lede);
+    color: var(--semantic-color-text-secondary);
+    font-size: var(--semantic-font-size-ui);
+    line-height: var(--semantic-line-height-ui);
+  }
+  .mol-mark-group {
+    margin-top: var(--primitive-space-lg);
+  }
+  .mol-mark-group h3 {
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-caption);
+    font-weight: var(--primitive-font-weight-black);
+    letter-spacing: var(--primitive-letter-spacing-wider);
+    text-transform: uppercase;
+    color: var(--semantic-color-text-muted);
+    padding-bottom: var(--primitive-space-xs);
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
+  }
+  .mol-mark-group ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--primitive-space-xs);
+    margin: var(--primitive-space-sm) 0 0;
+    padding: 0;
+  }
+  .mol-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--primitive-space-xs);
+    padding: var(--primitive-space-2xs) var(--primitive-space-sm) var(--primitive-space-2xs) var(--primitive-space-xs);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
+    border-radius: var(--semantic-radius-pill);
+    color: var(--semantic-color-text-secondary);
+    transition: color var(--semantic-duration-hover) var(--semantic-ease), border-color var(--semantic-duration-hover) var(--semantic-ease);
+  }
+  .mol-mark svg {
+    width: 1.15rem;
+    height: 1.15rem;
+    fill: currentColor;
+    flex: none;
+  }
+  .mol-mark span {
+    font-size: var(--semantic-font-size-ui);
+    font-weight: var(--primitive-font-weight-medium);
+    white-space: nowrap;
+  }
+  .mol-mark:hover {
+    color: var(--semantic-color-primary);
+    border-color: var(--semantic-color-primary);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mol-mark {
+      transition: none;
+    }
+  }
   .mol-contact-list {
     list-style: none;
     margin: var(--primitive-space-3xs) 0 0;
@@ -709,6 +786,81 @@
     gap: var(--primitive-space-xl);
     align-items: end;
   }
+  .org-capability-scan {
+    display: grid;
+    border-block: var(--semantic-border-width) solid var(--semantic-color-border);
+  }
+  .org-capability-scan a {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--primitive-space-sm);
+    padding: var(--primitive-space-sm) var(--semantic-space-gutter);
+    text-decoration: none;
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
+    transition: background var(--semantic-duration-hover) var(--semantic-ease), color var(--semantic-duration-hover) var(--semantic-ease);
+  }
+  .org-capability-scan a:last-child {
+    border-bottom: 0;
+  }
+  .org-capability-scan b {
+    font-family: var(--semantic-font-family-display);
+    font-size: var(--semantic-font-size-title-sm);
+    font-weight: var(--semantic-font-weight-display);
+    letter-spacing: var(--primitive-letter-spacing-tight);
+    line-height: var(--primitive-line-height-tight);
+  }
+  .org-capability-scan span {
+    font-size: var(--semantic-font-size-caption);
+    font-weight: var(--primitive-font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: var(--primitive-letter-spacing-wide);
+    text-align: right;
+    color: var(--semantic-color-text-muted);
+    transition: color var(--semantic-duration-hover) var(--semantic-ease);
+  }
+  .org-capability-scan b {
+    white-space: nowrap;
+  }
+  .org-capability-scan a:hover {
+    background: var(--semantic-color-primary);
+    color: var(--semantic-color-on-primary);
+  }
+  .org-capability-scan a:hover span {
+    color: var(--semantic-color-on-primary);
+  }
+  @media (min-width: 48rem) {
+    .org-capability-scan {
+      grid-template-columns: repeat(5, 1fr);
+      padding-inline: var(--semantic-pad-content);
+    }
+    .org-capability-scan a {
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: space-between;
+      gap: var(--primitive-space-lg);
+      min-height: 9.5rem;
+      padding: var(--primitive-space-md) var(--primitive-space-lg);
+      border-bottom: 0;
+      border-right: var(--semantic-border-width) solid var(--semantic-color-border);
+    }
+    .org-capability-scan span {
+      text-align: left;
+    }
+    .org-capability-scan a:first-child {
+      padding-left: 0;
+    }
+    .org-capability-scan a:last-child {
+      border-right: 0;
+      padding-right: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .org-capability-scan a,
+    .org-capability-scan span {
+      transition: none;
+    }
+  }
   .org-work {
     padding-block: var(--semantic-space-section);
   }
@@ -735,6 +887,22 @@
     max-width: var(--semantic-measure-prose);
     color: var(--semantic-color-text-secondary);
     font-size: var(--semantic-font-size-body-lg);
+  }
+  .org-stack {
+    display: grid;
+    gap: var(--semantic-space-block);
+  }
+  .org-stack__practice .atom-eyebrow,
+  .org-stack__marks .atom-eyebrow {
+    display: block;
+    color: var(--semantic-color-text-muted);
+  }
+  @media (min-width: 48rem) {
+    .org-stack {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: var(--semantic-space-section-compact);
+      align-items: start;
+    }
   }
   .org-contact {
     padding-block: var(--semantic-space-section-compact) var(--semantic-space-section);
@@ -841,10 +1009,8 @@
   }
   @media (max-width: 47.9375rem) {
     .mol-section-heading {
-      grid-template-columns: 2rem 1fr;
-    }
-    .mol-section-heading p:last-child {
-      grid-column: 2;
+      grid-template-columns: 1fr;
+      gap: var(--primitive-space-sm);
     }
   }
   @media (max-width: 29.9375rem) {

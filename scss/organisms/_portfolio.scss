@@ -57,6 +57,104 @@
     align-items: end;
   }
 
+  // The capability map: the first thing after the hero and, until now, five
+  // spans of dead grey text defined across four stylesheets. Each cell is a
+  // link to the case it names, and the capability word carries the weight.
+  .org-capability-scan {
+    display: grid;
+    border-block: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+  }
+
+  // On small screens the five cells stack, so they are compact rows rather
+  // than tall blocks: as columns they added 640px of scroll on their own.
+  .org-capability-scan a {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--primitive-space-sm);
+    padding: var(--primitive-space-sm) var(--semantic-space-gutter);
+    text-decoration: none;
+    border-bottom: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+    transition: background var(--semantic-duration-hover) var(--semantic-ease),
+      color var(--semantic-duration-hover) var(--semantic-ease);
+  }
+
+  .org-capability-scan a:last-child {
+    border-bottom: 0;
+  }
+
+  .org-capability-scan b {
+    font-family: var(--semantic-font-family-display);
+    font-size: var(--semantic-font-size-title-sm);
+    font-weight: var(--semantic-font-weight-display);
+    letter-spacing: var(--primitive-letter-spacing-tight);
+    line-height: var(--primitive-line-height-tight);
+  }
+
+  .org-capability-scan span {
+    font-size: var(--semantic-font-size-caption);
+    font-weight: var(--primitive-font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: var(--primitive-letter-spacing-wide);
+    text-align: right;
+    color: var(--semantic-color-text-muted);
+    transition: color var(--semantic-duration-hover) var(--semantic-ease);
+  }
+
+  .org-capability-scan b {
+    white-space: nowrap;
+  }
+
+  .org-capability-scan a:hover {
+    background: var(--semantic-color-primary);
+    color: var(--semantic-color-on-primary);
+  }
+
+  .org-capability-scan a:hover span {
+    color: var(--semantic-color-on-primary);
+  }
+
+  @include from($bp-md) {
+    .org-capability-scan {
+      grid-template-columns: repeat(5, 1fr);
+      padding-inline: var(--semantic-pad-content);
+    }
+
+    .org-capability-scan a {
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: space-between;
+      gap: var(--primitive-space-lg);
+      min-height: 9.5rem;
+      padding: var(--primitive-space-md) var(--primitive-space-lg);
+      border-bottom: 0;
+      border-right: var(--semantic-border-width) solid
+        var(--semantic-color-border);
+    }
+
+    .org-capability-scan span {
+      text-align: left;
+    }
+
+    .org-capability-scan a:first-child {
+      padding-left: 0;
+    }
+
+    .org-capability-scan a:last-child {
+      border-right: 0;
+      padding-right: 0;
+    }
+  }
+
+  @include reduced-motion {
+    .org-capability-scan a,
+    .org-capability-scan span {
+      transition: none;
+    }
+  }
+
   .org-work {
     padding-block: var(--semantic-space-section);
   }
@@ -87,6 +185,25 @@
     max-width: var(--semantic-measure-prose);
     color: var(--semantic-color-text-secondary);
     font-size: var(--semantic-font-size-body-lg);
+  }
+
+  .org-stack {
+    display: grid;
+    gap: var(--semantic-space-block);
+  }
+
+  .org-stack__practice .atom-eyebrow,
+  .org-stack__marks .atom-eyebrow {
+    display: block;
+    color: var(--semantic-color-text-muted);
+  }
+
+  @include from($bp-md) {
+    .org-stack {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: var(--semantic-space-section-compact);
+      align-items: start;
+    }
   }
 
   .org-contact {

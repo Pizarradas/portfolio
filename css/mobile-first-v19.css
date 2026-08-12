@@ -157,7 +157,6 @@
   .org-hero__footer{grid-template-columns:1fr;gap:1.5rem}
   .org-selected-work,.org-new-work,.org-tools,.org-case-index{padding:var(--mf-section) var(--mf-inline)}
   .org-selected-work__secondary,.org-new-work__grid,.org-tool-groups,.org-case-index__grid,.org-visual-craft{grid-template-columns:1fr}
-  .org-recruiter-scan{grid-template-columns:1fr 1fr}
   .org-system-preview__stack{grid-template-columns:1fr}
   .org-system-preview__foundation{grid-template-columns:1fr 1fr}
   .mol-new-project{grid-template-rows:minmax(15rem,65vw) auto}

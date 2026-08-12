@@ -22,9 +22,6 @@
   .mol-capability-row{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.4rem}.mol-capability-row span{border:1px solid var(--semantic-color-border);padding:.45rem .55rem;font-size:.65rem;text-transform:uppercase;letter-spacing:.07em}
 }
 @layer syx.organisms {
-  .org-recruiter-scan{display:grid;grid-template-columns:repeat(5,1fr);border-block:1px solid var(--semantic-color-border);background:var(--semantic-color-surface)}
-  .org-recruiter-scan span{min-height:5rem;padding:.8rem var(--semantic-space-page-inline);border-right:1px solid var(--semantic-color-border);display:flex;flex-direction:column;justify-content:center;font-size:.7rem;color:var(--semantic-color-text-muted)}
-  .org-recruiter-scan span:last-child{border-right:0}.org-recruiter-scan b{font-family:var(--semantic-font-family-display);font-size:1rem;color:var(--semantic-color-text);letter-spacing:-.03em;margin-bottom:.2rem}
   .org-new-work{padding:var(--semantic-space-section) var(--semantic-space-page-inline);border-bottom:1px solid var(--semantic-color-border)}
   .org-new-work__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1rem,2vw,1.5rem);margin-top:clamp(3rem,6vw,6rem)}
   .org-visual-craft{display:grid;grid-template-columns:.72fr 1.28fr;min-height:34rem;border-bottom:1px solid var(--semantic-color-border)}
@@ -36,6 +33,6 @@
   .org-visual-craft__placeholder strong{font-family:var(--semantic-font-family-display);font-size:clamp(3rem,6vw,7rem);line-height:.85;letter-spacing:-.06em}
 }
 @layer syx.utilities {
-  @media(max-width:900px){.org-recruiter-scan{grid-template-columns:1fr 1fr}.org-recruiter-scan span{border-bottom:1px solid var(--semantic-color-border)}.org-new-work__grid,.org-visual-craft{grid-template-columns:1fr}.mol-new-project{grid-template-rows:minmax(19rem,55vw) auto}}
-  @media(max-width:520px){.org-recruiter-scan{grid-template-columns:1fr}.org-new-work{padding-inline:1rem}.mol-new-project__visual>strong{font-size:7rem}}
+  @media(max-width:900px){.org-new-work__grid,.org-visual-craft{grid-template-columns:1fr}.mol-new-project{grid-template-rows:minmax(19rem,55vw) auto}}
+  @media(max-width:520px){.org-new-work{padding-inline:1rem}.mol-new-project__visual>strong{font-size:7rem}}
 }

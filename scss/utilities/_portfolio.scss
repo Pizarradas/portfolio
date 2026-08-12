@@ -30,12 +30,13 @@
   }
 
   @include until($bp-md) {
+    // Stack outright. A 2rem index column was fine when the index was "01";
+    // now that it reads "Work" or "Self-directed" it rendered one letter per
+    // line. This lives in the utilities layer, so it beat the molecule rule
+    // that already said 1fr regardless of stylesheet order.
     .mol-section-heading {
-      grid-template-columns: 2rem 1fr;
-    }
-
-    .mol-section-heading p:last-child {
-      grid-column: 2;
+      grid-template-columns: 1fr;
+      gap: var(--primitive-space-sm);
     }
   }
 

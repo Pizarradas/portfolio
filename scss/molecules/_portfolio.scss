@@ -172,6 +172,106 @@
     line-height: var(--semantic-line-height-ui);
   }
 
+  // Stack — what I bring to a system, and what I ship it with.
+  //
+  // The practices sit on the left as statements, not as list items: token
+  // architecture and WCAG AA are credentials, and they were previously buried
+  // among Jira and Google Sheets. The tools sit on the right as real marks.
+  .mol-practice-list {
+    list-style: none;
+    margin: var(--primitive-space-md) 0 0;
+    padding: 0;
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+  }
+
+  .mol-practice-list li {
+    padding: var(--primitive-space-md) 0;
+    border-bottom: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+  }
+
+  .mol-practice-list b {
+    display: block;
+    font-family: var(--semantic-font-family-display);
+    font-size: var(--semantic-font-size-title-sm);
+    font-weight: var(--semantic-font-weight-display);
+    letter-spacing: var(--primitive-letter-spacing-tight);
+    line-height: var(--semantic-line-height-title);
+  }
+
+  .mol-practice-list span {
+    display: block;
+    margin-top: var(--primitive-space-3xs);
+    max-width: var(--semantic-measure-lede);
+    color: var(--semantic-color-text-secondary);
+    font-size: var(--semantic-font-size-ui);
+    line-height: var(--semantic-line-height-ui);
+  }
+
+  .mol-mark-group {
+    margin-top: var(--primitive-space-lg);
+  }
+
+  .mol-mark-group h3 {
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-caption);
+    font-weight: var(--primitive-font-weight-black);
+    letter-spacing: var(--primitive-letter-spacing-wider);
+    text-transform: uppercase;
+    color: var(--semantic-color-text-muted);
+    padding-bottom: var(--primitive-space-xs);
+    border-bottom: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+  }
+
+  .mol-mark-group ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--primitive-space-xs);
+    margin: var(--primitive-space-sm) 0 0;
+    padding: 0;
+  }
+
+  .mol-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--primitive-space-xs);
+    padding: var(--primitive-space-2xs) var(--primitive-space-sm)
+      var(--primitive-space-2xs) var(--primitive-space-xs);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
+    border-radius: var(--semantic-radius-pill);
+    color: var(--semantic-color-text-secondary);
+    transition: color var(--semantic-duration-hover) var(--semantic-ease),
+      border-color var(--semantic-duration-hover) var(--semantic-ease);
+  }
+
+  // Marks stay monochrome so third-party brand colour never competes with the
+  // JLP blue. currentColor means one hover rule moves both mark and label.
+  .mol-mark svg {
+    width: 1.15rem;
+    height: 1.15rem;
+    fill: currentColor;
+    flex: none;
+  }
+
+  .mol-mark span {
+    font-size: var(--semantic-font-size-ui);
+    font-weight: var(--primitive-font-weight-medium);
+    white-space: nowrap;
+  }
+
+  .mol-mark:hover {
+    color: var(--semantic-color-primary);
+    border-color: var(--semantic-color-primary);
+  }
+
+  @include reduced-motion {
+    .mol-mark {
+      transition: none;
+    }
+  }
+
   // Contact — the page's only real call to action
   .mol-contact-list {
     list-style: none;

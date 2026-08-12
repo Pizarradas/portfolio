@@ -26,17 +26,12 @@
     .org-hero .atom-lede{font-size:clamp(1.15rem,1.7vw,1.45rem);line-height:1.45}
     .org-hero::before{display:block;right:var(--pe-inline)}
 
-    .org-recruiter-scan{grid-template-columns:repeat(5,1fr)}
-    .org-recruiter-scan span{min-height:6.25rem;padding:1rem 1.25rem;border-bottom:0}
-    .org-recruiter-scan b{font-size:1.05rem}
-
     .org-work,.org-selected-work,.org-new-work,.org-tools,.org-case-index{padding:var(--pe-section) var(--pe-inline)}
     .mol-section-heading{grid-template-columns:3.5rem minmax(0,1.2fr) minmax(16rem,.8fr);gap:1.5rem;align-items:start}
     .mol-section-heading p:last-child{grid-column:auto}
     .mol-section-heading h2{font-size:clamp(2.8rem,5vw,4.5rem)}
 
     .org-project-grid,.org-new-work__grid{grid-template-columns:1fr 1fr;gap:1.5rem}
-    .org-tool-groups{grid-template-columns:repeat(2,1fr)}
     .org-case-index__grid{grid-template-columns:repeat(2,1fr)}
     .org-visual-craft{grid-template-columns:.8fr 1.2fr}
 
@@ -94,10 +89,6 @@
     .org-hero::before{display:block;right:var(--pe-inline);top:calc(var(--component-header-height) + 3rem)}
 
     /* Capability strip should read as one deliberate horizontal system */
-    .org-recruiter-scan{grid-template-columns:repeat(5,1fr)}
-    .org-recruiter-scan span{min-height:7.5rem;padding:1.15rem clamp(1.2rem,2vw,2rem);border-bottom:0}
-    .org-recruiter-scan b{font-size:1.15rem}
-
     /* Section rhythm */
     .org-work,.org-selected-work,.org-new-work,.org-tools,.org-case-index{
       padding:var(--pe-section) var(--pe-inline)
@@ -145,7 +136,6 @@
     .mol-new-project__body h3{font-size:clamp(2.8rem,3.2vw,4.5rem)}
 
     .org-visual-craft{grid-template-columns:.7fr 1.3fr;min-height:42rem}
-    .org-tool-groups{grid-template-columns:repeat(4,1fr)}
     .org-case-index__grid{grid-template-columns:repeat(3,1fr)}
 
     /* 42DS: restore intentional two-column editorial layouts */
@@ -187,7 +177,6 @@
   /* LARGE DESKTOP: stop uncontrolled stretching */
   @media (min-width:1720px){
     .org-hero{padding-left:var(--semantic-pad-content);padding-right:var(--semantic-pad-content)}
-    .org-recruiter-scan{padding-left:var(--semantic-pad-content);padding-right:var(--semantic-pad-content)}
     .org-work,.org-new-work,.org-tools,.org-case-index{padding-left:var(--semantic-pad-content);padding-right:var(--semantic-pad-content)}
   }
 }

@@ -21,14 +21,6 @@
 }
 @layer syx.molecules {
   .mol-tool-group{border-top:1px solid var(--semantic-color-border);padding-top:1.2rem}
-  .mol-tool-group__heading{display:flex;gap:.7rem;align-items:center;margin-bottom:1.5rem}
-  .mol-tool-group__heading svg{width:1.1rem;height:1.1rem;color:var(--semantic-color-primary);stroke-width:1.8}
-  .mol-tool-group__heading h3{font-family:var(--semantic-font-family-display);font-size:1.15rem;letter-spacing:-.025em}
-  .mol-tool-list{display:grid;gap:.6rem}
-  .mol-tool{display:flex;align-items:center;gap:.8rem;min-height:3.4rem;padding:.5rem .65rem;border:1px solid transparent;border-radius:.25rem;transition:border-color .18s ease,background .18s ease}
-  .mol-tool:hover{border-color:var(--semantic-color-border);background:var(--semantic-color-surface-alt)}
-  .mol-tool img{width:var(--component-tool-icon-size);height:var(--component-tool-icon-size);object-fit:contain}
-  .mol-tool span{font-size:.9rem;font-weight:500}
 
   .mol-evidence-frame{position:relative;margin:0;background:var(--component-evidence-bg);border:1px solid var(--semantic-color-border);padding:clamp(1rem,2vw,2rem)}
   .mol-evidence-frame img{width:100%;max-height:46rem;object-fit:contain;background:#fff}
@@ -56,7 +48,6 @@
 }
 @layer syx.organisms {
   .org-tools{padding:var(--semantic-space-section) var(--semantic-space-page-inline);border-bottom:1px solid var(--semantic-color-border)}
-  .org-tool-groups{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(1.5rem,3vw,3rem)}
   .org-tools>.atom-source-note{margin-top:2.5rem}
 
   .org-sport-opening{max-width:var(--component-story-max);margin-inline:auto;padding:clamp(4rem,8vw,8rem) var(--semantic-space-page-inline);display:grid;grid-template-columns:1.25fr .75fr;gap:clamp(2rem,6vw,7rem);align-items:center;border-bottom:1px solid var(--semantic-color-border)}
