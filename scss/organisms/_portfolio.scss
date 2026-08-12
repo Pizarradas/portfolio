@@ -45,6 +45,29 @@
     gap: var(--semantic-space-section-compact);
   }
 
+  // The lattice behind the hero. It is drawn by js/hero-field.js, which reads
+  // its ink from `color` here — so the field follows the palette of whatever
+  // context the hero is placed in and there is no colour literal in the script.
+  .org-hero__field {
+    position: absolute;
+    inset: 0;
+    z-index: var(--primitive-z-base);
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: var(--semantic-color-text);
+    pointer-events: none;
+  }
+
+  // Everything the reader is actually here for sits above the texture. The
+  // accent bar is a pseudo-element, so it needs saying too: without a z-index
+  // it paints before the canvas and disappears under it.
+  .org-hero > *:not(.org-hero__field),
+  .org-hero::before {
+    position: relative;
+    z-index: var(--primitive-z-raised);
+  }
+
   .org-hero::before {
     content: "";
     position: absolute;

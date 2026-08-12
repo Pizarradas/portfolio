@@ -323,6 +323,8 @@
     --component-link-hover-color: var(--semantic-color-primary);
     --component-text-link-rule: var(--semantic-color-border);
     --component-text-link-offset: var(--primitive-space-3xs);
+    --component-hero-field-module: 46;
+    --component-hero-field-ink: 0.16;
     --component-eyebrow-color: var(--semantic-color-primary);
     --component-wordmark-accent: var(--semantic-color-primary);
     --component-selection-bg: var(--semantic-color-primary);
@@ -1864,6 +1866,21 @@
     flex-direction: column;
     justify-content: space-between;
     gap: var(--semantic-space-section-compact);
+  }
+  .org-hero__field {
+    position: absolute;
+    inset: 0;
+    z-index: var(--primitive-z-base);
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: var(--semantic-color-text);
+    pointer-events: none;
+  }
+  .org-hero > *:not(.org-hero__field),
+  .org-hero::before {
+    position: relative;
+    z-index: var(--primitive-z-raised);
   }
   .org-hero::before {
     content: "";

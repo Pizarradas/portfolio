@@ -82,6 +82,13 @@
     // border token does.
     --component-text-link-rule: var(--semantic-color-border);
     --component-text-link-offset: var(--primitive-space-3xs);
+
+    // Hero field. The two decisions that are design decisions — how dense the
+    // lattice is and how much ink it puts on the page — are tokens, so they are
+    // tuned here rather than in the script. Unitless: they are read by
+    // js/hero-field.js, which resolves them against device pixels itself.
+    --component-hero-field-module: 46; // px between nodes
+    --component-hero-field-ink: 0.16; // alpha of the nearest, brightest dot
     --component-eyebrow-color: var(--semantic-color-primary);
     --component-wordmark-accent: var(--semantic-color-primary);
     --component-selection-bg: var(--semantic-color-primary);
