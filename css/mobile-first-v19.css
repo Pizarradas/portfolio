@@ -10,8 +10,12 @@
   }
 }
 @layer syx.base {
-  html,body{max-width:100%;overflow-x:hidden}
-  body{min-width:0}
+  /* overflow-x lives on <html> only. Setting it on <body> as well makes the
+     body its own scroll container, and then every view() timeline inside it
+     resolves against a box that never scrolls — so scroll-driven animations
+     are "finished" before they start. <html> still clips the viewport. */
+  html{max-width:100%;overflow-x:hidden}
+  body{max-width:100%;min-width:0}
   img,svg,canvas{max-width:100%;height:auto}
   h1,h2,h3,p,li,dd,dt,span,strong,small{overflow-wrap:anywhere}
 }

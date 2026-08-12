@@ -55,3 +55,13 @@
   }
   @media(max-width:480px){.org-system-preview__foundation{grid-template-columns:1fr}.org-system-preview__foundation>span{border-right:0;border-bottom:1px solid var(--semantic-color-border)}}
 }
+
+/* `1fr` is `minmax(auto, 1fr)`, so these tracks refused to shrink below the
+   min-content of four columns of text and pushed the card 79px past the
+   viewport between roughly 768px and 900px. It went unnoticed because
+   body{overflow-x:hidden} was clipping it. */
+@layer syx.molecules {
+  .org-system-preview__foundation > span,
+  .org-system-preview__stack > figure { min-width: 0; }
+  .org-system-preview__meta strong { min-width: 0; }
+}

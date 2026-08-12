@@ -65,7 +65,10 @@ const NOW = { at: '2026-08', scope: 5, label: 'SYX + ATLAS' };
 
 const W = 1200;
 const H = 360;
-const PAD = { top: 34, right: 8, bottom: 74, left: 8 };
+// Enough padding that the end nodes stay inside the viewBox: the chart can
+// then clip normally, and the section no longer needs overflow:hidden — which
+// was silently making itself the scroll container for the view() timelines.
+const PAD = { top: 34, right: 14, bottom: 74, left: 14 };
 const BAR = { y: 258, h: 34 };
 
 const month = s => {

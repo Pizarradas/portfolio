@@ -54,6 +54,13 @@
   .mol-project-card__visual {
     position: relative;
     display: block;
+    // progressive-enhancement-v20 sets min-height:28rem and aspect-ratio:16/8.8
+    // on the featured card. Below ~900px those two cannot both hold: 448px of
+    // height at that ratio needs 815px of width, and the box grew to satisfy
+    // the ratio rather than stay in its track. Capping the width makes the
+    // ratio yield instead, so the height wins and nothing overflows.
+    min-width: 0;
+    max-width: 100%;
     overflow: hidden;
     background: var(--component-card-visual-bg);
     border-radius: var(--component-card-radius);
@@ -371,29 +378,74 @@
     font-variant-numeric: tabular-nums;
   }
 
-  // Scroll-driven drawing where the browser supports it. No library, no
-  // scroll listener; browsers without it simply get the finished chart.
+  // Scroll-driven choreography, native. The curve draws as the section enters,
+  // the area fills behind it, each node lands in turn and the duration bars
+  // grow from their start date. No library, no scroll listener, no layout read:
+  // the compositor runs it off the scroll position.
+  //
+  // Browsers without view() get the finished chart, which is the correct
+  // fallback — the animation is emphasis, never the only way to read it.
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
+      .mol-career-chart__svg {
+        // Every timeline below is measured against this element entering the
+        // viewport, so the whole sequence stays in step.
+        view-timeline-name: --career;
+        view-timeline-axis: block;
+      }
+
+      .mol-career-chart__grid line {
+        transform: scaleX(0);
+        transform-origin: left center;
+        animation: career-grow linear both;
+        animation-timeline: --career;
+        animation-range: entry 10% entry 70%;
+      }
+
       .mol-career-chart__curve {
         stroke-dasharray: 1;
         stroke-dashoffset: 1;
         animation: career-draw linear both;
-        animation-timeline: view();
-        animation-range: entry 15% cover 45%;
+        animation-timeline: --career;
+        animation-range: entry 25% entry 95%;
       }
 
-      .mol-career-chart__area,
-      .mol-career-chart__nodes circle {
+      .mol-career-chart__area {
         opacity: 0;
         animation: career-in linear both;
-        animation-timeline: view();
-        animation-range: entry 25% cover 55%;
+        animation-timeline: --career;
+        animation-range: entry 45% entry 100%;
       }
 
+      // Each node picks up where the curve reaches it: --i comes from the
+      // generator, so adding a role reshuffles the stagger automatically.
       .mol-career-chart__nodes circle {
-        animation-range: entry calc(30% + var(--i) * 4%) cover
-          calc(50% + var(--i) * 4%);
+        opacity: 0;
+        transform: scale(0.4);
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: career-pop linear both;
+        animation-timeline: --career;
+        animation-range: entry calc(30% + var(--i) * 12%) entry
+          calc(48% + var(--i) * 12%);
+      }
+
+      .mol-career-chart__bars rect {
+        transform: scaleX(0);
+        transform-box: fill-box;
+        transform-origin: left center;
+        animation: career-grow linear both;
+        animation-timeline: --career;
+        animation-range: entry 20% entry 80%;
+      }
+
+      .mol-career-chart__bars text,
+      .mol-career-chart__axis,
+      .mol-career-chart__gap {
+        opacity: 0;
+        animation: career-in linear both;
+        animation-timeline: --career;
+        animation-range: entry 60% entry 100%;
       }
     }
   }
@@ -407,6 +459,19 @@
   @keyframes career-in {
     to {
       opacity: 1;
+    }
+  }
+
+  @keyframes career-grow {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes career-pop {
+    to {
+      opacity: 1;
+      transform: scale(1);
     }
   }
 
