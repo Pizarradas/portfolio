@@ -18,6 +18,15 @@
     --primitive-shadow-md: 0 4px 16px rgb(8 15 26 / 0.08);
     --primitive-shadow-lg: 0 18px 48px rgb(8 15 26 / 0.12);
 
+    // Overlay surfaces already blurred what was behind them — the sticky header
+    // hardcoded blur(16px). These make that a scale instead of a one-off, so
+    // every floating surface reads as the same material.
+    --primitive-blur-sm: 6px;
+    --primitive-blur-md: 16px;
+    --primitive-blur-lg: 26px;
+    // A little saturation stops the blurred backdrop going grey and flat.
+    --primitive-saturate-glass: 165%;
+
     --primitive-z-base: 0;
     --primitive-z-raised: 1;
     --primitive-z-sticky: 20;

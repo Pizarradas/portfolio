@@ -126,7 +126,16 @@
     render(d);
     place(node);
     node.setAttribute('aria-describedby', 'career-tip');
-    gsap.fromTo(tip, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.22, ease: 'power2.out' });
+    // Materialises rather than fades: the pane arrives slightly small and out
+    // of focus, which reads as glass forming instead of a box appearing.
+    gsap.fromTo(
+      tip,
+      { opacity: 0, y: 10, scale: 0.97, filter: 'blur(6px)' },
+      {
+        opacity: 1, y: 0, scale: 1, filter: 'blur(0px)',
+        duration: 0.34, ease: 'power3.out',
+      }
+    );
   };
 
   const hide = () => {
@@ -134,7 +143,8 @@
     open.removeAttribute('aria-describedby');
     open = null;
     gsap.to(tip, {
-      opacity: 0, duration: 0.15,
+      opacity: 0, y: 6, scale: 0.98, filter: 'blur(4px)', duration: 0.16,
+      ease: 'power2.in',
       onComplete: () => { if (!open) tip.hidden = true; },
     });
   };

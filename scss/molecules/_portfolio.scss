@@ -1,4 +1,5 @@
 @use "../abstracts/breakpoints" as *;
+@use "../abstracts/surfaces" as *;
 
 @layer syx.molecules {
   .mol-nav {
@@ -407,16 +408,15 @@
   // Tooltip. Positioned from script against the node's own box, because the
   // SVG is scaled and its internal coordinates are not screen coordinates.
   .mol-career-tip {
+    @include glass;
+
     position: absolute;
-    z-index: var(--primitive-z-raised);
+    z-index: var(--semantic-z-overlay);
     display: grid;
     gap: var(--primitive-space-3xs);
     width: min(22rem, 80vw);
     padding: var(--primitive-space-md);
-    background: var(--semantic-color-surface);
-    border: var(--semantic-border-width) solid var(--semantic-color-border);
     border-radius: var(--semantic-radius-surface);
-    box-shadow: var(--semantic-shadow-overlay);
     pointer-events: none;
   }
 

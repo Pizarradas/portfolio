@@ -6,13 +6,9 @@
   // own stylesheets until they are migrated.
 
   :root {
+    // The header takes its surface from the glass mixin now, so it no longer
+    // needs a background token of its own.
     --component-header-height: 4.25rem;
-    --component-header-bg: color-mix(
-      in srgb,
-      var(--semantic-color-surface) 90%,
-      transparent
-    );
-    --component-header-border: var(--semantic-color-border);
 
     --component-card-radius: var(--semantic-radius-surface);
     --component-card-visual-bg: var(--semantic-color-surface-alt);

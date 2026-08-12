@@ -1,4 +1,5 @@
 @use "../abstracts/breakpoints" as *;
+@use "../abstracts/surfaces" as *;
 
 @layer syx.organisms {
   // Every full-bleed section uses the same padding token, so content lines up
@@ -14,7 +15,12 @@
     padding-inline: var(--semantic-pad-content);
   }
 
+  // Same material as the tooltip. It used to blur on its own with a hardcoded
+  // blur(16px) and no sheen, which is why the two overlays did not look
+  // related — the border is reset to a bottom edge only, since it spans.
   .org-site-header {
+    @include glass(var(--primitive-blur-md));
+
     position: sticky;
     top: 0;
     z-index: var(--semantic-z-sticky);
@@ -22,10 +28,9 @@
     justify-content: space-between;
     align-items: center;
     min-height: var(--component-header-height);
-    background: var(--component-header-bg);
-    backdrop-filter: blur(16px);
-    border-bottom: var(--semantic-border-width) solid
-      color-mix(in srgb, var(--component-header-border) 72%, transparent);
+    border-width: 0 0 var(--semantic-border-width);
+    border-radius: 0;
+    box-shadow: none;
   }
 
   .org-hero {

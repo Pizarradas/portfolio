@@ -16,6 +16,19 @@
     --semantic-shadow-floating: var(--primitive-shadow-md);
     --semantic-shadow-overlay: var(--primitive-shadow-lg);
 
+    // Glass is expressed as ratios, not as finished colours.
+    //
+    // A token like `color-mix(… var(--semantic-color-surface) 68%, transparent)`
+    // declared here would resolve against the :root palette and stay resolved:
+    // custom properties substitute their var()s on the element that declares
+    // them, so the tooltip inside `.syx-on-night` inherited a light-mode mix and
+    // came out dark-on-dark. Keeping the ratios here and doing the mixing in the
+    // glass() mixin means the material resolves per element, in its own context.
+    --semantic-glass-blur: var(--primitive-blur-lg);
+    --semantic-glass-tint: 68%;
+    --semantic-glass-edge: 18%;
+    --semantic-glass-sheen: 14%;
+
     --semantic-duration-hover: var(--primitive-duration-fast);
     --semantic-duration-transition: var(--primitive-duration-base);
     --semantic-duration-reveal: var(--primitive-duration-slow);

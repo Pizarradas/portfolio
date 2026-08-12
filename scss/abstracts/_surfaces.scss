@@ -1,0 +1,55 @@
+// Surface materials.
+//
+// One definition of "glass" for every floating surface, so the sticky header
+// and the chart tooltip are made of the same thing. The header used to blur on
+// its own with a hardcoded blur(16px) and no sheen; anything else that floats
+// later includes this instead of inventing a third variation.
+//
+// All values come from the semantic layer, which means the material follows the
+// context: navy inside `.syx-on-night`, white on the page ground, blue inside
+// `.syx-on-brand`. No rgba() literals anywhere.
+
+@mixin glass($blur: var(--semantic-glass-blur)) {
+  // Opaque fallback first. Firefox has shipped backdrop-filter for a while but
+  // it can still be disabled, and Safari drops it in Low Power Mode — in either
+  // case the surface must stay readable rather than turn into a haze.
+  background: var(--semantic-color-surface);
+  border: var(--semantic-border-width) solid var(--semantic-color-border);
+
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    // The mixing happens here, on the component, so `--semantic-color-surface`
+    // and `--semantic-color-text` are the ones in force in this context.
+    //
+    // The sheen is always white because it stands for light, not ink. Deriving
+    // it from the text colour painted a grey smear across the top of the header
+    // on the light ground; as white it reads as a bright edge on the dark
+    // contexts and simply disappears on the light one, which is correct.
+    $sheen: color-mix(
+      in srgb,
+      var(--primitive-color-white) var(--semantic-glass-sheen),
+      transparent
+    );
+    $pane: color-mix(
+      in srgb,
+      var(--semantic-color-surface) var(--semantic-glass-tint),
+      transparent
+    );
+
+    // A vertical tint over the blur: brighter where light would catch the top
+    // edge, settling into the plain pane below.
+    background-image: linear-gradient(to bottom, #{$sheen}, transparent 42%),
+      linear-gradient(#{$pane}, #{$pane});
+    background-color: transparent;
+    border-color: color-mix(
+      in srgb,
+      var(--semantic-color-text) var(--semantic-glass-edge),
+      transparent
+    );
+    -webkit-backdrop-filter: blur($blur) saturate(var(--primitive-saturate-glass));
+    backdrop-filter: blur($blur) saturate(var(--primitive-saturate-glass));
+    // Inset hairline along the top edge — the detail that separates a pane of
+    // glass from a flat panel at low opacity.
+    box-shadow: inset 0 var(--semantic-border-width) 0 #{$sheen},
+      var(--semantic-shadow-overlay);
+  }
+}

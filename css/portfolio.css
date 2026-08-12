@@ -123,6 +123,10 @@
     --primitive-shadow-sm: 0 1px 2px rgb(8 15 26 / 0.06);
     --primitive-shadow-md: 0 4px 16px rgb(8 15 26 / 0.08);
     --primitive-shadow-lg: 0 18px 48px rgb(8 15 26 / 0.12);
+    --primitive-blur-sm: 6px;
+    --primitive-blur-md: 16px;
+    --primitive-blur-lg: 26px;
+    --primitive-saturate-glass: 165%;
     --primitive-z-base: 0;
     --primitive-z-raised: 1;
     --primitive-z-sticky: 20;
@@ -260,6 +264,10 @@
     --semantic-shadow-raised: var(--primitive-shadow-sm);
     --semantic-shadow-floating: var(--primitive-shadow-md);
     --semantic-shadow-overlay: var(--primitive-shadow-lg);
+    --semantic-glass-blur: var(--primitive-blur-lg);
+    --semantic-glass-tint: 68%;
+    --semantic-glass-edge: 18%;
+    --semantic-glass-sheen: 14%;
     --semantic-duration-hover: var(--primitive-duration-fast);
     --semantic-duration-transition: var(--primitive-duration-base);
     --semantic-duration-reveal: var(--primitive-duration-slow);
@@ -273,12 +281,6 @@
 @layer syx.tokens {
   :root {
     --component-header-height: 4.25rem;
-    --component-header-bg: color-mix(
-      in srgb,
-      var(--semantic-color-surface) 90%,
-      transparent
-    );
-    --component-header-border: var(--semantic-color-border);
     --component-card-radius: var(--semantic-radius-surface);
     --component-card-visual-bg: var(--semantic-color-surface-alt);
     --component-card-ratio: 4 / 3;
@@ -793,16 +795,27 @@
     outline-offset: 3px;
   }
   .mol-career-tip {
+    background: var(--semantic-color-surface);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
+  }
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    .mol-career-tip {
+      background-image: linear-gradient(to bottom, color-mix(in srgb, var(--primitive-color-white) var(--semantic-glass-sheen), transparent), transparent 42%), linear-gradient(color-mix(in srgb, var(--semantic-color-surface) var(--semantic-glass-tint), transparent), color-mix(in srgb, var(--semantic-color-surface) var(--semantic-glass-tint), transparent));
+      background-color: transparent;
+      border-color: color-mix(in srgb, var(--semantic-color-text) var(--semantic-glass-edge), transparent);
+      -webkit-backdrop-filter: blur(var(--semantic-glass-blur)) saturate(var(--primitive-saturate-glass));
+      backdrop-filter: blur(var(--semantic-glass-blur)) saturate(var(--primitive-saturate-glass));
+      box-shadow: inset 0 var(--semantic-border-width) 0 color-mix(in srgb, var(--primitive-color-white) var(--semantic-glass-sheen), transparent), var(--semantic-shadow-overlay);
+    }
+  }
+  .mol-career-tip {
     position: absolute;
-    z-index: var(--primitive-z-raised);
+    z-index: var(--semantic-z-overlay);
     display: grid;
     gap: var(--primitive-space-3xs);
     width: min(22rem, 80vw);
     padding: var(--primitive-space-md);
-    background: var(--semantic-color-surface);
-    border: var(--semantic-border-width) solid var(--semantic-color-border);
     border-radius: var(--semantic-radius-surface);
-    box-shadow: var(--semantic-shadow-overlay);
     pointer-events: none;
   }
   .mol-career-tip[hidden] {
@@ -976,6 +989,20 @@
     padding-inline: var(--semantic-pad-content);
   }
   .org-site-header {
+    background: var(--semantic-color-surface);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
+  }
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    .org-site-header {
+      background-image: linear-gradient(to bottom, color-mix(in srgb, var(--primitive-color-white) var(--semantic-glass-sheen), transparent), transparent 42%), linear-gradient(color-mix(in srgb, var(--semantic-color-surface) var(--semantic-glass-tint), transparent), color-mix(in srgb, var(--semantic-color-surface) var(--semantic-glass-tint), transparent));
+      background-color: transparent;
+      border-color: color-mix(in srgb, var(--semantic-color-text) var(--semantic-glass-edge), transparent);
+      -webkit-backdrop-filter: blur(var(--primitive-blur-md)) saturate(var(--primitive-saturate-glass));
+      backdrop-filter: blur(var(--primitive-blur-md)) saturate(var(--primitive-saturate-glass));
+      box-shadow: inset 0 var(--semantic-border-width) 0 color-mix(in srgb, var(--primitive-color-white) var(--semantic-glass-sheen), transparent), var(--semantic-shadow-overlay);
+    }
+  }
+  .org-site-header {
     position: sticky;
     top: 0;
     z-index: var(--semantic-z-sticky);
@@ -983,9 +1010,9 @@
     justify-content: space-between;
     align-items: center;
     min-height: var(--component-header-height);
-    background: var(--component-header-bg);
-    backdrop-filter: blur(16px);
-    border-bottom: var(--semantic-border-width) solid color-mix(in srgb, var(--component-header-border) 72%, transparent);
+    border-width: 0 0 var(--semantic-border-width);
+    border-radius: 0;
+    box-shadow: none;
   }
   .org-hero {
     position: relative;

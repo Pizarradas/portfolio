@@ -32,7 +32,9 @@
   .map-pin--4{background:var(--semantic-color-accent-violet)!important}
 }
 @layer syx.organisms {
-  .org-site-header{background:color-mix(in srgb,var(--semantic-color-surface) 92%,transparent)!important}
+  /* The header surface now comes from the glass mixin in the foundation.
+     This !important was overriding it and flattening the material back to a
+     plain 92% tint with no blur tint or sheen. */
   .org-hero{min-height:92svh}
   .org-hero h1{max-width:14ch;font-size:clamp(4rem,8.2vw,8.6rem)}
   .org-hero::before{width:clamp(2.75rem,5vw,5rem);height:.22rem}
