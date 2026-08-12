@@ -1880,6 +1880,9 @@
     gap: var(--primitive-space-xl);
     align-items: end;
   }
+  .org-hero__footer .atom-text-link {
+    justify-self: end;
+  }
   .org-capability-scan {
     display: grid;
     border-block: var(--semantic-border-width) solid var(--semantic-color-border);
@@ -2046,6 +2049,9 @@
     border-bottom-color: currentColor;
   }
   @media (max-width: 47.9375rem) {
+    .org-hero__footer .atom-text-link {
+      justify-self: start;
+    }
     .org-hero__footer,
     .org-project-grid,
     .org-about,

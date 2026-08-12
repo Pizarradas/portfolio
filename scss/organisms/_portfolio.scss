@@ -62,6 +62,16 @@
     align-items: end;
   }
 
+  // The link goes to the right edge of the register, not to the left edge of
+  // its track. It reads as the closing corner of the hero — the accent bar sits
+  // at the top right, the way into the work sits at the bottom right, and the
+  // headline runs the diagonal between them. It only looked anchored before
+  // because the rule was stretching the whole width of the track, which is the
+  // bug that was showing.
+  .org-hero__footer .atom-text-link {
+    justify-self: end;
+  }
+
   // The capability map: the first thing after the hero and, until now, five
   // spans of dead grey text defined across four stylesheets. Each cell is a
   // link to the case it names, and the capability word carries the weight.
@@ -273,6 +283,11 @@
   }
 
   @include until($bp-md) {
+    // One column: the link goes back under the lede it belongs to.
+    .org-hero__footer .atom-text-link {
+      justify-self: start;
+    }
+
     .org-hero__footer,
     .org-project-grid,
     .org-about,
