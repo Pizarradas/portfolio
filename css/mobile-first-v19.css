@@ -17,7 +17,7 @@
   html{max-width:100%;overflow-x:hidden}
   body{max-width:100%;min-width:0}
   img,svg,canvas{max-width:100%;height:auto}
-  h1,h2,h3,p,li,dd,dt,span,strong,small{overflow-wrap:anywhere}
+  h1,h2,h3,p,li,dd,dt,span,strong,small{overflow-wrap:break-word}
 }
 @layer syx.atoms {
   .atom-eyebrow,.atom-index{font-size:.64rem;line-height:1.35;letter-spacing:.11em}

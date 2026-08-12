@@ -589,6 +589,17 @@
     text-decoration: none;
   }
 
+  // An email address and a bare URL contain no break opportunities, so at this
+  // size they set the min-content width of the entire list and pushed it 34px
+  // past a 360px viewport. This is the one place on the page that genuinely
+  // needs to break at any character — applied globally, `anywhere` also made
+  // every grid column able to shrink to one letter, which is what collapsed
+  // the project cards and split their headings mid-word.
+  .mol-contact-list a,
+  .org-footer__contact a {
+    overflow-wrap: anywhere;
+  }
+
   .mol-contact-list a:hover {
     text-decoration: underline;
     text-decoration-thickness: 0.07em;
