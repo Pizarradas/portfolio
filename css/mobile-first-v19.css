@@ -184,6 +184,7 @@
     .org-case-section{grid-template-columns:5rem minmax(15rem,25rem) minmax(0,var(--component-case-reading-width));gap:var(--component-case-gap);padding:clamp(5rem,10vw,10rem) clamp(1.25rem,4vw,4rem)}
     .org-case-section__content{grid-column:auto;font-size:clamp(1.05rem,1.3vw,1.25rem)}
     .org-case-next{grid-template-columns:1fr 1fr}.org-case-next a{min-height:13rem;padding:2rem clamp(1.25rem,4vw,4rem);border-right:1px solid var(--component-case-rule)}.org-case-next a:last-child{text-align:right}
+    .org-case-next:has(.org-case-next__contact){grid-template-columns:1fr 1fr 1fr}.org-case-next a.org-case-next__contact{text-align:left;border-right:0}
     .org-sport-opening{grid-template-columns:1.25fr .75fr;padding:clamp(4rem,8vw,8rem) var(--semantic-space-page-inline);gap:clamp(2rem,6vw,7rem)}
     .mol-research-model__metrics{grid-template-columns:repeat(4,1fr)}.mol-research-model__metrics span{border-right:1px solid var(--semantic-color-border)}.mol-research-model__metrics span:last-child{border-right:0}
     .mol-research-model__criteria{grid-template-columns:repeat(3,1fr)}

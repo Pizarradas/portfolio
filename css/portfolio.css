@@ -230,3 +230,71 @@
   }
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.mol-project-card__visual img,.mol-nav a::after{transition:none}}
 }
+
+/* Contact, about facts and case outcome.
+   Added to this file on purpose: the project already carries 26 stylesheets,
+   so new rules go into the layer they belong to instead of a 27th file. */
+
+@layer syx.atoms {
+  .atom-outcome-line{
+    margin-top:.4rem;max-width:34ch;
+    font-size:clamp(1.1rem,2vw,1.45rem);font-weight:800;line-height:1.35;letter-spacing:-.025em
+  }
+}
+
+@layer syx.molecules {
+  .mol-about-facts{
+    display:grid;margin-top:1.4rem;
+    border-top:1px solid var(--semantic-color-border-subtle)
+  }
+  .mol-about-facts div{
+    display:grid;grid-template-columns:minmax(6rem,9rem) minmax(0,1fr);gap:.35rem 1rem;
+    padding:.8rem 0;border-bottom:1px solid var(--semantic-color-border-subtle)
+  }
+  .mol-about-facts dt{
+    padding-top:.15rem;font-size:.7rem;font-weight:800;text-transform:uppercase;
+    letter-spacing:.11em;color:var(--semantic-color-content-muted)
+  }
+  .mol-about-facts dd{margin:0;font-size:.95rem;line-height:1.45}
+
+  .mol-contact-list{list-style:none;margin:.4rem 0 0;padding:0;border-top:1px solid var(--semantic-color-border-subtle)}
+  .mol-contact-list li{border-bottom:1px solid var(--semantic-color-border-subtle)}
+  .mol-contact-list a{
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.05rem 0;
+    font-size:clamp(1.05rem,2.2vw,1.6rem);font-weight:800;letter-spacing:-.03em;text-decoration:none
+  }
+  .mol-contact-list a:hover{text-decoration:underline;text-decoration-thickness:.07em;text-underline-offset:.22em}
+
+  .mol-code-visual__head{flex-wrap:wrap}
+  .mol-code-visual__head small,.mol-foundation-map small{
+    display:block;margin-top:.5rem;font-size:.72rem;line-height:1.45;
+    color:var(--semantic-color-content-muted)
+  }
+  .mol-code-visual__head small{flex-basis:100%;margin-top:.65rem;font-size:.78rem}
+}
+
+@layer syx.organisms {
+  .org-contact{
+    padding:var(--semantic-space-section-compact) var(--semantic-space-page-inline) var(--semantic-space-section);
+    display:grid;grid-template-columns:minmax(2rem,7rem) minmax(0,1fr);gap:clamp(1.5rem,5vw,5rem);
+    align-items:start;border-top:1px solid var(--semantic-color-border-subtle)
+  }
+  .org-contact__body{display:grid;gap:1.1rem;max-width:44rem}
+  .org-contact h2{font-size:clamp(2.4rem,5.2vw,5.2rem);margin-top:.4rem}
+  .org-contact__lede{color:var(--semantic-color-content-secondary);font-size:1.08rem}
+
+  .org-footer__contact{display:flex;flex-wrap:wrap;gap:.35rem 1.4rem;align-items:center;max-width:none}
+  .org-footer__contact a{text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:.12rem}
+  .org-footer__contact a:hover{border-bottom-width:2px}
+}
+
+@layer syx.utilities {
+  @media (max-width:800px){
+    .org-contact{grid-template-columns:1fr}
+    .org-contact>.atom-index{display:none}
+  }
+  @media (max-width:520px){
+    .mol-about-facts div{grid-template-columns:1fr}
+    .mol-contact-list a{flex-direction:column;align-items:flex-start;gap:.2rem}
+  }
+}

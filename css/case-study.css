@@ -78,6 +78,8 @@
   .org-case-next a:last-child { border-right:0; text-align:right; }
   .org-case-next span { font-size:.75rem; text-transform:uppercase; letter-spacing:.12em; opacity:.55; }
   .org-case-next strong { font-size:clamp(1.5rem,3vw,3rem); }
+  .org-case-next__contact { background:var(--semantic-color-primary); color:var(--semantic-color-on-primary); }
+  .org-case-next__contact span { opacity:.8; }
 }
 @layer syx.utilities {
   @media (max-width: 900px) {

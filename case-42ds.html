@@ -21,7 +21,7 @@
 <a class="atom-skip-link" href="#main">Skip to content</a>
 <header class="org-site-header">
 <a class="atom-wordmark" href="index.html">JLP<span>.</span></a>
-<nav aria-label="Primary navigation" class="mol-nav"><a href="index.html#work">Work</a><a href="index.html#about">About</a><a href="jose-luis-pizarro-feo-cv-2026.pdf">CV</a></nav>
+<nav aria-label="Primary navigation" class="mol-nav"><a href="index.html#work">Work</a><a href="index.html#about">About</a><a href="index.html#contact">Contact</a><a href="jose-luis-pizarro-feo-cv-2026.pdf">CV</a></nav>
 </header>
 <main id="main">
 <article class="org-case42">
@@ -30,7 +30,8 @@
 <h1>42DS — From shared foundations to an AI-operable design system.</h1>
 <p class="org-case42-hero__lede">Prensa Ibérica needed one system that could support different brands, technologies and editorial needs without freezing the business. 42DS became the shared architecture that connected design, front-end, development and, later, AI-assisted workflows.</p>
 <dl class="mol-case-facts">
-<div><dt>My role</dt><dd>Design / Front-End → Product Designer</dd></div>
+<div><dt>My role</dt><dd>Product Designer &amp; Front-End Engineer</dd></div>
+<div><dt>What I own</dt><dd>Design-token architecture (Figma → JSON → Style Dictionary) · WCAG 2.1 AA · CSS performance and technical-debt reduction</dd></div>
 <div><dt>System</dt><dd>Figma · SCSS · HTML · JS · Storybook · Vue hand-off</dd></div>
 <div><dt>Architecture</dt><dd>134 component families · 3 composition levels</dd></div>
 <div><dt>AI layer</dt><dd>13 specialised modes + governance</dd></div>
@@ -119,7 +120,7 @@
 <div><b>BASE</b><span>reset</span><span>helpers</span><span>dark</span></div>
 <div><b>BRANDS</b><span>setup</span><span>typography</span><span>colour</span><span>behaviours</span></div>
 <div><b>LAYOUT</b><span>grid</span><span>breakpoints</span></div>
-<div><b>FOURTIES</b><span>atoms</span><span>molecules</span><span>organisms</span></div>
+<div><b>FOURTIES</b><span>atoms</span><span>molecules</span><span>organisms</span><small>internal package name</small></div>
 </div>
 <p class="mol-case42-caption">Shared foundations first. Brand configuration and component composition sit on top.</p>
 </div>
@@ -131,7 +132,7 @@
 <p>Instead of showing file thumbnails, the portfolio reconstructs the underlying design decisions as live front-end visuals: tokens, controls, forms and navigation.</p>
 </div>
 <article class="mol-code-visual mol-code-visual--tokens">
-<div class="mol-code-visual__head"><span>01 / TOKENS</span><strong>Primitive → Semantic → Component</strong></div>
+<div class="mol-code-visual__head"><span>01 / TOKENS</span><strong>Primitive → Semantic → Component</strong><small>Defined in Figma, exported as JSON and compiled with Style Dictionary, so design and code consume the same source.</small></div>
 <div aria-label="Design token flow from primitive values to semantic aliases and component tokens." class="mol-token-flow" role="img">
 <div>
 <small>Primitive</small>
@@ -182,8 +183,8 @@
 <div class="mol-code-visual__head"><span>04 / NAVIGATION</span><strong>Information architecture becomes a reusable pattern.</strong></div>
 <nav aria-label="Example publication navigation" class="mol-nav-system">
 <div class="mol-nav-system__brand">42DS</div>
-<a href="#!">News</a><a href="#!">Sport</a><a href="#!">Economy</a><a href="#!">Culture</a>
-<button aria-label="Open menu" type="button">☰</button>
+<a>News</a><a>Sport</a><a>Economy</a><a>Culture</a>
+<button aria-hidden="true" tabindex="-1" type="button">☰</button>
 </nav>
 <div aria-hidden="true" class="mol-nav-system__mobile">
 <span>42DS</span><i></i><i></i><i></i>
@@ -354,7 +355,7 @@
 <span><b>1</b><small>semantic DOM</small></span>
 <span><b>1</b><small>information architecture</small></span>
 <span><b>N</b><small>brand expressions</small></span>
-<span><b>AA</b><small>accessibility target</small></span>
+<span><b>WCAG 2.1 AA</b><small>implemented, not aspirational</small></span>
 </div>
 </section>
 <section class="org-case42-section org-case42-section--targets" data-act="04 · Reality">
@@ -428,9 +429,9 @@
 <div class="org-case42-section__heading"><p class="atom-index">08</p><p class="atom-eyebrow">What changed</p><h2>The architecture grew. My role grew with it.</h2></div>
 <div class="org-case42-section__content"><p>I joined mainly as a designer/front-end profile inside the architecture. As the system expanded, my role moved toward end-to-end Product Design and AI-assisted execution.</p><blockquote>The most important evolution was not adding more components. It was turning implicit knowledge into an explicit system — first for people, and eventually for AI.</blockquote></div>
 </section>
-<nav class="org-case-next"><a href="index.html#work"><span>Back</span><strong>Selected work</strong></a><a href="case-sport.html"><span>Next case</span><strong>SPORT Cards →</strong></a></nav>
+<nav class="org-case-next"><a href="index.html#work"><span>Back</span><strong>Selected work</strong></a><a href="case-sport.html"><span>Next case</span><strong>SPORT Cards →</strong></a><a class="org-case-next__contact" href="mailto:profesional.pizarro@gmail.com"><span>Questions about this project?</span><strong>Get in touch →</strong></a></nav>
 </article>
 </main>
-<footer class="org-footer"><p>José Luis Pizarro · Madrid</p><p>Built with SYX.</p></footer>
+<footer class="org-footer"><p>José Luis Pizarro Feo — Product Designer &amp; Front-End Engineer · Madrid, Spain</p><p class="org-footer__contact"><a href="mailto:profesional.pizarro@gmail.com">profesional.pizarro@gmail.com</a><a href="https://www.linkedin.com/in/joseluispizarrofeo" rel="noopener" target="_blank">LinkedIn ↗</a><a href="jose-luis-pizarro-feo-cv-2026.pdf">CV (PDF)</a></p></footer>
 <script src="js/case-42ds-v14.js"></script><script src="js/case-42ds-v18.js"></script></body>
 </html>
