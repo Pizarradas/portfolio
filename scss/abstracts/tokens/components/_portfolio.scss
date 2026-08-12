@@ -25,6 +25,13 @@
     // column is not padded out with empty space when the text is brief.
     --component-register-min-height: #{fluid(21, 33)};
 
+    // Selected work. One ratio for every evidence frame is what makes the two
+    // cards in the grid line up: they were the same height but their visuals
+    // were 645px and 580px, so the two headlines started 65px apart and the
+    // row read as two unrelated cards rather than one comparison.
+    --component-work-frame-ratio: 16 / 10;
+    --component-work-frame-ratio-featured: 16 / 9;
+
     --component-chip-radius: var(--semantic-radius-pill);
     --component-chip-border: currentColor;
 

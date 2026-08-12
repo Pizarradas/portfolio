@@ -8,7 +8,6 @@
 .mol-role-thesis p{margin:1.2rem 0 0;max-width:42rem;font:.8rem/1.5 var(--v22-ui);opacity:.58}
 }
 @layer syx.organisms{
-.org-role-evolution-v22__intro .atom-timeline-kicker{font:600 .58rem/1 var(--v22-ui);letter-spacing:.12em;text-transform:uppercase;color:#fff;opacity:.55}
 .org-role-evolution-v22__conclusion--timeline{margin-top:2.5rem}
 .org-role-evolution-v22__conclusion--timeline blockquote{display:none}
 }

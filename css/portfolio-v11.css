@@ -1,22 +1,6 @@
 @layer syx.atoms {
   .atom-text-link{display:inline-flex;margin-top:1.1rem;color:var(--semantic-color-primary);font:600 .74rem/1 var(--semantic-font-family-ui);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:.18rem}
-  .atom-research-table{width:100%;border-collapse:collapse;font:500 clamp(.58rem,.78vw,.72rem)/1.3 var(--semantic-font-family-ui);background:#fff}
-  .atom-research-table th,.atom-research-table td{padding:.72rem .65rem;text-align:left;border-bottom:1px solid var(--semantic-color-border)}
-  .atom-research-table th{font-size:.57rem;text-transform:uppercase;letter-spacing:.08em;color:var(--semantic-color-text-muted)}
-  .atom-research-table td:last-child{text-align:right}.atom-research-table b{font-family:var(--semantic-font-family-display);font-size:1rem;color:var(--semantic-color-primary)}
-}
-@layer syx.molecules {
-  .mol-project-card__visual--research-coded{display:grid!important;place-items:center;background:var(--semantic-color-surface-alt)!important;padding:clamp(.8rem,2vw,1.5rem)!important}
-  .mol-research-proof{width:100%;max-width:42rem;border:1px solid var(--semantic-color-border);background:#fff;box-shadow:0 1.1rem 3rem rgba(8,15,26,.06)}
-  .mol-research-proof__head{display:flex;justify-content:space-between;gap:1rem;align-items:baseline;padding:.8rem;border-bottom:1px solid var(--semantic-color-border)}
-  .mol-research-proof__head span{font:600 .57rem/1 var(--semantic-font-family-ui);letter-spacing:.1em;color:var(--semantic-color-primary)}
-  .mol-research-proof__head strong{font-family:var(--semantic-font-family-display);font-size:1.15rem;letter-spacing:-.03em}
-  .mol-research-bars{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;padding:.8rem;background:var(--semantic-color-surface-alt)}
-  .mol-research-bars span{display:grid;gap:.35rem;font:600 .68rem/1 var(--semantic-font-family-ui)}.mol-research-bars i{display:block;width:var(--value);max-width:100%;height:.35rem;background:var(--semantic-color-primary)}
 }
 @layer syx.organisms {
   .org-new-work{padding:var(--semantic-space-section) var(--semantic-space-page-inline);border-bottom:1px solid var(--semantic-color-border)}
-}
-@layer syx.utilities {
-  @media(max-width:560px){.mol-research-bars{grid-template-columns:1fr}.atom-research-table th:nth-child(2),.atom-research-table td:nth-child(2){display:none}}
 }

@@ -42,7 +42,6 @@
 }
 @layer syx.organisms {
   .org-tools{padding:var(--semantic-space-section) var(--semantic-space-page-inline);border-bottom:1px solid var(--semantic-color-border)}
-  .org-tools>.atom-source-note{margin-top:2.5rem}
 
   .org-sport-opening{max-width:var(--component-story-max);margin-inline:auto;padding:clamp(4rem,8vw,8rem) var(--semantic-space-page-inline);display:grid;grid-template-columns:1.25fr .75fr;gap:clamp(2rem,6vw,7rem);align-items:center;border-bottom:1px solid var(--semantic-color-border)}
   .org-sport-opening__copy h2{font-family:var(--semantic-font-family-display);font-size:clamp(2.5rem,5vw,5.5rem);line-height:.98;letter-spacing:-.045em;margin:.5rem 0 2rem}

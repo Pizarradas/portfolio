@@ -8,18 +8,13 @@
     --component-rule-color:var(--semantic-color-border);
   }
 }
-@layer syx.molecules {
-  .mol-project-card__visual{border-radius:var(--component-media-radius)!important;box-shadow:none!important;border:1px solid var(--component-media-border)}
-  .mol-project-card__visual::after{display:none!important}
-  .mol-project-card__visual img{filter:none!important}
-}
 @layer syx.organisms {
   /* The header surface now comes from the glass mixin in the foundation.
      This !important was overriding it and flattening the material back to a
      plain 92% tint with no blur tint or sheen. */
   .org-hero{min-height:92svh}
   .org-hero h1{max-width:14ch;font-size:clamp(4rem,8.2vw,8.6rem)}
-  .org-hero::before{width:clamp(2.75rem,5vw,5rem);height:.22rem}.org-case-snippet--map .atom-eyebrow{color:#fff}
+  .org-hero::before{width:clamp(2.75rem,5vw,5rem);height:.22rem}
   .org-case-hero h1{max-width:13ch}
 }
 @layer syx.utilities {

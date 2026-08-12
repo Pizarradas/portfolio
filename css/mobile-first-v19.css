@@ -155,8 +155,6 @@
   .org-hero{min-height:auto;padding:4.5rem var(--mf-inline) 3rem;gap:2rem}
   .org-hero h1{max-width:100%;font-size:var(--mf-title);line-height:.92}
   .org-hero__footer{grid-template-columns:1fr;gap:1.5rem}.org-new-work,.org-tools,.org-case-index{padding:var(--mf-section) var(--mf-inline)}.org-case-index__grid{grid-template-columns:1fr}
-  .org-system-preview__stack{grid-template-columns:1fr}
-  .org-system-preview__foundation{grid-template-columns:1fr 1fr}
 
   /* Other case coded heroes */
   .org-coded-hero{padding:1rem}

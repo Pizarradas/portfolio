@@ -28,8 +28,6 @@
 
 @layer syx.organisms {
 
-  .org-case-snippet--map .atom-eyebrow { color: var(--semantic-color-on-primary); }
-
   .org-case-section--dark {
     background: var(--semantic-color-surface-night);
     color: var(--semantic-color-on-primary);

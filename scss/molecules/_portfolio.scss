@@ -52,48 +52,6 @@
     gap: var(--primitive-space-md);
   }
 
-  .mol-project-card__visual {
-    position: relative;
-    display: block;
-    // progressive-enhancement-v20 sets min-height:28rem and aspect-ratio:16/8.8
-    // on the featured card. Below ~900px those two cannot both hold: 448px of
-    // height at that ratio needs 815px of width, and the box grew to satisfy
-    // the ratio rather than stay in its track. Capping the width makes the
-    // ratio yield instead, so the height wins and nothing overflows.
-    min-width: 0;
-    max-width: 100%;
-    overflow: hidden;
-    background: var(--component-card-visual-bg);
-    border-radius: var(--component-card-radius);
-    aspect-ratio: var(--component-card-ratio);
-    box-shadow: 0 0 0 var(--semantic-border-width)
-      color-mix(in srgb, var(--semantic-color-border) 65%, transparent);
-  }
-
-  .mol-project-card__visual::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border: var(--semantic-border-width) solid var(--primitive-alpha-dark-08);
-    border-radius: inherit;
-    pointer-events: none;
-  }
-
-  .mol-project-card__visual img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform var(--semantic-duration-reveal) var(--semantic-ease);
-  }
-
-  .mol-project-card__visual:hover img {
-    transform: scale(1.018);
-  }
-
-  .mol-project-card--featured .mol-project-card__visual {
-    aspect-ratio: var(--component-card-ratio-featured);
-  }
-
   .mol-project-card__body {
     display: grid;
     gap: var(--primitive-space-sm);
@@ -124,16 +82,6 @@
     text-transform: uppercase;
     letter-spacing: var(--primitive-letter-spacing-wide);
     color: var(--semantic-color-text-muted);
-  }
-
-  .mol-project-card__visual--report img {
-    object-position: center top;
-    filter: saturate(0.72) contrast(0.98);
-  }
-
-  .mol-project-card__visual--map {
-    background: var(--semantic-color-surface-inverse);
-    color: var(--semantic-color-text-inverse);
   }
 
   .mol-process {
@@ -615,6 +563,395 @@
       flex-direction: column;
       align-items: flex-start;
       gap: var(--primitive-space-3xs);
+    }
+  }
+
+  // Selected work — the evidence family
+  //
+  // Three cards, three kinds of proof: real product screenshots, a measured
+  // study, a running map. They were three unrelated components spread over
+  // seven stylesheets — the study block was defined twice, in portfolio-v11
+  // and again in portfolio-v12 with slightly different numbers, and the
+  // flagship strip lived in a case-study stylesheet. The system preview was an
+  // organism nested inside a molecule's link, which is the layering rule the
+  // whole token architecture exists to keep.
+  //
+  // Now: one frame with one ratio, one body, three kinds of evidence inside.
+  .mol-project-card__frame {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: var(--component-work-frame-ratio);
+    max-width: 100%;
+    background: var(--component-card-visual-bg);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .mol-project-card--featured .mol-project-card__frame {
+    aspect-ratio: var(--component-work-frame-ratio-featured);
+  }
+
+  .mol-project-card__frame > * {
+    height: 100%;
+  }
+
+  // Flagship strip. The single most useful line in the section — what the work
+  // actually spans — so it sits above the headline rather than under it.
+  .mol-project-card__proof {
+    display: grid;
+    gap: var(--primitive-space-3xs);
+    margin: 0 0 var(--primitive-space-md);
+    padding-bottom: var(--primitive-space-md);
+    border-bottom: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+  }
+
+  .mol-project-card__proof span {
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-eyebrow);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    color: var(--semantic-color-primary);
+  }
+
+  .mol-project-card__proof b {
+    font-family: var(--semantic-font-family-display);
+    font-size: var(--semantic-font-size-ui);
+    line-height: var(--semantic-line-height-title);
+    letter-spacing: var(--semantic-letter-spacing-display);
+  }
+
+  .mol-project-card__proof small {
+    font-size: var(--semantic-font-size-caption);
+    color: var(--semantic-color-text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mol-project-card__takeaway {
+    margin: var(--primitive-space-md) 0 0;
+    padding-top: var(--primitive-space-md);
+    border-top: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+    font-size: var(--semantic-font-size-caption);
+    line-height: var(--semantic-line-height-body);
+    color: var(--semantic-color-text-secondary);
+  }
+
+  // EVIDENCE 01 — one architecture, four editorial identities
+  //
+  // Four real mastheads from the group. This is the strongest asset the page
+  // has, so it gets the whole frame rather than sitting inside a card as a
+  // thumbnail.
+  .mol-evidence-system {
+    display: flex;
+    flex-direction: column;
+    background: var(--semantic-color-surface-alt);
+  }
+
+  .mol-evidence-system__meta {
+    display: grid;
+    gap: var(--primitive-space-3xs);
+    padding: var(--primitive-space-sm) var(--primitive-space-md);
+    border-bottom: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+    background: var(--semantic-color-surface);
+  }
+
+  .mol-evidence-system__meta span {
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-eyebrow);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    color: var(--semantic-color-primary);
+  }
+
+  .mol-evidence-system__meta strong {
+    font-family: var(--semantic-font-family-display);
+    font-size: var(--semantic-font-size-ui);
+    letter-spacing: var(--semantic-letter-spacing-display);
+  }
+
+  .mol-evidence-system__stack {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mol-evidence-system__stack figure {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    margin: 0;
+    border-right: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+    border-bottom: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+    overflow: hidden;
+  }
+
+  .mol-evidence-system__stack figcaption {
+    order: 2;
+    padding: var(--primitive-space-3xs) var(--primitive-space-2xs);
+    background: var(--semantic-color-surface);
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-eyebrow);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    color: var(--semantic-color-text-muted);
+    border-top: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+  }
+
+  .mol-evidence-system__stack img {
+    order: 1;
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  // The foundation the four share, stated as the four things a token
+  // architecture actually decides.
+  .mol-evidence-system__foundation {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    background: var(--semantic-color-surface);
+  }
+
+  .mol-evidence-system__foundation span {
+    display: flex;
+    align-items: center;
+    gap: var(--primitive-space-2xs);
+    padding: var(--primitive-space-2xs) var(--primitive-space-sm);
+    border-right: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+    border-top: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-eyebrow);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-evidence-system__foundation b {
+    font-family: var(--semantic-font-family-display);
+    font-size: var(--semantic-font-size-caption);
+    letter-spacing: var(--semantic-letter-spacing-display);
+    text-transform: none;
+    color: var(--semantic-color-text);
+  }
+
+  .mol-evidence-system__foundation i {
+    width: 0.6rem;
+    height: 0.6rem;
+    background: var(--semantic-color-primary);
+  }
+
+  .mol-evidence-system__foundation i:nth-of-type(2) {
+    background: var(--semantic-color-text);
+  }
+
+  .mol-evidence-system__foundation i:nth-of-type(3) {
+    background: var(--semantic-color-border-strong);
+  }
+
+  // EVIDENCE 02 — the measured study
+  .mol-evidence-study {
+    display: flex;
+    flex-direction: column;
+    background: var(--semantic-color-surface-alt);
+    padding: var(--primitive-space-md);
+  }
+
+  .mol-evidence-study__panel {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: auto;
+    max-width: 44rem;
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
+    background: var(--semantic-color-surface);
+    box-shadow: var(--semantic-shadow-floating);
+  }
+
+  .mol-evidence-study__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--primitive-space-sm);
+    padding: var(--primitive-space-sm);
+    border-bottom: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+  }
+
+  .mol-evidence-study__head span {
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-eyebrow);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    color: var(--semantic-color-primary);
+  }
+
+  .mol-evidence-study__head strong {
+    font-family: var(--semantic-font-family-display);
+    font-size: var(--semantic-font-size-title-sm);
+    letter-spacing: var(--semantic-letter-spacing-display);
+  }
+
+  .mol-evidence-study table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-caption);
+  }
+
+  .mol-evidence-study th,
+  .mol-evidence-study td {
+    padding: var(--primitive-space-2xs) var(--primitive-space-sm);
+    text-align: left;
+    border-bottom: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+  }
+
+  .mol-evidence-study th {
+    font-size: var(--semantic-font-size-eyebrow);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-evidence-study td:last-child {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mol-evidence-study td b {
+    font-family: var(--semantic-font-family-display);
+    font-size: var(--semantic-font-size-body);
+    color: var(--semantic-color-primary);
+  }
+
+  .mol-evidence-study__bars {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--primitive-space-sm);
+    padding: var(--primitive-space-sm);
+    background: var(--semantic-color-surface-alt);
+  }
+
+  .mol-evidence-study__bars span {
+    display: grid;
+    gap: var(--primitive-space-3xs);
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-caption);
+    font-weight: var(--primitive-font-weight-bold);
+    font-variant-numeric: tabular-nums;
+  }
+
+  // The bar is the number. Width comes from --value on the element, which is
+  // the measured percentage, so the bar cannot disagree with the figure beside
+  // it.
+  .mol-evidence-study__bars i {
+    display: block;
+    width: var(--value);
+    max-width: 100%;
+    height: 0.35rem;
+    background: var(--semantic-color-primary);
+    transform-origin: left center;
+  }
+
+  // EVIDENCE 03 — the running map
+  .mol-evidence-live {
+    display: flex;
+    flex-direction: column;
+    background: var(--semantic-color-surface-night);
+  }
+
+  .mol-evidence-live__chrome {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--primitive-space-sm);
+    padding: var(--primitive-space-2xs) var(--primitive-space-sm);
+    background: var(--semantic-color-surface-alt);
+    border-bottom: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-eyebrow);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-evidence-live__chrome a {
+    flex: none;
+    color: var(--semantic-color-primary);
+    text-decoration: none;
+  }
+
+  .mol-evidence-live__chrome a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+
+  .mol-evidence-live__viewport {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .mol-evidence-live__viewport iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    pointer-events: none;
+  }
+
+  .mol-evidence-live__overlay {
+    position: absolute;
+    z-index: 2;
+    left: var(--primitive-space-sm);
+    bottom: var(--primitive-space-sm);
+    padding: var(--primitive-space-3xs) var(--primitive-space-2xs);
+    background: var(--semantic-color-surface);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-eyebrow);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+  }
+
+  @include from($bp-md) {
+    .mol-evidence-system__foundation {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .mol-evidence-system__stack figure:nth-child(2n) {
+      border-right: 0;
+    }
+
+    .mol-evidence-system__foundation span:last-child {
+      border-right: 0;
+    }
+  }
+
+  @include until($bp-md) {
+    .mol-evidence-study__bars {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    // The sample column repeats the same figure on every row, so it is the one
+    // to drop when the table has to fit a phone.
+    .mol-evidence-study th:nth-child(2),
+    .mol-evidence-study td:nth-child(2) {
+      display: none;
     }
   }
 
@@ -1107,7 +1444,6 @@
   }
 
   @include reduced-motion {
-    .mol-project-card__visual img,
     .mol-nav a::after {
       transition: none;
     }

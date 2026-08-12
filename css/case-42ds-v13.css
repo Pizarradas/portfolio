@@ -19,5 +19,3 @@
 @media(max-width:900px){.mol-architecture-stack{grid-template-columns:1fr}.mol-architecture-stack>i{transform:rotate(90deg);justify-self:center}.mol-case42-thesis,.org-case42-section{grid-template-columns:1fr}.mol-foundation-map,.mol-brand-tree__branches,.mol-targets{grid-template-columns:1fr 1fr}.mol-pipeline{grid-template-columns:1fr}.mol-pipeline i{transform:rotate(90deg);justify-self:center}}
 @media(max-width:580px){.mol-foundation-map,.mol-brand-tree__branches,.mol-targets{grid-template-columns:1fr}}
 }
-
-@layer syx.molecules{.mol-flagship-proof{display:grid;gap:.35rem;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--semantic-color-border)}.mol-flagship-proof span{font:700 .58rem/1 var(--semantic-font-family-ui);letter-spacing:.11em;color:var(--semantic-color-primary)}.mol-flagship-proof b{font:600 .88rem/1.25 var(--semantic-font-family-display);letter-spacing:-.025em}.mol-flagship-proof small{color:var(--semantic-color-text-muted)}}

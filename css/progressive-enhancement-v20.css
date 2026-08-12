@@ -30,11 +30,6 @@
     .mol-section-heading h2{font-size:clamp(2.8rem,5vw,4.5rem)}.org-project-grid{grid-template-columns:1fr 1fr;gap:1.5rem}
     .org-case-index__grid{grid-template-columns:repeat(2,1fr)}
 
-    .org-system-preview__stack{grid-template-columns:1fr 1fr}
-    .org-system-preview__foundation{grid-template-columns:repeat(4,1fr)}
-    .mol-project-card__visual{min-height:28rem}
-    .mol-project-card--featured .mol-project-card__visual{aspect-ratio:16/8.8}
-
     /* Case pages */
     .org-case42-hero h1{max-width:11ch;font-size:clamp(4.8rem,8vw,7.5rem)}
     .org-case42-section{grid-template-columns:minmax(14rem,22rem) minmax(0,46rem);gap:clamp(3rem,6vw,6rem)}
@@ -101,24 +96,13 @@
       padding-top:1.5rem;
       gap:clamp(2rem,4vw,4rem)
     }
-    .mol-project-card--featured .mol-project-card__visual{
-      aspect-ratio:auto;
-      min-height:38rem;
-      align-self:stretch
-    }
     .mol-project-card--featured .mol-project-card__body{
       align-self:end;
       padding-bottom:1rem
     }
     .mol-project-card--featured .mol-project-card__body h3{font-size:clamp(2.7rem,3vw,4.2rem);line-height:.95}
-    .org-system-preview{height:100%;display:flex;flex-direction:column}
-    .org-system-preview__stack{grid-template-columns:1fr 1fr;flex:1}
-    .org-system-preview__stack figure{display:flex;flex-direction:column}
-    .org-system-preview__stack img{flex:1;min-height:0;aspect-ratio:auto;object-fit:cover}
-    .org-system-preview__foundation{grid-template-columns:repeat(4,1fr)}
 
     .org-project-grid{grid-template-columns:1fr 1fr;gap:clamp(2rem,3vw,3.5rem);margin-top:clamp(5rem,7vw,8rem)}
-    .org-project-grid .mol-project-card__visual{min-height:31rem}
     .mol-project-card__body h3{font-size:clamp(2rem,2.4vw,3.2rem)}
     .org-case-index__grid{grid-template-columns:repeat(3,1fr)}
 

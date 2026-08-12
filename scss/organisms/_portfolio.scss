@@ -286,10 +286,6 @@
     .org-footer {
       flex-direction: column;
     }
-
-    .mol-project-card--featured .mol-project-card__visual {
-      aspect-ratio: var(--component-card-ratio);
-    }
   }
 
   // Self-directed registers — one per row

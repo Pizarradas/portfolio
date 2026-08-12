@@ -10,7 +10,6 @@
   .atom-echart__fallback{display:grid;gap:.85rem;padding:2rem 0}
   .atom-echart__fallback span{display:grid;grid-template-columns:3rem 1fr;gap:.7rem;align-items:center;font:600 .8rem/1 var(--semantic-font-family-ui)}
   .atom-echart__fallback span::after{content:"";grid-column:2;height:.6rem;width:var(--value);background:var(--semantic-color-primary)}
-  .atom-flagship-takeaway{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--semantic-color-border);font-size:.76rem!important;color:var(--semantic-color-text-secondary)}
 }
 @layer syx.molecules {
   .mol-inventory-visual{margin:2.2rem 0;border:1px solid var(--semantic-color-border);background:var(--semantic-color-surface)}
