@@ -1,7 +1,6 @@
 
-@layer syx.atoms{
-.atom-case-link{display:inline-flex;margin-top:1.25rem;color:var(--semantic-color-primary);font:600 .74rem/1 var(--semantic-font-family-ui);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:.18rem}
-}
+/* .atom-case-link removed: it was a second name for .atom-text-link, which is
+   defined once in scss/atoms/_portfolio.scss. */
 @layer syx.organisms{
 .org-case-index{padding:var(--semantic-space-section) var(--semantic-space-page-inline);border-bottom:1px solid var(--semantic-color-border)}
 .org-case-index__grid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:3rem;border-top:1px solid var(--semantic-color-border);border-left:1px solid var(--semantic-color-border)}

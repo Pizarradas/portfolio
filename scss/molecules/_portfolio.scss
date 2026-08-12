@@ -1303,11 +1303,16 @@
 
   // The chrome states where the preview comes from. It is a real address, not
   // a decorative browser bar, so it is set in mono and the link works.
+  // `max-width` is reset for the same reason as the map card's bar: this is a
+  // paragraph by markup only, and the base layer caps paragraphs at the prose
+  // measure — which stopped the bar two thirds of the way across and let the
+  // dark media column show through beside it.
   .mol-register__chrome {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--primitive-space-sm);
+    max-width: none;
     padding: var(--primitive-space-2xs) var(--primitive-space-sm);
     background: var(--semantic-color-surface-alt);
     border-bottom: var(--semantic-border-width) solid
@@ -1317,18 +1322,11 @@
     color: var(--semantic-color-text-muted);
   }
 
+  // The link is `.atom-text-link--compact`; the bar only says where it sits and
+  // what colour it takes on this ground.
   .mol-register__chrome a {
     flex: none;
     color: var(--semantic-color-primary);
-    text-decoration: none;
-    font-family: var(--semantic-font-family-ui);
-    letter-spacing: var(--semantic-letter-spacing-eyebrow);
-    text-transform: uppercase;
-  }
-
-  .mol-register__chrome a:hover {
-    text-decoration: underline;
-    text-underline-offset: 0.25em;
   }
 
   .mol-register__frame {
@@ -1497,24 +1495,15 @@
     color: var(--semantic-color-text);
   }
 
+  // Layout only. The links themselves are `.atom-text-link` — this pair was
+  // the version of the text link the site kept, so it is now the atom rather
+  // than a rule that happens to live inside one molecule.
   .mol-register__links {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--primitive-space-md);
+    gap: var(--primitive-space-lg);
     margin: 0;
-    font-family: var(--semantic-font-family-ui);
-    font-size: var(--semantic-font-size-ui);
-  }
-
-  .mol-register__links a {
-    text-decoration: none;
-    border-bottom: var(--semantic-border-width) solid
-      var(--semantic-color-border);
-    padding-bottom: var(--primitive-space-3xs);
-  }
-
-  .mol-register__links a:hover {
-    border-bottom-color: currentColor;
+    max-width: none;
   }
 
   @include from($bp-md) {

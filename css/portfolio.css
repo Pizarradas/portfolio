@@ -321,6 +321,8 @@
     --component-metric-color: var(--semantic-color-on-primary);
     --component-link-color: var(--semantic-color-text);
     --component-link-hover-color: var(--semantic-color-primary);
+    --component-text-link-rule: var(--semantic-color-border);
+    --component-text-link-offset: var(--primitive-space-3xs);
     --component-eyebrow-color: var(--semantic-color-primary);
     --component-wordmark-accent: var(--semantic-color-primary);
     --component-selection-bg: var(--semantic-color-primary);
@@ -469,17 +471,32 @@
     color: var(--semantic-color-text-secondary);
     max-width: var(--semantic-measure-lede);
   }
-  .atom-text-link {
+  .atom-text-link,
+  .atom-case-link {
     display: inline-flex;
     align-items: center;
     gap: var(--primitive-space-xs);
-    font-weight: var(--primitive-font-weight-black);
-    text-decoration-thickness: 0.08em;
-    text-underline-offset: 0.3em;
-    transition: text-decoration-thickness var(--semantic-duration-hover) var(--semantic-ease);
+    width: fit-content;
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-ui);
+    color: inherit;
+    text-decoration: none;
+    padding-bottom: var(--component-text-link-offset);
+    border-bottom: var(--semantic-border-width) solid var(--component-text-link-rule);
+    transition: border-color var(--semantic-duration-hover) var(--semantic-ease);
   }
-  .atom-text-link:hover {
-    text-decoration-thickness: 0.16em;
+  .atom-text-link:hover,
+  .atom-case-link:hover {
+    border-bottom-color: currentColor;
+  }
+  .atom-text-link--accent {
+    color: var(--semantic-color-primary);
+    border-bottom-color: color-mix(in srgb, currentColor 35%, transparent);
+  }
+  .atom-text-link--compact {
+    font-size: var(--semantic-font-size-eyebrow);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
   }
   .atom-metric {
     position: absolute;
@@ -1467,6 +1484,7 @@
     align-items: center;
     justify-content: space-between;
     gap: var(--primitive-space-sm);
+    max-width: none;
     padding: var(--primitive-space-2xs) var(--primitive-space-sm);
     background: var(--semantic-color-surface-alt);
     border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
@@ -1477,14 +1495,6 @@
   .mol-register__chrome a {
     flex: none;
     color: var(--semantic-color-primary);
-    text-decoration: none;
-    font-family: var(--semantic-font-family-ui);
-    letter-spacing: var(--semantic-letter-spacing-eyebrow);
-    text-transform: uppercase;
-  }
-  .mol-register__chrome a:hover {
-    text-decoration: underline;
-    text-underline-offset: 0.25em;
   }
   .mol-register__frame {
     position: relative;
@@ -1621,18 +1631,9 @@
   .mol-register__links {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--primitive-space-md);
+    gap: var(--primitive-space-lg);
     margin: 0;
-    font-family: var(--semantic-font-family-ui);
-    font-size: var(--semantic-font-size-ui);
-  }
-  .mol-register__links a {
-    text-decoration: none;
-    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
-    padding-bottom: var(--primitive-space-3xs);
-  }
-  .mol-register__links a:hover {
-    border-bottom-color: currentColor;
+    max-width: none;
   }
   @media (min-width: 48rem) {
     .mol-register {
@@ -2037,11 +2038,12 @@
   }
   .org-footer__contact a {
     text-decoration: none;
-    border-bottom: var(--semantic-border-width) solid currentColor;
-    padding-bottom: 0.12rem;
+    border-bottom: var(--semantic-border-width) solid var(--component-text-link-rule);
+    padding-bottom: var(--component-text-link-offset);
+    transition: border-color var(--semantic-duration-hover) var(--semantic-ease);
   }
   .org-footer__contact a:hover {
-    border-bottom-width: var(--semantic-border-width-strong);
+    border-bottom-color: currentColor;
   }
   @media (max-width: 47.9375rem) {
     .org-hero__footer,

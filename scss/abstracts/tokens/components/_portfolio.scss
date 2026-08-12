@@ -72,6 +72,16 @@
 
     --component-link-color: var(--semantic-color-text);
     --component-link-hover-color: var(--semantic-color-primary);
+
+    // Text link — the standalone "go and read this" link.
+    //
+    // One rule for every one of them: a hairline at rest that comes up to the
+    // link's own colour on hover. It reads as a rule under a word rather than
+    // as an underline, which is what separates it from a link inside a
+    // sentence, and it inverts by itself inside `.syx-on-night` because the
+    // border token does.
+    --component-text-link-rule: var(--semantic-color-border);
+    --component-text-link-offset: var(--primitive-space-3xs);
     --component-eyebrow-color: var(--semantic-color-primary);
     --component-wordmark-accent: var(--semantic-color-primary);
     --component-selection-bg: var(--semantic-color-primary);

@@ -1,6 +1,4 @@
-@layer syx.atoms {
-  .atom-text-link{display:inline-flex;margin-top:1.1rem;color:var(--semantic-color-primary);font:600 .74rem/1 var(--semantic-font-family-ui);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:.18rem}
-}
+/* .atom-text-link removed: it is defined once, in scss/atoms/_portfolio.scss. */
 @layer syx.organisms {
   .org-new-work{padding:var(--semantic-space-section) var(--semantic-space-page-inline);border-bottom:1px solid var(--semantic-color-border)}
 }

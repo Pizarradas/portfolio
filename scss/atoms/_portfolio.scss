@@ -54,19 +54,58 @@
     max-width: var(--semantic-measure-lede);
   }
 
-  .atom-text-link {
+  // Text link — one definition for every standalone link on the site.
+  //
+  // There were three: this one (a thickening underline), a second in
+  // portfolio-v10.css and a third in portfolio-v11.css, all three writing to
+  // `.atom-text-link` in the same layer — so the last file linked in the head
+  // decided how the link looked. `.atom-case-link` was a fourth copy of the
+  // same idea under a different name. The version that survives is the one used
+  // by the self-directed registers, because that is the one the section was
+  // designed around.
+  //
+  // `width: fit-content` is not cosmetic: grid blockifies its items, so an
+  // inline-flex link placed directly in a grid cell — which is where the hero
+  // puts it — stretched to the width of the track and dragged its rule right
+  // across the page.
+  .atom-text-link,
+  .atom-case-link {
     display: inline-flex;
     align-items: center;
     gap: var(--primitive-space-xs);
-    font-weight: var(--primitive-font-weight-black);
-    text-decoration-thickness: 0.08em;
-    text-underline-offset: 0.3em;
-    transition: text-decoration-thickness var(--semantic-duration-hover)
+    width: fit-content;
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-ui);
+    color: inherit;
+    text-decoration: none;
+    padding-bottom: var(--component-text-link-offset);
+    border-bottom: var(--semantic-border-width) solid
+      var(--component-text-link-rule);
+    transition: border-color var(--semantic-duration-hover)
       var(--semantic-ease);
   }
 
-  .atom-text-link:hover {
-    text-decoration-thickness: 0.16em;
+  .atom-text-link:hover,
+  .atom-case-link:hover {
+    border-bottom-color: currentColor;
+  }
+
+  // Variant — the accent link. For the one link in a region that has to be
+  // found before anything else is read; everywhere else the base link belongs
+  // to its paragraph, not above it.
+  // The rule is the link's own colour held back, so the hover behaviour is the
+  // same gesture as the base link rather than a second idea.
+  .atom-text-link--accent {
+    color: var(--semantic-color-primary);
+    border-bottom-color: color-mix(in srgb, currentColor 35%, transparent);
+  }
+
+  // Variant — the compact link, for chrome bars and captions where the rest of
+  // the furniture is set in the eyebrow size.
+  .atom-text-link--compact {
+    font-size: var(--semantic-font-size-eyebrow);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
   }
 
   .atom-metric {

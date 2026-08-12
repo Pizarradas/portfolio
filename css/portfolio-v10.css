@@ -1,6 +1,7 @@
 
 @layer syx.atoms {
-  .atom-text-link{display:inline-flex;margin-top:1.2rem;font:600 .76rem/1 var(--semantic-font-family-ui);color:var(--semantic-color-primary);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:.2rem}
+  /* .atom-text-link moved to scss/atoms/_portfolio.scss — three copies of it in
+     this layer meant the link looked like whichever file loaded last. */
   .atom-orbit{position:absolute;border:1px solid rgba(255,255,255,.18);border-radius:50%}
 }
 @layer syx.organisms {

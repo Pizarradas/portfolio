@@ -16,6 +16,8 @@
    column and broke mid-word on anything below ~1800px. */
 .org-illustration-showcase__intro h2{font:var(--semantic-font-weight-display) var(--semantic-font-size-title-lg)/var(--semantic-line-height-display) var(--semantic-font-family-display);letter-spacing:var(--semantic-letter-spacing-hero);margin:.6rem 0 1.2rem}
 .org-illustration-showcase__intro>p:last-of-type{max-width:42rem;color:var(--semantic-color-text-secondary)}
+/* The link is .atom-text-link now; this block owns its spacing, the atom owns its look. */
+.org-illustration-showcase__intro .atom-text-link{margin-top:1.25rem}
 
 .org-illustration-case__hero{padding:clamp(5rem,10vw,10rem) var(--semantic-space-page-inline) clamp(3rem,6vw,6rem)}
 .org-illustration-case__hero h1{font:600 clamp(3.4rem,10vw,8rem)/.88 var(--semantic-font-family-display);letter-spacing:-.065em;max-width:12ch;margin:.6rem 0 1.5rem}

@@ -256,14 +256,20 @@
     max-width: none;
   }
 
+  // Same rule as the text link atom: a hairline that comes up to the link's own
+  // colour on hover. It was the inverse here — a solid rule that got thicker —
+  // which made three footer links louder than the case links above them.
   .org-footer__contact a {
     text-decoration: none;
-    border-bottom: var(--semantic-border-width) solid currentColor;
-    padding-bottom: 0.12rem;
+    border-bottom: var(--semantic-border-width) solid
+      var(--component-text-link-rule);
+    padding-bottom: var(--component-text-link-offset);
+    transition: border-color var(--semantic-duration-hover)
+      var(--semantic-ease);
   }
 
   .org-footer__contact a:hover {
-    border-bottom-width: var(--semantic-border-width-strong);
+    border-bottom-color: currentColor;
   }
 
   @include until($bp-md) {
