@@ -32,36 +32,79 @@ const ROLES = [
     role: 'Digital Designer & Front-End', tag: 'Craft',
     note: 'HTML, CSS and jQuery for clients like Barceló Viajes and Vodafone.',
     said: 'I designed screens and built them myself.',
+    where: 'Madrid, Spain',
+    detail: [
+      'Front-end in HTML, CSS, JavaScript and jQuery.',
+      'Visual design and adaptation to each brand identity.',
+      'Several simultaneous client projects.',
+      'Clients included Barceló Viajes and Vodafone.',
+    ],
   },
   {
     org: 'France Telecom Spain', from: '2012-04', to: '2021-12', scope: 2,
     role: 'Senior UI/UX Designer & Front-End Developer', tag: 'Scale',
     note: 'High-traffic products, flows and conversion structures.',
     said: 'Nine years learning what scale actually breaks.',
+    where: 'Madrid, Spain',
+    detail: [
+      'Web and mobile interfaces on high-traffic products.',
+      'Front-end development in HTML, CSS and JavaScript.',
+      'Optimised flows and structures for conversion.',
+      'CMS work inside complex corporate environments.',
+      'Cross-team work with UX, business and technology.',
+    ],
   },
   {
     org: 'Aliseda', from: '2021-12', to: '2023-02', scope: 3,
     role: 'UI/UX Designer & Front-End (Design Systems)', tag: 'System',
     note: 'Created Brickee, their internal design system, from zero.',
     said: 'I built my first design system from nothing.',
+    where: 'Madrid, Spain',
+    detail: [
+      'Created Brickee, the internal design system.',
+      'Designed and built reusable components in SCSS.',
+      'Defined a scalable front-end architecture.',
+      'Responsive interface design and implementation.',
+    ],
   },
   {
     org: 'Plexus Tech', from: '2023-02', to: '2023-06', scope: 3,
     role: 'UI/UX Designer', tag: 'System',
     note: 'Responsive interfaces and reusable SCSS component architecture.',
     said: '',
+    where: 'Madrid, Spain',
+    detail: [
+      'Responsive interfaces built for performance.',
+      'Reusable components and SCSS architecture.',
+    ],
   },
   {
     org: 'Prensa Ibérica', from: '2023-07', to: '2026-08', scope: 4,
     role: 'Product Designer & Front-End Engineer', tag: 'Multi-brand',
     note: '42DS: design tokens, WCAG 2.1 AA and CSS performance across the group.',
     said: 'The system became a product used by others.',
+    where: 'Madrid, Spain',
+    detail: [
+      'Components in Figma inside the 42DS design system.',
+      'Design-token architecture: Figma → JSON → Style Dictionary.',
+      'WCAG 2.1 AA across complex editorial products.',
+      'CSS and front-end performance on high-traffic titles.',
+      'Maintainability and technical-debt reduction.',
+    ],
   },
 ];
 
 // SYX + ATLAS is self-directed work running alongside the current role, so it
 // is the end point of the scope curve rather than another employment bar.
-const NOW = { at: '2026-08', scope: 5, label: 'SYX + ATLAS' };
+const NOW = {
+  at: '2026-08', scope: 5, label: 'SYX + ATLAS',
+  role: 'Self-directed', where: 'Ongoing',
+  detail: [
+    'SYX: a token-driven SCSS design system of my own.',
+    'ATLAS: an editorial mental model layered on top of it.',
+    'Rules, knowledge and modes that keep AI-assisted work inside the system.',
+  ],
+};
 
 const W = 1200;
 const H = 360;
@@ -86,9 +129,27 @@ const y = scaleLinear()
 
 const mid = r => new Date((month(r.from).getTime() + month(r.to).getTime()) / 2);
 
+const fmt = s => {
+  const [yy, mm] = s.split('-');
+  return `${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][Number(mm) - 1]} ${yy}`;
+};
+
 const points = [
-  ...ROLES.filter(r => r.said).map(r => ({ t: mid(r), s: r.scope, org: r.org })),
-  { t: month(NOW.at), s: NOW.scope, org: NOW.label },
+  ...ROLES.filter(r => r.said).map(r => ({
+    t: mid(r), s: r.scope, org: r.org,
+    tip: {
+      org: r.org, role: r.role, where: r.where, detail: r.detail,
+      when: `${fmt(r.from)} – ${r.to === NOW.at ? 'present' : fmt(r.to)}`,
+      scope: SCOPE[r.scope],
+    },
+  })),
+  {
+    t: month(NOW.at), s: NOW.scope, org: NOW.label,
+    tip: {
+      org: NOW.label, role: NOW.role, where: NOW.where, detail: NOW.detail,
+      when: '2026 →', scope: SCOPE[NOW.scope],
+    },
+  },
 ];
 
 const px = p => x(p.t);
@@ -138,8 +199,12 @@ const axis = TICKS.map((t, i) => {
     `<text x="${xx}" y="${BAR.y + BAR.h + 26}" text-anchor="${anchor}">${t.slice(0, 4)}</text>`;
 }).join('');
 
+// Nodes are focusable and labelled: the tooltip has to be reachable without a
+// pointer, and its content is the same text the list below already carries.
 const nodes = points.map((p, i) =>
-  `<circle cx="${n(px(p))}" cy="${n(py(p))}" r="${5 + i}" style="--i:${i}"/>`).join('');
+  `<circle cx="${n(px(p))}" cy="${n(py(p))}" r="${5 + i}" style="--i:${i}" ` +
+  `class="mol-career-chart__node" data-point="${i}" tabindex="0" role="button" ` +
+  `aria-label="${esc(p.tip.org)}, ${esc(p.tip.when)}. ${esc(p.tip.scope)}."/>`).join('');
 
 const gapStart = n(x(month('2011-05')));
 const gapEnd = n(x(month('2012-04')));
@@ -172,8 +237,13 @@ const items = ROLES.map((r, i) => {
 </li>`;
 }).join('\n');
 
+const tipData = JSON.stringify(points.map(p => p.tip))
+  .replace(/</g, '\\u003c');
+
 const block = `<figure class="mol-career-chart">
 ${svg}
+<div class="mol-career-tip" id="career-tip" role="tooltip" hidden></div>
+<script type="application/json" id="career-tip-data">${tipData}</script>
 </figure>
 <ol class="mol-career-list">
 ${items}

@@ -701,6 +701,7 @@
     }
   }
   .mol-career-chart {
+    position: relative;
     margin: var(--primitive-space-xl) 0 0;
   }
   .mol-career-chart__svg {
@@ -779,79 +780,68 @@
     font-size: 13px;
     font-variant-numeric: tabular-nums;
   }
-  @supports (animation-timeline: view()) {
-    @media (prefers-reduced-motion: no-preference) {
-      .mol-career-chart__svg {
-        view-timeline-name: --career;
-        view-timeline-axis: block;
-      }
-      .mol-career-chart__grid line {
-        transform: scaleX(0);
-        transform-origin: left center;
-        animation: career-grow linear both;
-        animation-timeline: --career;
-        animation-range: entry 10% entry 70%;
-      }
-      .mol-career-chart__curve {
-        stroke-dasharray: 1;
-        stroke-dashoffset: 1;
-        animation: career-draw linear both;
-        animation-timeline: --career;
-        animation-range: entry 25% entry 95%;
-      }
-      .mol-career-chart__area {
-        opacity: 0;
-        animation: career-in linear both;
-        animation-timeline: --career;
-        animation-range: entry 45% entry 100%;
-      }
-      .mol-career-chart__nodes circle {
-        opacity: 0;
-        transform: scale(0.4);
-        transform-box: fill-box;
-        transform-origin: center;
-        animation: career-pop linear both;
-        animation-timeline: --career;
-        animation-range: entry calc(30% + var(--i) * 12%) entry calc(48% + var(--i) * 12%);
-      }
-      .mol-career-chart__bars rect {
-        transform: scaleX(0);
-        transform-box: fill-box;
-        transform-origin: left center;
-        animation: career-grow linear both;
-        animation-timeline: --career;
-        animation-range: entry 20% entry 80%;
-      }
-      .mol-career-chart__bars text,
-      .mol-career-chart__axis,
-      .mol-career-chart__gap {
-        opacity: 0;
-        animation: career-in linear both;
-        animation-timeline: --career;
-        animation-range: entry 60% entry 100%;
-      }
-    }
+  .mol-career-chart__node {
+    cursor: pointer;
+    transition: r var(--semantic-duration-hover) var(--semantic-ease);
   }
-  @keyframes career-draw {
-    to {
-      stroke-dashoffset: 0;
-    }
+  .mol-career-chart__node:hover,
+  .mol-career-chart__node:focus-visible {
+    fill: currentColor;
   }
-  @keyframes career-in {
-    to {
-      opacity: 1;
-    }
+  .mol-career-chart__node:focus-visible {
+    outline: var(--semantic-border-width-strong) solid var(--semantic-color-focus);
+    outline-offset: 3px;
   }
-  @keyframes career-grow {
-    to {
-      transform: scaleX(1);
-    }
+  .mol-career-tip {
+    position: absolute;
+    z-index: var(--primitive-z-raised);
+    display: grid;
+    gap: var(--primitive-space-3xs);
+    width: min(22rem, 80vw);
+    padding: var(--primitive-space-md);
+    background: var(--semantic-color-surface);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
+    border-radius: var(--semantic-radius-surface);
+    box-shadow: var(--semantic-shadow-overlay);
+    pointer-events: none;
   }
-  @keyframes career-pop {
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
+  .mol-career-tip[hidden] {
+    display: none;
+  }
+  .mol-career-tip b {
+    font-family: var(--semantic-font-family-display);
+    font-size: var(--semantic-font-size-body-lg);
+    font-weight: var(--semantic-font-weight-display);
+    letter-spacing: var(--primitive-letter-spacing-tight);
+  }
+  .mol-career-tip__meta,
+  .mol-career-tip__scope {
+    font-size: var(--semantic-font-size-caption);
+    font-weight: var(--primitive-font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: var(--primitive-letter-spacing-wide);
+    color: var(--semantic-color-text-muted);
+  }
+  .mol-career-tip__scope {
+    justify-self: start;
+    margin-top: var(--primitive-space-3xs);
+    padding: 0.2rem 0.5rem;
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
+    border-radius: var(--semantic-radius-pill);
+    color: var(--semantic-color-primary);
+  }
+  .mol-career-tip__role {
+    font-size: var(--semantic-font-size-ui);
+    color: var(--semantic-color-text);
+  }
+  .mol-career-tip ul {
+    display: grid;
+    gap: var(--primitive-space-3xs);
+    margin: var(--primitive-space-3xs) 0 0;
+    padding-left: var(--primitive-space-md);
+    font-size: var(--semantic-font-size-ui);
+    line-height: var(--semantic-line-height-ui);
+    color: var(--semantic-color-text-secondary);
   }
   .mol-career-list {
     list-style: none;
