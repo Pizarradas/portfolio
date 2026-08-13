@@ -22,19 +22,21 @@
     // body-lg, so it still has room inside 880.
     //
     // `sm` moved with it, to W(1): it is what `--semantic-width-compact` caps
-    // the copy column of a work card to, and a column cap has to be a step of
-    // the width scale like any other. `lg` is left at 78 because the only thing
-    // reading it is `--semantic-width-narrow`, which nothing uses — correcting
-    // a dead value is churn, and the fix for it is deletion.
+    // the copy column of a work card and Contact's body to, and a column cap
+    // has to be a step of the width scale like any other.
     //
     // `3xl` is new and is W(6): the register above survey. Not a fourth size
     // invented for a section that wanted to be bigger, but the next step of the
     // same scale, which is what keeps an uncapped `full` from being the only
     // answer to "wider than survey" on a 3440px display.
-    --primitive-width-xs: 34rem; //  544px — W(0)
+    //
+    // `xs` and `lg` are gone. They were the last two off-curve steps, and the
+    // only things reading them were `--semantic-width-prose` and
+    // `--semantic-width-narrow`, aliases kept for stylesheets that no longer
+    // exist. So the bank skips a name between `md` and `xl` on purpose: every
+    // step left is on the curve and every step left has a reader.
     --primitive-width-sm: 43.25rem; //  692px — W(1)
     --primitive-width-md: 55rem; //  880px — W(2)
-    --primitive-width-lg: 78rem; // 1248px — off curve, unused
     --primitive-width-xl: 90rem; // 1440px — W(4), +1.1 %
     --primitive-width-2xl: 112rem; // 1792px — W(5), −1.1 %
     --primitive-width-3xl: 144rem; // 2304px — W(6)

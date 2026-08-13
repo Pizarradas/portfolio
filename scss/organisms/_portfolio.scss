@@ -9,10 +9,15 @@
   // stacked on top of each other on a wide display.
   // `.org-work` is no longer in the list: it runs at `showcase`, and leaving a
   // survey padding here that the utilities layer silently beats is how a
-  // section ends up with two answers to how wide it is. The rest keep it, but
-  // it is dead weight for them too — every section in this selector carries its
-  // register in the markup, and the utilities layer wins on layer position
-  // whatever the specificity.
+  // section ends up with two answers to how wide it is.
+  //
+  // The rest stay, and this rule is not the dead weight it looks like. On
+  // index.html every one of them carries a register class, so yes, the
+  // utilities layer beats this. But `.org-site-header` and `.org-footer` also
+  // appear on the six case pages, and there they carry no register class at
+  // all — this is the only thing holding them off the viewport edge. Deleting
+  // it would strip the padding from the header and the footer of six pages at
+  // once, with nothing failing to say so.
   .org-site-header,
   .org-hero,
   .org-about,
@@ -400,10 +405,6 @@
 
     .mol-project-card__meta {
       flex-direction: column;
-    }
-
-    .atom-metric {
-      max-width: 8rem;
     }
   }
 }

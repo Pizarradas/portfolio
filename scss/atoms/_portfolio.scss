@@ -61,16 +61,16 @@
   // portfolio-v10.css and a third in portfolio-v11.css, all three writing to
   // `.atom-text-link` in the same layer — so the last file linked in the head
   // decided how the link looked. `.atom-case-link` was a fourth copy of the
-  // same idea under a different name. The version that survives is the one used
-  // by the self-directed registers, because that is the one the section was
-  // designed around.
+  // same idea under a different name; it was kept as an alias through the
+  // migration and no markup ever asked for it again, so it is gone. The version
+  // that survives is the one used by the self-directed registers, because that
+  // is the one the section was designed around.
   //
   // `width: fit-content` is not cosmetic: grid blockifies its items, so an
   // inline-flex link placed directly in a grid cell — which is where the hero
   // puts it — stretched to the width of the track and dragged its rule right
   // across the page.
-  .atom-text-link,
-  .atom-case-link {
+  .atom-text-link {
     display: inline-flex;
     align-items: center;
     gap: var(--semantic-space-component-xs);
@@ -85,8 +85,7 @@
     @include transition(border-color var(--semantic-duration-hover) var(--semantic-ease));
   }
 
-  .atom-text-link:hover,
-  .atom-case-link:hover {
+  .atom-text-link:hover {
     border-bottom-color: currentColor;
   }
 
@@ -161,26 +160,6 @@
       padding-inline-start: var(--semantic-space-component-2xs);
       font-size: var(--semantic-font-size-eyebrow);
     }
-  }
-
-  .atom-metric {
-    @include absolute($bottom: var(--semantic-space-component-md), $left: var(--semantic-space-component-md));
-    z-index: var(--semantic-z-raised);
-    max-width: 10rem;
-    padding: var(--semantic-space-component-md);
-    background: var(--component-metric-bg);
-    color: var(--component-metric-color);
-    font-size: var(--semantic-font-size-ui);
-    font-weight: var(--semantic-font-weight-display);
-    line-height: var(--semantic-line-height-display);
-    border-radius: var(--semantic-radius-control);
-  }
-
-  .atom-metric span {
-    display: block;
-    font-size: var(--semantic-font-size-title);
-    line-height: var(--semantic-line-height-flat);
-    letter-spacing: var(--semantic-letter-spacing-hero);
   }
 
   .atom-outcome-line {

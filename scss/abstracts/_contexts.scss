@@ -47,13 +47,6 @@
     --semantic-color-on-primary: var(--primitive-color-brand-950);
   }
 
-  .syx-on-ink {
-    @include on-dark;
-
-    --semantic-color-surface: var(--semantic-color-surface-inverse);
-    --semantic-color-on-primary: var(--primitive-color-ink-1000);
-  }
-
   // Brand-blue ground. Same idea, different surface.
   .syx-on-brand {
     @include on-dark;

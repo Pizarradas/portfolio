@@ -51,36 +51,25 @@
       calc((100% - var(--semantic-width-showcase)) / 2)
     );
 
-    // A fourth register, and the only one with no cap: the page itself, minus
-    // its gutter. For a section whose content is the spatial relationship
-    // between whole blocks rather than anything to be read — the work mosaic —
-    // where the cap was leaving 700px of empty page either side on a wide
-    // display and making three cases look like three small cards.
-    // The work mosaic it was written for now runs at `showcase` instead: a
-    // register with no cap is, by definition, off the width scale, and at
-    // 3440px it takes 96 % of the viewport. Nothing reads this one today.
-    --semantic-pad-full: var(--semantic-space-gutter);
-
     // Column cap, not a section register. The copy column of a work card stops
     // here so the width above survey goes to the evidence beside it instead of
     // to the line length — at `showcase` an uncapped column would run to 960px
-    // of caption text, which is about 140 characters a line.
+    // of caption text, which is about 140 characters a line. Contact's body
+    // reads it too: the same job, one measure below its register.
     --semantic-width-compact: var(--primitive-width-sm);
 
-    // Names the existing stylesheets already reference. They keep the values
-    // they had, so nothing shifts implicitly: a section changes width when it
-    // is given a register in the markup, and only then.
-    --semantic-width-prose: var(--primitive-width-xs);
-    --semantic-width-narrow: var(--primitive-width-lg);
-    --semantic-width-content: var(--semantic-width-survey);
-    --semantic-width-wide: var(--semantic-width-survey);
-
+    // The one alias from the old stylesheets still worth its name. It resolves
+    // to `pad-survey`, and it is what gives the six case pages their header and
+    // footer padding: those pages carry `.org-site-header` and `.org-footer`
+    // with no register class of their own, so the organism rule that reads this
+    // is the only thing holding them off the viewport edge. Not dead — load
+    // bearing, and on six pages at once.
+    //
+    // Its siblings — `width-prose`, `width-narrow`, `width-content`,
+    // `width-wide`, `pad-wide`, `pad-narrow`, `pad-full` — were kept through
+    // the migration for stylesheets that no longer exist, and nothing ever
+    // asked for them again.
     --semantic-pad-content: var(--semantic-pad-survey);
-    --semantic-pad-wide: var(--semantic-pad-survey);
-    --semantic-pad-narrow: max(
-      var(--semantic-space-gutter),
-      calc((100% - var(--semantic-width-narrow)) / 2)
-    );
 
     // Vertical rhythm between blocks. Tighter than the old
     // clamp(5rem, 9vw, 10rem): the wide render was mostly empty space.

@@ -176,20 +176,6 @@
     color: var(--semantic-color-primary);
   }
 
-  .mol-process {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--semantic-space-component-xs);
-  }
-
-  .mol-process span {
-    padding: var(--semantic-space-component-xs) var(--semantic-space-component-sm);
-    border: var(--semantic-border-width) solid var(--component-chip-border);
-    border-radius: var(--component-chip-radius);
-    font-size: var(--semantic-font-size-ui);
-    font-weight: var(--semantic-font-weight-strong);
-  }
-
   // About — factual key/value rows
   .mol-about-facts {
     display: grid;
