@@ -166,6 +166,77 @@
     max-width: var(--semantic-measure-prose);
   }
 
+  // Reading fold.
+  //
+  // A block of prose should not run past φ⁻¹ of the screen it is being read on.
+  // At the smallest supported viewport — 360×640, the floor the whole fluid
+  // scale is built from — that is 395px, about fifteen lines. Past it the block
+  // stops being an element on a page and becomes the page: About runs 29 lines
+  // and 789px on a phone, a screen and a quarter of unbroken text.
+  //
+  // Folded height is nine lines, φ⁻¹ of the threshold in turn. The clip is in
+  // lines and not in characters on purpose: the same source sets 7–12% longer
+  // in Spanish (measured, not assumed), so a character count would fold the two
+  // languages to different depths for no reason. Characters are only the
+  // authoring rule for deciding which block gets the class — over ~600 in the
+  // English source, which today is this one block and no other.
+  //
+  // The clip is CSS, so the folded height exists at first paint and nothing
+  // jumps; the script only wires the button. And it hangs off `.js`, set inline
+  // in <head>: with scripting off there is no fold, because a clipped text with
+  // no way to open it is worse than a long one. The text stays in the DOM and
+  // in the accessibility tree either way — this hides it from the eye, not from
+  // a screen reader or a crawler.
+  .syx-fold__toggle {
+    display: none;
+    background: none;
+    padding-inline: 0;
+    padding-block-start: 0;
+    border-block-start-width: 0;
+    border-inline-width: 0;
+    cursor: pointer;
+  }
+
+  // A symbol, so it is generated rather than translated. The label beside it is
+  // a text node and does get translated.
+  .syx-fold__toggle::after {
+    content: "↓";
+  }
+
+  .syx-fold__toggle[aria-expanded="true"]::after {
+    content: "↑";
+  }
+
+  @include until($bp-md) {
+    .js .syx-fold {
+      // `gap: inherit` rather than a value of its own: the wrapper is a fold,
+      // not a layout, and it has to keep whatever rhythm its parent was already
+      // giving the paragraphs it now contains.
+      display: grid;
+      gap: inherit;
+
+      // `black`/`transparent` here are an alpha ramp, not colours — the mask
+      // fades the last line and a half so the cut reads as "there is more"
+      // instead of as a paragraph that happens to end there.
+      max-height: calc(9 * var(--semantic-line-height-body) * 1em);
+      overflow: hidden;
+      mask-image: linear-gradient(
+        to bottom,
+        black calc(100% - 2.5em),
+        transparent
+      );
+    }
+
+    .js .syx-fold[data-open="true"] {
+      max-height: none;
+      mask-image: none;
+    }
+
+    .js .syx-fold__toggle {
+      display: inline-flex;
+    }
+  }
+
   // The opener as a band.
   //
   // Once it runs the full width, the three parts stop sharing the width in
