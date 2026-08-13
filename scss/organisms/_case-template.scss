@@ -54,10 +54,35 @@
   // producción» son 34— y caen en dos. No es un defecto que haya que compensar
   // con un ancho mayor: la medida correcta es la misma en los dos idiomas, y un
   // titular de dos líneas sigue siendo un titular.
+  // La regla que abre un acto cruza la ventana; la que abre una sección empieza
+  // y acaba con el contenido.
+  //
+  // Antes las dos iban a sangre —`.syx-span-survey` reparte con `padding-inline`,
+  // así que la caja sigue siendo 100% ancha y el borde llega a los dos extremos—
+  // y solo se diferenciaban en el grosor: 2px contra 1px. A 3426px de ancho, un
+  // píxel en una línea gris no lo distingue nadie, y el capítulo no se leía como
+  // lo que es: la apertura de cinco secciones, no la separación entre dos.
+  //
+  // El instrumento no puede ser el color. `BRAND.md` §4 reserva las dos bandas a
+  // sangre para los cortes de ritmo —«dos, no cinco»— y esta página ya va con
+  // tres; los capítulos son cinco más. Además el acento ya está gastado en esa
+  // misma pantalla: `--component-eyebrow-color` es el azul de marca, así que el
+  // eyebrow de la sección de debajo ya va en azul, y §4 dice que si hay dos
+  // cosas en azul ninguna es la importante.
+  //
+  // El instrumento es la retícula, que además es el argumento del sitio: §4,
+  // «retícula visible, el sitio va de sistemas, así que la estructura se
+  // enseña». Una línea que cruza la ventana contra una que respeta el registro
+  // es una diferencia estructural, se lee de un vistazo y no cuesta color.
+  //
+  // El reparto vertical es 96 arriba y 64 abajo, razón 1,5. `PROPORTIONS.md`
+  // §5.1 pide φ —1,618— para un encabezado que pertenece a lo que va debajo; el
+  // siguiente escalón arriba daría 1,33 y el de abajo 2,0, así que 1,5 es lo más
+  // cerca que llega la escala de espaciado actual, a un 7 %.
   .org-case__chapter {
     padding-block: var(--semantic-space-section-compact)
       var(--semantic-space-block);
-    border-top: var(--semantic-border-width-strong) solid
+    border-top: var(--semantic-border-width-heavy) solid
       var(--semantic-color-text);
   }
 
@@ -85,9 +110,14 @@
   // veía a 3440.
   //
   // El ancho lo decide el registro en el marcado, no esta regla.
+  //
+  // La regla superior ya no va aquí. Estaba en el contenedor, que es 100% ancho
+  // —el registro se reparte con `padding-inline`—, así que llegaba a los dos
+  // bordes de la ventana igual que la del capítulo. Ahora la lleva la banda de
+  // encabezado, que sí vive dentro del padding: empieza y acaba con el
+  // contenido. Ver el comentario del capítulo para el porqué.
   .org-case__act {
     padding-block: var(--semantic-space-section-compact);
-    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   // La prosa, a medida y en el elemento que fija el tamaño. Nunca en el
@@ -128,13 +158,34 @@
 @layer syx.utilities {
   // La presentación de cada acto es la misma molécula que ya usa la home para
   // abrir una sección, así que un caso y la portada se leen con la misma voz.
-  // Aquí no lleva banda: el acto ya está dentro de un registro.
-  @include from($bp-md) {
-    .org-case__act > .mol-section-heading {
-      padding-top: 0;
-      border-top: 0;
-    }
+  //
+  // Aquí llevaba `padding-top: 0; border-top: 0` porque la banda se la ponía el
+  // contenedor. Ya no: la regla del acto es esta, la de la molécula, y es la que
+  // se queda dentro del registro frente a la del capítulo, que cruza la ventana.
+  // Así que el override se retira y la molécula usa su propia banda, la misma
+  // que usa en la home.
+  //
+  // El tamaño baja un escalón porque un caso tiene un nivel de jerarquía más que
+  // la home. Allí una sección cuelga del hero y no hay nada en medio: 144 → 64,
+  // razón 2,25. En un caso hay un escalón intermedio —el capítulo, que agrupa
+  // varias secciones— así que hacen falta tres tamaños: portada 96, capítulo 64,
+  // sección 44, razones 1,5 y 1,45. Sin esto el capítulo y la sección que lo
+  // sigue medían los dos 64px con el mismo peso y se leían como el mismo nivel.
+  //
+  // La alternativa era bajar la molécula a 44px en todas partes, pero eso
+  // arrastra la home de 92,8 a 44 sin que allí exista el nivel que lo
+  // justifique: el tamaño lo decide cuántos escalones tiene la página, no el
+  // nombre de la clase.
+  //
+  // Y va fuera de la media query a propósito: el número de escalones de una
+  // página no cambia con el viewport. Dentro de `from($bp-md)`, en móvil el
+  // capítulo y su primera sección volverían a medir los dos 32px, que es el
+  // empate que esta regla existe para deshacer.
+  .org-case__act > .mol-section-heading h2 {
+    font-size: var(--semantic-font-size-title);
+  }
 
+  @include from($bp-md) {
     // El capítulo toma la misma retícula que esa molécula: el índice en la
     // pista de etiqueta y el titular en la columna principal. Con eso los tres
     // elementos que se ven seguidos en pantalla —«Act 01», «How the system is

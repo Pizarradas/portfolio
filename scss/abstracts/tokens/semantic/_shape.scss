@@ -9,6 +9,12 @@
 
     --semantic-border-width: var(--primitive-border-hairline);
     --semantic-border-width-strong: var(--primitive-border-thick);
+    // El tercer peso. Lo pide el corte de acto, que tiene que distinguirse de la
+    // regla de una sección sin gastar color: `BRAND.md` §4 reserva las bandas a
+    // sangre —navy y azul— para dos cortes de ritmo, «dos, no cinco», y los
+    // capítulos son cinco. El primitivo de 3px ya existía pero solo lo leía el
+    // foco, así que no había nombre para usarlo como borde.
+    --semantic-border-width-heavy: var(--primitive-border-heavy);
     --semantic-focus-width: var(--primitive-border-heavy);
     --semantic-focus-offset: var(--primitive-space-3xs);
 
