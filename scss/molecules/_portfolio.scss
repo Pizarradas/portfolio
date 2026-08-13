@@ -90,6 +90,20 @@
     align-content: start;
   }
 
+  // El titular pertenece a lo que va debajo (PROPORTIONS §5.1: margen superior
+  // : margen inferior = φ : 1). El `gap` uniforme del cuerpo dejaba exactamente
+  // el mismo hueco arriba que abajo, así que el titular se leía como un
+  // elemento más de una lista de cinco en vez de como el titular: pegado por
+  // igual a la fila de metadatos que tiene encima y al párrafo que explica.
+  //
+  // Abajo se queda el `gap` (0.75rem) y arriba se le suma 0.5rem, que da 1.25 :
+  // 0.75 = 1.667. φ son 1.618, un 3 % de desvío: es lo más cerca que llega la
+  // escala micro actual, cuyos escalones son 0.5 / 0.75 / 1 en vez de los
+  // √φⁿ. El φ exacto sale solo cuando se aplique la banda de espaciado.
+  .mol-project-card__body h3 {
+    margin-block-start: var(--semantic-space-component-xs);
+  }
+
   .mol-project-card__body h3 a {
     text-decoration: none;
     text-decoration-thickness: 0.06em;
@@ -119,10 +133,19 @@
     gap: var(--semantic-space-component-md);
     padding-top: var(--semantic-space-component-sm);
     border-top: var(--semantic-border-width) solid var(--semantic-color-border);
-    font-size: var(--semantic-font-size-caption);
-    font-weight: var(--semantic-font-weight-strong);
+    // Un solo registro de versalita en toda la tarjeta. Antes había tres
+    // tratamientos distintos para el mismo trabajo —rotular—: la etiqueta de
+    // `__proof` a tamaño eyebrow con tracking .12em, esta fila a tamaño caption
+    // con .08em y peso 700, y el `.atom-eyebrow` de la sección a .11em. Tres
+    // trackings, tres tamaños y dos pesos para decir lo mismo.
+    //
+    // Y el 700 sobraba: mayúsculas + tracking + color apagado ya son tres
+    // énfasis; la negrita era el cuarto y solo conseguía que la letra más
+    // pequeña de la tarjeta fuese también la que más grita.
+    font-size: var(--semantic-font-size-eyebrow);
+    font-weight: var(--semantic-font-weight-medium);
     text-transform: uppercase;
-    letter-spacing: var(--semantic-letter-spacing-wide);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     color: var(--semantic-color-text-muted);
     font-variant-numeric: tabular-nums;
   }
@@ -773,21 +796,26 @@
 
   // Flagship strip. The single most useful line in the section — what the work
   // actually spans — so it sits above the headline rather than under it.
+  // Sin filete propio. El de `__meta` viene justo detrás, así que había dos
+  // hairlines separadas solo por el hueco: dos líneas idénticas seguidas no
+  // jerarquizan nada, se anulan. Una sola, la de abajo, cierra el bloque.
   .mol-project-card__proof {
     display: grid;
     gap: var(--semantic-space-component-3xs);
     margin: 0 0 var(--semantic-space-component-md);
-    padding-bottom: var(--semantic-space-component-md);
-    border-bottom: var(--semantic-border-width) solid
-      var(--semantic-color-border);
   }
 
+  // La etiqueta no es el acento. El azul de esta tarjeta se gasta en el índice
+  // —01, 02, 03— que es la espina de la sección; si la etiqueta también va en
+  // azul, tres filas más arriba, ninguno de los dos es el importante. Es el
+  // patrón que `.mol-evidence-live__chrome` ya sigue: rótulo apagado, acento
+  // reservado a un solo elemento.
   .mol-project-card__proof span {
     font-family: var(--semantic-font-family-ui);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
-    color: var(--semantic-color-primary);
+    color: var(--semantic-color-text-muted);
   }
 
   .mol-project-card__proof b {
@@ -833,12 +861,13 @@
     background: var(--semantic-color-surface);
   }
 
+  // Rótulo del panel, no acento: mismo criterio que en `__proof span`.
   .mol-evidence-system__meta span {
     font-family: var(--semantic-font-family-ui);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
-    color: var(--semantic-color-primary);
+    color: var(--semantic-color-text-muted);
   }
 
   // The claim the frame has to prove, so it is set at the scale of a claim.
@@ -1000,12 +1029,16 @@
       var(--semantic-color-border);
   }
 
+  // En esta tarjeta el azul lo tenía todo: el rótulo, las cuatro cifras de la
+  // columna de resultado y las tres barras. Once elementos en acento hacen que
+  // ninguno sea el importante. Se queda donde significa algo —el resultado
+  // medido— y el rótulo baja a apagado.
   .mol-evidence-study__head span {
     font-family: var(--semantic-font-family-ui);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
-    color: var(--semantic-color-primary);
+    color: var(--semantic-color-text-muted);
   }
 
   // The sample size is the headline of this card, so it is set at title scale

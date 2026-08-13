@@ -239,17 +239,22 @@
       padding: var(--component-register-pad);
     }
 
-    // The row is as tall as its copy, and the copy is usually the taller half.
-    // Rather than letting the claim panel swallow the whole difference — which
-    // opened a hole between the claim and the mastheads it introduces — the
-    // evidence keeps its own height and sits centred in the column, with the
-    // slack split evenly above and below it.
-    .org-work .mol-evidence-system {
-      justify-content: center;
-    }
-
+    // La fila mide lo que mide su columna de texto, que casi siempre es la más
+    // alta. La pila de mastheads no puede estirarse para igualarla: cada banda
+    // lleva `aspect-ratio: 1920/110` justo para que el recorte quede clavado en
+    // la cabecera, y crecer en vertical es dejar entrar otra vez la publicidad
+    // que hay debajo. Así que la holgura tiene que ir al panel del titular.
+    //
+    // Antes se intentó eso mismo y abrió un hueco entre el titular y los
+    // mastheads que presenta: el panel crecía y el texto se quedaba centrado en
+    // mitad de la nada. La solución fue centrar el conjunto, pero eso reparte la
+    // holgura arriba y abajo y deja la evidencia flotando en dos bandas grises.
+    //
+    // Crece el panel y el titular se ancla a su base: el aire queda por encima
+    // del rótulo, donde un panel lo admite, y el titular sigue pegado a lo que
+    // introduce. La columna llena el 100 % de la altura y no hay banda gris.
     .org-work .mol-evidence-system__meta {
-      flex: none;
+      align-content: end;
     }
 
     // One title size for the three cases. The flagship earns its weight from
