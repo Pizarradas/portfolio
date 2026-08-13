@@ -120,19 +120,24 @@
     line-height: .98;
   }
 
-  // La columna de texto de una sección de afirmación tenía tope de 48rem, que
-  // a 1.08rem de cuerpo son unos 89 caracteres por línea a partir de 1200px:
-  // muy por encima de los 66ch de la medida de prosa, y en la parte de la
-  // página que más se lee. El tope pasa a ser la medida, que es lo que
-  // `PROPORTIONS.md` §6.2 dice que ya está bien calculado y no hay que tocar.
-  //
-  // Es la corrección importante de esta pasada: el registro decide cuánto mide
-  // la sección, la medida decide cuánto mide la línea. Aquí estaban siendo el
-  // mismo número.
   .org-case42-section__content {
-    max-width: var(--semantic-measure-prose);
     font-size: .98rem;
     line-height: 1.65;
+  }
+
+  // La medida va en el párrafo, no en la columna.
+  //
+  // La puse en `__content` en la pasada anterior y estaba mal: esa columna no
+  // solo lleva prosa, lleva también el diagrama de la sección, así que capar la
+  // columna a 66ch metía mapas de cinco columnas y tablas de cuatro dentro de
+  // 620px. Es exactamente la trampa que avisa el comentario de las utilidades:
+  // una medida puesta en un envoltorio en vez de en el elemento que fija el
+  // tamaño de letra.
+  //
+  // El defecto que la motivaba sigue siendo real: a 48rem y 1.08rem de cuerpo,
+  // la línea salía a ~89 caracteres, un 35 % por encima de los 66ch.
+  .org-case42-section__content>p {
+    max-width: var(--semantic-measure-prose);
   }
 
 }
@@ -149,8 +154,23 @@
 
   }
   @media (min-width:1200px) {
+    // La columna de contenido pasa de 48rem a 76rem.
+    //
+    // Ahí no vive solo el párrafo: viven también los seis diagramas de estas
+    // secciones —el mapa de fundaciones de cinco columnas, la tabla de targets
+    // de cuatro, el pipeline de siete pistas—. A 48rem estaban dibujándose en
+    // 768px mientras la sección disponía de 1792, y eso es la mitad del vacío
+    // que se ve en la captura a 3440.
+    //
+    // 76rem no es un escalón de la curva de anchos y no tiene por qué serlo: es
+    // el resto. 27 de titular + 9 de gap + 76 de contenido = 112rem, que es
+    // `survey` exacto. Se dimensiona el hueco para que el total caiga en el
+    // registro, en vez de inventar un tope nuevo.
+    //
+    // La prosa no se ensancha con él: la medida está en el `<p>`, así que la
+    // línea sigue en 66ch y quien se queda los 28rem extra es el diagrama.
     .org-case42-section {
-      grid-template-columns: minmax(18rem,27rem) minmax(0,48rem);
+      grid-template-columns: minmax(18rem,27rem) minmax(0,76rem);
       gap: clamp(5rem,8vw,9rem);
       padding: var(--semantic-space-case-block) var(--semantic-space-case-inline);
     }
@@ -214,7 +234,6 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: clamp(2rem,6vw,7rem);
-    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
     background: var(--semantic-color-primary);
     color: #fff;
     border-bottom: 1px solid rgba(255,255,255,.18);
@@ -266,10 +285,7 @@
   }
 }
 @layer syx.organisms {
-  .org-hierarchy-diagram {
-    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
-    border-bottom: 1px solid var(--semantic-color-border);
-    display: grid;
+  .org-hierarchy-diagram {    display: grid;
     grid-template-columns: 1fr;
     gap: 1rem;
     align-items: center;
@@ -298,9 +314,7 @@
       margin-right: auto;
     }
 
-    .org-hierarchy-diagram {
-      padding: var(--semantic-space-case-block) var(--semantic-space-case-inline);
-      grid-template-columns: .7fr 1.3fr;
+    .org-hierarchy-diagram {      grid-template-columns: .7fr 1.3fr;
     }
 
   }
@@ -320,17 +334,12 @@
 
 }
 @layer syx.organisms {
-  .org-architecture-atlas {
-    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
-    border-bottom: 1px solid var(--semantic-color-border);
-  }
+  .org-architecture-atlas {  }
 
 }
 @layer syx.utilities {
   @media (min-width:1200px) {
-    .org-architecture-atlas {
-      padding: var(--semantic-space-case-block) var(--semantic-space-case-inline);
-    }
+    .org-architecture-atlas {    }
 
     .org-architecture-atlas>* {
       max-width: var(--semantic-width-case-max);
@@ -376,10 +385,7 @@
   }
 }
 @layer syx.organisms {
-  .org-ai-architecture {
-    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
-    border-bottom: 1px solid var(--semantic-color-border);
-    display: grid;
+  .org-ai-architecture {    display: grid;
     grid-template-columns: 1fr;
     gap: 1rem;
     align-items: start;
@@ -410,9 +416,7 @@
       margin-right: auto;
     }
 
-    .org-ai-architecture {
-      padding: var(--semantic-space-case-block) var(--semantic-space-case-inline);
-      grid-template-columns: .7fr 1.3fr;
+    .org-ai-architecture {      grid-template-columns: .7fr 1.3fr;
     }
 
   }
@@ -438,10 +442,7 @@
 
 }
 @layer syx.organisms {
-  .org-operating-model {
-    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
-    border-bottom: 1px solid var(--semantic-color-border);
-    background: #fff;
+  .org-operating-model {    background: #fff;
   }
 
 
@@ -455,9 +456,7 @@
 }
 @layer syx.utilities {
   @media (min-width:1200px) {
-    .org-operating-model {
-      padding: var(--semantic-space-case-block) var(--semantic-space-case-inline);
-    }
+    .org-operating-model {    }
 
     .org-operating-model>* {
       max-width: var(--semantic-width-case-max);
@@ -498,7 +497,6 @@
     grid-template-columns: 1fr;
     gap: 1px;
     background: var(--semantic-color-border);
-    border-bottom: 1px solid var(--semantic-color-border);
   }
 
   // La galería es una retícula de paneles separados por una línea de 1px de
@@ -558,9 +556,7 @@
     grid-template-columns: 1fr;
     gap: 1rem;
     align-items: center;
-    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
     background: var(--semantic-color-surface-alt);
-    border-bottom: 1px solid var(--semantic-color-border);
   }
 
 }
@@ -578,9 +574,7 @@
       margin-right: auto;
     }
 
-    .org-component-anatomy {
-      padding: var(--semantic-space-case-block) var(--semantic-space-case-inline);
-      grid-template-columns: .7fr 1.3fr;
+    .org-component-anatomy {      grid-template-columns: .7fr 1.3fr;
     }
 
   }
@@ -604,19 +598,14 @@
 
 }
 @layer syx.organisms {
-  .org-header-system {
-    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
-    border-bottom: 1px solid var(--semantic-color-border);
-  }
+  .org-header-system {  }
 
 
 
 }
 @layer syx.utilities {
   @media (min-width:1200px) {
-    .org-header-system {
-      padding: var(--semantic-space-case-block) var(--semantic-space-case-inline);
-    }
+    .org-header-system {    }
 
     // La única sección de la página en el registro `showcase`, y por la misma
     // razón que `#work` en la home: son las cuatro cabeceras de marca, con
@@ -669,11 +658,8 @@
 
 }
 @layer syx.organisms {
-  .org-foundation-showcase {
-    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
-    background: #080f1a;
+  .org-foundation-showcase {    background: #080f1a;
     color: #fff;
-    border-bottom: 1px solid rgba(255,255,255,.14);
   }
 
 
@@ -681,9 +667,7 @@
 }
 @layer syx.utilities {
   @media (min-width:1200px) {
-    .org-foundation-showcase {
-      padding: var(--semantic-space-case-block) var(--semantic-space-case-inline);
-    }
+    .org-foundation-showcase {    }
 
     .org-foundation-showcase>* {
       max-width: var(--semantic-width-case-max);
@@ -701,43 +685,99 @@
     padding: 4.25rem var(--semantic-space-shell-inline) 2.75rem;
   }
 
+  // Tipografía y huecos del hero, sobre la escala.
+  //
+  // El bloque declaraba nueve valores en crudo. Cuatro de ellos eran, dígito a
+  // dígito, el valor de un token que ya existía —`-.055em` es
+  // `--semantic-letter-spacing-hero`, `1.45` es `--semantic-line-height-normal`,
+  // `.12em` es `--semantic-letter-spacing-eyebrow`, `2rem` es
+  // `--semantic-space-component-xl`—: coincidían por casualidad y no se movían
+  // si el tema los movía. Los otros eran casi-escalones: `1.35rem` entre E(1) y
+  // E(2), `.91` de interlineado, `.95rem` de cuerpo.
+  //
+  // El `font:` abreviado además fijaba `600` y un interlineado de `.88` que la
+  // línea siguiente pisaba con `.91`. Se despliega en longhands para que se vea
+  // lo que hay.
   .org-case42-hero h1 {
     max-width: 100%;
-    font: 600 clamp(4rem,9vw,9rem)/.88 var(--semantic-font-family-display);
-    letter-spacing: -.055em;
-    margin: .5rem 0 1.35rem;
+    margin: var(--semantic-space-component-xs) 0
+      var(--semantic-space-component-lg);
+    font-family: var(--semantic-font-family-display);
+    font-weight: var(--semantic-font-weight-emphasis);
     font-size: var(--semantic-font-size-hero-compact);
-    line-height: .91;
+    line-height: var(--semantic-line-height-flat);
+    letter-spacing: var(--semantic-letter-spacing-hero);
   }
 
   .org-case42-hero__lede {
-    max-width: 48rem;
-    margin: 0 0 2rem;
-    font-size: 1.05rem;
-    line-height: 1.45;
+    max-width: var(--semantic-measure-lede);
+    margin: 0 0 var(--semantic-space-component-xl);
+    font-size: var(--semantic-font-size-lede);
+    line-height: var(--semantic-line-height-normal);
   }
 
 }
 @layer syx.utilities {
+  // El hero, sobre una sola retícula.
+  //
+  // Tenía tres sistemas horizontales conviviendo en un mismo bloque: el
+  // titular topado a `10.5ch`, la entradilla empujada a la derecha con
+  // `margin-left: auto` sobre un tope de 52rem, y la fila de datos en cuatro
+  // columnas iguales. Ninguno de los tres compartía una arista con los otros.
+  //
+  // El resultado medible: a 1900px la entradilla empezaba en x=935 y la tercera
+  // columna de datos en x=950. Quince píxeles. Dos cosas que parecen alineadas
+  // y no lo están se leen peor que dos cosas claramente distintas — es
+  // exactamente lo que hace que el bloque parezca deslabazado.
+  //
+  // Ahora hay una retícula: las mismas cuatro columnas que ya usa `.mol-case-facts`,
+  // sin gap, para que las columnas del hero y las de la ficha sean las mismas
+  // columnas. La entradilla entra en la tercera y comparte arista con el dato
+  // que tiene debajo.
   @include from($bp-md) {
     .org-case42-hero {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
       padding: clamp(7rem,12vw,11rem) clamp(1.2rem,4vw,4rem) clamp(3rem,7vw,6rem);
     }
 
+    .org-case42-hero>* {
+      grid-column: 1/-1;
+    }
+
+    // El titular deja de llevar un tope inventado. `display` son los 16ch de la
+    // curva áurea de `PROPORTIONS.md` §6.2, y a este cuerpo caen cerca del
+    // borde de la tercera columna: el bloque de texto se apoya en la retícula
+    // en vez de cortarse donde cayera.
     .org-case42-hero h1 {
-      max-width: 12ch;
+      max-width: var(--semantic-measure-display);
       font-size: clamp(4rem,9vw,9rem);
     }
 
+    // La entradilla, a la izquierda y a su medida.
+    //
+    // Estaba empujada a la derecha con `margin-left: auto`. Alinearla con la
+    // tercera columna de la ficha quitó los quince píxeles de desajuste, pero
+    // no arregló el fondo del asunto: con un titular ancho, una entradilla
+    // desplazada a la derecha no se lee como composición sino como un párrafo
+    // que se ha caído hacia ese lado, y abre un hueco enorme abajo a la
+    // izquierda.
+    //
+    // El hero de la home resuelve esto poniendo la entradilla en una columna de
+    // 38rem a la izquierda, bajo el titular. Aquí lo mismo, con la medida en
+    // vez de con un número: `lede` son los 42ch de `PROPORTIONS.md` §6.2.
+    //
+    // Ahora hay una sola arista para todo: el titular, la entradilla y el
+    // primer dato de la ficha arrancan en la misma vertical.
     .org-case42-hero__lede {
-      margin-left: auto;
+      grid-column: 1/-1;
+      max-width: var(--semantic-measure-lede);
       font-size: clamp(1.3rem,2vw,1.9rem);
     }
 
   }
   @media (min-width:768px) and (max-width:1199px) {
     .org-case42-hero h1 {
-      max-width: 11ch;
       font-size: clamp(4.8rem,8vw,7.5rem);
     }
 
@@ -748,12 +788,10 @@
     }
 
     .org-case42-hero h1 {
-      max-width: 10.5ch;
       font-size: clamp(6rem,8vw,9.5rem);
     }
 
     .org-case42-hero__lede {
-      max-width: 52rem;
       font-size: clamp(1.5rem,1.7vw,2rem);
     }
 

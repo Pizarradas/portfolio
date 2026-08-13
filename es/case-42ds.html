@@ -59,7 +59,11 @@
 <i>↓</i><div><span>05</span><strong>Componentes</strong><small>átomos → moléculas → organismos</small></div>
 </div>
 <div class="mol-case42-thesis"><p>La historia de 42DS es una progresión:</p><strong>estandarizar los fundamentos → componer patrones de producto reutilizables → hacer el sistema comprensible para las personas y para la IA.</strong></div>
-</section><section aria-labelledby="architecture-atlas-title" class="org-architecture-atlas js-reveal">
+</section><section class="org-case__chapter syx-span-read">
+<p class="atom-index">Acto 01</p>
+<h2>Cómo está construido el sistema</h2>
+</section>
+<section aria-labelledby="architecture-atlas-title" class="org-architecture-atlas js-reveal">
 <div class="mol-case-intro">
 <p class="atom-eyebrow">La arquitectura de un vistazo</p>
 <h2 id="architecture-atlas-title">Un único núcleo. Varias capas de composición y entrega.</h2>
@@ -121,6 +125,10 @@
 </svg>
 </div>
 </section>
+<section class="org-case__chapter syx-span-read">
+<p class="atom-index">Acto 02</p>
+<h2>Lo que había que decidir</h2>
+</section>
 <section class="org-case42-section org-case42-section--split" data-act="01 · Context">
 <div class="org-case42-section__heading"><p class="atom-index">01</p><p class="atom-eyebrow">El problema de negocio</p><h2>Unificar sin parar la compañía.</h2></div>
 <div class="org-case42-section__content"><p>Prensa Ibérica había crecido hasta convertirse en un ecosistema multimarca con distintas tecnologías, identidades y decisiones heredadas. La unificación tenía que ocurrir mientras el trabajo del día a día —correcciones, patrocinios, cambios visuales y peticiones editoriales— seguía adelante.</p><p>Así que el primer trabajo no fue «diseñar el sistema nuevo». Fue entender el que ya existía: auditar el rendimiento y la complejidad del CSS, aprender el legacy e identificar qué podía pasar a ser compartido.</p></div>
@@ -137,6 +145,10 @@
 </div>
 <p class="mol-case42-caption">Primero los fundamentos compartidos. La configuración de marca y la composición de componentes van encima.</p>
 </div>
+</section>
+<section class="org-case__chapter syx-span-read">
+<p class="atom-index">Acto 03</p>
+<h2>El sistema en producción</h2>
 </section>
 <section aria-labelledby="code-gallery-title" class="org-code-gallery js-reveal">
 <div class="mol-case-intro mol-case-intro--baseline">
@@ -371,6 +383,10 @@
 <span><b>WCAG 2.1 AA</b><small>implementadas, no aspiracionales</small></span>
 </div>
 </section>
+<section class="org-case__chapter syx-span-read">
+<p class="atom-index">Acto 04</p>
+<h2>Lo que costó llevarlo a producción</h2>
+</section>
 <section class="org-case42-section org-case42-section--targets" data-act="04 · Reality">
 <div class="org-case42-section__heading"><p class="atom-index">05</p><p class="atom-eyebrow">La realidad de producción</p><h2>Un design system construido para restricciones imperfectas.</h2></div>
 <div class="org-case42-section__content">
@@ -384,6 +400,10 @@
 <div class="mol-pipeline js-reveal"><span><b>Figma</b><small>fundamentos · variantes · estados</small></span><i>→</i><span><b>HTML / SCSS / JS</b><small>implementación canónica</small></span><i>→</i><span><b>Storybook</b><small>documentación · testing · lenguaje compartido</small></span><i>→</i><span><b>Vue</b><small>Integración con tecnología</small></span></div>
 <p>Un componente no estaba terminado cuando se veía bien en Figma. También necesitaba una implementación canónica, documentación y un camino claro hacia Vue.</p>
 </div>
+</section>
+<section class="org-case__chapter syx-span-read">
+<p class="atom-index">Acto 05</p>
+<h2>Y luego lo tuvo que leer la IA</h2>
 </section>
 <section aria-labelledby="ai-architecture-title" class="org-ai-architecture js-reveal">
 <div class="org-ai-architecture__copy">

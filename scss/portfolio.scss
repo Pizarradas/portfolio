@@ -56,6 +56,10 @@
 @use "organisms/portfolio" as organisms-portfolio;
 @use "organisms/case-shell" as organisms-case-shell;
 @use "organisms/case-42ds" as organisms-case-42ds;
+// Después de los dos armazones que sustituye: dentro de una misma capa manda el
+// orden de @use, así que el acto tiene que poder ganarle el ritmo vertical a
+// cada organismo mientras dure la migración.
+@use "organisms/case-template" as organisms-case-template;
 @use "organisms/sport" as organisms-sport;
 @use "organisms/illustrations" as organisms-illustrations;
 @use "organisms/home-sections" as organisms-home-sections;

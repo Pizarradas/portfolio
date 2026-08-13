@@ -6,18 +6,23 @@
     overflow: clip;
   }
 
+  // La etiqueta de un dato es el mismo papel que un eyebrow, así que toma sus
+  // tokens. `opacity: .55` se va y en su lugar va un color: la opacidad compone
+  // contra lo que haya detrás, así que el contraste real depende del fondo de
+  // la sección y deja de poder calcularse. `BRAND.md` §5 dice que el contraste
+  // se comprueba, no se supone, y con opacidad no hay nada que comprobar.
   .mol-case-facts dt {
-    font-size: .72rem;
+    margin-bottom: var(--semantic-space-component-2xs);
+    font-size: var(--semantic-font-size-caption);
     text-transform: uppercase;
-    letter-spacing: .12em;
-    opacity: .55;
-    margin-bottom: .45rem;
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    color: var(--semantic-color-text-muted);
   }
 
   .mol-case-facts dd {
     margin: 0;
-    font-size: .95rem;
-    line-height: 1.45;
+    font-size: var(--semantic-font-size-ui);
+    line-height: var(--semantic-line-height-normal);
   }
 
 }
@@ -60,8 +65,11 @@
       grid-template-columns: repeat(4,1fr);
     }
 
+    // 1.25 y 1.5 no son escalones de `PROPORTIONS.md` §4.1: E(1) son 1.272 y
+    // E(2) son 1.618. Un mismo paso en los tres lados, del banco de espaciado.
     .mol-case-facts div {
-      padding: 1.25rem 1.25rem 1.5rem 0;
+      padding: var(--semantic-space-component-lg)
+        var(--semantic-space-component-lg) var(--semantic-space-component-lg) 0;
       border-bottom: 0;
     }
 

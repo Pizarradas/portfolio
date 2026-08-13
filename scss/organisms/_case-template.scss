@@ -1,0 +1,114 @@
+@use "../abstracts/breakpoints" as *;
+@use "../abstracts/mixins" as *;
+
+// Plantilla de página de caso.
+//
+// Sustituye a dos armazones que hacían lo mismo: `.org-case-section` en
+// `_case-shell.scss`, que usan cinco páginas, y `.org-case42-*`, que es la
+// misma idea reimplementada entera para una sola. Entre las dos suman más de
+// mil doscientas líneas para describir «una sección con un titular y algo
+// debajo».
+//
+// Se construye sobre lo que la home ya tiene y está probado: los cuatro
+// registros de ancho, la banda a sangre, la medida en el elemento que fija el
+// tamaño de letra, y el criterio de que una arista anuncia un cambio de ancho.
+// No inventa vocabulario nuevo donde el sistema ya tiene uno.
+//
+// Cinco piezas, y ninguna sección de un caso necesita más:
+//
+//   .org-case            el artículo
+//   .org-case__chapter   marcador de capítulo — una de las cinco preguntas
+//   .org-case__act       una sección: presentación + figura
+//   .mol-case-figure     la figura y su pie
+//   .org-case__band      corte de ritmo a color
+@layer syx.organisms {
+  // ---------------------------------------------------------------- capítulo
+  //
+  // `BRAND.md` §1 dice que un caso responde cinco preguntas en orden. La página
+  // tenía diecisiete afirmaciones seguidas, todas del mismo peso, y por eso no
+  // se leía como un caso sino como un catálogo. El capítulo es la pregunta,
+  // dicha en voz alta, y es lo único de la página que se permite el tamaño
+  // `section`: por debajo de él todos los titulares son `section-compact`.
+  //
+  // Registro `read`: es una pregunta, no una superficie de datos.
+  .org-case__chapter {
+    padding-block: var(--semantic-space-section) var(--semantic-space-block);
+    border-top: var(--semantic-border-width-strong) solid
+      var(--semantic-color-text);
+  }
+
+  .org-case__chapter p {
+    margin: 0;
+    color: var(--semantic-color-text-muted);
+  }
+
+  .org-case__chapter h2 {
+    margin: var(--semantic-space-component-sm) 0 0;
+    max-width: var(--semantic-measure-display);
+    font-family: var(--semantic-font-family-display);
+    font-weight: var(--semantic-font-weight-display);
+    font-size: var(--semantic-font-size-section);
+    line-height: var(--semantic-line-height-display);
+    letter-spacing: var(--semantic-letter-spacing-display);
+  }
+
+  // -------------------------------------------------------------------- acto
+  //
+  // Una sección. Apila: presentación arriba, figura debajo. Apila a propósito y
+  // no en dos columnas, que es lo que hacían los dos armazones anteriores: una
+  // figura metida en la columna de texto se dibuja en la mitad del ancho que la
+  // sección tiene disponible, y ese era literalmente la mitad del vacío que se
+  // veía a 3440.
+  //
+  // El ancho lo decide el registro en el marcado, no esta regla.
+  .org-case__act {
+    padding-block: var(--semantic-space-section-compact);
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+  }
+
+  // La prosa, a medida y en el elemento que fija el tamaño. Nunca en el
+  // envoltorio: eso es lo que metió mapas de cinco columnas dentro de 66ch.
+  .org-case__act p {
+    max-width: var(--semantic-measure-prose);
+  }
+
+  // ------------------------------------------------------------------ figura
+  //
+  // Todo diagrama es una figura y toda figura lleva pie. Es lo que convierte un
+  // dibujo en evidencia: el pie dice qué se está mirando y de dónde sale, que
+  // es lo que `BRAND.md` §3 pide de cualquier dato.
+  .mol-case-figure {
+    margin: var(--semantic-space-block) 0 0;
+  }
+
+  .mol-case-figure figcaption {
+    margin-top: var(--semantic-space-component-md);
+    padding-top: var(--semantic-space-component-sm);
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+    color: var(--semantic-color-text-muted);
+    font-size: var(--semantic-font-size-caption);
+    line-height: var(--semantic-line-height-body);
+  }
+
+  // --------------------------------------------------------------------banda
+  //
+  // Los cortes de ritmo. `BRAND.md` §4: dos, no cinco. El fondo sangra hasta el
+  // borde de la ventana y el contenido se queda en su registro, que es el mismo
+  // mecanismo que la tira de capacidades de la home.
+  .org-case__band {
+    padding-block: var(--semantic-space-section);
+    border-top: 0;
+  }
+}
+
+@layer syx.utilities {
+  // La presentación de cada acto es la misma molécula que ya usa la home para
+  // abrir una sección, así que un caso y la portada se leen con la misma voz.
+  // Aquí no lleva banda: el acto ya está dentro de un registro.
+  @include from($bp-md) {
+    .org-case__act > .mol-section-heading {
+      padding-top: 0;
+      border-top: 0;
+    }
+  }
+}
