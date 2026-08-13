@@ -295,6 +295,14 @@
 
   // Marks stay monochrome so third-party brand colour never competes with the
   // JLP blue. currentColor means one hover rule moves both mark and label.
+  // Every glyph in this list is a 24×24 single path, monochrome, inheriting
+  // `currentColor` so the chip and its icon change together on hover.
+  //
+  // All of them are brand marks from Simple Icons except Affinity, which is a
+  // generic brush from Material Icons (Apache 2.0). That set has no Affinity
+  // glyph — the family was dropped, and the paths still in circulation are the
+  // pre-2025 Serif mark. A wrong logo is worse than none, so this one names the
+  // craft instead of the brand, which is also what it is doing in the list.
   .mol-mark svg {
     width: 1.15rem;
     height: 1.15rem;
