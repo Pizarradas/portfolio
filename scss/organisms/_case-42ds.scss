@@ -305,13 +305,6 @@
 
   }
 }
-@layer syx.organisms {
-  .org-architecture-atlas__intro>p:last-child {
-    color: var(--semantic-color-text-secondary);
-    max-width: 42ch;
-  }
-
-}
 @layer syx.utilities {
   .org-architecture-atlas.is-visible .atom-system-node {
     animation: case-node-in .55s both;
@@ -325,12 +318,6 @@
     animation-delay: .24s;
   }
 
-  @media(max-width:800px) {
-    .org-architecture-atlas__intro {
-      grid-template-columns: 1fr;
-    }
-
-  }
 }
 @layer syx.organisms {
   .org-architecture-atlas {
@@ -338,29 +325,8 @@
     border-bottom: 1px solid var(--semantic-color-border);
   }
 
-  .org-architecture-atlas__intro {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    align-items: start;
-    margin-bottom: 3rem;
-  }
-
-  .org-architecture-atlas__intro h2 {
-    font: 600 clamp(2.5rem,5vw,5.5rem)/.92 var(--semantic-font-family-display);
-    letter-spacing: -.06em;
-    margin: 0;
-    font-size: var(--semantic-font-size-section-compact);
-  }
-
 }
 @layer syx.utilities {
-  @media (min-width:768px) and (max-width:1199px) {
-    .org-architecture-atlas__intro {
-      grid-template-columns: .45fr 1fr .8fr;
-    }
-
-  }
   @media (min-width:1200px) {
     .org-architecture-atlas {
       padding: var(--semantic-space-case-block) var(--semantic-space-case-inline);
@@ -370,10 +336,6 @@
       max-width: var(--semantic-width-case-max);
       margin-left: auto;
       margin-right: auto;
-    }
-
-    .org-architecture-atlas__intro {
-      grid-template-columns: .45fr 1fr .7fr;
     }
 
   }
@@ -474,12 +436,6 @@
     animation-delay: .32s;
   }
 
-  @media(max-width:800px) {
-    .org-operating-model__header {
-      grid-template-columns: 1fr;
-    }
-
-  }
 }
 @layer syx.organisms {
   .org-operating-model {
@@ -488,13 +444,6 @@
     background: #fff;
   }
 
-  .org-operating-model__header {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    align-items: start;
-    margin-bottom: 3rem;
-  }
 
   .org-operating-model h2 {
     font: 600 clamp(2.5rem,5vw,5.5rem)/.92 var(--semantic-font-family-display);
@@ -505,12 +454,6 @@
 
 }
 @layer syx.utilities {
-  @media (min-width:768px) and (max-width:1199px) {
-    .org-operating-model__header {
-      grid-template-columns: .45fr 1fr .8fr;
-    }
-
-  }
   @media (min-width:1200px) {
     .org-operating-model {
       padding: var(--semantic-space-case-block) var(--semantic-space-case-inline);
@@ -522,18 +465,8 @@
       margin-right: auto;
     }
 
-    .org-operating-model__header {
-      grid-template-columns: .45fr 1fr .7fr;
-    }
 
   }
-}
-@layer syx.organisms {
-  .org-code-gallery__intro>p:last-child {
-    color: var(--semantic-color-text-secondary);
-    max-width: 40ch;
-  }
-
 }
 @layer syx.utilities {
   .org-code-gallery.is-visible .mol-code-visual {
@@ -557,20 +490,9 @@
       grid-template-columns: 1fr;
     }
 
-    .org-code-gallery__intro {
-      grid-template-columns: 1fr;
-    }
-
   }
 }
 @layer syx.organisms {
-  .org-code-gallery__intro h2 {
-    font: 600 clamp(2.8rem,5vw,5.5rem)/.92 var(--semantic-font-family-display);
-    letter-spacing: -.06em;
-    margin: 0;
-    font-size: var(--semantic-font-size-section-compact);
-  }
-
   .org-code-gallery {
     display: grid;
     grid-template-columns: 1fr;
@@ -579,12 +501,12 @@
     border-bottom: 1px solid var(--semantic-color-border);
   }
 
-  .org-code-gallery__intro {
-    grid-column: auto;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    align-items: end;
+  // La galería es una retícula de paneles separados por una línea de 1px de
+  // fondo, así que su banda de presentación necesita su propio fondo y su
+  // propio padding para no quedarse dentro de una celda. El resto —la retícula
+  // de tres columnas, el titular, la medida del párrafo— lo pone la molécula.
+  .org-code-gallery .mol-case-intro {
+    grid-column: 1/-1;
     background: #fff;
     padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
   }
@@ -596,20 +518,10 @@
       grid-template-columns: 1fr 1fr;
     }
 
-    .org-code-gallery__intro {
-      grid-template-columns: .45fr 1fr .8fr;
-      grid-column: 1/-1;
-    }
-
   }
   @media (min-width:1200px) {
     .org-code-gallery {
       grid-template-columns: 1fr 1fr;
-    }
-
-    .org-code-gallery__intro {
-      grid-template-columns: .45fr 1fr .7fr;
-      grid-column: 1/-1;
     }
 
   }
@@ -673,13 +585,6 @@
 
   }
 }
-@layer syx.organisms {
-  .org-header-system__intro>p:last-child {
-    max-width: 42ch;
-    color: var(--semantic-color-text-secondary);
-  }
-
-}
 @layer syx.utilities {
   .org-header-system.is-visible .mol-brand-header {
     animation: header-card-in .55s both;
@@ -697,12 +602,6 @@
     animation-delay: .24s;
   }
 
-  @media(max-width:850px) {
-    .org-header-system__intro {
-      grid-template-columns: 1fr;
-    }
-
-  }
 }
 @layer syx.organisms {
   .org-header-system {
@@ -710,29 +609,10 @@
     border-bottom: 1px solid var(--semantic-color-border);
   }
 
-  .org-header-system__intro {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    align-items: end;
-    margin-bottom: 3rem;
-  }
 
-  .org-header-system__intro h2 {
-    font: 600 clamp(3rem,6vw,6.8rem)/.9 var(--semantic-font-family-display);
-    letter-spacing: -.06em;
-    margin: 0;
-    font-size: var(--semantic-font-size-section-compact);
-  }
 
 }
 @layer syx.utilities {
-  @media (min-width:768px) and (max-width:1199px) {
-    .org-header-system__intro {
-      grid-template-columns: .45fr 1fr .8fr;
-    }
-
-  }
   @media (min-width:1200px) {
     .org-header-system {
       padding: var(--semantic-space-case-block) var(--semantic-space-case-inline);
@@ -751,19 +631,19 @@
       margin-right: auto;
     }
 
-    .org-header-system__intro {
-      grid-template-columns: .45fr 1fr .7fr;
-    }
 
   }
 }
 @layer syx.organisms {
-  .org-foundation-showcase__intro .atom-eyebrow {
+  // Lo único de esta banda que no es la molécula: va sobre fondo oscuro, así
+  // que el eyebrow y el párrafo llevan sus propios colores. Siguen en crudo
+  // porque esta sección no declara contexto de superficie; el arreglo de fondo
+  // es darle uno, no repetir dos hex aquí.
+  .org-foundation-showcase .mol-case-intro .atom-eyebrow {
     color: #8fa0ff;
   }
 
-  .org-foundation-showcase__intro>p:last-child {
-    max-width: 42ch;
+  .org-foundation-showcase .mol-case-intro>p:last-child {
     color: rgba(255,255,255,.65);
   }
 
@@ -787,12 +667,6 @@
     animation-delay: .12s;
   }
 
-  @media(max-width:900px) {
-    .org-foundation-showcase__intro {
-      grid-template-columns: 1fr;
-    }
-
-  }
 }
 @layer syx.organisms {
   .org-foundation-showcase {
@@ -802,29 +676,10 @@
     border-bottom: 1px solid rgba(255,255,255,.14);
   }
 
-  .org-foundation-showcase__intro {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    align-items: end;
-    margin-bottom: 3rem;
-  }
 
-  .org-foundation-showcase__intro h2 {
-    font: 600 clamp(3rem,6vw,6.5rem)/.9 var(--semantic-font-family-display);
-    letter-spacing: -.06em;
-    margin: 0;
-    font-size: var(--semantic-font-size-section-compact);
-  }
 
 }
 @layer syx.utilities {
-  @media (min-width:768px) and (max-width:1199px) {
-    .org-foundation-showcase__intro {
-      grid-template-columns: .45fr 1fr .8fr;
-    }
-
-  }
   @media (min-width:1200px) {
     .org-foundation-showcase {
       padding: var(--semantic-space-case-block) var(--semantic-space-case-inline);
@@ -836,9 +691,6 @@
       margin-right: auto;
     }
 
-    .org-foundation-showcase__intro {
-      grid-template-columns: .45fr 1fr .7fr;
-    }
 
   }
 }
