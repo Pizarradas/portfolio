@@ -229,76 +229,37 @@
 
 }
 @layer syx.molecules {
-  .org-hierarchy-diagram.is-visible .mol-hierarchy-pyramid__row {
-    opacity: 1;
-  }
-
-  .org-hierarchy-diagram.is-visible .mol-hierarchy-pyramid__row--2 {
-    transition-delay: .08s;
-  }
-
-  .org-hierarchy-diagram.is-visible .mol-hierarchy-pyramid__row--3 {
-    transition-delay: .16s;
-  }
-
-  .org-hierarchy-diagram.is-visible .mol-hierarchy-pyramid__row--4 {
-    transition-delay: .24s;
-  }
-
-  .org-hierarchy-diagram.is-visible .mol-hierarchy-pyramid__row--5 {
-    transition-delay: .32s;
-  }
+  // El escalonado de la pirámide vivía aquí, atado a `__row--2` … `__row--5`.
+  // Lo sustituye el de `.mol-composition-nest`, que va por `--delay` en el
+  // marcado porque sus niveles están anidados y `nth-child` no puede contarlos.
 
 }
 @layer syx.organisms {
-  .org-hierarchy-diagram__copy>p:last-child {
-    color: var(--semantic-color-text-secondary);
-    max-width: 42ch;
-  }
-
-}
-@layer syx.utilities {
-  @media(max-width:800px) {
-    .org-hierarchy-diagram {
-      grid-template-columns: 1fr;
-    }
-
-  }
+  // `.org-hierarchy-diagram__copy` era la sexta copia de la banda de encabezado
+  // —eyebrow, h2 y entradilla— y se quedó fuera de la consolidación de las otras
+  // cinco por llamarse `__copy` en vez de `__intro`. Ahora usa
+  // `.mol-section-heading`, como el resto. Su `max-width: 42ch` en crudo era
+  // `--semantic-measure-lede`, que la molécula ya aplica.
 }
 @layer syx.organisms {
-  .org-hierarchy-diagram {    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    align-items: center;
+  // Este acto se partía en dos columnas —`.75fr 1.25fr` y luego `.7fr 1.3fr`—,
+  // que es justo lo que el comentario de `.org-case__act` dice que no se hace y
+  // por qué: «una figura metida en la columna de texto se dibuja en la mitad del
+  // ancho que la sección tiene disponible». Era el único acto que seguía
+  // haciéndolo, y de ahí salían los ~500px de blanco entre el texto y el dibujo.
+  //
+  // Sin las tres media queries, el acto apila: banda arriba, figura debajo, y la
+  // figura dispone del registro entero. Lo único que quedaba propio de esta
+  // sección era el fondo.
+  //
+  // El `h2` tampoco necesita regla: declaraba un `font:` abreviado con un
+  // `clamp(2.5rem,5vw,5.5rem)` y lo pisaba con `font-size` en la línea siguiente
+  // —el mismo clamp muerto que ya se retiró de las otras cinco bandas—, y el
+  // tamaño que quedaba en pie es el que pone la molécula.
+  .org-hierarchy-diagram {
     background: var(--semantic-color-surface);
   }
 
-  .org-hierarchy-diagram h2 {
-    font: 600 clamp(2.5rem,5vw,5.5rem)/.92 var(--semantic-font-family-display);
-    letter-spacing: -.06em;
-    margin: 0;
-    font-size: var(--semantic-font-size-section-compact);
-  }
-
-}
-@layer syx.utilities {
-  @media (min-width:768px) and (max-width:1199px) {
-    .org-hierarchy-diagram {
-      grid-template-columns: .75fr 1.25fr;
-    }
-
-  }
-  @media (min-width:1200px) {
-    .org-hierarchy-diagram>* {
-      max-width: var(--semantic-width-case-max);
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .org-hierarchy-diagram {      grid-template-columns: .7fr 1.3fr;
-    }
-
-  }
 }
 @layer syx.utilities {
   // La entrada del diagrama.

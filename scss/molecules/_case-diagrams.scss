@@ -519,99 +519,120 @@
 // `.mol-arch-map`, en `molecules/_case-glance.scss`, generado por
 // `scripts/build-architecture.mjs`.
 @layer syx.molecules {
-  .mol-hierarchy-pyramid {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: .55rem;
-    padding: 2rem 0;
+  // La jerarquía de composición, dibujada como lo que es: anidamiento.
+  //
+  // Antes era `.mol-hierarchy-pyramid`, cinco filas de anchos decrecientes. Tenía
+  // dos problemas, y el segundo es el que obliga a cambiar de forma y no solo de
+  // números.
+  //
+  // El primero era de capa, el mismo que ya tenían `.mol-architecture-stack` y
+  // las cuatro parejas de revelado de este fichero: los anchos se declaraban
+  // 100/86/70/54/38 % en `syx.molecules` y se volvían a declarar
+  // 100/94/88/82/76 % en `syx.organisms`, que gana. El escalonado que se veía
+  // tenía un recorrido de 24 puntos en vez de 62, así que la pirámide no
+  // estrechaba: se veía como cinco cajas casi iguales y mal alineadas.
+  //
+  // El segundo: los datos son 31 átomos, 71 moléculas y 32 organismos. Eso no es
+  // una pirámide, es un ensanchamiento en el centro. Cualquier forma que estreche
+  // de abajo arriba —con el recorrido corregido o no— afirma lo contrario de lo
+  // que dicen sus propios números, y encima contradice el pie del bloque, que ya
+  // avisa de que la jerarquía «no trata Atomic Design como dogma».
+  //
+  // Las cifras se van: viven en el gráfico de inventario del Acto 03, que es el
+  // que argumenta sobre tamaño. Aquí el argumento es la composición —lo dice el
+  // titular, «los primitivos pequeños se convierten en productos editoriales»— y
+  // la composición se dibuja anidando. Cada nivel contiene al anterior, que es
+  // literalmente la afirmación, y no hay ningún ancho que pueda mentir.
+  .mol-composition-nest {
+    max-width: var(--semantic-measure-lede);
+    margin-inline: auto;
   }
 
-  .mol-hierarchy-pyramid__row {
-    height: 5.2rem;
-    display: flex;
-    justify-content: center;
-    @include transition(width .8s cubic-bezier(.2,.75,.25,1),opacity .5s ease);
-    opacity: .18;
+  .mol-composition-nest__level {
+    display: grid;
+    gap: var(--semantic-space-component-sm);
+    padding: var(--semantic-space-component-md);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
+    background: var(--semantic-color-surface);
   }
 
-  .mol-hierarchy-pyramid__row span {
-    width: 100%;
+  // La fila de encabezado de cada nivel: el ordinal y el nombre en la misma
+  // línea de base. En la pirámide iban a los dos extremos con
+  // `justify-content: space-between`, y en la fila más estrecha —la de arriba,
+  // al 38 %— «EXPERIENCE» y «Product patterns» no cabían y se solapaban.
+  .mol-composition-nest__level > p {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 1.1rem;
-    border: 1px solid var(--semantic-color-border);
-    background: #fff;
+    align-items: baseline;
+    gap: var(--semantic-space-component-sm);
+    margin: 0;
   }
 
-  .mol-hierarchy-pyramid__row small {
-    font: 600 .58rem/1 var(--semantic-font-family-ui);
-    letter-spacing: .1em;
-    text-transform: uppercase;
+  .mol-composition-nest__level small {
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-caption);
+    font-weight: var(--semantic-font-weight-emphasis);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     color: var(--semantic-color-text-muted);
+    font-variant-numeric: tabular-nums;
   }
 
-  .mol-hierarchy-pyramid__row b {
-    font: 600 clamp(1rem,2vw,1.5rem)/1 var(--semantic-font-family-display);
+  // Un solo cuerpo para los cinco niveles. La jerarquía ya la dice el
+  // anidamiento; decirla otra vez con el tamaño de letra sería escribir dos
+  // veces la misma cosa, y a cinco niveles de profundidad obligaría al de dentro
+  // a ser ilegible.
+  .mol-composition-nest__level b {
+    font-family: var(--semantic-font-family-display);
+    font-weight: var(--semantic-font-weight-emphasis);
+    font-size: var(--semantic-font-size-body-lg);
+    letter-spacing: var(--semantic-letter-spacing-display);
   }
 
-  .mol-hierarchy-pyramid__row--1 {
-    width: 100%;
+  // El núcleo es el único nivel que no contiene a otro: es donde el anidamiento
+  // termina, así que es el que se marca.
+  .mol-composition-nest__level--core {
+    background: var(--semantic-color-primary);
+    border-color: var(--semantic-color-primary);
   }
 
-  .mol-hierarchy-pyramid__row--2 {
-    width: 86%;
+  .mol-composition-nest__level--core b {
+    color: var(--semantic-color-on-primary);
   }
 
-  .mol-hierarchy-pyramid__row--3 {
-    width: 70%;
+  // La opacidad aquí sí es calculable, a diferencia del caso que la hizo retirar
+  // de `.mol-case-facts dt`: lo que hay detrás no es «lo que toque», es siempre
+  // el relleno de este mismo nivel. Contra el azul de marca da 4,65:1, por
+  // encima del 4,5:1 de AA; a .72 se quedaba en 4,17:1.
+  .mol-composition-nest__level--core small {
+    color: var(--semantic-color-on-primary);
+    opacity: .78;
   }
-
-  .mol-hierarchy-pyramid__row--4 {
-    width: 54%;
-  }
-
-  .mol-hierarchy-pyramid__row--5 {
-    width: 38%;
-  }
-
 }
+
 @layer syx.utilities {
+  // El escalonado de entrada va por `--delay` en el marcado, como
+  // `.mol-ill-collage` en la home: los niveles están anidados, no son hermanos,
+  // así que `nth-child` no puede contarlos.
+  //
+  // Las dos reglas llevan `.js` y la que enciende va después —misma
+  // especificidad, gana la última—. Es lo que no hacían las parejas rotas de
+  // este mismo fichero, donde la que apaga tiene un selector más específico y el
+  // estado `is-visible` no llega a aplicarse nunca.
+  .js .org-hierarchy-diagram.js-reveal .mol-composition-nest__level {
+    opacity: 0;
+    @include transition(opacity .5s ease);
+  }
+
+  .js .org-hierarchy-diagram.is-visible .mol-composition-nest__level {
+    opacity: 1;
+    transition-delay: var(--delay, 0ms);
+  }
+
   @include reduced-motion {
-    .mol-hierarchy-pyramid__row {
-      animation: none;
-      @include transition(none);
+    .js .org-hierarchy-diagram.js-reveal .mol-composition-nest__level {
       opacity: 1;
+      @include transition(none);
     }
-
   }
-}
-@layer syx.organisms {
-  .mol-hierarchy-pyramid__row {
-    height: 4.25rem;
-  }
-
-  .mol-hierarchy-pyramid__row--1 {
-    width: 100%;
-  }
-
-  .mol-hierarchy-pyramid__row--2 {
-    width: 94%;
-  }
-
-  .mol-hierarchy-pyramid__row--3 {
-    width: 88%;
-  }
-
-  .mol-hierarchy-pyramid__row--4 {
-    width: 82%;
-  }
-
-  .mol-hierarchy-pyramid__row--5 {
-    width: 76%;
-  }
-
 }
 @layer syx.molecules {
   .mol-orbit-system {

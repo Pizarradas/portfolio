@@ -1009,5 +1009,6 @@
   "Make the system understandable to people and AI.": "Hacer el sistema comprensible para las personas y para la IA.",
   "Component families": "Familias de componentes",
   "Composition levels": "Niveles de composición",
-  "Specialised AI modes": "Modos de IA especializados"
+  "Specialised AI modes": "Modos de IA especializados",
+  "Nesting diagram: foundations sit inside atoms, atoms inside molecules, molecules inside organisms, and organisms inside product patterns.": "Diagrama de anidamiento: los fundamentos van dentro de los átomos, los átomos dentro de las moléculas, las moléculas dentro de los organismos y los organismos dentro de los patrones de producto."
 }
