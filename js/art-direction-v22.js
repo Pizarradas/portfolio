@@ -1,7 +1,11 @@
 (() => {
  const grid=document.querySelector('.mol-dot-universe__grid');
  if(grid){
-   const total=100, hot=86;
+   // One dot per card, not one dot per percentage point. The field used to be
+   // 100 dots under a "279 cards analysed" label, so a reader who counted got a
+   // different number from the one the panel claimed. Counts come from the
+   // markup now, which is also where the caption that states them lives.
+   const total=Number(grid.dataset.dots)||0, hot=Number(grid.dataset.exceeded)||0;
    for(let i=0;i<total;i++){const d=document.createElement('i'); d.setAttribute('aria-hidden','true'); grid.appendChild(d);}
    const dots=[...grid.children];
    const reveal=()=>dots.forEach((d,i)=>{setTimeout(()=>{d.style.opacity='1'; if(i<hot)d.classList.add('is-hot')}, Math.min(i*8,650));});

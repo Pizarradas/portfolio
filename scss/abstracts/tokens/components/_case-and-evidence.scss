@@ -51,6 +51,12 @@
     --component-art-ink: #06101f;
     --component-art-night: #07102f;
     --component-art-muted: #6c7484;
+
+    // El contorno de un punto «dentro del umbral». Estaba en crudo dentro del
+    // componente y no puede ser `--semantic-color-border`: esos 39 puntos son
+    // una clase del gráfico, no una separación, y con el gris de borde dejan de
+    // distinguirse del fondo a ese tamaño.
+    --component-art-dot-idle: #b8c0ce;
   }
 }
 
