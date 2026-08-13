@@ -54,25 +54,37 @@
 
 }
 @layer syx.utilities {
-  .js-reveal {
+  // Entrada al hacer scroll — detrás de `.js`, que pone un script inline en el
+  // <head>.
+  //
+  // Sin esa guarda, `opacity: 0` es el estado por defecto y lo único que lo
+  // deshace es un IntersectionObserver. Si el script no corre, o si nada hace
+  // scroll —un rastreador, una previsualización, una captura de página
+  // completa, `print`—, las dieciocho secciones de una página de caso se
+  // quedan invisibles para siempre. La única red que había era
+  // `prefers-reduced-motion`, que solo cubre a quien la tenga activada.
+  //
+  // Es el mismo criterio que el plegado de lectura: si el JS no llega, el
+  // contenido se ve. La animación es la mejora, nunca la condición para leer.
+  .js .js-reveal {
     opacity: 0;
     transform: translateY(1.4rem);
     @include transition(opacity var(--component-case42-motion-duration) ease,transform var(--component-case42-motion-duration) cubic-bezier(.2,.75,.25,1));
   }
 
-  .js-reveal.is-visible {
+  .js .js-reveal.is-visible {
     opacity: 1;
     transform: none;
   }
 
   @include reduced-motion {
-    .js-reveal {
+    .js .js-reveal {
       opacity: 1;
       transform: none;
       @include transition(none);
     }
 
-    .js-reveal>* {
+    .js .js-reveal>* {
       opacity: 1;
       transform: none;
       @include transition(none);

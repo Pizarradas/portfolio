@@ -51,7 +51,10 @@
     }
 
   }
-  .mol-architecture-stack.js-reveal>div {
+  // Escalonado interno del diagrama, detrás de `.js` por lo mismo que
+  // `.js-reveal` en base: si el script no corre, esto no puede dejar las
+  // piezas del diagrama en opacidad cero para siempre.
+  .js .mol-architecture-stack.js-reveal>div {
     opacity: 0;
     transform: translateY(.8rem);
     @include transition(opacity .5s ease,transform .5s ease);
@@ -171,7 +174,7 @@
     }
 
   }
-  .mol-foundation-map.js-reveal>div {
+  .js .mol-foundation-map.js-reveal>div {
     opacity: 0;
     transform: translateY(.8rem);
     @include transition(opacity .5s ease,transform .5s ease);
@@ -279,7 +282,7 @@
     }
 
   }
-  .mol-brand-tree.js-reveal .mol-brand-tree__branches span {
+  .js .mol-brand-tree.js-reveal .mol-brand-tree__branches span {
     opacity: 0;
     transform: translateY(.8rem);
     @include transition(opacity .5s ease,transform .5s ease);
@@ -423,7 +426,7 @@
     }
 
   }
-  .mol-pipeline.js-reveal span {
+  .js .mol-pipeline.js-reveal span {
     opacity: 0;
     transform: translateY(.8rem);
     @include transition(opacity .5s ease,transform .5s ease);
@@ -506,7 +509,7 @@
 
 }
 @layer syx.utilities {
-  .mol-ai-system.js-reveal>div {
+  .js .mol-ai-system.js-reveal>div {
     opacity: 0;
     transform: translateY(.8rem);
     @include transition(opacity .5s ease,transform .5s ease);

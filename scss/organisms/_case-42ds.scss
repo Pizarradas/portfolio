@@ -120,7 +120,17 @@
     line-height: .98;
   }
 
+  // La columna de texto de una sección de afirmación tenía tope de 48rem, que
+  // a 1.08rem de cuerpo son unos 89 caracteres por línea a partir de 1200px:
+  // muy por encima de los 66ch de la medida de prosa, y en la parte de la
+  // página que más se lee. El tope pasa a ser la medida, que es lo que
+  // `PROPORTIONS.md` §6.2 dice que ya está bien calculado y no hay que tocar.
+  //
+  // Es la corrección importante de esta pasada: el registro decide cuánto mide
+  // la sección, la medida decide cuánto mide la línea. Aquí estaban siendo el
+  // mismo número.
   .org-case42-section__content {
+    max-width: var(--semantic-measure-prose);
     font-size: .98rem;
     line-height: 1.65;
   }
@@ -728,8 +738,15 @@
       padding: var(--semantic-space-case-block) var(--semantic-space-case-inline);
     }
 
+    // La única sección de la página en el registro `showcase`, y por la misma
+    // razón que `#work` en la home: son las cuatro cabeceras de marca, con
+    // fuentes de 1920px, y es la evidencia más fuerte del caso. Que la home y
+    // el caso las enseñen al mismo ancho es lo que hace que se lean como el
+    // mismo argumento en vez de como dos piezas distintas.
+    //
+    // Una por página. Si algún día hay dos, ninguna es la importante.
     .org-header-system>* {
-      max-width: var(--semantic-width-case-max);
+      max-width: var(--semantic-width-showcase);
       margin-left: auto;
       margin-right: auto;
     }

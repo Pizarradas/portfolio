@@ -40,7 +40,9 @@
     --semantic-font-size-section-compact: clamp(2.1rem, 10vw, 3rem);
 
     // Caso 42DS.
-    --component-case42-max-width: 92rem;
+    // El segundo de los tres topes inventados. La portada de un caso es un
+    // opener de sección, y los openers de la home corren a `survey`.
+    --component-case42-max-width: var(--semantic-width-survey);
     --component-case42-reading-width: 48rem;
     --component-case42-rule: var(--semantic-color-border);
     --component-case42-motion-duration: 720ms;
@@ -79,7 +81,14 @@
     :root {
       --semantic-space-case-inline: clamp(2.5rem,3vw,5rem);
       --semantic-space-case-block: clamp(6rem,8vw,9rem);
-      --semantic-width-case-max: 108rem;
+      // Era 108rem: un tope inventado, cerca de `survey` (W5 = 113,23) pero en
+      // ningún escalón de la curva de `PROPORTIONS.md` §6.1. La página de caso
+      // llevaba tres topes distintos —84rem las secciones de afirmación, 92rem
+      // la portada, 108rem los diagramas— donde el sistema ya tiene una
+      // escalera de cuatro. Apuntarlo al registro cuesta 4rem de diferencia,
+      // imperceptibles, y a cambio los diagramas de un caso miden lo mismo que
+      // las superficies de datos de la home.
+      --semantic-width-case-max: var(--semantic-width-survey);
     }
 
   }
