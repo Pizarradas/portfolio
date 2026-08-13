@@ -1,31 +1,33 @@
 ---
 name: content
-description: Contenido bilingüe del portfolio — el inglés es la fuente y el español se genera con build-i18n.mjs. Úsala siempre que cambie texto visible, un alt, un aria-label, un title, una meta description o el contenido de los bloques generados (timeline, mapa). Explica el flujo, el diccionario i18n/es.json, el selector de idioma y qué NO se debe editar a mano. Si has tocado una página en inglés, esta skill es obligatoria antes de dar el trabajo por terminado.
+description: Contenido bilingüe del portfolio — el inglés es la fuente y el español lo genera build-i18n.mjs. Cubre el flujo, el diccionario i18n/es.json, los criterios de traducción y el selector de idioma. Esta skill es la fuente del dominio. Obligatoria en cuanto cambie texto visible, un alt, un aria-label, un title o una meta description.
 ---
 
 # Contenido bilingüe
 
-## La regla
+**Esta skill es la fuente.** Los criterios de voz y de idioma los fija
+`BRAND.md` §3, vía la skill `brand`.
 
-**`es/` es salida generada.** Los siete HTML de `es/` los produce
-`scripts/build-i18n.mjs` a partir de los ingleses. Editarlos a mano se pierde en
-el siguiente build, igual que pasa con `css/portfolio.css`.
+## Cuándo entra
+
+Después de `brand`, siempre que haya texto nuevo o modificado. No es opcional: si
+no se ejecuta, la página española sirve esas frases en inglés.
+
+## Procedimiento
 
 ```
-editar el HTML inglés  →  npm run build:i18n  →  traducir lo que reporte
+editar el HTML inglés  →  npm run build:i18n  →  traducir lo que reporte  →  npm run check:i18n
 ```
-
-## Flujo
 
 ```bash
 npm run build:i18n     # regenera es/ y lista las frases sin traducir
-npm run check:i18n     # falla (exit 1) si falta alguna — para CI o pre-commit
+npm run check:i18n     # falla (exit 1) si falta alguna
 npm run extract:i18n   # vuelca las pendientes a i18n/_missing.json
 ```
 
-El script recorre el HTML sin parsearlo a árbol, traduce nodos de texto y
-atributos legibles vía `i18n/es.json`, reescribe las URLs relativas con `../`,
-pone `lang="es"` y rellena dos bloques marcados:
+`scripts/build-i18n.mjs` recorre el HTML sin parsearlo a árbol, traduce nodos de
+texto y atributos legibles vía `i18n/es.json`, reescribe las URLs relativas con
+`../`, pone `lang="es"` y rellena dos bloques marcados:
 
 - `<!-- i18n:head -->` — canonical + `hreflang` + `og:locale`
 - `<!-- i18n:switch -->` — el selector EN/ES
@@ -38,29 +40,17 @@ salen del mismo sitio y no divergen.
 `i18n/es.json` mapea cada cadena inglesa a su gemela española.
 
 - Lo que se lee igual en los dos idiomas —nombres propios, cargos, herramientas,
-  fragmentos de código— va en el array **`__same`**, no como par idéntico.
-- Las claves deben coincidir **carácter a carácter**, incluidas las entidades
-  (`&amp;`) y las comillas tipográficas (`’`, `“ ”`).
-- Añadir una frase nueva es añadir una entrada. El script te dice cuáles faltan.
+  código— va en el array **`__same`**, no como par idéntico.
+- Las claves coinciden **carácter a carácter**, incluidas entidades (`&amp;`) y
+  comillas tipográficas (`’`, `“ ”`).
 
 ## Criterios de traducción
 
-Los fija `BRAND.md` §3. En corto:
-
-- Español de España, tuteo cuando haya que dirigirse al lector.
+- Español de España, tuteo al dirigirse al lector.
 - Anglicismos de industria intactos: design system, front-end, tokens, motion,
   benchmark, paywall.
-- Cargos en inglés: son los títulos reales.
+- Cargos en inglés: son los títulos reales del CV.
 - **Cifras sin tocar**: `86 %`, `40.86 %`. Los datos no se localizan.
-- Los labels de navegación en español son más largos que en inglés; si añades
-  uno, comprueba que la cabecera no desborda por debajo de 480px.
-
-## Qué se traduce además del texto visible
-
-El script ya lo cubre, pero al revisar ten en cuenta que también pasan por el
-diccionario: `alt`, `title`, `aria-label`, `placeholder`, la `meta description`,
-las cadenas del JSON de la timeline (`<script type="application/json">`) y los
-textos dentro de los SVG generados.
 
 ## El selector de idioma
 
@@ -70,21 +60,20 @@ traducido de esa misma página**, nunca a la home, y `js/lang-switch.js` arrastr
 el `#ancla`.
 
 **Sin preferencia guardada y sin redirección automática.** La redirección
-dispararía después de pintar y un hispanohablante puede estar leyendo la versión
-inglesa a propósito. No lo "mejores" añadiéndola.
+dispararía después de pintar, y un hispanohablante puede estar leyendo la versión
+inglesa a propósito. No lo «mejores» añadiéndola.
 
-## Orden con los otros generadores
+## Trampas
 
-`build-timeline.mjs` y `build-map-process.mjs` inyectan en `index.html`, así que
-van **antes** de `build-i18n.mjs`. `npm run build` ya los ordena — pero ese
-script incluye un `sass` que pisa el build de Prepros, así que no lo ejecutes sin
-querer hacerlo.
+- **Se traduce más que el texto visible**: `alt`, `title`, `aria-label`,
+  `placeholder`, la `meta description`, el JSON de la timeline
+  (`<script type="application/json">`) y los textos dentro de los SVG generados.
+- **Los labels en español son más largos.** Si añades uno a la navegación,
+  comprueba que la cabecera no desborda por debajo de 480px.
+- **Orden de los generadores**: `build-timeline.mjs` y `build-map-process.mjs`
+  inyectan en `index.html`, así que van **antes** de `build-i18n.mjs`.
 
 ## Antes de terminar
 
-```bash
-npm run check:i18n    # → "every string translated"
-```
-
-Si reporta frases pendientes, el trabajo no está hecho: esas cadenas se sirven en
-inglés dentro de la página española.
+- [ ] `npm run check:i18n` dice «every string translated»
+- [ ] Si tocaste la navegación: comprobado por debajo de 480px

@@ -1,84 +1,54 @@
 ---
 name: proportions
-description: Sistema matemático de proporciones áureas del portfolio — cómo calcular tamaños de tipografía, interlineados, tracking, espaciado vertical y horizontal, anchos de columna y medida de lectura. Úsala siempre que haya que elegir un número que se vea: un hueco, un tamaño de letra, un ancho, un padding, un line-height. También cuando la petición sea vaga ("se ve apretado", "esto es muy grande", "dale más aire"): traduce la sensación al escalón que toca. Nunca inventes un valor sin pasar por aquí.
+description: Proporciones áureas del portfolio — procedimiento para convertir cualquier número que se vea (un hueco, un tamaño de letra, un ancho, un interlineado) en el escalón que le toca. La fuente con todas las tablas es scss/PROPORTIONS.md. Úsala también cuando la petición sea vaga: "se ve apretado", "esto es muy grande", "dale más aire".
 ---
 
 # Proporciones
 
-La tabla completa está en **[`scss/PROPORTIONS.md`](../../../scss/PROPORTIONS.md)**.
-Léela antes de calcular. Aquí está el procedimiento.
+**Fuente: [`scss/PROPORTIONS.md`](../../../scss/PROPORTIONS.md).** Ahí están las
+tablas con todos los valores. Aquí solo está cómo elegir cuál.
 
-## La constante
+## Cuándo entra
 
-```
-φ = 1.6180339887      ∛φ = 1.1740 → tipografía
-√φ = 1.2720           φ         → estructura
-```
-
-Cada tres escalones de tipografía y cada dos de espaciado caes en una potencia
-exacta de φ. Es la misma escala vista de cerca o de lejos.
+Después de `brand` y antes de `scss`: la marca decide qué se dice, esto decide
+cuánto mide, y scss dónde vive. Sirve a la prioridad 5 de `CLAUDE.md` —**ningún
+valor se elige a ojo**.
 
 ## Procedimiento
 
-**1. Clasifica el número** antes de calcularlo:
-
-| Es un… | Regla |
-|---|---|
-| tamaño de letra | `∛φⁿ` rem |
-| interlineado | `1 + φ⁻ⁿ` |
-| tracking | `∓φ⁻ⁿ/10` em (`+φ⁻ⁿ/4` si es versalita) |
-| hueco dentro de un componente | `√φⁿ` rem, **fijo** |
-| hueco entre bloques | `√φⁿ` rem, **fluido con g = 2** |
-| ancho de columna | `34 × √φⁿ` rem |
-| medida de lectura | `16 × φⁿ` ch |
-
-**2. Si es fluido, usa ganancia constante.** Un token no interpola entre dos
-números elegidos a ojo, sino entre **dos escalones de la misma escala**:
-
-```scss
---token: #{fluid(S(n), S(n + g))};
-```
-
-`g` es constante por banda: **1** para texto, **2** para títulos, **5** para
-display. Y `Δg` entre el elemento mayor y el menor **nunca pasa de 5**: por
-encima de eso la página deja de ser una composición a dos tamaños y pasa a ser
-dos composiciones distintas.
-
-**3. Si no encaja en ninguna categoría, el valor está mal.** No falta un escalón:
-sobra el número. Comprueba que no existe ya un token para eso antes de crear uno.
+1. **Clasifica el número.** El checklist de `PROPORTIONS.md` §7 dice qué regla le
+   toca según sea tamaño de letra, interlineado, tracking, hueco interno, hueco
+   entre bloques, ancho de columna o medida de lectura.
+2. **Busca el escalón en la tabla de esa regla.** No lo calcules de cabeza: las
+   tablas ya traen rem y px.
+3. **Si es fluido, usa ganancia constante** (§1.1): interpola entre dos escalones
+   de la misma escala, no entre dos números elegidos a ojo. `g` es constante por
+   banda y `Δg` global nunca pasa de 5.
+4. **Si no encaja en ninguna categoría, el valor está mal.** No falta un escalón:
+   sobra el número. Comprueba que no existe ya un token para eso.
 
 ## Traducir peticiones vagas
+
+Esto no está en el documento y es lo que más se necesita en la práctica:
 
 | Dice | Significa | Haz |
 |---|---|---|
 | «se ve apretado» | falta un escalón de espaciado | sube 1–2 pasos de `√φⁿ` |
 | «esto es muy grande» | el `Δg` de su banda se pasó | baja el escalón, no el `clamp` |
 | «no se lee bien» | interlineado o medida | `1 + φ⁻ⁿ`, o medida a `16 × φⁿ` ch |
-| «dale más aire» | ritmo vertical, no padding suelto | sube el hueco **entre bloques**, no el interno |
+| «dale más aire» | ritmo vertical | sube el hueco **entre bloques**, no el interno |
 | «que respire arriba» | jerarquía de encabezado | `margen-superior : inferior = φ : 1` |
 
-## Ritmo vertical
+## Trampas
 
-1. Un encabezado pertenece a lo de abajo: **arriba : abajo = φ : 1**.
-2. El hueco entre hermanos es dos escalones menor que el que los separa de la
-   sección siguiente (`E(n)` vs `E(n+2)`, que es exactamente `× φ`).
-3. El padding vertical de una sección es φ veces su mayor espaciado interno.
+- **La medida de lectura ya es correcta** (16 / 42 / 66 ch, a 0.2 % y 2.7 % de la
+  curva áurea). Es la parte mejor construida del sistema: no la «arregles».
+- **Aplicar la escala mueve la página entera**, así que el comparador de
+  declaraciones no sirve para validarlo —ese demuestra que *nada* cambió, y aquí
+  el objetivo es el contrario.
 
-## Lo que ya está bien
+## Antes de terminar
 
-**La medida de lectura no se toca.** 16 / 42 / 66 ch frente a los 16 / 41.9 /
-67.8 teóricos: 0.2 % y 2.7 % de desvío. Es la parte mejor construida del sistema.
-Si hace falta un escalón intermedio, el que toca es **26ch**.
-
-## Advertencia antes de aplicar
-
-Cambiar la escala **mueve la página entera**, así que no se puede validar con el
-comparador de declaraciones —ese sirve para demostrar que nada cambió, y aquí el
-objetivo es el contrario. Aplícalo **por bandas**, de menor a mayor riesgo
-visual:
-
-1. interlineados y tracking
-2. espaciado macro
-3. tipografía
-
-Con render de control entre pasos. Nunca las tres a la vez.
+Si el cambio aplica escala nueva, hazlo **por bandas** y de menor a mayor riesgo
+visual —(1) interlineados y tracking, (2) espaciado macro, (3) tipografía— con
+render de control entre pasos. Nunca las tres a la vez.

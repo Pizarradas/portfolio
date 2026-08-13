@@ -62,6 +62,21 @@ declaración. Elegir mal ese nivel es el fallo más caro del proyecto: los tres
 fallos silenciosos que ha tenido —dos comentarios sin cerrar y catorce tokens
 perdidos— pasaron una verificación que era correcta pero insuficiente.
 
+### Cómo está construida una skill
+
+Tres reglas, para que el sistema no se llene de copias del mismo párrafo:
+
+1. **Este fichero manda sobre todas.** Lo que aplica a *cualquier* petición vive
+   aquí y no se repite en ninguna skill. Una skill que reexplique que `css/` es
+   salida generada está gastando contexto en algo que ya está cargado.
+2. **Si el dominio tiene documento, la skill no lo repite.** Lo referencia y
+   aporta solo el procedimiento: cuándo entra, en qué orden, qué comprobar.
+   Tienen documento `brand` (`BRAND.md`) y `proportions` (`scss/PROPORTIONS.md`).
+   `scss`, `content` y `verify` no lo tienen, así que la skill **es** la fuente.
+3. **Todas tienen la misma forma:** fuente → cuándo entra → procedimiento →
+   trampas conocidas → antes de terminar. Si a una le sobra una sección, es que
+   está repitiendo algo.
+
 ---
 
 ## 3. Reglas que no se saltan nunca
