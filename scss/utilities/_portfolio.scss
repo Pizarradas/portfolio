@@ -116,6 +116,23 @@
     }
   }
 
+  // The divider that was being drawn twice.
+  //
+  // A section opener carries a rule across the top of the page to separate it
+  // from what came before. The capability strip closes its own box with
+  // `border-block`, which is the same rule at the same width, and the two land
+  // about 140px apart with nothing between them but the section's padding —
+  // the same duplication the band openers had at their bottom edge, at the
+  // other end of the section.
+  //
+  // The strip keeps its border, because that is what closes its five cells.
+  // The opener drops the one it does not need: where a neighbour has already
+  // drawn the line, the section starts at its own eyebrow. Not gated at a
+  // breakpoint — both rules exist at every width, and so does the duplication.
+  .org-capability-scan + * > .mol-section-heading {
+    border-block-start: 0;
+  }
+
   // In the read register there is room for one column of content, not two.
   //
   // About splits its heading and its copy into separate grid columns, which is
