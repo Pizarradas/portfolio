@@ -7,6 +7,7 @@
     "build": "node scripts/build-timeline.mjs && node scripts/build-map-process.mjs && node scripts/build-i18n.mjs && sass scss/portfolio.scss css/portfolio.css --style=expanded --no-source-map",
     "build:i18n": "node scripts/build-i18n.mjs",
     "check:i18n": "node scripts/build-i18n.mjs --check",
+    "check:css": "node scripts/check-css.mjs",
     "extract:i18n": "node scripts/build-i18n.mjs --extract",
     "build:min": "sass scss/portfolio.scss css/portfolio.css --style=compressed --no-source-map",
     "watch": "sass --watch scss/portfolio.scss:css/portfolio.css --style=expanded --no-source-map",

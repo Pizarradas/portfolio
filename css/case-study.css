@@ -8,7 +8,10 @@
     --component-case-dark-bg: #11120f;
     --component-case-dark-fg: #f3f1e8;
     --component-case-accent-bg: #1E3AFF;
-    --component-case-accent-fg: #11120f;
+    /* Era #11120f — el mismo valor que --component-case-dark-bg, copiado del
+       par de tokens de arriba. Sobre el azul de marca daba 2.8:1 y no pasaba
+       WCAG AA. En blanco son 6.8:1. */
+    --component-case-accent-fg: var(--semantic-color-on-primary, #fff);
   }
 }
 @layer syx.organisms {
@@ -55,6 +58,10 @@
   .org-case-section--dark { background:var(--component-case-dark-bg); color:var(--component-case-dark-fg); border-color:#34352f; }
   .org-case-section--dark .atom-eyebrow, .org-case-section--dark .atom-index { color:inherit; }
   .org-case-section--accent { background:var(--component-case-accent-bg); color:var(--component-case-accent-fg); }
+  /* El eyebrow y el índice se pintan con --component-eyebrow-color, que es el
+     azul de marca: exactamente el fondo de esta sección. Sin esta regla eran
+     invisibles. La sección --dark ya tenía su equivalente. */
+  .org-case-section--accent .atom-eyebrow, .org-case-section--accent .atom-index { color:inherit; }
   .org-case-section--outcome blockquote { margin:3rem 0 0; font-size:clamp(1.5rem,2.4vw,2.3rem); line-height:1.25; letter-spacing:-.025em; }
   .org-case-next { display:grid; grid-template-columns:1fr 1fr; }
   .org-case-next a { min-height:13rem; padding:2rem clamp(1.25rem,4vw,4rem); display:flex; flex-direction:column; justify-content:space-between; text-decoration:none; color:inherit; border-right:1px solid var(--component-case-rule); }

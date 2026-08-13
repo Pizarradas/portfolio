@@ -1,18 +1,9 @@
 
 /* V26 — crop live previews to meaningful product frames + curated illustration collage */
 @layer syx.molecules{
-  /* ATLAS home cards: preserve the published hero, remove the blank tail below it. */
-  .mol-register-preview__viewport--cropped{
-    height:auto!important;
-    aspect-ratio:1440 / 835;
-    background:#090a0c;
-  }
-  .mol-register-preview__viewport--cropped iframe{
-    width:1440px!important;
-    height:835px!important;
-    min-height:835px!important;
-    transform-origin:0 0;
-  }
+  /* Se han quitado de aquí las reglas de .mol-register-preview__viewport--cropped:
+     esa clase no existe en el marcado desde que el bloque de registros pasó a
+     .mol-register__frame. Con ellas se van cinco !important. */
 
   /* ATLAS case: same principle, slightly more editorial breathing room */
   .mol-browser-preview__viewport--editorial-crop{

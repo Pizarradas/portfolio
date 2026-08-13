@@ -1,0 +1,10 @@
+# Dependencias de build. GSAP se sirve desde js/vendor/, que sí se versiona,
+# así que el sitio publicado no depende de esta carpeta.
+node_modules/
+
+# Salida de `npm run extract:i18n`. Se regenera a demanda y no debe commitearse.
+i18n/_missing.json
+
+# Basura del sistema operativo
+.DS_Store
+Thumbs.db

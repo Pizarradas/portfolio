@@ -26,55 +26,8 @@
   });
 })();
 
-;(() => {
-  const frames=[...document.querySelectorAll('.mol-register-preview__viewport iframe')];
-  const scale=frame=>{
-    const vp=frame.parentElement;
-    if(!vp) return;
-    const base=1440;
-    const s=Math.min(1,vp.clientWidth/base);
-    frame.style.transform=`scale(${s})`;
-    frame.style.width=`${base}px`;
-    frame.style.height=`${Math.max(1100,vp.clientHeight/Math.max(s,.01))}px`;
-  };
-  frames.forEach(scale);
-  let raf;
-  window.addEventListener('resize',()=>{
-    cancelAnimationFrame(raf);
-    raf=requestAnimationFrame(()=>frames.forEach(scale));
-  },{passive:true});
-})();
-
-;(() => {
-  const cropFrames=[...document.querySelectorAll('.mol-register-preview__viewport--cropped iframe')];
-  const crop=frame=>{
-    const vp=frame.parentElement;
-    if(!vp)return;
-    const s=Math.min(1,vp.clientWidth/1440);
-    frame.style.transform=`scale(${s})`;
-    frame.style.width='1440px';
-    frame.style.height='835px';
-  };
-  cropFrames.forEach(crop);
-  let r;
-  window.addEventListener('resize',()=>{cancelAnimationFrame(r);r=requestAnimationFrame(()=>cropFrames.forEach(crop));},{passive:true});
-})();
-
-;(() => {
-  const frames=[...document.querySelectorAll('.mol-project-hero-v27__viewport iframe')];
-  const fit=frame=>{
-    const vp=frame.parentElement;
-    if(!vp)return;
-    const sourceW=1440, sourceH=900;
-    const scale=Math.max(vp.clientWidth/sourceW, vp.clientHeight/sourceH);
-    frame.style.width=`${sourceW}px`;
-    frame.style.height=`${sourceH}px`;
-    frame.style.transform=`scale(${scale})`;
-  };
-  frames.forEach(fit);
-  let raf;
-  window.addEventListener('resize',()=>{
-    cancelAnimationFrame(raf);
-    raf=requestAnimationFrame(()=>frames.forEach(fit));
-  },{passive:true});
-})();
+// Aquí había tres bloques más, cada uno con su propio listener de resize:
+// escalaban `.mol-register-preview__viewport`, su variante `--cropped` y
+// `.mol-project-hero-v27__viewport`. Ninguna de esas tres clases existe ya en
+// el marcado — el bloque de registros usa `.mol-register__frame`, que gestiona
+// js/register-previews.js. Eran tres listeners registrados para nada.

@@ -152,20 +152,16 @@
 
   // Phone. The header row was already sized for four nav labels and a wordmark;
   // this pair is a fifth item, and the Spanish labels are longer than the
-  // English ones, so both the switch and the gap around it give ground here.
+  // English ones, so the switch itself gives ground here.
   //
-  // The nav gap is reached through `.org-site-header` on purpose:
-  // mobile-first-v19.css sets `.mol-nav { gap: .9rem }` in the same cascade
-  // layer and is linked after portfolio.css, so a bare `.mol-nav` would lose.
+  // The nav gap is NOT touched from this layer: `.mol-nav { gap }` below 480px
+  // belongs to syx.utilities, which wins over syx.atoms whatever the
+  // specificity. It is tightened there, next to the rule that already owns it.
   @include until($bp-sm) {
     .atom-lang-switch {
       gap: var(--primitive-space-3xs);
       padding-inline-start: var(--primitive-space-2xs);
       font-size: var(--semantic-font-size-eyebrow);
-    }
-
-    .org-site-header .mol-nav {
-      gap: var(--primitive-space-xs);
     }
   }
 

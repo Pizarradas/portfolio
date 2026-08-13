@@ -1,6 +1,9 @@
 @layer syx.base {
   html {
     background: var(--semantic-color-surface);
+    // Tiñe checkboxes, radios y barras de progreso nativas con el azul de
+    // marca. Venía de css/brand-jlp.css, que ya no existe.
+    accent-color: var(--semantic-color-primary);
   }
 
   body {
@@ -53,5 +56,14 @@
   :focus-visible {
     outline: var(--semantic-focus-width) solid var(--semantic-color-focus);
     outline-offset: var(--semantic-focus-offset);
+  }
+}
+
+@layer syx.atoms {
+  // También venía de brand-jlp.css. Se queda en la capa de átomos, que es
+  // donde estaba, para no adelantarla por delante de los enlaces que sí
+  // definen su propio hover.
+  a:hover {
+    color: var(--component-link-hover-color);
   }
 }

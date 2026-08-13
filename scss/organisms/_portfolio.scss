@@ -390,3 +390,106 @@
     }
   }
 }
+
+// ---------------------------------------------------------------------------
+// Migrado desde hojas sueltas de css/
+//
+// Estas reglas vivían en portfolio-v10.css, portfolio-v12.css, timeline-v29.css
+// y map-live-v30.css, que se cargaban después de portfolio.css. Al entrar aquí
+// mantienen su capa, así que el resultado no cambia; lo que desaparece es el
+// hecho de que su posición en la cascada dependiera del orden de los <link>.
+//
+// Los literales `1px` originales pasan a --semantic-border-width, que vale
+// exactamente 1px.
+// ---------------------------------------------------------------------------
+
+@layer syx.organisms {
+  // portfolio-v10.css
+  .org-new-work {
+    padding: var(--semantic-space-section) var(--semantic-space-page-inline);
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
+  }
+
+  // portfolio-v12.css
+  .org-case-index {
+    padding: var(--semantic-space-section) var(--semantic-space-page-inline);
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
+  }
+
+  .org-case-index__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 3rem;
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+    border-left: var(--semantic-border-width) solid var(--semantic-color-border);
+  }
+
+  .org-case-index__grid a {
+    min-height: 10rem;
+    padding: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    border-right: var(--semantic-border-width) solid var(--semantic-color-border);
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
+  }
+
+  .org-case-index__grid span {
+    font: 600 0.62rem/1 var(--semantic-font-family-ui);
+    color: var(--semantic-color-primary);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .org-case-index__grid strong {
+    margin: auto 0 0.4rem;
+    font-family: var(--semantic-font-family-display);
+    font-size: clamp(1.5rem, 2.4vw, 2.6rem);
+    letter-spacing: -0.04em;
+  }
+
+  .org-case-index__grid small {
+    color: var(--semantic-color-text-muted);
+  }
+
+  .org-coded-hero {
+    padding: clamp(1rem, 4vw, 4rem);
+    background: var(--semantic-color-surface-alt);
+  }
+
+  // timeline-v29.css
+  .org-role-evolution-v22__conclusion--timeline {
+    margin-top: 2.5rem;
+  }
+
+  .org-role-evolution-v22__conclusion--timeline blockquote {
+    display: none;
+  }
+
+  // map-live-v30.css
+  .org-map-live-case-v30 {
+    padding: clamp(4rem, 8vw, 8rem) var(--semantic-space-page-inline);
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
+    background: #fff;
+  }
+
+  .org-map-live-case-v30__intro {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .org-map-live-case-v30__intro h2 {
+    margin: 0;
+    font: 600 clamp(3rem, 9vw, 6rem)/0.9 var(--semantic-font-family-display);
+    letter-spacing: -0.06em;
+  }
+
+  .org-map-live-case-v30__intro > p:last-child {
+    max-width: 48rem;
+    color: var(--semantic-color-text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+}

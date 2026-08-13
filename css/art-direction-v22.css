@@ -7,7 +7,7 @@
 }
 }
 @layer syx.molecules{
-.mol-project-context-v22{position:relative;min-height:19rem;background:var(--v22-night);overflow:hidden}.mol-project-context-v22 iframe{border:0;pointer-events:none;background:#fff}
+/* .mol-project-context-v22 eliminado: no existe en el marcado. */
 .mol-evidence-legend{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem;font:.62rem/1 var(--v22-ui);text-transform:uppercase;letter-spacing:.06em}.mol-evidence-legend span{display:flex;align-items:center;gap:.45rem}.mol-evidence-legend i{width:.55rem;height:.55rem;border:1px solid var(--v22-blue)}.mol-evidence-legend span:nth-child(2) i{background:var(--v22-blue)}
 .mol-dot-universe{padding:1.25rem;border:1px solid var(--v22-line)}.mol-dot-universe__head{display:flex;align-items:baseline;gap:.7rem}.mol-dot-universe__head strong,.mol-dot-universe__result strong,.mol-sample-stats strong{font:600 clamp(3.5rem,13vw,6rem)/.8 var(--v22-display);letter-spacing:-.07em}.mol-dot-universe__head span,.mol-dot-universe__result span,.mol-sample-stats span{font:.68rem/1.3 var(--v22-ui);color:var(--v22-muted)}
 .mol-dot-universe__grid{display:grid;grid-template-columns:repeat(10,1fr);gap:.35rem;margin:2rem 0}.mol-dot-universe__grid i{aspect-ratio:1;border-radius:50%;border:1px solid #b8c0ce;transform:scale(.55);opacity:.2;transition:transform .45s ease,opacity .45s ease,background .45s ease}.mol-dot-universe__grid i.is-hot{background:var(--v22-blue);border-color:var(--v22-blue);opacity:1;transform:scale(1)}.mol-dot-universe__result{display:flex;align-items:end;gap:.9rem}.mol-dot-universe__result strong{color:var(--v22-blue)}
@@ -29,7 +29,6 @@
 @media(min-width:1200px){
  .org-sport-evidence-v22__story h2{font-size:clamp(4.5rem,5vw,6.5rem)}
  .org-role-evolution-v22__conclusion blockquote{font-size:clamp(4rem,4.6vw,6rem)}
- .mol-project-context-v22{min-height:27rem}
 }
 @media(prefers-reduced-motion:reduce){.mol-dot-universe__grid i{transition:none}}
 }

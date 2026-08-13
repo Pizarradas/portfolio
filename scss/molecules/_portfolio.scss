@@ -1779,3 +1779,184 @@
     }
   }
 }
+
+// ---------------------------------------------------------------------------
+// Migrado desde hojas sueltas de css/ — ver la nota en organisms/_portfolio.scss.
+// ---------------------------------------------------------------------------
+
+@layer syx.molecules {
+  // portfolio-v12.css — los dos escenarios oscuros comparten caja.
+  .mol-worldcup-stage,
+  .mol-atlas-architecture {
+    max-width: 90rem;
+    min-height: 32rem;
+    margin: auto;
+    padding: clamp(2rem, 5vw, 5rem);
+    background: #080f2f;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .mol-worldcup-stage > span {
+    font: 600 0.65rem/1 var(--semantic-font-family-ui);
+    letter-spacing: 0.15em;
+  }
+
+  .mol-worldcup-stage > strong {
+    font-family: var(--semantic-font-family-display);
+    font-size: clamp(8rem, 20vw, 20rem);
+    line-height: 0.65;
+    letter-spacing: -0.08em;
+  }
+
+  .mol-worldcup-stage > p {
+    max-width: 38ch;
+    font-size: 1.15rem;
+  }
+
+  .mol-worldcup-stage__tech {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .mol-worldcup-stage__tech b {
+    padding: 0.5rem 0.65rem;
+    border: var(--semantic-border-width) solid rgba(255, 255, 255, 0.28);
+    font: 600 0.62rem/1 var(--semantic-font-family-ui);
+  }
+
+  .mol-atlas-architecture {
+    background: #0b0b0d;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    gap: 1.4rem;
+  }
+
+  .mol-atlas-architecture > span {
+    font: 700 1rem/1 var(--semantic-font-family-ui);
+    letter-spacing: 0.2em;
+    color: #7187ff;
+  }
+
+  .mol-atlas-architecture > strong {
+    font-family: var(--semantic-font-family-display);
+    font-size: clamp(2.8rem, 6vw, 6rem);
+    letter-spacing: -0.05em;
+  }
+
+  .mol-atlas-architecture > i {
+    font-style: normal;
+    font-size: 2rem;
+    opacity: 0.4;
+  }
+
+  .mol-atlas-architecture > div {
+    display: flex;
+    gap: 0.7rem;
+  }
+
+  .mol-atlas-architecture > div b {
+    border: var(--semantic-border-width) solid rgba(255, 255, 255, 0.3);
+    padding: 0.7rem 1rem;
+    letter-spacing: 0.1em;
+  }
+
+  .mol-atlas-architecture > small {
+    opacity: 0.6;
+  }
+
+  // timeline-v29.css
+  //
+  // La medida vive en el elemento que fija el font-size. Estuvo en el wrapper,
+  // donde 21ch resolvía contra los 16px heredados en vez de contra los 86px del
+  // <strong> de dentro — y la frase salía en una columna de un carácter de
+  // ancho, estirando la sección entera.
+  .mol-role-thesis {
+    grid-column: 1/-1;
+    margin: 3.5rem 0 0 auto;
+  }
+
+  .mol-role-thesis strong {
+    display: block;
+    max-width: var(--semantic-measure-display);
+    font: var(--semantic-font-weight-display) var(--semantic-font-size-section) / var(--semantic-line-height-display) var(--v22-display);
+    letter-spacing: var(--semantic-letter-spacing-hero);
+  }
+
+  .mol-role-thesis p {
+    margin: 1.2rem 0 0;
+    max-width: 42rem;
+    font: 0.8rem/1.5 var(--v22-ui);
+    opacity: 0.58;
+  }
+
+  // map-live-v30.css
+  .mol-map-browser-v30 {
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
+    background: #fff;
+    overflow: hidden;
+  }
+
+  .mol-map-browser-v30 > header,
+  .mol-map-browser-v30 > footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.8rem 1rem;
+    font: 600 0.56rem/1.25 var(--semantic-font-family-ui);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .mol-map-browser-v30 > header {
+    background: #f5f7fa;
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
+  }
+
+  .mol-map-browser-v30 > header > div {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+
+  .mol-map-browser-v30 > header i {
+    width: 0.42rem;
+    height: 0.42rem;
+    border-radius: 50%;
+    background: #d6dce5;
+  }
+
+  .mol-map-browser-v30 > header span {
+    margin-left: 0.35rem;
+    color: var(--semantic-color-text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mol-map-browser-v30 > header strong {
+    color: var(--semantic-color-primary);
+  }
+
+  .mol-map-browser-v30 > footer {
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-map-browser-v30__viewport {
+    height: clamp(28rem, 58vw, 48rem);
+    background: #eef1f4;
+  }
+
+  .mol-map-browser-v30__viewport iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+}
