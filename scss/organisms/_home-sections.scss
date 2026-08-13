@@ -70,7 +70,7 @@
   .org-role-evolution-v22 {
     background: var(--component-art-night);
     color: #fff;
-    padding: clamp(4rem,8vw,8rem) var(--semantic-space-page-inline);
+    padding: var(--semantic-space-section) var(--semantic-space-page-inline);
   }
 
   .org-role-evolution-v22__intro {

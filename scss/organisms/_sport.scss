@@ -40,7 +40,7 @@
   @include from($bp-md) {
     .org-sport-opening {
       grid-template-columns: 1.25fr .75fr;
-      padding: clamp(4rem,8vw,8rem) var(--semantic-space-page-inline);
+      padding: var(--semantic-space-section) var(--semantic-space-page-inline);
       gap: clamp(2rem,6vw,7rem);
     }
 
@@ -81,7 +81,7 @@
   .org-sport-evidence-v22 {
     display: grid;
     gap: 3rem;
-    padding: clamp(4rem,8vw,8rem) var(--semantic-space-page-inline);
+    padding: var(--semantic-space-section) var(--semantic-space-page-inline);
     background: #fff;
     color: var(--component-art-ink);
   }

@@ -10,15 +10,33 @@
     font-size: var(--semantic-font-size-ui);
   }
 
+  // El área pulsable era la caja del texto y nada más: sin padding, a 11px de
+  // cuerpo por debajo de 480px, "CV" medía 14×16px y "EN"/"ES" unos 15×16.
+  // Los tres por debajo del mínimo de 24×24 de WCAG 2.2 SC 2.5.8, y con un
+  // `gap` de 8px la excepción por separación tampoco los salvaba.
+  //
+  // Crece el área, no la composición: `min-width` solo levanta a los enlaces
+  // que no llegan —los tres cortos— y el texto se recentra dentro, así que el
+  // ritmo horizontal de la barra no se mueve. Los largos ya pasaban de 24px.
   .mol-nav a {
     @include relative();
 
-
+    display: inline-flex;
+    justify-content: center;
+    min-width: var(--semantic-size-target-min);
+    padding-block: var(--semantic-space-component-2xs);
     text-decoration: none;
   }
 
+  // El subrayado se mide desde la caja de padding, así que sin compensar caería
+  // 6px más abajo de donde estaba. Se resta el padding para que siga a la misma
+  // distancia óptica del texto que antes de este cambio.
   .mol-nav a::after {
-    @include absolute($right: 100%, $bottom: -0.3rem, $left: 0);
+    @include absolute(
+      $right: 100%,
+      $bottom: calc(var(--semantic-space-component-2xs) - 0.3rem),
+      $left: 0
+    );
 
     content: "";
 

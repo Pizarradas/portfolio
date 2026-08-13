@@ -5,7 +5,7 @@
   .org-illustration-showcase {
     display: grid;
     gap: 2rem;
-    padding: clamp(4rem,8vw,8rem) var(--semantic-space-page-inline);
+    padding: var(--semantic-space-section) var(--semantic-space-page-inline);
     background: #fff;
     border-bottom: 1px solid var(--ill-line);
   }
@@ -69,7 +69,7 @@
   .org-illustration-case__statement {
     display: grid;
     gap: 1rem;
-    padding: clamp(4rem,8vw,8rem) var(--semantic-space-page-inline);
+    padding: var(--semantic-space-section) var(--semantic-space-page-inline);
     background: var(--semantic-color-primary);
     color: #fff;
   }
@@ -110,7 +110,7 @@
   .org-illustration-case__system {
     display: grid;
     gap: 2rem;
-    padding: clamp(4rem,8vw,8rem) var(--semantic-space-page-inline);
+    padding: var(--semantic-space-section) var(--semantic-space-page-inline);
     background: var(--ill-paper);
   }
 
@@ -121,7 +121,7 @@
   }
 
   .org-illustration-case__closing {
-    padding: clamp(4rem,8vw,8rem) var(--semantic-space-page-inline);
+    padding: var(--semantic-space-section) var(--semantic-space-page-inline);
     background: #08101f;
     color: #fff;
   }

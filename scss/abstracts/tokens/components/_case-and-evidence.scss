@@ -24,6 +24,18 @@
     // Escala del armazón de página. Es la base móvil; se amplía más abajo.
     --semantic-space-shell-inline: 1rem;
     --semantic-space-shell-block: 3.5rem;
+
+    // Escala de las páginas de caso. Hasta ahora solo existían dentro de
+    // `min-width:768px` (las dos primeras) y de `min-width:1200px` (la
+    // tercera): por debajo de ese ancho eran tokens sin declarar, y un
+    // `var()` sin declarar no da error — invalida la declaración entera y la
+    // propiedad cae a su valor inicial en silencio. Los dieciséis usos que hay
+    // hoy están todos dentro de esas guardas, así que no había nada roto; esta
+    // base es para que siga sin haberlo cuando alguien escriba el decimoséptimo.
+    // Los valores replican el armazón móvil, que es el que les corresponde.
+    --semantic-space-case-inline: var(--semantic-space-shell-inline);
+    --semantic-space-case-block: var(--semantic-space-shell-block);
+    --semantic-width-case-max: none;
     --semantic-font-size-hero-compact: clamp(2.55rem, 12.5vw, 3.45rem);
     --semantic-font-size-section-compact: clamp(2.1rem, 10vw, 3rem);
 

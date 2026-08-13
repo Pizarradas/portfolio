@@ -94,6 +94,12 @@
 
     --semantic-width-compact: var(--primitive-width-sm);
 
+    // Suelo de objetivo táctil. NO es un escalón de la escala de espaciado y
+    // no debe buscarse en `scss/PROPORTIONS.md`: son los 24 CSS px que exige
+    // WCAG 2.2 SC 2.5.8 (Target Size, Minimum). La accesibilidad es la
+    // prioridad 2 y las proporciones la 5, así que aquí manda la norma.
+    --semantic-size-target-min: 1.5rem;
+
     // Measures. Apply to the element that sets the font-size, never to a wrapper.
     --semantic-measure-display: var(--primitive-measure-display);
     --semantic-measure-lede: var(--primitive-measure-lede);

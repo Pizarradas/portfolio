@@ -465,7 +465,7 @@
 
   // map-live-v30.css
   .org-map-live-case-v30 {
-    padding: clamp(4rem, 8vw, 8rem) var(--semantic-space-page-inline);
+    padding: var(--semantic-space-section) var(--semantic-space-page-inline);
     border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
     background: #fff;
   }
