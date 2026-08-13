@@ -61,10 +61,28 @@
     content: none;
   }
 
+  // La banda que abre una sección, en la home y en un caso.
+  //
+  // Eran dos moléculas: esta y `.mol-case-intro`, con el mismo marcado —una
+  // etiqueta, un h2 y una entradilla—, la misma retícula de tres columnas y la
+  // misma intención declarada en sus dos comentarios. Sus titulares ya medían
+  // casi lo mismo por dos rutas distintas: `title-lg` topa en 49,2px y
+  // `section-compact` en 48px.
+  //
+  // Y esta llevaba cinco declaraciones en conflicto. La base —tres columnas y
+  // `title-lg` por token— era código muerto: la pisaba una segunda declaración
+  // base en este mismo fichero y capa, y luego tres media queries con clamps en
+  // crudo. El tamaño que se servía de verdad era `clamp(3.5rem,4.8vw,5.8rem)`,
+  // 92,8px a partir de 1200px, prácticamente el titular de una portada de caso.
+  //
+  // Ahora hay una declaración base, mobile-first, y las media queries solo
+  // cambian la retícula. El cuerpo del titular sale de la escala en todos los
+  // anchos. La única excepción es `.syx-bleed`, cuyo tamaño sí está razonado en
+  // su propio comentario contra el hero de la home y se queda como está.
   .mol-section-heading {
     display: grid;
-    grid-template-columns: minmax(2rem, 7rem) minmax(0, 1fr) minmax(16rem, 28rem);
-    gap: var(--semantic-space-component-lg);
+    grid-template-columns: 1fr;
+    gap: var(--semantic-space-component-sm);
     align-items: start;
     padding-top: var(--semantic-space-component-md);
     margin-bottom: var(--semantic-space-block);
@@ -75,8 +93,23 @@
     font-size: var(--semantic-font-size-title-lg);
   }
 
-  .mol-section-heading p:last-child {
+  // La medida venía de `.mol-case-intro`, que sí la topaba: sin ella la
+  // entradilla de la tercera columna se estira hasta donde llegue la pista.
+  .mol-section-heading > p:last-child {
+    max-width: var(--semantic-measure-lede);
     color: var(--semantic-color-text-secondary);
+  }
+
+  // Variante de línea base, de `.mol-case-intro--baseline`. Alinea el titular y
+  // la entradilla contra el mismo suelo antes de una figura ancha. Se conserva
+  // porque es una decisión de composición, no una copia.
+  .mol-section-heading--baseline {
+    align-items: end;
+  }
+
+  // La galería de código pone el hueco con el `gap` de su propia retícula.
+  .org-code-gallery .mol-section-heading {
+    margin-bottom: 0;
   }
 
   .mol-project-card {
@@ -2054,14 +2087,7 @@
     gap: .35rem;
   }
 
-  .mol-section-heading {
-    grid-template-columns: 1fr;
-    gap: .75rem;
-    margin-bottom: 2rem;
-    padding-top: .85rem;
-  }
-
-  .mol-section-heading h2 {
-    font-size: var(--semantic-font-size-section-compact);
-  }
+  // La segunda declaración base de `.mol-section-heading` estaba aquí, en la
+  // misma capa y más abajo en el mismo fichero, así que ganaba a la de arriba y
+  // la dejaba muerta. Sus cuatro valores están ya en la declaración única.
 }

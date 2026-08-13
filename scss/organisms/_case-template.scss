@@ -27,12 +27,36 @@
   // `BRAND.md` §1 dice que un caso responde cinco preguntas en orden. La página
   // tenía diecisiete afirmaciones seguidas, todas del mismo peso, y por eso no
   // se leía como un caso sino como un catálogo. El capítulo es la pregunta,
-  // dicha en voz alta, y es lo único de la página que se permite el tamaño
-  // `section`: por debajo de él todos los titulares son `section-compact`.
+  // dicha en voz alta.
   //
-  // Registro `read`: es una pregunta, no una superficie de datos.
+  // El marcador tenía dos problemas de escala, y el segundo era el de verdad.
+  //
+  // El primero: ocupaba un tercio de la ventana para cuatro palabras, con 128px
+  // de padding arriba y un h2 a `section` —los mismos 96px que el titular de la
+  // portada—. Un divisor interno no puede medir lo que mide el título de la
+  // página. Baja a `title-lg`, y lo que lo mantiene siendo un corte de acto es
+  // lo que ya era distinto: la regla negra gruesa y el índice «Act 01». Mismo
+  // criterio que `.org-case-opener--flagship`.
+  //
+  // El segundo: corría en registro `read` —62rem, centrado— mientras los actos
+  // que separa corren en `survey` —112rem—. Son dos ejes verticales distintos, y
+  // a 1792px se separan unos 400px: el capítulo aparecía flotando en el centro
+  // sobre una página alineada a la izquierda. La justificación que había escrita
+  // —«es una pregunta, no una superficie de datos»— explica un ancho de línea,
+  // no un eje: una pregunta puede ser corta y empezar donde empieza todo lo
+  // demás. La longitud la limita ahora la medida, que es su herramienta, y el
+  // eje lo comparte con el resto.
+  //
+  // La medida es `title` —26ch, §6.2—, el escalón entre `display` (16ch, que
+  // partía estos títulos en tres líneas) y `lede` (42ch, que ya no se lee como
+  // titular). En inglés los cinco miden entre 20 y 26 caracteres y caen en una
+  // línea; en español tres de los cinco pasan de 26 —«Lo que costó llevarlo a
+  // producción» son 34— y caen en dos. No es un defecto que haya que compensar
+  // con un ancho mayor: la medida correcta es la misma en los dos idiomas, y un
+  // titular de dos líneas sigue siendo un titular.
   .org-case__chapter {
-    padding-block: var(--semantic-space-section) var(--semantic-space-block);
+    padding-block: var(--semantic-space-section-compact)
+      var(--semantic-space-block);
     border-top: var(--semantic-border-width-strong) solid
       var(--semantic-color-text);
   }
@@ -44,10 +68,10 @@
 
   .org-case__chapter h2 {
     margin: var(--semantic-space-component-sm) 0 0;
-    max-width: var(--semantic-measure-display);
+    max-width: var(--semantic-measure-title);
     font-family: var(--semantic-font-family-display);
     font-weight: var(--semantic-font-weight-display);
-    font-size: var(--semantic-font-size-section);
+    font-size: var(--semantic-font-size-title-lg);
     line-height: var(--semantic-line-height-display);
     letter-spacing: var(--semantic-letter-spacing-display);
   }
@@ -109,6 +133,25 @@
     .org-case__act > .mol-section-heading {
       padding-top: 0;
       border-top: 0;
+    }
+
+    // El capítulo toma la misma retícula que esa molécula: el índice en la
+    // pista de etiqueta y el titular en la columna principal. Con eso los tres
+    // elementos que se ven seguidos en pantalla —«Act 01», «How the system is
+    // built» y «One core. Multiple layers…»— dejan de arrancar en tres
+    // verticales distintas y arrancan en dos: la de la etiqueta y la del
+    // titular. Es la misma pista, `--component-heading-label-track`, así que no
+    // hay un número nuevo que mantener.
+    .org-case__chapter {
+      display: grid;
+      grid-template-columns: var(--component-heading-label-track) minmax(0, 1fr);
+      column-gap: var(--semantic-space-block);
+      align-items: start;
+    }
+
+    // En la retícula el hueco lo pone la columna, no el margen.
+    .org-case__chapter h2 {
+      margin-top: 0;
     }
   }
 }

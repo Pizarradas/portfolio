@@ -62,41 +62,22 @@
 <div><dt>Niveles de composición</dt><dd>3</dd></div>
 <div><dt>Modos de IA especializados</dt><dd>13</dd></div>
 </dl>
-</section><section class="org-case__chapter syx-span-read">
+</section><section class="org-case__chapter syx-span-survey">
 <p class="atom-index">Acto 01</p>
 <h2>Cómo está construido el sistema</h2>
 </section>
 <section aria-labelledby="architecture-atlas-title" class="org-case__act syx-span-survey org-architecture-atlas js-reveal">
-<div class="mol-case-intro">
+<div class="mol-section-heading">
 <p class="atom-eyebrow">La arquitectura de un vistazo</p>
 <h2 id="architecture-atlas-title">Un único núcleo. Varias capas de composición y entrega.</h2>
 <p>42DS se entiende mejor como un sistema de relaciones: los fundamentos alimentan los componentes reutilizables, la configuración de marca cambia la expresión y los destinos de producción consumen la misma lógica compartida.</p>
 </div>
-<div aria-label="Diagrama de la arquitectura de 42DS, desde los fundamentos hasta la composición de componentes, la configuración de marca y los destinos de producción." class="mol-system-map" role="img">
-<div class="mol-system-map__rail mol-system-map__rail--foundations">
-<span class="atom-system-node atom-system-node--primary"><small>01 / Núcleo</small><b>Fundamentos</b><em>variables · mapas · mixins · funciones</em></span>
-<i aria-hidden="true"></i>
+<!-- architecture:start -->
+<div class="mol-arch-map">
+<svg class="mol-arch-map__svg mol-arch-map__svg--wide" viewBox="0 0 719 563" role="img" aria-label="Diagrama de la arquitectura de 42DS, desde los fundamentos hasta la composición de componentes, la configuración de marca y los destinos de producción." preserveAspectRatio="xMidYMin meet"><g class="mol-arch-map__edges"><path class="atom-arch-edge" style="--edge-length:53" d="M359.5 111 L359.5 164"/><path class="atom-arch-edge" style="--edge-length:236" d="M359.5 265 L359.5 275 L176.5 275 L176.5 318"/><path class="atom-arch-edge" style="--edge-length:236" d="M359.5 265 L359.5 275 L542.5 275 L542.5 318"/><path class="atom-arch-edge" style="--edge-length:145" d="M176.5 419 L176.5 429 L85 429 L85 472"/><path class="atom-arch-edge" style="--edge-length:511" d="M542.5 419 L542.5 429 L85 429 L85 472"/><path class="atom-arch-edge" style="--edge-length:145" d="M176.5 419 L176.5 429 L268 429 L268 472"/><path class="atom-arch-edge" style="--edge-length:328" d="M542.5 419 L542.5 429 L268 429 L268 472"/><path class="atom-arch-edge" style="--edge-length:328" d="M176.5 419 L176.5 429 L451 429 L451 472"/><path class="atom-arch-edge" style="--edge-length:145" d="M542.5 419 L542.5 429 L451 429 L451 472"/><path class="atom-arch-edge" style="--edge-length:511" d="M176.5 419 L176.5 429 L634 429 L634 472"/><path class="atom-arch-edge" style="--edge-length:145" d="M542.5 419 L542.5 429 L634 429 L634 472"/></g><g class="mol-arch-map__nodes"><g class="atom-arch-node atom-arch-node--primary"><rect class="atom-arch-node__box" x="10" y="10" width="699" height="101" rx="2"/><text class="atom-arch-node__index" font-size="10.2" x="29" y="39.2">01 / Núcleo</text><text class="atom-arch-node__label" font-size="22.8" x="29" y="71.3">Fundamentos</text><text class="atom-arch-node__detail" font-size="12" x="29" y="91.9">variables · mapas · mixins · funciones</text></g><g class="atom-arch-node"><rect class="atom-arch-node__box" x="10" y="164" width="699" height="101" rx="2"/><text class="atom-arch-node__index" font-size="10.2" x="29" y="193.2">02 / Reglas</text><text class="atom-arch-node__label" font-size="22.8" x="29" y="225.3">Base</text><text class="atom-arch-node__detail" font-size="12" x="29" y="245.9">reset · tipografía · helpers</text></g><g class="atom-arch-node"><rect class="atom-arch-node__box" x="10" y="318" width="333" height="101" rx="2"/><text class="atom-arch-node__index" font-size="10.2" x="29" y="347.2">03A / Contexto</text><text class="atom-arch-node__label" font-size="22.8" x="29" y="379.3">Configuración de marca</text><text class="atom-arch-node__detail" font-size="12" x="29" y="399.9">color · tipografía · identidad</text></g><g class="atom-arch-node"><rect class="atom-arch-node__box" x="376" y="318" width="333" height="101" rx="2"/><text class="atom-arch-node__index" font-size="10.2" x="395" y="347.2">03B / Composición</text><text class="atom-arch-node__label" font-size="22.8" x="395" y="379.3">Componentes</text><text class="atom-arch-node__detail" font-size="12" x="395" y="399.9">átomos · moléculas · organismos</text></g><g class="atom-arch-node atom-arch-node--target"><rect class="atom-arch-node__box" x="10" y="472" width="150" height="81" rx="2"/><text class="atom-arch-node__index" font-size="10.2" x="29" y="501.2">04 / Entrega</text><text class="atom-arch-node__label" font-size="22.8" x="29" y="533.3">HTML5</text></g><g class="atom-arch-node atom-arch-node--target"><rect class="atom-arch-node__box" x="193" y="472" width="150" height="81" rx="2"/><text class="atom-arch-node__index" font-size="10.2" x="212" y="501.2">04 / Entrega</text><text class="atom-arch-node__label" font-size="22.8" x="212" y="533.3">AMP</text></g><g class="atom-arch-node atom-arch-node--target"><rect class="atom-arch-node__box" x="376" y="472" width="150" height="81" rx="2"/><text class="atom-arch-node__index" font-size="10.2" x="395" y="501.2">04 / Entrega</text><text class="atom-arch-node__label" font-size="22.8" x="395" y="533.3">Piano</text></g><g class="atom-arch-node atom-arch-node--target"><rect class="atom-arch-node__box" x="559" y="472" width="150" height="81" rx="2"/><text class="atom-arch-node__index" font-size="10.2" x="578" y="501.2">04 / Entrega</text><text class="atom-arch-node__label" font-size="22.8" x="578" y="533.3">Legacy</text></g></g></svg>
+<svg class="mol-arch-map__svg mol-arch-map__svg--narrow" viewBox="0 0 363 982" role="img" aria-label="Diagrama de la arquitectura de 42DS, desde los fundamentos hasta la composición de componentes, la configuración de marca y los destinos de producción." preserveAspectRatio="xMidYMin meet"><g class="mol-arch-map__edges"><path class="atom-arch-edge" style="--edge-length:34" d="M181.5 109 L181.5 143"/><path class="atom-arch-edge" style="--edge-length:34" d="M181.5 244 L181.5 278"/><path class="atom-arch-edge" style="--edge-length:34" d="M181.5 379 L181.5 413"/><path class="atom-arch-edge" style="--edge-length:34" d="M181.5 514 L181.5 548"/><path class="atom-arch-edge" style="--edge-length:34" d="M181.5 629 L181.5 663"/><path class="atom-arch-edge" style="--edge-length:34" d="M181.5 744 L181.5 778"/><path class="atom-arch-edge" style="--edge-length:34" d="M181.5 859 L181.5 893"/></g><g class="mol-arch-map__nodes"><g class="atom-arch-node atom-arch-node--primary"><rect class="atom-arch-node__box" x="8" y="8" width="347" height="101" rx="2"/><text class="atom-arch-node__index" font-size="10.2" x="27" y="37.2">01 / Núcleo</text><text class="atom-arch-node__label" font-size="22.8" x="27" y="69.3">Fundamentos</text><text class="atom-arch-node__detail" font-size="12" x="27" y="89.9">variables · mapas · mixins · funciones</text></g><g class="atom-arch-node"><rect class="atom-arch-node__box" x="8" y="143" width="347" height="101" rx="2"/><text class="atom-arch-node__index" font-size="10.2" x="27" y="172.2">02 / Reglas</text><text class="atom-arch-node__label" font-size="22.8" x="27" y="204.3">Base</text><text class="atom-arch-node__detail" font-size="12" x="27" y="224.9">reset · tipografía · helpers</text></g><g class="atom-arch-node"><rect class="atom-arch-node__box" x="8" y="278" width="347" height="101" rx="2"/><text class="atom-arch-node__index" font-size="10.2" x="27" y="307.2">03A / Contexto</text><text class="atom-arch-node__label" font-size="22.8" x="27" y="339.3">Configuración de marca</text><text class="atom-arch-node__detail" font-size="12" x="27" y="359.9">color · tipografía · identidad</text></g><g class="atom-arch-node"><rect class="atom-arch-node__box" x="8" y="413" width="347" height="101" rx="2"/><text class="atom-arch-node__index" font-size="10.2" x="27" y="442.2">03B / Composición</text><text class="atom-arch-node__label" font-size="22.8" x="27" y="474.3">Componentes</text><text class="atom-arch-node__detail" font-size="12" x="27" y="494.9">átomos · moléculas · organismos</text></g><g class="atom-arch-node atom-arch-node--target"><rect class="atom-arch-node__box" x="8" y="548" width="347" height="81" rx="2"/><text class="atom-arch-node__index" font-size="10.2" x="27" y="577.2">04 / Entrega</text><text class="atom-arch-node__label" font-size="22.8" x="27" y="609.3">HTML5</text></g><g class="atom-arch-node atom-arch-node--target"><rect class="atom-arch-node__box" x="8" y="663" width="347" height="81" rx="2"/><text class="atom-arch-node__index" font-size="10.2" x="27" y="692.2">04 / Entrega</text><text class="atom-arch-node__label" font-size="22.8" x="27" y="724.3">AMP</text></g><g class="atom-arch-node atom-arch-node--target"><rect class="atom-arch-node__box" x="8" y="778" width="347" height="81" rx="2"/><text class="atom-arch-node__index" font-size="10.2" x="27" y="807.2">04 / Entrega</text><text class="atom-arch-node__label" font-size="22.8" x="27" y="839.3">Piano</text></g><g class="atom-arch-node atom-arch-node--target"><rect class="atom-arch-node__box" x="8" y="893" width="347" height="81" rx="2"/><text class="atom-arch-node__index" font-size="10.2" x="27" y="922.2">04 / Entrega</text><text class="atom-arch-node__label" font-size="22.8" x="27" y="954.3">Legacy</text></g></g></svg>
 </div>
-<div class="mol-system-map__rail mol-system-map__rail--base">
-<span class="atom-system-node"><small>02 / Reglas</small><b>Base</b><em>reset · tipografía · helpers</em></span>
-<i aria-hidden="true"></i>
-</div>
-<div class="mol-system-map__split">
-<div>
-<span class="atom-system-node"><small>03A / Contexto</small><b>Configuración de marca</b><em>color · tipografía · identidad</em></span>
-</div>
-<div>
-<span class="atom-system-node"><small>03B / Composición</small><b>Componentes</b><em>átomos · moléculas · organismos</em></span>
-</div>
-</div>
-<div aria-hidden="true" class="mol-system-map__connector"><i></i><i></i><i></i></div>
-<div class="mol-system-map__targets">
-<span class="atom-system-node atom-system-node--target"><small>04 / Entrega</small><b>HTML5</b></span>
-<span class="atom-system-node atom-system-node--target"><small>04 / Entrega</small><b>AMP</b></span>
-<span class="atom-system-node atom-system-node--target"><small>04 / Entrega</small><b>Piano</b></span>
-<span class="atom-system-node atom-system-node--target"><small>04 / Entrega</small><b>Legacy</b></span>
-</div>
-</div>
+<!-- architecture:end -->
 </section><section aria-labelledby="hierarchy-title" class="org-case__act syx-span-survey org-hierarchy-diagram js-reveal">
 <div class="org-hierarchy-diagram__copy">
 <p class="atom-eyebrow">Jerarquía de composición</p>
@@ -111,7 +92,7 @@
 <div class="mol-hierarchy-pyramid__row mol-hierarchy-pyramid__row--1"><span><small>Núcleo</small><b>Fundamentos</b></span></div>
 </div>
 </section><section aria-labelledby="operating-title" class="org-case__act syx-span-survey org-operating-model js-reveal">
-<div class="mol-case-intro">
+<div class="mol-section-heading">
 <p class="atom-eyebrow">Modelo operativo</p>
 <h2 id="operating-title">El mismo sistema conecta diseño, código, entrega e IA.</h2>
 </div>
@@ -128,7 +109,7 @@
 </svg>
 </div>
 </section>
-<section class="org-case__chapter syx-span-read">
+<section class="org-case__chapter syx-span-survey">
 <p class="atom-index">Acto 02</p>
 <h2>Lo que había que decidir</h2>
 </section>
@@ -149,12 +130,12 @@
 <p class="mol-case42-caption">Primero los fundamentos compartidos. La configuración de marca y la composición de componentes van encima.</p>
 </div>
 </section>
-<section class="org-case__chapter syx-span-read">
+<section class="org-case__chapter syx-span-survey">
 <p class="atom-index">Acto 03</p>
 <h2>El sistema en producción</h2>
 </section>
 <section aria-labelledby="code-gallery-title" class="org-case__act syx-span-survey org-code-gallery js-reveal">
-<div class="mol-case-intro mol-case-intro--baseline">
+<div class="mol-section-heading mol-section-heading--baseline">
 <p class="atom-eyebrow">Fundamentos de diseño · reconstruidos en código</p>
 <h2 id="code-gallery-title">Enseñar el sistema, no la portada de Figma.</h2>
 <p>En lugar de mostrar miniaturas de archivos, el portfolio reconstruye las decisiones de diseño subyacentes como piezas front-end en vivo: tokens, controles, formularios y navegación.</p>
@@ -219,7 +200,7 @@
 </div>
 </article>
 </section><section aria-labelledby="foundation-showcase-title" class="org-case__band syx-span-survey org-foundation-showcase js-reveal">
-<div class="mol-case-intro mol-case-intro--baseline">
+<div class="mol-section-heading mol-section-heading--baseline">
 <p class="atom-eyebrow">Fundamentos · sistema en vivo</p>
 <h2 id="foundation-showcase-title">Los tokens definen la identidad. La rejilla define el ritmo.</h2>
 <p>Estas piezas están reconstruidas a partir de la arquitectura SCSS de 42DS: custom properties de CSS para el contexto de marca y una rejilla responsive de 12 columnas con breakpoints y reglas de espaciado reales.</p>
@@ -348,7 +329,7 @@
 </div>
 </section>
 <section aria-labelledby="header-system-title" class="org-case__act syx-span-showcase org-header-system js-reveal">
-<div class="mol-case-intro mol-case-intro--baseline">
+<div class="mol-section-heading mol-section-heading--baseline">
 <p class="atom-eyebrow">Caso de uso · cabeceras</p>
 <h2 id="header-system-title">Una estructura. Muchas identidades.</h2>
 <p>La cabecera fue una prueba de esfuerzo exigente: una única arquitectura de información y estructura semántica, y después la expresión de marca a través de logos, tipografía, color y variantes seleccionadas.</p>
@@ -386,7 +367,7 @@
 <span><b>WCAG 2.1 AA</b><small>implementadas, no aspiracionales</small></span>
 </div>
 </section>
-<section class="org-case__chapter syx-span-read">
+<section class="org-case__chapter syx-span-survey">
 <p class="atom-index">Acto 04</p>
 <h2>Lo que costó llevarlo a producción</h2>
 </section>
@@ -404,7 +385,7 @@
 <p>Un componente no estaba terminado cuando se veía bien en Figma. También necesitaba una implementación canónica, documentación y un camino claro hacia Vue.</p>
 </div>
 </section>
-<section class="org-case__chapter syx-span-read">
+<section class="org-case__chapter syx-span-survey">
 <p class="atom-index">Acto 05</p>
 <h2>Y luego lo tuvo que leer la IA</h2>
 </section>

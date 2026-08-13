@@ -80,64 +80,79 @@
     background: var(--semantic-color-primary);
   }
 
-  .atom-system-node {
-    @include relative();
-    display: flex;
-    flex-direction: column;
-    gap: .35rem;
-    padding: 1rem 1.1rem;
-    border: 1px solid var(--semantic-color-border);
-    background: #fff;
-    min-height: 6.4rem;
-    justify-content: flex-end;
+  // Los nodos y las aristas del diagrama de arquitectura, dibujados en SVG por
+  // `scripts/build-architecture.mjs`.
+  //
+  // Aquí solo hay color, familia y peso. La geometría —posición, tamaño de caja,
+  // cuerpo de letra— la calcula el generador y viaja en atributos del SVG: dentro
+  // de un `viewBox` una longitud es una unidad del dibujo, no de la página, así
+  // que un token en `rem` se resolvería contra la raíz y rompería el escalado.
+  // Y el ancho de cada caja sale del cuerpo de su texto, de modo que pisarlo
+  // desde CSS sacaría el texto del rectángulo.
+  //
+  // Ningún hex: es el mismo criterio de `js/hero-field.js`, que lee el contexto
+  // en el que está y no lleva un solo color literal.
+  .atom-arch-node__box {
+    fill: var(--semantic-color-surface);
+    stroke: var(--semantic-color-border);
+    stroke-width: 1;
   }
 
-  .atom-system-node small {
-    font: 600 .56rem/1 var(--semantic-font-family-ui);
-    letter-spacing: .12em;
+  .atom-arch-node__index {
+    font-family: var(--semantic-font-family-ui);
+    font-weight: var(--semantic-font-weight-emphasis);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
-    color: var(--semantic-color-text-muted);
+    fill: var(--semantic-color-text-muted);
   }
 
-  .atom-system-node b {
-    font: 600 clamp(1rem,1.8vw,1.45rem)/1 var(--semantic-font-family-display);
-    letter-spacing: -.035em;
+  .atom-arch-node__label {
+    font-family: var(--semantic-font-family-display);
+    font-weight: var(--semantic-font-weight-emphasis);
+    letter-spacing: var(--semantic-letter-spacing-display);
+    fill: var(--semantic-color-text);
   }
 
-  .atom-system-node em {
-    font: 400 .66rem/1.3 var(--semantic-font-family-ui);
-    font-style: normal;
-    color: var(--semantic-color-text-secondary);
+  .atom-arch-node__detail {
+    font-family: var(--semantic-font-family-ui);
+    fill: var(--semantic-color-text-secondary);
   }
 
-  .atom-system-node--primary {
-    background: var(--semantic-color-primary);
-    color: #fff;
-    border-color: var(--semantic-color-primary);
+  // El núcleo. Es el único nodo del que cuelga todo lo demás, así que es el
+  // único que va en el color de marca.
+  .atom-arch-node--primary .atom-arch-node__box {
+    fill: var(--semantic-color-primary);
+    stroke: var(--semantic-color-primary);
   }
 
-  .atom-system-node--primary small {
-    color: rgba(255,255,255,.7);
+  .atom-arch-node--primary .atom-arch-node__label {
+    fill: var(--semantic-color-on-primary);
   }
 
-  .atom-system-node--primary em {
-    color: rgba(255,255,255,.7);
+  // El índice y el detalle bajan de intensidad sobre el azul, pero no tanto como
+  // para dejar de leerse. A .72 el contraste calculado contra el azul de marca
+  // era 4,17:1 y a este cuerpo —unos 13 y 15px renderizados— no califica como
+  // texto grande, así que fallaba el 4,5:1 de AA. A .78 son 4,65:1.
+  //
+  // Aquí la opacidad sí es calculable, a diferencia del caso que hizo retirarla
+  // de `.mol-case-facts dt`: lo que hay detrás no es «lo que toque», es siempre
+  // el relleno de este mismo nodo.
+  .atom-arch-node--primary .atom-arch-node__index,
+  .atom-arch-node--primary .atom-arch-node__detail {
+    fill: var(--semantic-color-on-primary);
+    fill-opacity: .78;
   }
 
-  .atom-system-node--target {
-    min-height: 5.2rem;
-    background: var(--semantic-color-surface);
+  // Los destinos de producción son consumidores, no capas del sistema: se
+  // diferencian por superficie, no por color.
+  .atom-arch-node--target .atom-arch-node__box {
+    fill: var(--semantic-color-surface-alt);
   }
 
-}
-@layer syx.utilities {
-  @include reduced-motion {
-    .atom-system-node {
-      animation: none;
-      @include transition(none);
-      opacity: 1;
-    }
-
+  .atom-arch-edge {
+    fill: none;
+    stroke: var(--semantic-color-border-strong);
+    stroke-width: 1.5;
   }
 }
 @layer syx.atoms {

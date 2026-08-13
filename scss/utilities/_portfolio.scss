@@ -239,8 +239,11 @@
     .mol-section-heading.syx-bleed {
       // The index track is fixed, so every section title on the page starts on
       // the same vertical — an auto track would put "Work" and "Self-directed"
-      // at two different left edges.
-      grid-template-columns: 10rem minmax(0, 1fr) auto;
+      // at two different left edges. El 10rem que se investigó aquí es ahora
+      // `--component-heading-label-track`, el que usa la molécula en todos los
+      // anchos.
+      grid-template-columns: var(--component-heading-label-track)
+        minmax(0, 1fr) auto;
       column-gap: var(--semantic-space-block);
       padding-block: var(--primitive-space-2xl) var(--primitive-space-3xl);
     }
@@ -399,16 +402,10 @@
     }
   }
 
-  @include until($bp-md) {
-    // Stack outright. A 2rem index column was fine when the index was "01";
-    // now that it reads "Work" or "Self-directed" it rendered one letter per
-    // line. This lives in the utilities layer, so it beat the molecule rule
-    // that already said 1fr regardless of stylesheet order.
-    .mol-section-heading {
-      grid-template-columns: 1fr;
-      gap: var(--primitive-space-sm);
-    }
-  }
+  // El apilado de móvil estaba aquí, forzando `1fr` desde la capa de utilidades
+  // para ganarle a una regla de molécula que ya decía `1fr`. Ahora la molécula
+  // es mobile-first y una columna es su estado base, así que no hay nada que
+  // revertir a este ancho.
 
   @include until($bp-sm) {
     // Esta capa es la dueña del gap de la nav por debajo de 480px: gana a
@@ -520,41 +517,25 @@
 
   }
 
-  @media (min-width:768px) and (max-width:1199px) {
+  // Las tres columnas, con una sola pista de etiqueta para toda la página.
+  //
+  // Había dos juegos —3.5rem/1.2fr/.8fr y 4rem/1.2fr/.65fr— con dos gaps en
+  // crudo y dos clamps de titular. De ahí salían los 92,8px de tope. El tamaño
+  // ya no se declara aquí: lo pone la molécula, desde la escala, y estas reglas
+  // se ocupan solo de la retícula, que es lo único que depende del ancho.
+  @include from($bp-md) {
     .mol-section-heading {
-      grid-template-columns: 3.5rem minmax(0,1.2fr) minmax(16rem,.8fr);
-      gap: 1.5rem;
-      align-items: start;
+      grid-template-columns: var(--component-heading-label-track)
+        minmax(0, 1fr) minmax(16rem, 28rem);
+      column-gap: var(--semantic-space-block);
+      row-gap: var(--semantic-space-component-lg);
     }
-
-    .mol-section-heading p:last-child {
-      grid-column: auto;
-    }
-
-    .mol-section-heading h2 {
-      font-size: clamp(2.8rem,5vw,4.5rem);
-    }
-
   }
-  @media (min-width:1200px) {
+
+  @media (min-width: 1200px) {
     .mol-section-heading {
-      grid-template-columns: 4rem minmax(0,1.2fr) minmax(20rem,.65fr);
-      gap: 2rem;
-      align-items: start;
-      margin-bottom: clamp(3rem,5vw,5rem);
+      margin-bottom: var(--semantic-space-section-compact);
     }
-
-    .mol-section-heading p:last-child {
-      grid-column: auto;
-      font-size: 1rem;
-      line-height: 1.55;
-    }
-
-    .mol-section-heading h2 {
-      font-size: clamp(3.5rem,4.8vw,5.8rem);
-      line-height: .94;
-    }
-
   }
 
   @media (min-width:1200px) {

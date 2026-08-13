@@ -149,6 +149,16 @@
     --component-media-label-bg: color-mix(in srgb,var(--semantic-color-surface) 94%,transparent);
     --component-media-label-color: var(--semantic-color-text);
     --component-rule-color: var(--semantic-color-border);
+    // La pista de la etiqueta en `.mol-section-heading`. Fija y no `auto`:
+    // con una pista automática «Work» y «Self-directed» arrancan en dos
+    // verticales distintas y la página pierde su margen izquierdo.
+    //
+    // 10rem es el valor que ya había investigado la variante `.syx-bleed`: a
+    // 4rem «Self-directed» se partía en dos líneas dentro del margen. Las otras
+    // declaraciones de esta molécula usaban 2–7rem, 3.5rem y 4rem, cada una con
+    // su propia vertical. Ahora hay una sola.
+    --component-heading-label-track: 10rem;
+
     --component-case-max-width: 90rem;
     --component-case-reading-width: 46rem;
     --component-case-gap: clamp(2rem, 5vw, 6rem);

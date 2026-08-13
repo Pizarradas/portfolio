@@ -114,6 +114,36 @@
   }
 }
 
+// El diagrama de arquitectura.
+//
+// El marcado lo genera `scripts/build-architecture.mjs` a partir del grafo que
+// declara ese fichero, y llega a la página como SVG plano. Aquí solo se decide
+// cuál de los dos renderizados se ve.
+//
+// Son dos porque un mismo dibujo no sirve para los dos anchos: el ancho mide 732
+// unidades y a 360px de ventana quedaría escalado a 0,49, con el texto a 5px.
+// El estrecho es el mismo grafo leído en línea, 252 unidades, que a esa ventana
+// se ve a tamaño natural.
+@layer syx.molecules {
+  .mol-arch-map__svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  // Móvil primero: el que se ve es el lineal, y no se estira hasta el ancho de
+  // la ventana porque una columna de cajas a 700px de ancho no es un diagrama,
+  // es una lista con bordes.
+  .mol-arch-map__svg--wide {
+    display: none;
+  }
+
+  .mol-arch-map__svg--narrow {
+    max-width: 20rem;
+    margin-inline: auto;
+  }
+}
+
 @layer syx.utilities {
   // Tres pasos, tres columnas: la forma de la retícula dice lo mismo que dice el
   // texto. Por debajo de tablet es una columna, y ahí el `<ol>` numerado es lo
@@ -123,6 +153,14 @@
     .mol-case-metrics {
       grid-template-columns: repeat(3, 1fr);
       gap: var(--semantic-space-block);
+    }
+
+    .mol-arch-map__svg--wide {
+      display: block;
+    }
+
+    .mol-arch-map__svg--narrow {
+      display: none;
     }
   }
 }
