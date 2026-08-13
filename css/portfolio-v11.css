@@ -1,4 +1,0 @@
-/* .atom-text-link removed: it is defined once, in scss/atoms/_portfolio.scss. */
-@layer syx.organisms {
-  .org-new-work{padding:var(--semantic-space-section) var(--semantic-space-page-inline);border-bottom:1px solid var(--semantic-color-border)}
-}
