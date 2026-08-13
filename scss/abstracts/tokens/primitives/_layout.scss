@@ -48,6 +48,11 @@
     // inherited size, which is what collapsed the manifesto quote into a
     // one-character-wide column.
     --primitive-measure-display: 16ch;
+    // El escalón intermedio que `scss/PROPORTIONS.md` §6.2 dejaba reservado
+    // entre `display` (16ch) y `lede` (42ch): 16 × φ = 25.9. Lo pide la portada
+    // de un caso interior, cuyo titular es una frase entera y no una palabra —
+    // a 16ch se parte en seis líneas, a 42ch deja de leerse como titular.
+    --primitive-measure-title: 26ch;
     --primitive-measure-lede: 42ch;
     --primitive-measure-prose: 66ch;
 

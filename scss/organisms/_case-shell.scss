@@ -22,7 +22,12 @@
   .mol-case-facts dd {
     margin: 0;
     font-size: var(--semantic-font-size-ui);
-    line-height: var(--semantic-line-height-normal);
+    // Era `--semantic-line-height-normal`, que no está declarado en ninguna
+    // parte: un `var()` sin declarar invalida la declaración entera y la
+    // propiedad cae a su valor inicial en silencio, así que estos `dd` llevaban
+    // el interlineado por defecto del navegador desde siempre. El rol que
+    // corresponde a un dato de ficha es `ui`.
+    line-height: var(--semantic-line-height-ui);
   }
 
 }
@@ -287,46 +292,5 @@
 
   }
 }
-@layer syx.organisms {
-  .org-case-hero {
-    max-width: var(--component-case-max-width);
-    margin-inline: auto;
-    padding: 4.25rem var(--semantic-space-shell-inline) 2.5rem;
-  }
-
-  .org-case-hero h1 {
-    font-family: var(--component-hero-title-font-family);
-    font-weight: var(--component-hero-title-font-weight);
-    line-height: .92;
-    letter-spacing: -.055em;
-    max-width: 100%;
-    margin: .55rem 0 1.35rem;
-    font-size: var(--semantic-font-size-hero-compact);
-  }
-
-  .org-case-hero__lede {
-    max-width: 46rem;
-    margin: 0 0 2rem;
-    font-size: 1.05rem;
-    line-height: 1.45;
-  }
-
-}
-@layer syx.utilities {
-  @include from($bp-md) {
-    .org-case-hero {
-      padding: clamp(7rem,13vw,12rem) clamp(1.25rem,4vw,4rem) clamp(3rem,7vw,7rem);
-    }
-
-    .org-case-hero h1 {
-      font-size: clamp(3.5rem,9vw,9rem);
-      max-width: 12ch;
-    }
-
-    .org-case-hero__lede {
-      margin-left: auto;
-      font-size: clamp(1.3rem,2.2vw,2rem);
-    }
-
-  }
-}
+// `.org-case-hero` vivía aquí. Lo sustituye `.org-case-opener`, en
+// `organisms/_case-opener.scss`, que unifica las tres portadas de caso que había.

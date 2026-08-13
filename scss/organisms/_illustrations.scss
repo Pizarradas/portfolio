@@ -48,23 +48,8 @@
   }
 }
 @layer syx.organisms {
-  .org-illustration-case__hero {
-    padding: clamp(5rem,10vw,10rem) var(--semantic-space-page-inline) clamp(3rem,6vw,6rem);
-  }
-
-  .org-illustration-case__hero h1 {
-    font: 600 clamp(3.4rem,10vw,8rem)/.88 var(--semantic-font-family-display);
-    letter-spacing: -.065em;
-    max-width: 12ch;
-    margin: .6rem 0 1.5rem;
-  }
-
-  .org-illustration-case__hero>p:not(.atom-eyebrow) {
-    max-width: 48rem;
-    margin-left: auto;
-    font-size: 1.05rem;
-    line-height: 1.5;
-  }
+  // `.org-illustration-case__hero` vivía aquí. Lo sustituye
+  // `.org-case-opener--visual`, en `organisms/_case-opener.scss`.
 
   .org-illustration-case__statement {
     display: grid;
@@ -165,11 +150,6 @@
 
   }
   @media(min-width:1200px) {
-    .org-illustration-case__hero {
-      padding-left: var(--semantic-pad-content);
-      padding-right: var(--semantic-pad-content);
-    }
-
     .org-illustration-case__statement {
       padding-left: var(--semantic-pad-content);
       padding-right: var(--semantic-pad-content);

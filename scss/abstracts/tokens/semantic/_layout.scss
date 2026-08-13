@@ -107,6 +107,7 @@
 
     // Measures. Apply to the element that sets the font-size, never to a wrapper.
     --semantic-measure-display: var(--primitive-measure-display);
+    --semantic-measure-title: var(--primitive-measure-title);
     --semantic-measure-lede: var(--primitive-measure-lede);
     --semantic-measure-prose: var(--primitive-measure-prose);
 

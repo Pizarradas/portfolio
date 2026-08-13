@@ -1,0 +1,108 @@
+@use "../abstracts/breakpoints" as *;
+@use "../abstracts/mixins" as *;
+
+// Portada de un caso interior.
+//
+// Sustituye a las tres que había —`.org-case42-hero`, `.org-case-hero` y
+// `.org-illustration-case__hero`—, que eran el mismo bloque escrito tres veces:
+// eyebrow, titular, entradilla y ficha de datos, en ese orden, en las seis
+// páginas de caso. Lo que las diferenciaba no era la composición sino los
+// números, y ninguno de los tres juegos salía de la escala:
+//
+//   .org-case42-hero        titular clamp(6rem,8vw,9.5rem)   padding-top 12rem
+//   .org-case-hero          titular clamp(3.5rem,9vw,9rem)   padding-top 12rem
+//   .org-illustration-…     titular clamp(3.4rem,10vw,8rem)  padding-top 10rem
+//
+// El tope de 9.5rem son 152px. El titular de la home son 144px. Una página
+// interior no puede ser más grande que la portada del sitio: la jerarquía entre
+// las dos deja de existir, y es lo que hacía que la portada de un caso pareciera
+// ocupar toda la pantalla sin decir nada más que su título.
+//
+// Aquí hay un solo tamaño para las seis, `section` (40→96px), que es el escalón
+// inmediatamente por debajo del `hero` de la home. Las variantes cambian la
+// composición —el ancho de la caja, el gutter, la marca de caso destacado— pero
+// nunca el cuerpo de letra: es lo que mantiene las seis portadas reconocibles
+// como el mismo sitio.
+
+@layer syx.organisms {
+  .org-case-opener {
+    max-width: var(--component-case-opener-max-width);
+    margin-inline: auto;
+    padding: var(--component-case-opener-pad-block-start)
+      var(--component-case-opener-pad-inline)
+      var(--component-case-opener-pad-block-end);
+  }
+
+  // El eyebrow es la etiqueta del titular, no un bloque aparte: va pegado a él.
+  // El resto del ritmo sigue §5.2 de `PROPORTIONS.md` —el hueco que separa el
+  // texto de la ficha es mayor que los huecos de dentro del texto—, así que la
+  // portada se lee como dos cosas (el argumento y los datos) y no como cuatro
+  // elementos sueltos.
+  .org-case-opener > .atom-eyebrow {
+    margin: 0 0 var(--semantic-space-component-sm);
+  }
+
+  // Del `h1` base solo cambian dos cosas: el cuerpo, que baja un escalón, y la
+  // medida. `display` son 16ch —la medida de una palabra suelta— y el titular de
+  // un caso es una frase entera: a 16ch se parte en seis líneas. `title` son los
+  // 26ch que `PROPORTIONS.md` §6.2 dejaba reservados para justo este hueco.
+  //
+  // El peso se declara porque las tres portadas anteriores lo hacían: el `h1`
+  // base corre a `display` (negra) y estas portadas siempre han ido a `emphasis`.
+  .org-case-opener h1 {
+    max-width: var(--component-case-opener-title-measure);
+    margin: 0 0 var(--semantic-space-component-lg);
+    font-weight: var(--semantic-font-weight-emphasis);
+    font-size: var(--component-case-opener-title-size);
+  }
+
+  // La entradilla vuelve a la izquierda. Dos de las tres portadas la empujaban a
+  // la derecha con `margin-left: auto`, que con un titular ancho no se lee como
+  // composición sino como un párrafo que se ha caído hacia ese lado.
+  .org-case-opener__lede {
+    max-width: var(--semantic-measure-lede);
+    margin: 0 0 var(--semantic-space-block);
+    font-size: var(--component-case-opener-lede-size);
+    line-height: var(--semantic-line-height-title);
+    color: var(--semantic-color-text-muted);
+  }
+
+  // Caso destacado. La diferencia con una portada normal no es que sea más
+  // grande: es que se anuncia. Una regla de acento arriba y el eyebrow en el
+  // color de marca bastan para decirlo, y no mueven ni un número de la escala.
+  .org-case-opener--flagship {
+    border-top: var(--semantic-border-width-strong) solid
+      var(--component-case-opener-accent);
+  }
+
+  .org-case-opener--flagship > .atom-eyebrow {
+    color: var(--component-case-opener-accent);
+  }
+
+  // Caso visual. Su contenido de debajo va a sangre, así que la portada usa el
+  // gutter de página en vez del del armazón y renuncia al tope de ancho: la
+  // primera arista vertical de la página es la misma de arriba abajo.
+  .org-case-opener--visual {
+    max-width: none;
+    padding-inline: var(--semantic-space-page-inline);
+  }
+
+  // A partir de 1200px el resto de la página de ilustraciones se centra sobre el
+  // registro `survey` con `--semantic-pad-content`. La portada lo sigue: si no,
+  // es el único bloque de la página que arranca en otra vertical.
+  @media (min-width: 1200px) {
+    .org-case-opener--visual {
+      padding-inline: var(--semantic-pad-content);
+    }
+  }
+
+  // En móvil la ficha de datos es una lista vertical larga y empuja el contenido
+  // real de la página fuera de la primera pantalla. Sigue ahí —es información
+  // del caso, no decoración— pero con el hueco de arriba reducido a un escalón
+  // de componente en vez de uno de bloque.
+  @include until($bp-md) {
+    .org-case-opener__lede {
+      margin-bottom: var(--semantic-space-component-xl);
+    }
+  }
+}

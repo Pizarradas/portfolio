@@ -39,6 +39,28 @@
     --semantic-font-size-hero-compact: clamp(2.55rem, 12.5vw, 3.45rem);
     --semantic-font-size-section-compact: clamp(2.1rem, 10vw, 3rem);
 
+    // Portada de un caso interior.
+    //
+    // Había tres portadas distintas —`.org-case42-hero`, `.org-case-hero` y
+    // `.org-illustration-case__hero`— con la misma estructura (eyebrow, titular,
+    // entradilla, ficha) y tres juegos de números inventados. El defecto
+    // medible: a 1200px el titular de 42DS pedía `clamp(6rem,8vw,9.5rem)` —152px
+    // de tope— contra los 144px del titular de la home. Una página interior
+    // gritaba más fuerte que la portada del sitio.
+    //
+    // La escala de una portada interior es la de `section` (display-xl,
+    // 40→96px): un escalón por debajo del `hero` de la home, que es exactamente
+    // la relación que hay entre las dos páginas. Ninguna variante la sube; lo
+    // que cambia entre casos es la composición, no el cuerpo de letra.
+    --component-case-opener-max-width: var(--semantic-width-survey);
+    --component-case-opener-pad-block-start: var(--semantic-space-section);
+    --component-case-opener-pad-block-end: var(--semantic-space-section-compact);
+    --component-case-opener-pad-inline: var(--semantic-space-shell-inline);
+    --component-case-opener-title-size: var(--semantic-font-size-section);
+    --component-case-opener-title-measure: var(--semantic-measure-title);
+    --component-case-opener-lede-size: var(--semantic-font-size-lede);
+    --component-case-opener-accent: var(--semantic-color-primary);
+
     // Caso 42DS.
     // El segundo de los tres topes inventados. La portada de un caso es un
     // opener de sección, y los openers de la home corren a `survey`.
