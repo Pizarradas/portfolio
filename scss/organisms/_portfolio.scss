@@ -215,12 +215,18 @@
     margin-top: var(--semantic-space-section-compact);
   }
 
+  // The one section on the page that opened with nothing. Contact has this
+  // border, the footer has it, every section heading has it; About came after
+  // Tools with two section paddings between them and not a single edge, so the
+  // read register looked less like a decision and more like the page running
+  // out. Same rule as Contact, at its own register width.
   .org-about {
     padding-block: var(--semantic-space-section);
     display: grid;
     grid-template-columns: minmax(2rem, 7rem) 1.35fr 1fr;
     gap: var(--semantic-space-block);
     align-items: start;
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   .org-about h2 {
@@ -255,22 +261,6 @@
     }
   }
 
-  // The rule that closes the band.
-  //
-  // At band width the opener stops drawing its own bottom border, so the block
-  // underneath is what closes the section — on the content verticals rather
-  // than on the page edges. The other three bands are followed by something
-  // that already has a border (a card, the case index grid, a register); this
-  // one is followed by two bare text columns, so the rule is declared here.
-  // Gated at the same breakpoint as the band: below it the opener never had a
-  // bottom border, so there is nothing to replace.
-  @include from($bp-2xl) {
-    .org-stack {
-      padding-block-start: var(--semantic-space-component-lg);
-      border-top: var(--semantic-border-width) solid
-        var(--semantic-color-border);
-    }
-  }
 
   .org-contact {
     padding-block: var(--semantic-space-section-compact)
@@ -596,7 +586,8 @@
 
   .org-tools {
     padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
-    border-bottom: 1px solid var(--semantic-color-border);
+    border-bottom: var(--semantic-border-width) solid
+      var(--semantic-color-border);
   }
 
   .org-new-work {

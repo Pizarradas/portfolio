@@ -193,9 +193,15 @@
     // hairline repeating the same line a block further down. The closing rule
     // belongs to the content block, where it lands on the verticals the cards
     // actually have, and the opener reads as page width handing over the width
-    // the section is going to use. Three of the four bands already draw it —
-    // the work card, the case index grid and the register all carry a top
-    // border of their own; only `.org-stack` had to be given one.
+    // the section is going to use. Both bands already draw it: the work card
+    // and the first self-directed register each carry a top border of their
+    // own, so nothing extra is declared for it.
+    //
+    // Two bands, and they are the two project sections. The case index and the
+    // stack were bands too, and at `scan` the opener dropped 1000px per side
+    // onto its own content — twice the gap this treatment exists to close.
+    // They open at their register now, like every other section that is not
+    // arguing a case.
     .mol-section-heading.syx-bleed {
       // The index track is fixed, so every section title on the page starts on
       // the same vertical — an auto track would put "Work" and "Self-directed"
