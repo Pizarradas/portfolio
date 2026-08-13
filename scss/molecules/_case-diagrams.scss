@@ -634,54 +634,9 @@
     }
   }
 }
-@layer syx.molecules {
-  .mol-orbit-system {
-    @include relative();
-    min-height: 35rem;
-    border: 1px solid var(--semantic-color-border);
-    background: radial-gradient(circle at 50% 50%,rgba(30,58,255,.07),transparent 34%),var(--semantic-color-surface);
-    overflow: hidden;
-  }
-
-  .mol-orbit-system__lines {
-    @include absolute();
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-  }
-
-  .mol-orbit-system__lines path {
-    fill: none;
-    stroke: var(--semantic-color-primary);
-    stroke-width: 1;
-    stroke-dasharray: 4 7;
-    vector-effect: non-scaling-stroke;
-  }
-
-}
-@layer syx.utilities {
-  @media(max-width:800px) {
-    .mol-orbit-system {
-      min-height: 46rem;
-    }
-
-  }
-}
-@layer syx.organisms {
-  .mol-orbit-system {
-    display: grid;
-    gap: .55rem;
-    min-height: 0;
-    padding: .8rem;
-    background: var(--semantic-color-surface-alt);
-  }
-
-  .mol-orbit-system__lines {
-    display: none;
-  }
-
-}
+// `.mol-orbit-system` vivía aquí: un lienzo de 35rem con degradado radial y un
+// SVG de cinco radios con las coordenadas escritas a mano. Lo sustituye
+// `.mol-arch-map`, el mismo contenedor que usa el diagrama de capas.
 @layer syx.molecules {
   .mol-ai-layers {
     display: grid;

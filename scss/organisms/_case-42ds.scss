@@ -396,24 +396,37 @@
     }
 
   }
-  .org-operating-model.is-visible .atom-orbit-node {
+  // La entrada del modelo operativo. Mismo mecanismo que el atlas de
+  // arquitectura: los nodos salen del generador en orden de declaración —el
+  // núcleo primero y los cinco consumidores detrás— así que el escalonado se
+  // pide por posición sin marcar nada en el marcado.
+  .org-operating-model.is-visible .atom-arch-node {
     animation: case-node-in .55s both;
   }
 
-  .org-operating-model.is-visible .atom-orbit-node--2 {
-    animation-delay: .08s;
+  .org-operating-model.is-visible .atom-arch-node:nth-child(n + 2) {
+    animation-delay: .12s;
   }
 
-  .org-operating-model.is-visible .atom-orbit-node--3 {
-    animation-delay: .16s;
+  .js .org-operating-model.js-reveal .atom-arch-edge {
+    stroke-dasharray: var(--edge-length);
+    stroke-dashoffset: var(--edge-length);
   }
 
-  .org-operating-model.is-visible .atom-orbit-node--4 {
-    animation-delay: .24s;
+  .js .org-operating-model.is-visible .atom-arch-edge {
+    stroke-dashoffset: 0;
+    @include transition(stroke-dashoffset 1.1s ease .2s);
   }
 
-  .org-operating-model.is-visible .atom-orbit-node--5 {
-    animation-delay: .32s;
+  @include reduced-motion {
+    .org-operating-model .atom-arch-node {
+      animation: none;
+    }
+
+    .js .org-operating-model.js-reveal .atom-arch-edge {
+      stroke-dasharray: none;
+      stroke-dashoffset: 0;
+    }
   }
 
 }
@@ -422,12 +435,10 @@
   }
 
 
-  .org-operating-model h2 {
-    font: 600 clamp(2.5rem,5vw,5.5rem)/.92 var(--semantic-font-family-display);
-    letter-spacing: -.06em;
-    margin: 0;
-    font-size: var(--semantic-font-size-section-compact);
-  }
+  // El `h2` no necesita regla: declaraba un `font:` abreviado con un clamp que
+  // la línea siguiente pisaba con `font-size` —el mismo clamp muerto que ya se
+  // retiró de las otras bandas— y el tamaño que quedaba en pie lo pone la
+  // molécula de encabezado.
 
 }
 @layer syx.utilities {
