@@ -1,0 +1,97 @@
+// Tokens que venían declarados dentro de las hojas sueltas de css/.
+// Se conservan tal cual para no alterar ningún valor computado; el paso
+// siguiente es promoverlos a la capa semántica y retirar los prefijos ad-hoc
+// (--mf-, --pe-, --v22-).
+
+@use "../../breakpoints" as *;
+
+@layer syx.utilities {
+  @include from($bp-md) {
+    :root {
+      --mf-inline: clamp(1.5rem,4vw,4rem);
+      --mf-section: clamp(5rem,9vw,9rem);
+    }
+
+  }
+  @media (min-width:768px) and (max-width:1199px) {
+    :root {
+      --pe-inline: clamp(2rem,4vw,3.5rem);
+      --pe-section: clamp(5rem,8vw,7rem);
+    }
+
+  }
+  @media (min-width:1200px) {
+    :root {
+      --pe-inline: clamp(2.5rem,3vw,5rem);
+      --pe-section: clamp(6rem,8vw,9rem);
+      --pe-content-max: 108rem;
+    }
+
+  }
+}
+@layer syx.tokens {
+  :root {
+    --primitive-font-family-instrument: "Instrument Sans","Helvetica Neue",Arial,sans-serif;
+    --primitive-font-family-inter: "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --primitive-font-family-mono: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+    --primitive-font-weight-regular: 400;
+    --primitive-font-weight-medium: 500;
+    --primitive-font-weight-semibold: 600;
+    --primitive-font-weight-bold: 700;
+    --semantic-font-family-display: var(--primitive-font-family-instrument);
+    --semantic-font-family-body: var(--primitive-font-family-inter);
+    --semantic-font-family-ui: var(--primitive-font-family-inter);
+    --semantic-font-family-code: var(--primitive-font-family-mono);
+    --component-hero-title-font-family: var(--semantic-font-family-display);
+    --component-hero-title-font-weight: var(--primitive-font-weight-semibold);
+    --component-hero-title-line-height: .94;
+    --component-hero-title-letter-spacing: -.052em;
+    --component-section-title-font-family: var(--semantic-font-family-display);
+    --component-section-title-font-weight: var(--primitive-font-weight-semibold);
+    --component-section-title-line-height: 1;
+    --component-section-title-letter-spacing: -.04em;
+    --component-metric-font-family: var(--semantic-font-family-display);
+    --component-metric-font-weight: var(--primitive-font-weight-semibold);
+    --component-metric-letter-spacing: -.05em;
+    --component-body-font-family: var(--semantic-font-family-body);
+    --component-body-font-weight: var(--primitive-font-weight-regular);
+    --component-body-line-height: 1.62;
+    --component-ui-font-family: var(--semantic-font-family-ui);
+    --component-code-font-family: var(--semantic-font-family-code);
+    --component-media-radius: .25rem;
+    --component-media-border: var(--semantic-color-border);
+    --component-media-label-bg: color-mix(in srgb,var(--semantic-color-surface) 94%,transparent);
+    --component-media-label-color: var(--semantic-color-text);
+    --component-rule-color: var(--semantic-color-border);
+    --component-case-max-width: 90rem;
+    --component-case-reading-width: 46rem;
+    --component-case-gap: clamp(2rem, 5vw, 6rem);
+    --component-case-rule: var(--semantic-color-border, #c9c8c1);
+    --component-case-dark-bg: #11120f;
+    --component-case-dark-fg: #f3f1e8;
+    --component-case-accent-bg: #1E3AFF;
+    --component-case-accent-fg: var(--semantic-color-on-primary, #fff);
+    --component-story-max: 90rem;
+    --component-tool-icon-size: 1.55rem;
+    --component-chart-height: 25rem;
+    --component-chart-bg: var(--semantic-color-surface);
+    --component-chart-border: var(--semantic-color-border);
+    --component-evidence-bg: var(--semantic-color-surface-alt);
+    --demo-brand: #f53036;
+    --grid-line: rgba(30,58,255,.16);
+    --grid-fill: rgba(30,58,255,.08);
+    --mf-inline: 1rem;
+    --mf-section: 3.5rem;
+    --mf-gap: 1rem;
+    --mf-title: clamp(2.55rem,12.5vw,3.45rem);
+    --preview-bg: #080f1a;
+    --preview-chrome: #f5f7fa;
+    --preview-border: var(--semantic-color-border);
+    --preview-radius: .2rem;
+    --ill-red: #ef1632;
+    --ill-ink: #08101f;
+    --ill-paper: #f7f8fb;
+    --ill-line: #dfe4ec;
+  }
+
+}

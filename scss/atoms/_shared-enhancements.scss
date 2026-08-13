@@ -1,0 +1,39 @@
+// Ajustes de componentes que se definen en _portfolio.scss.
+//
+// Venían de las hojas que se cargaban DESPUÉS de portfolio.css —
+// typography-jlp, visual-jlp, mobile-first-v19 y progressive-enhancement-v20—
+// y por eso ganaban a la definición base. Aquí conservan esa posición porque
+// este parcial se usa después de `_portfolio.scss` dentro del mismo tier.
+//
+// Es la única concesión que queda al modelo antiguo: lo coherente sería que
+// cada uno de estos bloques viviera dentro del componente al que ajusta. Se
+// deja aislado y señalado en vez de disuelto, para que se vea qué falta por
+// plegar y no se confunda con la definición base del componente.
+
+@use "../abstracts/breakpoints" as *;
+@use "../abstracts/mixins" as *;
+
+@layer syx.atoms {
+  .atom-wordmark {
+    font-family: var(--component-ui-font-family);
+    font-weight: 700;
+    letter-spacing: -.04em;
+  }
+
+  .atom-eyebrow {
+    font-family: var(--component-ui-font-family);
+    font-weight: 600;
+    letter-spacing: .11em;
+    font-size: .64rem;
+    line-height: 1.35;
+  }
+
+  .atom-index {
+    font-family: var(--component-ui-font-family);
+    font-weight: 600;
+    letter-spacing: .11em;
+    font-size: .64rem;
+    line-height: 1.35;
+  }
+
+}

@@ -1,0 +1,163 @@
+// Ajustes de componentes que se definen en _portfolio.scss.
+//
+// Venían de las hojas que se cargaban DESPUÉS de portfolio.css —
+// typography-jlp, visual-jlp, mobile-first-v19 y progressive-enhancement-v20—
+// y por eso ganaban a la definición base. Aquí conservan esa posición porque
+// este parcial se usa después de `_portfolio.scss` dentro del mismo tier.
+//
+// Es la única concesión que queda al modelo antiguo: lo coherente sería que
+// cada uno de estos bloques viviera dentro del componente al que ajusta. Se
+// deja aislado y señalado en vez de disuelto, para que se vea qué falta por
+// plegar y no se confunda con la definición base del componente.
+
+@use "../abstracts/breakpoints" as *;
+@use "../abstracts/mixins" as *;
+
+@layer syx.atoms {
+  .mol-nav {
+    font-family: var(--component-ui-font-family);
+  }
+
+}
+@layer syx.molecules {
+  .mol-nav {
+    gap: .9rem;
+    font-size: .72rem;
+  }
+
+}
+@layer syx.utilities {
+  @include from($bp-md) {
+    .mol-nav {
+      font-size: .9rem;
+      gap: clamp(1rem,3vw,2.75rem);
+    }
+
+  }
+}
+@layer syx.molecules {
+  .mol-project-card__body h3 {
+    font-family: var(--semantic-font-family-display);
+    font-weight: 600;
+    letter-spacing: -.035em;
+    line-height: 1.02;
+  }
+
+  .mol-project-card__meta {
+    flex-direction: column;
+    gap: .35rem;
+  }
+
+}
+@layer syx.utilities {
+  @media (min-width:1200px) {
+    .mol-project-card--featured {
+      display: grid;
+      grid-template-columns: minmax(0,1fr);
+      border-top: 1px solid var(--semantic-color-border);
+      padding-top: 1.5rem;
+      gap: clamp(1.5rem,2.5vw,2.5rem);
+    }
+
+    .mol-project-card--featured .mol-project-card__body h3 {
+      font-size: clamp(3rem,3.4vw,4.6rem);
+      line-height: .95;
+    }
+
+    .mol-project-card__body h3 {
+      font-size: clamp(2rem,2.4vw,3.2rem);
+    }
+
+  }
+}
+@layer syx.molecules {
+  .mol-section-heading {
+    grid-template-columns: 1fr;
+    gap: .75rem;
+    margin-bottom: 2rem;
+    padding-top: .85rem;
+  }
+
+  .mol-section-heading h2 {
+    font-size: var(--mf-h2);
+  }
+
+}
+@layer syx.utilities {
+  @media (min-width:768px) and (max-width:1199px) {
+    .mol-section-heading {
+      grid-template-columns: 3.5rem minmax(0,1.2fr) minmax(16rem,.8fr);
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .mol-section-heading p:last-child {
+      grid-column: auto;
+    }
+
+    .mol-section-heading h2 {
+      font-size: clamp(2.8rem,5vw,4.5rem);
+    }
+
+  }
+  @media (min-width:1200px) {
+    .mol-section-heading {
+      grid-template-columns: 4rem minmax(0,1.2fr) minmax(20rem,.65fr);
+      gap: 2rem;
+      align-items: start;
+      margin-bottom: clamp(3rem,5vw,5rem);
+    }
+
+    .mol-section-heading p:last-child {
+      grid-column: auto;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .mol-section-heading h2 {
+      font-size: clamp(3.5rem,4.8vw,5.8rem);
+      line-height: .94;
+    }
+
+  }
+}
+@layer syx.organisms {
+  .mol-worldcup-stage {
+    min-height: 22rem;
+    padding: 1.25rem;
+  }
+
+  .mol-worldcup-stage>strong {
+    font-size: clamp(6rem,34vw,9rem);
+  }
+
+}
+@layer syx.utilities {
+  @media (min-width:1200px) {
+    .mol-worldcup-stage {
+      min-height: 38rem;
+      padding: clamp(3rem,5vw,5rem);
+    }
+
+  }
+}
+@layer syx.organisms {
+  .mol-atlas-architecture {
+    min-height: 22rem;
+    padding: 1.25rem;
+  }
+
+  .mol-atlas-architecture>strong {
+    font-size: 2.5rem;
+  }
+
+}
+@layer syx.utilities {
+  @media (min-width:1200px) {
+    .mol-atlas-architecture {
+      min-height: 38rem;
+      padding: clamp(3rem,5vw,5rem);
+    }
+
+  }
+}

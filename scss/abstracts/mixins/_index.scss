@@ -1,0 +1,6 @@
+// Punto de entrada de los mixins. Un componente hace:
+//   @use "../abstracts/mixins" as *;
+// y tiene disponible todo lo que exigen R03 y R04.
+
+@forward "positioning";
+@forward "helpers";

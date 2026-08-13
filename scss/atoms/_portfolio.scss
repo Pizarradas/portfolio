@@ -1,10 +1,9 @@
 @use "../abstracts/breakpoints" as *;
+@use "../abstracts/mixins" as *;
 
 @layer syx.atoms {
   .atom-skip-link {
-    position: fixed;
-    left: var(--primitive-space-md);
-    top: var(--primitive-space-md);
+    @include fixed($top: var(--primitive-space-md), $left: var(--primitive-space-md));
     z-index: var(--semantic-z-skip);
     transform: translateY(-180%);
     padding: var(--primitive-space-sm) var(--primitive-space-md);
@@ -83,8 +82,7 @@
     padding-bottom: var(--component-text-link-offset);
     border-bottom: var(--semantic-border-width) solid
       var(--component-text-link-rule);
-    transition: border-color var(--semantic-duration-hover)
-      var(--semantic-ease);
+    @include transition(border-color var(--semantic-duration-hover) var(--semantic-ease));
   }
 
   .atom-text-link:hover,
@@ -135,7 +133,7 @@
   .atom-lang-switch > span,
   .atom-lang-switch a {
     color: var(--semantic-color-text-muted);
-    transition: color var(--semantic-duration-hover) var(--semantic-ease);
+    @include transition(color var(--semantic-duration-hover) var(--semantic-ease));
   }
 
   .atom-lang-switch a:hover {
@@ -166,9 +164,7 @@
   }
 
   .atom-metric {
-    position: absolute;
-    left: var(--primitive-space-md);
-    bottom: var(--primitive-space-md);
+    @include absolute($bottom: var(--primitive-space-md), $left: var(--primitive-space-md));
     z-index: var(--primitive-z-raised);
     max-width: 10rem;
     padding: var(--primitive-space-md);

@@ -1,4 +1,5 @@
 @use "../abstracts/breakpoints" as *;
+@use "../abstracts/mixins" as *;
 
 @layer syx.utilities {
   .syx-sr-only {

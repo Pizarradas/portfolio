@@ -1,0 +1,9 @@
+@use "../abstracts/breakpoints" as *;
+@use "../abstracts/mixins" as *;
+
+@layer syx.utilities {
+  @keyframes case-node-in {from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @keyframes code-visual-in {from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @keyframes header-card-in {from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @keyframes foundation-lab-in {from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+}

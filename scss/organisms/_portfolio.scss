@@ -1,4 +1,5 @@
 @use "../abstracts/breakpoints" as *;
+@use "../abstracts/mixins" as *;
 @use "../abstracts/surfaces" as *;
 
 @layer syx.organisms {
@@ -19,10 +20,9 @@
   // blur(16px) and no sheen, which is why the two overlays did not look
   // related — the border is reset to a bottom edge only, since it spans.
   .org-site-header {
+    @include sticky($top: 0);
     @include glass(var(--primitive-blur-md));
 
-    position: sticky;
-    top: 0;
     z-index: var(--semantic-z-sticky);
     display: flex;
     justify-content: space-between;
@@ -34,7 +34,7 @@
   }
 
   .org-hero {
-    position: relative;
+    @include relative();
     min-height: calc(96svh - var(--component-header-height));
     padding-block: var(--semantic-space-section-compact)
       var(--semantic-space-section-compact);
@@ -49,7 +49,7 @@
   // its ink from `color` here — so the field follows the palette of whatever
   // context the hero is placed in and there is no colour literal in the script.
   .org-hero__field {
-    position: absolute;
+    @include absolute();
     inset: 0;
     z-index: var(--primitive-z-base);
     display: block;
@@ -64,15 +64,13 @@
   // it paints before the canvas and disappears under it.
   .org-hero > *:not(.org-hero__field),
   .org-hero::before {
-    position: relative;
+    @include relative();
     z-index: var(--primitive-z-raised);
   }
 
   .org-hero::before {
+    @include absolute($top: var(--primitive-space-4xl), $right: var(--semantic-pad-content));
     content: "";
-    position: absolute;
-    right: var(--semantic-pad-content);
-    top: var(--primitive-space-4xl);
     width: clamp(3.5rem, 8vw, 8rem);
     height: 0.55rem;
     background: var(--semantic-color-primary);
@@ -115,8 +113,7 @@
     text-decoration: none;
     border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
-    transition: background var(--semantic-duration-hover) var(--semantic-ease),
-      color var(--semantic-duration-hover) var(--semantic-ease);
+    @include transition(background var(--semantic-duration-hover) var(--semantic-ease), color var(--semantic-duration-hover) var(--semantic-ease));
   }
 
   .org-capability-scan a:last-child {
@@ -138,7 +135,7 @@
     letter-spacing: var(--primitive-letter-spacing-wide);
     text-align: right;
     color: var(--semantic-color-text-muted);
-    transition: color var(--semantic-duration-hover) var(--semantic-ease);
+    @include transition(color var(--semantic-duration-hover) var(--semantic-ease));
   }
 
   .org-capability-scan b {
@@ -189,7 +186,7 @@
   @include reduced-motion {
     .org-capability-scan a,
     .org-capability-scan span {
-      transition: none;
+      @include transition(none);
     }
   }
 
@@ -297,8 +294,7 @@
     border-bottom: var(--semantic-border-width) solid
       var(--component-text-link-rule);
     padding-bottom: var(--component-text-link-offset);
-    transition: border-color var(--semantic-duration-hover)
-      var(--semantic-ease);
+    @include transition(border-color var(--semantic-duration-hover) var(--semantic-ease));
   }
 
   .org-footer__contact a:hover {

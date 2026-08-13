@@ -1,0 +1,85 @@
+@use "../abstracts/breakpoints" as *;
+@use "../abstracts/mixins" as *;
+
+@layer syx.molecules {
+  .atom-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .72rem;
+  }
+
+  .atom-data-table thead {
+    display: none;
+  }
+
+  .atom-data-table tbody {
+    display: block;
+    width: 100%;
+  }
+
+  .atom-data-table tr {
+    display: block;
+    width: 100%;
+    margin-bottom: .65rem;
+    border: 1px solid var(--semantic-color-border);
+    background: #fff;
+    padding: .45rem .65rem;
+  }
+
+  .atom-data-table td {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 6.4rem 1fr;
+    gap: .6rem;
+    padding: .35rem 0;
+    border-bottom: 1px solid var(--semantic-color-border);
+  }
+
+  .atom-data-table td:last-child {
+    border-bottom: 0;
+  }
+
+  .atom-data-table td::before {
+    content: attr(data-label);
+    font: 700 .54rem/1.2 var(--semantic-font-family-ui);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--semantic-color-text-muted);
+  }
+
+  .atom-data-table td b {
+    color: var(--semantic-color-primary);
+    font-size: 1rem;
+  }
+
+}
+@layer syx.utilities {
+  @include from($bp-md) {
+    .atom-data-table thead {
+      display: table-header-group;
+    }
+
+    .atom-data-table tbody {
+      display: table-row-group;
+    }
+
+    .atom-data-table tr {
+      display: table-row;
+      margin: 0;
+      border: 0;
+      padding: 0;
+    }
+
+    .atom-data-table td {
+      display: table-cell;
+      width: auto;
+      padding: .7rem .6rem;
+      border-bottom: 1px solid var(--semantic-color-border);
+    }
+
+    .atom-data-table td::before {
+      display: none;
+    }
+
+  }
+}

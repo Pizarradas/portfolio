@@ -216,3 +216,47 @@ the home page, and `js/lang-switch.js` carries the current `#anchor` across so t
 reader lands where they already were. There is no stored preference and no
 automatic redirect — a redirect would fire after the page had already painted,
 and a Spanish speaker may be reading the English version on purpose.
+
+## V32 — todo el CSS bajo la arquitectura SCSS
+Las 25 hojas escritas a mano han desaparecido. `css/` contiene un único fichero,
+`portfolio.css`, generado desde `scss/`. Cada página carga **una** hoja.
+
+```
+scss/
+  abstracts/
+    mixins/        _positioning.scss, _helpers.scss   ← nuevo (R03/R04 de SYX)
+    tokens/        primitives → semantic → components
+  base/            _reset, _elements, _form-and-code
+  atoms/           _portfolio, _case-visuals, _data-table, _shared-enhancements
+  molecules/       _portfolio, _research, _case-diagrams, _code-visuals,
+                   _header-system, _illustrations, _live-preview,
+                   _shared-enhancements
+  organisms/       _portfolio, _case-shell, _case-42ds, _sport,
+                   _illustrations, _home-sections, _shared-enhancements
+  utilities/       _portfolio, _keyframes
+```
+
+**Cómo se hizo sin romper nada.** El orden de los `<link>` era idéntico en las
+siete páginas, así que existía un orden total. Se aplanaron las reglas
+conservando su cadena de at-rules, se fusionaron por (contexto, selector) con la
+última declaración ganando —que es lo que el navegador computaba— y se emitió un
+bloque por selector. Después se comprobaron las **2.492 declaraciones**
+resultantes contra el build: 0 propiedades ausentes, 0 valores distintos.
+
+**Reglas de SYX aplicadas al migrar:**
+
+| Regla | Antes | Ahora |
+|---|---|---|
+| R02 `!important` | 67 | 0 |
+| R03 `transition:` en crudo | 19 | 0 — vía `@include transition()`, que añade la guarda de `prefers-reduced-motion` |
+| R04 `position:` en crudo | 23 | 0 fuera de `base/_reset` y `utilities` |
+
+**Lo que queda abierto.** Los tres `_shared-enhancements.scss` son ajustes de
+componentes definidos en `_portfolio.scss`; lo coherente sería plegarlos dentro
+de cada componente. Y `abstracts/tokens/components/_case-and-evidence.scss`
+todavía guarda tokens con prefijos ad-hoc (`--mf-`, `--pe-`, `--v22-`) que
+deberían promoverse a la capa semántica. Ambas cosas están señaladas en el
+propio código.
+
+`npm run check:css` avisa de comentarios sin cerrar y de clases declaradas que ya
+no existen en el marcado.

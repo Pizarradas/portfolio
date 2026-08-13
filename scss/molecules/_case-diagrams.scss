@@ -1,0 +1,1042 @@
+@use "../abstracts/breakpoints" as *;
+@use "../abstracts/mixins" as *;
+
+@layer syx.molecules {
+  .mol-architecture-stack {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
+    gap: .65rem;
+    align-items: center;
+  }
+
+  .mol-architecture-stack>div {
+    min-height: 8rem;
+    padding: 1rem;
+    border: 1px solid var(--semantic-color-border);
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mol-architecture-stack span {
+    font: 600 .62rem/1 var(--semantic-font-family-ui);
+    color: var(--semantic-color-primary);
+  }
+
+  .mol-architecture-stack strong {
+    margin: auto 0 .35rem;
+    font: 600 1.25rem/1 var(--semantic-font-family-display);
+    letter-spacing: -.035em;
+  }
+
+  .mol-architecture-stack small {
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-architecture-stack>i {
+    font-style: normal;
+    color: var(--semantic-color-primary);
+  }
+
+}
+@layer syx.utilities {
+  @media(max-width:900px) {
+    .mol-architecture-stack {
+      grid-template-columns: 1fr;
+    }
+
+    .mol-architecture-stack>i {
+      transform: rotate(90deg);
+      justify-self: center;
+    }
+
+  }
+  .mol-architecture-stack.js-reveal>div {
+    opacity: 0;
+    transform: translateY(.8rem);
+    @include transition(opacity .5s ease,transform .5s ease);
+  }
+
+  .mol-architecture-stack.is-visible>div {
+    opacity: 1;
+    transform: none;
+  }
+
+  .mol-architecture-stack.is-visible>div:nth-of-type(2) {
+    transition-delay: .09s;
+  }
+
+  .mol-architecture-stack.is-visible>div:nth-of-type(3) {
+    transition-delay: .18s;
+  }
+
+  .mol-architecture-stack.is-visible>div:nth-of-type(4) {
+    transition-delay: .27s;
+  }
+
+  .mol-architecture-stack.is-visible>div:nth-of-type(5) {
+    transition-delay: .36s;
+  }
+
+}
+@layer syx.organisms {
+  .mol-architecture-stack {
+    grid-template-columns: 1fr;
+    gap: .45rem;
+  }
+
+  .mol-architecture-stack>i {
+    transform: rotate(90deg);
+    justify-self: center;
+  }
+
+}
+@layer syx.molecules {
+  .mol-case42-thesis {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: .55fr 1.45fr;
+    gap: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--semantic-color-border);
+  }
+
+  .mol-case42-thesis p {
+    margin: 0;
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-case42-thesis strong {
+    font: 600 clamp(1.7rem,3vw,3rem)/1 var(--semantic-font-family-display);
+    letter-spacing: -.045em;
+  }
+
+}
+@layer syx.utilities {
+  @media(max-width:900px) {
+    .mol-case42-thesis {
+      grid-template-columns: 1fr;
+    }
+
+  }
+}
+@layer syx.organisms {
+  .mol-case42-thesis {
+    grid-template-columns: 1fr;
+    gap: .75rem;
+  }
+
+}
+@layer syx.molecules {
+  .mol-foundation-map {
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    border: 1px solid rgba(255,255,255,.25);
+  }
+
+  .mol-foundation-map>div {
+    min-height: 11rem;
+    padding: 1rem;
+    border-right: 1px solid rgba(255,255,255,.2);
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+  }
+
+  .mol-foundation-map>div:last-child {
+    border-right: 0;
+  }
+
+  .mol-foundation-map b {
+    font: 600 .75rem/1 var(--semantic-font-family-ui);
+    letter-spacing: .08em;
+  }
+
+  .mol-foundation-map span {
+    font-size: .78rem;
+    color: rgba(255,255,255,.62);
+  }
+
+}
+@layer syx.utilities {
+  @media(max-width:900px) {
+    .mol-foundation-map {
+      grid-template-columns: 1fr 1fr;
+    }
+
+  }
+  @media(max-width:580px) {
+    .mol-foundation-map {
+      grid-template-columns: 1fr;
+    }
+
+  }
+  .mol-foundation-map.js-reveal>div {
+    opacity: 0;
+    transform: translateY(.8rem);
+    @include transition(opacity .5s ease,transform .5s ease);
+  }
+
+  .mol-foundation-map.is-visible>div {
+    opacity: 1;
+    transform: none;
+  }
+
+  .mol-foundation-map.is-visible>div:nth-child(2) {
+    transition-delay: .09s;
+  }
+
+  .mol-foundation-map.is-visible>div:nth-child(3) {
+    transition-delay: .18s;
+  }
+
+  .mol-foundation-map.is-visible>div:nth-child(4) {
+    transition-delay: .27s;
+  }
+
+  .mol-foundation-map.is-visible>div:nth-child(5) {
+    transition-delay: .36s;
+  }
+
+}
+@layer syx.organisms {
+  .mol-foundation-map {
+    grid-template-columns: 1fr;
+  }
+
+  .mol-foundation-map>div {
+    min-height: 7rem;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255,255,255,.2);
+  }
+
+}
+@layer syx.utilities {
+  @media (min-width:1200px) {
+    .mol-foundation-map {
+      grid-template-columns: repeat(5,1fr);
+    }
+
+  }
+}
+@layer syx.molecules {
+  .mol-case42-caption {
+    font-size: .8rem;
+    color: rgba(255,255,255,.62);
+  }
+
+  .mol-brand-tree {
+    margin: 2rem 0;
+  }
+
+  .mol-brand-tree__core {
+    padding: 1rem;
+    background: var(--semantic-color-primary);
+    color: #fff;
+    text-align: center;
+    font: 700 1rem/1 var(--semantic-font-family-ui);
+    letter-spacing: .1em;
+  }
+
+  .mol-brand-tree__branches {
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    border-inline: 1px solid var(--semantic-color-border);
+  }
+
+  .mol-brand-tree__branches span {
+    min-height: 7rem;
+    padding: 1rem;
+    border-right: 1px solid var(--semantic-color-border);
+    border-bottom: 1px solid var(--semantic-color-border);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    font: 600 .78rem/1.2 var(--semantic-font-family-ui);
+  }
+
+  .mol-brand-tree__branches span:last-child {
+    border-right: 0;
+  }
+
+  .mol-brand-tree__branches small {
+    margin-top: .3rem;
+    color: var(--semantic-color-text-muted);
+    font-weight: 400;
+  }
+
+}
+@layer syx.utilities {
+  @media(max-width:900px) {
+    .mol-brand-tree__branches {
+      grid-template-columns: 1fr 1fr;
+    }
+
+  }
+  @media(max-width:580px) {
+    .mol-brand-tree__branches {
+      grid-template-columns: 1fr;
+    }
+
+  }
+  .mol-brand-tree.js-reveal .mol-brand-tree__branches span {
+    opacity: 0;
+    transform: translateY(.8rem);
+    @include transition(opacity .5s ease,transform .5s ease);
+  }
+
+  .mol-brand-tree.is-visible .mol-brand-tree__branches span {
+    opacity: 1;
+    transform: none;
+  }
+
+  .mol-brand-tree.is-visible .mol-brand-tree__branches span:nth-child(2) {
+    transition-delay: .09s;
+  }
+
+  .mol-brand-tree.is-visible .mol-brand-tree__branches span:nth-child(3) {
+    transition-delay: .18s;
+  }
+
+  .mol-brand-tree.is-visible .mol-brand-tree__branches span:nth-child(4) {
+    transition-delay: .27s;
+  }
+
+  .mol-brand-tree.is-visible .mol-brand-tree__branches span:nth-child(5) {
+    transition-delay: .36s;
+  }
+
+}
+@layer syx.organisms {
+  .mol-brand-tree__branches {
+    grid-template-columns: 1fr;
+  }
+
+}
+@layer syx.utilities {
+  @media (min-width:1200px) {
+    .mol-brand-tree__branches {
+      grid-template-columns: repeat(5,1fr);
+    }
+
+  }
+}
+@layer syx.molecules {
+  .mol-targets {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    margin: 2rem 0;
+    border-top: 1px solid var(--semantic-color-border);
+    border-left: 1px solid var(--semantic-color-border);
+  }
+
+  .mol-targets span {
+    min-height: 9rem;
+    padding: 1rem;
+    border-right: 1px solid var(--semantic-color-border);
+    border-bottom: 1px solid var(--semantic-color-border);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .mol-targets b {
+    font: 600 1.5rem/1 var(--semantic-font-family-display);
+    letter-spacing: -.04em;
+  }
+
+  .mol-targets small {
+    color: var(--semantic-color-text-muted);
+  }
+
+}
+@layer syx.utilities {
+  @media(max-width:900px) {
+    .mol-targets {
+      grid-template-columns: 1fr 1fr;
+    }
+
+  }
+  @media(max-width:580px) {
+    .mol-targets {
+      grid-template-columns: 1fr;
+    }
+
+  }
+}
+@layer syx.organisms {
+  .mol-targets {
+    grid-template-columns: 1fr;
+  }
+
+}
+@layer syx.utilities {
+  @media (min-width:1200px) {
+    .mol-targets {
+      grid-template-columns: repeat(4,1fr);
+    }
+
+  }
+}
+@layer syx.molecules {
+  .mol-pipeline {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+    gap: .7rem;
+    align-items: center;
+    margin: 2rem 0;
+  }
+
+  .mol-pipeline span {
+    min-height: 8rem;
+    padding: 1rem;
+    border: 1px solid var(--semantic-color-border);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .mol-pipeline b {
+    font-family: var(--semantic-font-family-display);
+    font-size: 1.3rem;
+  }
+
+  .mol-pipeline small {
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-pipeline i {
+    font-style: normal;
+    color: var(--semantic-color-primary);
+  }
+
+}
+@layer syx.utilities {
+  @media(max-width:900px) {
+    .mol-pipeline {
+      grid-template-columns: 1fr;
+    }
+
+    .mol-pipeline i {
+      transform: rotate(90deg);
+      justify-self: center;
+    }
+
+  }
+  .mol-pipeline.js-reveal span {
+    opacity: 0;
+    transform: translateY(.8rem);
+    @include transition(opacity .5s ease,transform .5s ease);
+  }
+
+  .mol-pipeline.is-visible span {
+    opacity: 1;
+    transform: none;
+  }
+
+  .mol-pipeline.is-visible span:nth-of-type(2) {
+    transition-delay: .09s;
+  }
+
+  .mol-pipeline.is-visible span:nth-of-type(3) {
+    transition-delay: .18s;
+  }
+
+  .mol-pipeline.is-visible span:nth-of-type(4) {
+    transition-delay: .27s;
+  }
+
+}
+@layer syx.organisms {
+  .mol-pipeline {
+    grid-template-columns: 1fr;
+  }
+
+  .mol-pipeline i {
+    transform: rotate(90deg);
+    justify-self: center;
+  }
+
+}
+@layer syx.utilities {
+  @media (min-width:1200px) {
+    .mol-pipeline {
+      grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+    }
+
+  }
+}
+@layer syx.molecules {
+  .mol-ai-system {
+    display: grid;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .mol-ai-system>div {
+    padding: 1rem;
+    border: 1px solid rgba(255,255,255,.25);
+    display: flex;
+    flex-wrap: wrap;
+    gap: .45rem;
+  }
+
+  .mol-ai-system b {
+    width: 100%;
+    font: 600 .7rem/1 var(--semantic-font-family-ui);
+    letter-spacing: .1em;
+    color: #fff;
+  }
+
+  .mol-ai-system span {
+    padding: .5rem .6rem;
+    border: 1px solid rgba(255,255,255,.22);
+    font-size: .7rem;
+  }
+
+  .mol-ai-system>i {
+    justify-self: center;
+    font-style: normal;
+    opacity: .5;
+  }
+
+  .mol-ai-system__governance {
+    background: rgba(255,255,255,.06);
+  }
+
+}
+@layer syx.utilities {
+  .mol-ai-system.js-reveal>div {
+    opacity: 0;
+    transform: translateY(.8rem);
+    @include transition(opacity .5s ease,transform .5s ease);
+  }
+
+  .mol-ai-system.is-visible>div {
+    opacity: 1;
+    transform: none;
+  }
+
+  .mol-ai-system.is-visible>div:nth-of-type(2) {
+    transition-delay: .09s;
+  }
+
+  .mol-ai-system.is-visible>div:nth-of-type(3) {
+    transition-delay: .18s;
+  }
+
+}
+@layer syx.molecules {
+  .mol-case42-principle {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding: 1rem;
+    border-left: 4px solid #fff;
+    background: rgba(255,255,255,.06);
+  }
+
+  .mol-case42-principle strong {
+    font-family: var(--semantic-font-family-display);
+  }
+
+  .mol-inventory-visual {
+    margin: 2.2rem 0;
+    border: 1px solid var(--semantic-color-border);
+    background: var(--semantic-color-surface);
+  }
+
+  .mol-inventory-visual__summary {
+    display: grid;
+    grid-template-columns: .55fr 1.45fr;
+    gap: 1.5rem;
+    align-items: end;
+    padding: 1.2rem;
+    border-bottom: 1px solid var(--semantic-color-border);
+  }
+
+  .mol-inventory-visual__summary span {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mol-inventory-visual__summary b {
+    font: 600 clamp(4rem,8vw,8rem)/.75 var(--semantic-font-family-display);
+    letter-spacing: -.07em;
+    color: var(--semantic-color-primary);
+  }
+
+  .mol-inventory-visual__summary small {
+    margin-top: .7rem;
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-inventory-visual__summary p {
+    max-width: 30ch;
+    margin: 0;
+    color: var(--semantic-color-text-secondary);
+  }
+
+}
+@layer syx.utilities {
+  @media(max-width:800px) {
+    .mol-inventory-visual__summary {
+      grid-template-columns: 1fr;
+    }
+
+  }
+}
+@layer syx.molecules {
+  .mol-ai-metrics {
+    display: grid;
+    grid-template-columns: .6fr .6fr 1.4fr;
+    margin: 0 0 1.2rem;
+    border: 1px solid rgba(255,255,255,.24);
+  }
+
+  .mol-ai-metrics span {
+    min-height: 7rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid rgba(255,255,255,.2);
+  }
+
+  .mol-ai-metrics span:last-child {
+    border-right: 0;
+  }
+
+  .mol-ai-metrics b {
+    font: 600 clamp(1.8rem,3vw,3rem)/1 var(--semantic-font-family-display);
+    letter-spacing: -.05em;
+  }
+
+  .mol-ai-metrics small {
+    color: rgba(255,255,255,.62);
+  }
+
+}
+@layer syx.utilities {
+  @media(max-width:800px) {
+    .mol-ai-metrics {
+      grid-template-columns: 1fr;
+    }
+
+    .mol-ai-metrics span {
+      border-right: 0;
+      border-bottom: 1px solid rgba(255,255,255,.2);
+    }
+
+  }
+}
+@layer syx.organisms {
+  .mol-ai-metrics {
+    grid-template-columns: 1fr;
+  }
+
+}
+@layer syx.molecules {
+  .mol-system-map {
+    padding: clamp(1.2rem,3vw,2.5rem);
+    border: 1px solid var(--semantic-color-border);
+    background: var(--semantic-color-surface);
+    overflow: hidden;
+  }
+
+  .mol-system-map__rail {
+    width: 52%;
+    margin: auto;
+    text-align: center;
+  }
+
+  .mol-system-map__rail>i {
+    display: block;
+    width: 1px;
+    height: 2.2rem;
+    background: var(--semantic-color-primary);
+    margin: auto;
+  }
+
+  .mol-system-map__split {
+    @include relative();
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem,10vw,10rem);
+  }
+
+  .mol-system-map__split::before {
+    @include absolute($top: -1.1rem, $right: 25%, $left: 25%);
+    content: "";
+    height: 1px;
+    background: var(--semantic-color-primary);
+  }
+
+  .mol-system-map__split>div {
+    @include relative();
+  }
+
+  .mol-system-map__split>div::before {
+    @include absolute($top: -1.1rem, $left: 50%);
+    content: "";
+    height: 1.1rem;
+    width: 1px;
+    background: var(--semantic-color-primary);
+  }
+
+  .mol-system-map__connector {
+    @include relative();
+    height: 3rem;
+  }
+
+  .mol-system-map__connector::before {
+    @include absolute($top: 1.5rem, $right: 12.5%, $left: 12.5%);
+    content: "";
+    height: 1px;
+    background: var(--semantic-color-border);
+  }
+
+  .mol-system-map__connector i {
+    @include absolute($top: 1.5rem);
+    width: 1px;
+    height: 1.5rem;
+    background: var(--semantic-color-border);
+  }
+
+  .mol-system-map__connector i:nth-child(1) {
+    left: 12.5%;
+  }
+
+  .mol-system-map__connector i:nth-child(2) {
+    left: 50%;
+  }
+
+  .mol-system-map__connector i:nth-child(3) {
+    right: 12.5%;
+  }
+
+  .mol-system-map__targets {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: .7rem;
+  }
+
+}
+@layer syx.utilities {
+  @media(max-width:800px) {
+    .mol-system-map__rail {
+      width: 80%;
+    }
+
+    .mol-system-map__split {
+      gap: 1rem;
+    }
+
+    .mol-system-map__targets {
+      grid-template-columns: 1fr 1fr;
+    }
+
+  }
+}
+@layer syx.organisms {
+  .mol-system-map {
+    padding: .8rem;
+  }
+
+  .mol-system-map__rail {
+    width: 100%;
+  }
+
+  .mol-system-map__split {
+    grid-template-columns: 1fr;
+    gap: .6rem;
+  }
+
+  .mol-system-map__split::before {
+    display: none;
+  }
+
+  .mol-system-map__split>div::before {
+    display: none;
+  }
+
+  .mol-system-map__connector {
+    display: none;
+  }
+
+  .mol-system-map__targets {
+    grid-template-columns: 1fr 1fr;
+    gap: .5rem;
+  }
+
+}
+@layer syx.utilities {
+  @media (min-width:768px) and (max-width:1199px) {
+    .mol-system-map__split {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .mol-system-map__targets {
+      grid-template-columns: repeat(4,1fr);
+    }
+
+  }
+  @media (min-width:1200px) {
+    .mol-system-map__split {
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(4rem,8vw,9rem);
+    }
+
+    .mol-system-map__targets {
+      grid-template-columns: repeat(4,1fr);
+    }
+
+  }
+}
+@layer syx.molecules {
+  .mol-hierarchy-pyramid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .55rem;
+    padding: 2rem 0;
+  }
+
+  .mol-hierarchy-pyramid__row {
+    height: 5.2rem;
+    display: flex;
+    justify-content: center;
+    @include transition(width .8s cubic-bezier(.2,.75,.25,1),opacity .5s ease);
+    opacity: .18;
+  }
+
+  .mol-hierarchy-pyramid__row span {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.1rem;
+    border: 1px solid var(--semantic-color-border);
+    background: #fff;
+  }
+
+  .mol-hierarchy-pyramid__row small {
+    font: 600 .58rem/1 var(--semantic-font-family-ui);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-hierarchy-pyramid__row b {
+    font: 600 clamp(1rem,2vw,1.5rem)/1 var(--semantic-font-family-display);
+  }
+
+  .mol-hierarchy-pyramid__row--1 {
+    width: 100%;
+  }
+
+  .mol-hierarchy-pyramid__row--2 {
+    width: 86%;
+  }
+
+  .mol-hierarchy-pyramid__row--3 {
+    width: 70%;
+  }
+
+  .mol-hierarchy-pyramid__row--4 {
+    width: 54%;
+  }
+
+  .mol-hierarchy-pyramid__row--5 {
+    width: 38%;
+  }
+
+}
+@layer syx.utilities {
+  @include reduced-motion {
+    .mol-hierarchy-pyramid__row {
+      animation: none;
+      @include transition(none);
+      opacity: 1;
+    }
+
+  }
+}
+@layer syx.organisms {
+  .mol-hierarchy-pyramid__row {
+    height: 4.25rem;
+  }
+
+  .mol-hierarchy-pyramid__row--1 {
+    width: 100%;
+  }
+
+  .mol-hierarchy-pyramid__row--2 {
+    width: 94%;
+  }
+
+  .mol-hierarchy-pyramid__row--3 {
+    width: 88%;
+  }
+
+  .mol-hierarchy-pyramid__row--4 {
+    width: 82%;
+  }
+
+  .mol-hierarchy-pyramid__row--5 {
+    width: 76%;
+  }
+
+}
+@layer syx.molecules {
+  .mol-orbit-system {
+    @include relative();
+    min-height: 35rem;
+    border: 1px solid var(--semantic-color-border);
+    background: radial-gradient(circle at 50% 50%,rgba(30,58,255,.07),transparent 34%),var(--semantic-color-surface);
+    overflow: hidden;
+  }
+
+  .mol-orbit-system__lines {
+    @include absolute();
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .mol-orbit-system__lines path {
+    fill: none;
+    stroke: var(--semantic-color-primary);
+    stroke-width: 1;
+    stroke-dasharray: 4 7;
+    vector-effect: non-scaling-stroke;
+  }
+
+}
+@layer syx.utilities {
+  @media(max-width:800px) {
+    .mol-orbit-system {
+      min-height: 46rem;
+    }
+
+  }
+}
+@layer syx.organisms {
+  .mol-orbit-system {
+    display: grid;
+    gap: .55rem;
+    min-height: 0;
+    padding: .8rem;
+    background: var(--semantic-color-surface-alt);
+  }
+
+  .mol-orbit-system__lines {
+    display: none;
+  }
+
+}
+@layer syx.molecules {
+  .mol-ai-layers {
+    display: grid;
+    gap: .6rem;
+  }
+
+  .mol-ai-layers__layer {
+    padding: 1.2rem;
+    border: 1px solid rgba(255,255,255,.25);
+    display: grid;
+    grid-template-columns: .7fr 1fr 1.6fr;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .mol-ai-layers__layer small {
+    font: 600 .56rem/1 var(--semantic-font-family-ui);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.55);
+  }
+
+  .mol-ai-layers__layer b {
+    font: 600 clamp(1.2rem,2.5vw,2.2rem)/1 var(--semantic-font-family-display);
+    letter-spacing: -.04em;
+  }
+
+  .mol-ai-layers__layer em {
+    font-style: normal;
+    color: rgba(255,255,255,.65);
+  }
+
+  .mol-ai-layers__layer--knowledge {
+    background: rgba(255,255,255,.06);
+  }
+
+  .mol-ai-layers__layer--governance {
+    background: rgba(30,58,255,.28);
+  }
+
+  .mol-ai-layers__layer--output {
+    background: #fff;
+    color: #080f1a;
+  }
+
+  .mol-ai-layers__layer--output small {
+    color: #687083;
+  }
+
+  .mol-ai-layers__layer--output em {
+    color: #687083;
+  }
+
+  .mol-ai-layers__layer--modes div {
+    grid-column: 2/4;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+  }
+
+  .mol-ai-layers__layer--modes span {
+    padding: .5rem .65rem;
+    border: 1px solid rgba(255,255,255,.25);
+    font-size: .65rem;
+  }
+
+  .mol-ai-layers__arrow {
+    text-align: center;
+    color: rgba(255,255,255,.45);
+  }
+
+}
+@layer syx.utilities {
+  @media(max-width:800px) {
+    .mol-ai-layers__layer {
+      grid-template-columns: 1fr;
+    }
+
+    .mol-ai-layers__layer--modes div {
+      grid-column: auto;
+    }
+
+  }
+  @include reduced-motion {
+    .mol-ai-layers__layer {
+      animation: none;
+      @include transition(none);
+      opacity: 1;
+    }
+
+  }
+}
+@layer syx.organisms {
+  .mol-ai-layers__layer {
+    grid-template-columns: 1fr;
+    gap: .5rem;
+  }
+
+  .mol-ai-layers__layer--modes div {
+    grid-column: auto;
+  }
+
+}

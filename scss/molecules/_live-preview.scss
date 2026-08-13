@@ -1,0 +1,114 @@
+@use "../abstracts/breakpoints" as *;
+@use "../abstracts/mixins" as *;
+
+@layer syx.molecules {
+  .mol-browser-preview {
+    border: 1px solid var(--semantic-color-border);
+    background: #fff;
+    overflow: hidden;
+  }
+
+  .mol-browser-preview>header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: .75rem .9rem;
+    font: 600 .58rem/1 var(--semantic-font-family-ui);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    background: #fff;
+    border-bottom: 1px solid var(--semantic-color-border);
+  }
+
+  .mol-browser-preview>header a {
+    color: var(--semantic-color-primary);
+    text-decoration: none;
+  }
+
+  .mol-browser-preview>footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: .75rem .9rem;
+    font: 600 .58rem/1 var(--semantic-font-family-ui);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    border-top: 1px solid var(--semantic-color-border);
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-browser-preview__viewport {
+    @include relative();
+    height: clamp(27rem,42vw,46rem);
+    overflow: hidden;
+    background: #080f1a;
+  }
+
+  .mol-browser-preview__viewport iframe {
+    @include absolute($top: 0, $left: 0);
+    z-index: 2;
+    width: 1440px;
+    height: 1100px;
+    border: 0;
+    pointer-events: none;
+    transform-origin: 0 0;
+    transform: scale(var(--browser-scale,.62));
+    background: #fff;
+  }
+
+  .mol-browser-preview__fallback {
+    @include absolute();
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+  }
+
+  .mol-browser-preview__fallback b {
+    font: 600 clamp(2rem,4vw,4rem)/1 var(--semantic-font-family-display);
+  }
+
+  .mol-browser-preview__fallback small {
+    margin-top: .5rem;
+    color: rgba(255,255,255,.55);
+  }
+
+}
+@layer syx.utilities {
+  @include until($bp-md) {
+    .mol-browser-preview__viewport {
+      height: 22rem;
+    }
+
+    .mol-browser-preview>footer {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+  }
+  @include reduced-motion {
+    .mol-browser-preview iframe {
+      scroll-behavior: auto;
+    }
+
+  }
+}
+@layer syx.molecules {
+  .mol-browser-preview__viewport--editorial-crop {
+    height: auto;
+    aspect-ratio: 1440 / 860;
+    background: #090a0c;
+  }
+
+  .mol-browser-preview__viewport--editorial-crop iframe {
+    width: 1440px;
+    height: 860px;
+    min-height: 860px;
+  }
+
+}

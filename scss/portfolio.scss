@@ -31,11 +31,37 @@
 @use "abstracts/tokens/semantic/shape" as semantic-shape;
 
 @use "abstracts/tokens/components/portfolio" as component-portfolio;
+@use "abstracts/tokens/components/case-and-evidence" as component-case;
 
 @use "base/reset";
 @use "base/elements";
+@use "base/form-and-code" as base-form-and-code;
+
+// Dentro de cada tier el orden importa: `_portfolio.scss` es la base y los
+// parciales que vienen detrás son los que antes se cargaban como hojas
+// separadas después de portfolio.css. Mantener ese orden mantiene la cascada.
 @use "atoms/portfolio" as atoms-portfolio;
+@use "atoms/case-visuals" as atoms-case-visuals;
+@use "atoms/data-table" as atoms-data-table;
+@use "atoms/shared-enhancements" as atoms-shared-enhancements;
+
 @use "molecules/portfolio" as molecules-portfolio;
+@use "molecules/research" as molecules-research;
+@use "molecules/case-diagrams" as molecules-case-diagrams;
+@use "molecules/code-visuals" as molecules-code-visuals;
+@use "molecules/header-system" as molecules-header-system;
+@use "molecules/illustrations" as molecules-illustrations;
+@use "molecules/live-preview" as molecules-live-preview;
+@use "molecules/shared-enhancements" as molecules-shared-enhancements;
+
 @use "organisms/portfolio" as organisms-portfolio;
+@use "organisms/case-shell" as organisms-case-shell;
+@use "organisms/case-42ds" as organisms-case-42ds;
+@use "organisms/sport" as organisms-sport;
+@use "organisms/illustrations" as organisms-illustrations;
+@use "organisms/home-sections" as organisms-home-sections;
+@use "organisms/shared-enhancements" as organisms-shared-enhancements;
+
 @use "utilities/portfolio" as utilities-portfolio;
+@use "utilities/keyframes" as utilities-keyframes;
 @use "abstracts/contexts";

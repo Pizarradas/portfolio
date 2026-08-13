@@ -1,4 +1,5 @@
 @use "../abstracts/breakpoints" as *;
+@use "../abstracts/mixins" as *;
 @use "../abstracts/surfaces" as *;
 
 @layer syx.molecules {
@@ -10,19 +11,23 @@
   }
 
   .mol-nav a {
-    position: relative;
+    @include relative();
+
+
     text-decoration: none;
   }
 
   .mol-nav a::after {
+    @include absolute($right: 100%, $bottom: -0.3rem, $left: 0);
+
     content: "";
-    position: absolute;
-    left: 0;
-    right: 100%;
-    bottom: -0.3rem;
+
+
+
+
     height: var(--semantic-border-width);
     background: currentColor;
-    transition: right var(--semantic-duration-hover) var(--semantic-ease);
+    @include transition(right var(--semantic-duration-hover) var(--semantic-ease));
   }
 
   .mol-nav a:hover::after {
@@ -88,7 +93,9 @@
   // one line of movement, at the width of the card, is what tells the eye
   // which of the three cards is live.
   .mol-project-card__meta {
-    position: relative;
+    @include relative();
+
+
     display: flex;
     justify-content: space-between;
     gap: var(--primitive-space-md);
@@ -103,17 +110,18 @@
   }
 
   .mol-project-card__meta::before {
+    @include absolute($top: calc(-1 * var(--semantic-border-width-strong)), $left: 0);
+
     content: "";
-    position: absolute;
-    left: 0;
-    top: calc(-1 * var(--semantic-border-width-strong));
+
+
+
     width: 100%;
     height: var(--semantic-border-width-strong);
     background: var(--component-card-accent);
     transform: scaleX(0);
     transform-origin: left center;
-    transition: transform var(--semantic-duration-transition)
-      var(--semantic-ease-emphasis);
+    @include transition(transform var(--semantic-duration-transition) var(--semantic-ease-emphasis));
   }
 
   .mol-project-card:is(:hover, :focus-within) .mol-project-card__meta::before {
@@ -241,8 +249,7 @@
     border: var(--semantic-border-width) solid var(--semantic-color-border);
     border-radius: var(--semantic-radius-pill);
     color: var(--semantic-color-text-secondary);
-    transition: color var(--semantic-duration-hover) var(--semantic-ease),
-      border-color var(--semantic-duration-hover) var(--semantic-ease);
+    @include transition(color var(--semantic-duration-hover) var(--semantic-ease), border-color var(--semantic-duration-hover) var(--semantic-ease));
   }
 
   // Marks stay monochrome so third-party brand colour never competes with the
@@ -267,7 +274,7 @@
 
   @include reduced-motion {
     .mol-mark {
-      transition: none;
+      @include transition(none);
     }
   }
 
@@ -277,7 +284,9 @@
   // The previous version drew five equal columns, which made nine years at
   // France Telecom and fifteen months at Aliseda look identical.
   .mol-career-chart {
-    position: relative; // containing block for the tooltip
+    @include relative();
+
+// containing block for the tooltip
     margin: var(--primitive-space-xl) 0 0;
   }
 
@@ -382,7 +391,7 @@
   // viewport even though they look right once the tween settles.
   .mol-career-chart__node {
     cursor: pointer;
-    transition: r var(--semantic-duration-hover) var(--semantic-ease);
+    @include transition(r var(--semantic-duration-hover) var(--semantic-ease));
   }
 
   .mol-career-chart__node:hover,
@@ -399,9 +408,11 @@
   // Tooltip. Positioned from script against the node's own box, because the
   // SVG is scaled and its internal coordinates are not screen coordinates.
   .mol-career-tip {
+    @include absolute();
+
     @include glass;
 
-    position: absolute;
+
     z-index: var(--semantic-z-overlay);
     display: grid;
     gap: var(--primitive-space-3xs);
@@ -626,8 +637,10 @@
   // set the study table to its roomy layout at exactly the width where the
   // card had least room — and the last row was clipped by the frame.
   .mol-project-card__frame {
+    @include relative();
+
     container: work-frame / inline-size;
-    position: relative;
+
     display: block;
     overflow: hidden;
     aspect-ratio: var(--component-work-frame-ratio);
@@ -636,9 +649,7 @@
     border: var(--semantic-border-width) solid var(--semantic-color-border);
     text-decoration: none;
     color: inherit;
-    transition: border-color var(--semantic-duration-hover) var(--semantic-ease),
-      box-shadow var(--semantic-duration-transition) var(--semantic-ease),
-      transform var(--semantic-duration-transition) var(--semantic-ease);
+    @include transition(border-color var(--semantic-duration-hover) var(--semantic-ease), box-shadow var(--semantic-duration-transition) var(--semantic-ease), transform var(--semantic-duration-transition) var(--semantic-ease));
   }
 
   .mol-project-card:is(:hover, :focus-within) .mol-project-card__frame {
@@ -657,8 +668,7 @@
   // it, so it neither fills the height nor scales with the visual.
   .mol-project-card__frame > *:not(.mol-project-card__enter) {
     height: 100%;
-    transition: transform var(--semantic-duration-reveal)
-      var(--semantic-ease-emphasis);
+    @include transition(transform var(--semantic-duration-reveal) var(--semantic-ease-emphasis));
   }
 
   .mol-project-card:is(:hover, :focus-within)
@@ -670,15 +680,16 @@
   // A veil, not a curtain: the evidence has to stay legible underneath, since
   // the whole argument of this section is that the visual is the proof.
   .mol-project-card__frame::after {
+    @include absolute();
+
     content: "";
-    position: absolute;
+
     inset: 0;
     z-index: 3;
     background: var(--component-work-veil);
     opacity: 0;
     pointer-events: none;
-    transition: opacity var(--semantic-duration-transition)
-      var(--semantic-ease);
+    @include transition(opacity var(--semantic-duration-transition) var(--semantic-ease));
   }
 
   .mol-project-card:is(:hover, :focus-within) .mol-project-card__frame::after {
@@ -690,10 +701,12 @@
   // summary band, a map credit — and the middle is the only place the same
   // chip can land on all three without covering one of them.
   .mol-project-card__enter {
-    position: absolute;
+    @include absolute($top: 50%, $left: 50%);
+
+
     z-index: 4;
-    left: 50%;
-    top: 50%;
+
+
     display: inline-flex;
     align-items: center;
     gap: var(--primitive-space-xs);
@@ -710,10 +723,7 @@
     white-space: nowrap;
     opacity: 0;
     transform: translate(-50%, calc(-50% + 0.6rem));
-    transition: opacity var(--semantic-duration-transition)
-        var(--semantic-ease),
-      transform var(--semantic-duration-transition)
-        var(--semantic-ease-emphasis);
+    @include transition(opacity var(--semantic-duration-transition) var(--semantic-ease), transform var(--semantic-duration-transition) var(--semantic-ease-emphasis));
   }
 
   .mol-project-card:is(:hover, :focus-within) .mol-project-card__enter {
@@ -723,7 +733,7 @@
 
   .mol-project-card__enter i {
     font-style: normal;
-    transition: transform var(--semantic-duration-hover) var(--semantic-ease);
+    @include transition(transform var(--semantic-duration-hover) var(--semantic-ease));
   }
 
   .mol-project-card:is(:hover, :focus-within) .mol-project-card__enter i {
@@ -837,7 +847,9 @@
   }
 
   .mol-evidence-system__stack figure {
-    position: relative;
+    @include relative();
+
+
     min-height: 0;
     margin: 0;
     overflow: hidden;
@@ -849,10 +861,12 @@
   // the subscribe furniture every one of these headers carries, so it never
   // covers the logo — which is the part doing the work.
   .mol-evidence-system__stack figcaption {
-    position: absolute;
+    @include absolute($top: 0, $right: 0);
+
+
     z-index: 2;
-    right: 0;
-    top: 0;
+
+
     padding: var(--primitive-space-3xs) var(--primitive-space-2xs);
     background: var(--semantic-color-surface);
     font-family: var(--semantic-font-family-ui);
@@ -1107,7 +1121,9 @@
   }
 
   .mol-evidence-live__viewport {
-    position: relative;
+    @include relative();
+
+
     flex: 1;
     min-height: 0;
     overflow: hidden;
@@ -1121,14 +1137,16 @@
   }
 
   .mol-evidence-live__overlay {
-    position: absolute;
+    @include absolute($bottom: var(--primitive-space-sm), $left: var(--primitive-space-sm));
+
+
     z-index: 2;
     // Bottom left, because the demo carries its own credit line there and the
     // card's label has to sit over it rather than beside a duplicate. The
     // Leaflet zoom controls own the top left corner.
     max-width: none;
-    left: var(--primitive-space-sm);
-    bottom: var(--primitive-space-sm);
+
+
     padding: var(--primitive-space-3xs) var(--primitive-space-2xs);
     background: var(--semantic-color-surface);
     border: var(--semantic-border-width) solid var(--semantic-color-border);
@@ -1136,7 +1154,7 @@
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
-    transition: opacity var(--semantic-duration-hover) var(--semantic-ease);
+    @include transition(opacity var(--semantic-duration-hover) var(--semantic-ease));
   }
 
   // The card's own label steps aside for the affordance instead of the two
@@ -1280,7 +1298,7 @@
     .mol-project-card__enter,
     .mol-project-card__enter i,
     .mol-project-card__meta::before {
-      transition: none;
+      @include transition(none);
     }
 
     .mol-project-card:is(:hover, :focus-within) .mol-project-card__frame,
@@ -1350,7 +1368,9 @@
   }
 
   .mol-register__frame {
-    position: relative;
+    @include relative();
+
+
     overflow: hidden;
     aspect-ratio: var(--component-register-ratio);
     background: var(--semantic-color-surface-inverse);
@@ -1360,10 +1380,12 @@
   // is transformed down to fit, so the preview is the page rather than a crop
   // of its top-left corner.
   .mol-register__frame iframe {
-    position: absolute;
+    @include absolute($top: 0, $left: 0);
+
+
     z-index: 2;
-    left: 0;
-    top: 0;
+
+
     border: 0;
     transform-origin: 0 0;
     pointer-events: none;
@@ -1371,7 +1393,9 @@
   }
 
   .mol-register__fallback {
-    position: absolute;
+    @include absolute();
+
+
     inset: 0;
     z-index: 1;
     display: flex;
@@ -1775,7 +1799,7 @@
 
   @include reduced-motion {
     .mol-nav a::after {
-      transition: none;
+      @include transition(none);
     }
   }
 }

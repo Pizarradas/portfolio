@@ -1,0 +1,25 @@
+// MIXINS — ayudas de comportamiento
+//
+// `transition()` existe por la regla R03 de SYX: una transición escrita en
+// crudo se salta la guarda de prefers-reduced-motion. El mixin la añade
+// siempre, así que respetar la preferencia del sistema deja de depender de que
+// alguien se acuerde.
+//
+// @example
+//   @include transition(opacity var(--semantic-duration-hover) var(--semantic-ease));
+
+@mixin transition($props...) {
+  transition: $props;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+// Texto de una línea con elipsis.
+@mixin truncate($max-width: 100%) {
+  max-width: $max-width;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

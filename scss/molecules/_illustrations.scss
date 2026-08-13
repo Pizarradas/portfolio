@@ -1,0 +1,171 @@
+@use "../abstracts/breakpoints" as *;
+@use "../abstracts/mixins" as *;
+
+@layer syx.molecules {
+  .mol-ill-case-card {
+    margin: 0;
+    background: #fff;
+    border: 1px solid var(--ill-line);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(18px);
+    @include transition(opacity .55s ease var(--delay),transform .55s ease var(--delay));
+  }
+
+  .js-ill-gallery.is-visible .mol-ill-case-card {
+    opacity: 1;
+    transform: none;
+  }
+
+  .mol-ill-case-card>div {
+    display: grid;
+    place-items: center;
+    background: #fff;
+    min-height: 14rem;
+    padding: 1rem;
+    overflow: hidden;
+  }
+
+  .mol-ill-case-card img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .mol-ill-case-card figcaption {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+    padding: .7rem .8rem;
+    border-top: 1px solid var(--ill-line);
+    font: .6rem/1.2 var(--semantic-font-family-ui);
+    text-transform: uppercase;
+    letter-spacing: .07em;
+  }
+
+  .mol-ill-case-card figcaption span {
+    color: var(--semantic-color-primary);
+  }
+
+  .mol-ill-case-card figcaption b {
+    font-weight: 600;
+    text-align: right;
+  }
+
+}
+@layer syx.utilities {
+  @include reduced-motion {
+    .mol-ill-case-card {
+      opacity: 1;
+      transform: none;
+      @include transition(none);
+    }
+
+  }
+}
+@layer syx.molecules {
+  .mol-ill-principles {
+    display: grid;
+    gap: 1px;
+    background: var(--ill-line);
+    border: 1px solid var(--ill-line);
+  }
+
+  .mol-ill-principles article {
+    background: #fff;
+    padding: 1rem;
+    min-height: 10rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mol-ill-principles article>b {
+    font: .58rem/1 var(--semantic-font-family-ui);
+    color: var(--semantic-color-primary);
+  }
+
+  .mol-ill-principles strong {
+    font: 600 1.35rem/1 var(--semantic-font-family-display);
+    letter-spacing: -.035em;
+    margin: auto 0 .5rem;
+  }
+
+  .mol-ill-principles p {
+    font: .75rem/1.45 var(--semantic-font-family-ui);
+    color: var(--semantic-color-text-secondary);
+    margin: 0;
+  }
+
+}
+@layer syx.utilities {
+  @include from($bp-md) {
+    .mol-ill-principles {
+      grid-template-columns: 1fr 1fr;
+    }
+
+  }
+}
+@layer syx.molecules {
+  .mol-ill-collage {
+    @include relative();
+    margin: 0;
+    min-width: 0;
+    overflow: hidden;
+    background: #fff;
+    opacity: 0;
+    transform: translateY(16px);
+    @include transition(opacity .55s ease var(--delay),transform .55s ease var(--delay));
+  }
+
+  .mol-ill-collage img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    padding: clamp(.35rem,1vw,.9rem);
+  }
+
+  .mol-ill-collage figcaption {
+    @include absolute($right: .65rem, $bottom: .55rem, $left: .65rem);
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: .7rem;
+    padding: .42rem .5rem;
+    background: rgba(255,255,255,.88);
+    backdrop-filter: blur(8px);
+    font: 600 .52rem/1 var(--semantic-font-family-ui);
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(.4rem);
+    @include transition(opacity .25s ease,transform .25s ease);
+  }
+
+  .mol-ill-collage:hover figcaption {
+    opacity: 1;
+    transform: none;
+  }
+
+  .mol-ill-collage:focus-within figcaption {
+    opacity: 1;
+    transform: none;
+  }
+
+  .mol-ill-collage figcaption span {
+    color: var(--semantic-color-primary);
+  }
+
+}
+@layer syx.utilities {
+  @include reduced-motion {
+    .mol-ill-collage {
+      opacity: 1;
+      transform: none;
+      @include transition(none);
+    }
+
+  }
+}
