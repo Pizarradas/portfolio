@@ -43,7 +43,6 @@
 @use "atoms/portfolio" as atoms-portfolio;
 @use "atoms/case-visuals" as atoms-case-visuals;
 @use "atoms/data-table" as atoms-data-table;
-@use "atoms/shared-enhancements" as atoms-shared-enhancements;
 
 @use "molecules/portfolio" as molecules-portfolio;
 @use "molecules/research" as molecules-research;
@@ -52,7 +51,6 @@
 @use "molecules/header-system" as molecules-header-system;
 @use "molecules/illustrations" as molecules-illustrations;
 @use "molecules/live-preview" as molecules-live-preview;
-@use "molecules/shared-enhancements" as molecules-shared-enhancements;
 
 @use "organisms/portfolio" as organisms-portfolio;
 @use "organisms/case-shell" as organisms-case-shell;
@@ -60,7 +58,6 @@
 @use "organisms/sport" as organisms-sport;
 @use "organisms/illustrations" as organisms-illustrations;
 @use "organisms/home-sections" as organisms-home-sections;
-@use "organisms/shared-enhancements" as organisms-shared-enhancements;
 
 @use "utilities/portfolio" as utilities-portfolio;
 @use "utilities/keyframes" as utilities-keyframes;

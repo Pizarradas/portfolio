@@ -3,12 +3,12 @@
 
 @layer syx.organisms {
   .org-case42-overview>* {
-    max-width: var(--case42-max);
+    max-width: var(--component-case42-max-width);
     margin-inline: auto;
   }
 
   .org-case42-overview {
-    padding: 2rem var(--mf-inline);
+    padding: 2rem var(--semantic-space-shell-inline);
     background: var(--semantic-color-surface-alt);
     border-block: 1px solid var(--semantic-color-border);
   }
@@ -17,7 +17,7 @@
 @layer syx.utilities {
   @media (min-width:1200px) {
     .org-case42-overview {
-      padding: clamp(4rem,6vw,6rem) var(--pe-inline);
+      padding: clamp(4rem,6vw,6rem) var(--semantic-space-case-inline);
     }
 
   }
@@ -99,12 +99,12 @@
     grid-template-columns: 1fr;
     gap: 1.2rem;
     justify-content: center;
-    padding: var(--mf-section) var(--mf-inline);
+    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
     border-bottom: 1px solid var(--semantic-color-border);
   }
 
   .org-case42-section[data-act]::before {
-    @include absolute($top: .85rem, $left: var(--mf-inline));
+    @include absolute($top: .85rem, $left: var(--semantic-space-shell-inline));
     content: attr(data-act);
     font: 600 .58rem/1 var(--semantic-font-family-ui);
     letter-spacing: .12em;
@@ -116,7 +116,7 @@
     font: 600 clamp(2.5rem,5vw,5rem)/.95 var(--semantic-font-family-display);
     letter-spacing: -.055em;
     margin: .5rem 0 0;
-    font-size: var(--mf-h2);
+    font-size: var(--semantic-font-size-section-compact);
     line-height: .98;
   }
 
@@ -142,7 +142,7 @@
     .org-case42-section {
       grid-template-columns: minmax(18rem,27rem) minmax(0,48rem);
       gap: clamp(5rem,8vw,9rem);
-      padding: var(--pe-section) var(--pe-inline);
+      padding: var(--semantic-space-case-block) var(--semantic-space-case-inline);
     }
 
     .org-case42-section__heading h2 {
@@ -204,7 +204,7 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: clamp(2rem,6vw,7rem);
-    padding: var(--mf-section) var(--mf-inline);
+    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
     background: var(--semantic-color-primary);
     color: #fff;
     border-bottom: 1px solid rgba(255,255,255,.18);
@@ -257,7 +257,7 @@
 }
 @layer syx.organisms {
   .org-hierarchy-diagram {
-    padding: var(--mf-section) var(--mf-inline);
+    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
     border-bottom: 1px solid var(--semantic-color-border);
     display: grid;
     grid-template-columns: 1fr;
@@ -270,7 +270,7 @@
     font: 600 clamp(2.5rem,5vw,5.5rem)/.92 var(--semantic-font-family-display);
     letter-spacing: -.06em;
     margin: 0;
-    font-size: var(--mf-h2);
+    font-size: var(--semantic-font-size-section-compact);
   }
 
 }
@@ -283,13 +283,13 @@
   }
   @media (min-width:1200px) {
     .org-hierarchy-diagram>* {
-      max-width: var(--pe-content-max);
+      max-width: var(--semantic-width-case-max);
       margin-left: auto;
       margin-right: auto;
     }
 
     .org-hierarchy-diagram {
-      padding: var(--pe-section) var(--pe-inline);
+      padding: var(--semantic-space-case-block) var(--semantic-space-case-inline);
       grid-template-columns: .7fr 1.3fr;
     }
 
@@ -324,7 +324,7 @@
 }
 @layer syx.organisms {
   .org-architecture-atlas {
-    padding: var(--mf-section) var(--mf-inline);
+    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
     border-bottom: 1px solid var(--semantic-color-border);
   }
 
@@ -340,7 +340,7 @@
     font: 600 clamp(2.5rem,5vw,5.5rem)/.92 var(--semantic-font-family-display);
     letter-spacing: -.06em;
     margin: 0;
-    font-size: var(--mf-h2);
+    font-size: var(--semantic-font-size-section-compact);
   }
 
 }
@@ -353,11 +353,11 @@
   }
   @media (min-width:1200px) {
     .org-architecture-atlas {
-      padding: var(--pe-section) var(--pe-inline);
+      padding: var(--semantic-space-case-block) var(--semantic-space-case-inline);
     }
 
     .org-architecture-atlas>* {
-      max-width: var(--pe-content-max);
+      max-width: var(--semantic-width-case-max);
       margin-left: auto;
       margin-right: auto;
     }
@@ -405,7 +405,7 @@
 }
 @layer syx.organisms {
   .org-ai-architecture {
-    padding: var(--mf-section) var(--mf-inline);
+    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
     border-bottom: 1px solid var(--semantic-color-border);
     display: grid;
     grid-template-columns: 1fr;
@@ -420,7 +420,7 @@
     font: 600 clamp(2.5rem,5vw,5.5rem)/.92 var(--semantic-font-family-display);
     letter-spacing: -.06em;
     margin: 0;
-    font-size: var(--mf-h2);
+    font-size: var(--semantic-font-size-section-compact);
   }
 
 }
@@ -433,13 +433,13 @@
   }
   @media (min-width:1200px) {
     .org-ai-architecture>* {
-      max-width: var(--pe-content-max);
+      max-width: var(--semantic-width-case-max);
       margin-left: auto;
       margin-right: auto;
     }
 
     .org-ai-architecture {
-      padding: var(--pe-section) var(--pe-inline);
+      padding: var(--semantic-space-case-block) var(--semantic-space-case-inline);
       grid-template-columns: .7fr 1.3fr;
     }
 
@@ -473,7 +473,7 @@
 }
 @layer syx.organisms {
   .org-operating-model {
-    padding: var(--mf-section) var(--mf-inline);
+    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
     border-bottom: 1px solid var(--semantic-color-border);
     background: #fff;
   }
@@ -490,7 +490,7 @@
     font: 600 clamp(2.5rem,5vw,5.5rem)/.92 var(--semantic-font-family-display);
     letter-spacing: -.06em;
     margin: 0;
-    font-size: var(--mf-h2);
+    font-size: var(--semantic-font-size-section-compact);
   }
 
 }
@@ -503,11 +503,11 @@
   }
   @media (min-width:1200px) {
     .org-operating-model {
-      padding: var(--pe-section) var(--pe-inline);
+      padding: var(--semantic-space-case-block) var(--semantic-space-case-inline);
     }
 
     .org-operating-model>* {
-      max-width: var(--pe-content-max);
+      max-width: var(--semantic-width-case-max);
       margin-left: auto;
       margin-right: auto;
     }
@@ -558,7 +558,7 @@
     font: 600 clamp(2.8rem,5vw,5.5rem)/.92 var(--semantic-font-family-display);
     letter-spacing: -.06em;
     margin: 0;
-    font-size: var(--mf-h2);
+    font-size: var(--semantic-font-size-section-compact);
   }
 
   .org-code-gallery {
@@ -576,7 +576,7 @@
     gap: 1rem;
     align-items: end;
     background: #fff;
-    padding: var(--mf-section) var(--mf-inline);
+    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
   }
 
 }
@@ -628,7 +628,7 @@
     font: 600 clamp(2.8rem,5vw,5.5rem)/.92 var(--semantic-font-family-display);
     letter-spacing: -.06em;
     margin: 0;
-    font-size: var(--mf-h2);
+    font-size: var(--semantic-font-size-section-compact);
   }
 
   .org-component-anatomy {
@@ -636,7 +636,7 @@
     grid-template-columns: 1fr;
     gap: 1rem;
     align-items: center;
-    padding: var(--mf-section) var(--mf-inline);
+    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
     background: var(--semantic-color-surface-alt);
     border-bottom: 1px solid var(--semantic-color-border);
   }
@@ -651,13 +651,13 @@
   }
   @media (min-width:1200px) {
     .org-component-anatomy>* {
-      max-width: var(--pe-content-max);
+      max-width: var(--semantic-width-case-max);
       margin-left: auto;
       margin-right: auto;
     }
 
     .org-component-anatomy {
-      padding: var(--pe-section) var(--pe-inline);
+      padding: var(--semantic-space-case-block) var(--semantic-space-case-inline);
       grid-template-columns: .7fr 1.3fr;
     }
 
@@ -696,7 +696,7 @@
 }
 @layer syx.organisms {
   .org-header-system {
-    padding: var(--mf-section) var(--mf-inline);
+    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
     border-bottom: 1px solid var(--semantic-color-border);
   }
 
@@ -712,7 +712,7 @@
     font: 600 clamp(3rem,6vw,6.8rem)/.9 var(--semantic-font-family-display);
     letter-spacing: -.06em;
     margin: 0;
-    font-size: var(--mf-h2);
+    font-size: var(--semantic-font-size-section-compact);
   }
 
 }
@@ -725,11 +725,11 @@
   }
   @media (min-width:1200px) {
     .org-header-system {
-      padding: var(--pe-section) var(--pe-inline);
+      padding: var(--semantic-space-case-block) var(--semantic-space-case-inline);
     }
 
     .org-header-system>* {
-      max-width: var(--pe-content-max);
+      max-width: var(--semantic-width-case-max);
       margin-left: auto;
       margin-right: auto;
     }
@@ -779,7 +779,7 @@
 }
 @layer syx.organisms {
   .org-foundation-showcase {
-    padding: var(--mf-section) var(--mf-inline);
+    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
     background: #080f1a;
     color: #fff;
     border-bottom: 1px solid rgba(255,255,255,.14);
@@ -797,7 +797,7 @@
     font: 600 clamp(3rem,6vw,6.5rem)/.9 var(--semantic-font-family-display);
     letter-spacing: -.06em;
     margin: 0;
-    font-size: var(--mf-h2);
+    font-size: var(--semantic-font-size-section-compact);
   }
 
 }
@@ -810,11 +810,11 @@
   }
   @media (min-width:1200px) {
     .org-foundation-showcase {
-      padding: var(--pe-section) var(--pe-inline);
+      padding: var(--semantic-space-case-block) var(--semantic-space-case-inline);
     }
 
     .org-foundation-showcase>* {
-      max-width: var(--pe-content-max);
+      max-width: var(--semantic-width-case-max);
       margin-left: auto;
       margin-right: auto;
     }
@@ -827,9 +827,9 @@
 }
 @layer syx.organisms {
   .org-case42-hero {
-    max-width: var(--case42-max);
+    max-width: var(--component-case42-max-width);
     margin: auto;
-    padding: 4.25rem var(--mf-inline) 2.75rem;
+    padding: 4.25rem var(--semantic-space-shell-inline) 2.75rem;
   }
 
   .org-case42-hero h1 {
@@ -837,7 +837,7 @@
     font: 600 clamp(4rem,9vw,9rem)/.88 var(--semantic-font-family-display);
     letter-spacing: -.055em;
     margin: .5rem 0 1.35rem;
-    font-size: var(--mf-title);
+    font-size: var(--semantic-font-size-hero-compact);
     line-height: .91;
   }
 
@@ -875,7 +875,7 @@
   }
   @media (min-width:1200px) {
     .org-case42-hero {
-      padding: clamp(8rem,10vw,12rem) var(--pe-inline) clamp(5rem,7vw,7rem);
+      padding: clamp(8rem,10vw,12rem) var(--semantic-space-case-inline) clamp(5rem,7vw,7rem);
     }
 
     .org-case42-hero h1 {

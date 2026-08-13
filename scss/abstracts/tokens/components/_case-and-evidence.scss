@@ -1,30 +1,67 @@
-// Tokens que venían declarados dentro de las hojas sueltas de css/.
-// Se conservan tal cual para no alterar ningún valor computado; el paso
-// siguiente es promoverlos a la capa semántica y retirar los prefijos ad-hoc
-// (--mf-, --pe-, --v22-).
+// Tokens de las páginas de caso y de los visuales de evidencia.
+//
+// Vienen de las hojas sueltas que había en css/. Los prefijos ad-hoc con los
+// que nacieron (--mf-, --pe-, --case42-, --v22-) están retirados: lo que era un
+// alias exacto de un token semántico se sustituyó por ese token, y el resto se
+// renombró a la capa que le corresponde. Los valores no han cambiado.
+//
+//   --mf-inline    → --semantic-space-shell-inline
+//   --mf-section   → --semantic-space-shell-block
+//   --mf-title     → --semantic-font-size-hero-compact
+//   --mf-h2        → --semantic-font-size-section-compact
+//   --pe-inline    → --semantic-space-case-inline
+//   --pe-section   → --semantic-space-case-block
+//   --pe-content-max → --semantic-width-case-max
+//   --case42-*     → --component-case42-*
+//   --v22-display / --v22-ui / --v22-blue / --v22-paper / --v22-line
+//                  → eran alias exactos; se usan ya los tokens semánticos
+//   --v22-ink / --v22-night / --v22-muted → --component-art-*
 
 @use "../../breakpoints" as *;
+
+@layer syx.tokens {
+  :root {
+    // Escala del armazón de página. Es la base móvil; se amplía más abajo.
+    --semantic-space-shell-inline: 1rem;
+    --semantic-space-shell-block: 3.5rem;
+    --semantic-font-size-hero-compact: clamp(2.55rem, 12.5vw, 3.45rem);
+    --semantic-font-size-section-compact: clamp(2.1rem, 10vw, 3rem);
+
+    // Caso 42DS.
+    --component-case42-max-width: 92rem;
+    --component-case42-reading-width: 48rem;
+    --component-case42-rule: var(--semantic-color-border);
+    --component-case42-motion-duration: 720ms;
+    --component-case42-chart-height: 22rem;
+
+    // Dirección de arte de la sección de trayectoria. Los tres valores que no
+    // coincidían con ningún token existente; el resto eran alias y ya no están.
+    --component-art-ink: #06101f;
+    --component-art-night: #07102f;
+    --component-art-muted: #6c7484;
+  }
+}
 
 @layer syx.utilities {
   @include from($bp-md) {
     :root {
-      --mf-inline: clamp(1.5rem,4vw,4rem);
-      --mf-section: clamp(5rem,9vw,9rem);
+      --semantic-space-shell-inline: clamp(1.5rem,4vw,4rem);
+      --semantic-space-shell-block: clamp(5rem,9vw,9rem);
     }
 
   }
   @media (min-width:768px) and (max-width:1199px) {
     :root {
-      --pe-inline: clamp(2rem,4vw,3.5rem);
-      --pe-section: clamp(5rem,8vw,7rem);
+      --semantic-space-case-inline: clamp(2rem,4vw,3.5rem);
+      --semantic-space-case-block: clamp(5rem,8vw,7rem);
     }
 
   }
   @media (min-width:1200px) {
     :root {
-      --pe-inline: clamp(2.5rem,3vw,5rem);
-      --pe-section: clamp(6rem,8vw,9rem);
-      --pe-content-max: 108rem;
+      --semantic-space-case-inline: clamp(2.5rem,3vw,5rem);
+      --semantic-space-case-block: clamp(6rem,8vw,9rem);
+      --semantic-width-case-max: 108rem;
     }
 
   }
@@ -80,10 +117,8 @@
     --demo-brand: #f53036;
     --grid-line: rgba(30,58,255,.16);
     --grid-fill: rgba(30,58,255,.08);
-    --mf-inline: 1rem;
-    --mf-section: 3.5rem;
-    --mf-gap: 1rem;
-    --mf-title: clamp(2.55rem,12.5vw,3.45rem);
+    // La base del armazón se declara una sola vez, arriba. Aquí estaba
+    // repetida porque venía de mobile-first-v19.css; --mf-gap no lo usaba nadie.
     --preview-bg: #080f1a;
     --preview-chrome: #f5f7fa;
     --preview-border: var(--semantic-color-border);

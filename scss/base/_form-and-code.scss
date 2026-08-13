@@ -57,7 +57,7 @@
   .js-reveal {
     opacity: 0;
     transform: translateY(1.4rem);
-    @include transition(opacity var(--case42-motion-duration) ease,transform var(--case42-motion-duration) cubic-bezier(.2,.75,.25,1));
+    @include transition(opacity var(--component-case42-motion-duration) ease,transform var(--component-case42-motion-duration) cubic-bezier(.2,.75,.25,1));
   }
 
   .js-reveal.is-visible {

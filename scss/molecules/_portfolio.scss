@@ -6,7 +6,7 @@
   .mol-nav {
     display: flex;
     align-items: center;
-    gap: clamp(var(--primitive-space-md), 3vw, var(--primitive-space-xl));
+    gap: clamp(var(--semantic-space-component-md), 3vw, var(--semantic-space-component-xl));
     font-size: var(--semantic-font-size-ui);
   }
 
@@ -46,9 +46,9 @@
   .mol-section-heading {
     display: grid;
     grid-template-columns: minmax(2rem, 7rem) minmax(0, 1fr) minmax(16rem, 28rem);
-    gap: var(--primitive-space-lg);
+    gap: var(--semantic-space-component-lg);
     align-items: start;
-    padding-top: var(--primitive-space-md);
+    padding-top: var(--semantic-space-component-md);
     margin-bottom: var(--semantic-space-block);
     border-top: var(--semantic-border-width) solid var(--semantic-color-border);
   }
@@ -63,12 +63,12 @@
 
   .mol-project-card {
     display: grid;
-    gap: var(--primitive-space-md);
+    gap: var(--semantic-space-component-md);
   }
 
   .mol-project-card__body {
     display: grid;
-    gap: var(--primitive-space-sm);
+    gap: var(--semantic-space-component-sm);
     align-content: start;
   }
 
@@ -98,13 +98,13 @@
 
     display: flex;
     justify-content: space-between;
-    gap: var(--primitive-space-md);
-    padding-top: var(--primitive-space-sm);
+    gap: var(--semantic-space-component-md);
+    padding-top: var(--semantic-space-component-sm);
     border-top: var(--semantic-border-width) solid var(--semantic-color-border);
     font-size: var(--semantic-font-size-caption);
-    font-weight: var(--primitive-font-weight-bold);
+    font-weight: var(--semantic-font-weight-strong);
     text-transform: uppercase;
-    letter-spacing: var(--primitive-letter-spacing-wide);
+    letter-spacing: var(--semantic-letter-spacing-wide);
     color: var(--semantic-color-text-muted);
     font-variant-numeric: tabular-nums;
   }
@@ -131,36 +131,36 @@
   // The index is the section's spine — 01, 02, 03 — so it is set as a figure
   // in the accent colour rather than buried in a string of small caps.
   .mol-project-card__meta b {
-    margin-right: var(--primitive-space-3xs);
+    margin-right: var(--semantic-space-component-3xs);
     color: var(--semantic-color-primary);
   }
 
   .mol-process {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--primitive-space-xs);
+    gap: var(--semantic-space-component-xs);
   }
 
   .mol-process span {
-    padding: var(--primitive-space-xs) var(--primitive-space-sm);
+    padding: var(--semantic-space-component-xs) var(--semantic-space-component-sm);
     border: var(--semantic-border-width) solid var(--component-chip-border);
     border-radius: var(--component-chip-radius);
     font-size: var(--semantic-font-size-ui);
-    font-weight: var(--primitive-font-weight-bold);
+    font-weight: var(--semantic-font-weight-strong);
   }
 
   // About — factual key/value rows
   .mol-about-facts {
     display: grid;
-    margin-top: var(--primitive-space-lg);
+    margin-top: var(--semantic-space-component-lg);
     border-top: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   .mol-about-facts div {
     display: grid;
     grid-template-columns: minmax(6rem, 9rem) minmax(0, 1fr);
-    gap: var(--primitive-space-3xs) var(--primitive-space-md);
-    padding: var(--primitive-space-sm) 0;
+    gap: var(--semantic-space-component-3xs) var(--semantic-space-component-md);
+    padding: var(--semantic-space-component-sm) 0;
     border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
   }
@@ -168,9 +168,9 @@
   .mol-about-facts dt {
     padding-top: 0.15rem;
     font-size: var(--semantic-font-size-caption);
-    font-weight: var(--primitive-font-weight-black);
+    font-weight: var(--semantic-font-weight-display);
     text-transform: uppercase;
-    letter-spacing: var(--primitive-letter-spacing-wider);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     color: var(--semantic-color-text-muted);
   }
 
@@ -186,13 +186,13 @@
   // among Jira and Google Sheets. The tools sit on the right as real marks.
   .mol-practice-list {
     list-style: none;
-    margin: var(--primitive-space-md) 0 0;
+    margin: var(--semantic-space-component-md) 0 0;
     padding: 0;
     border-top: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   .mol-practice-list li {
-    padding: var(--primitive-space-md) 0;
+    padding: var(--semantic-space-component-md) 0;
     border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
   }
@@ -202,13 +202,13 @@
     font-family: var(--semantic-font-family-display);
     font-size: var(--semantic-font-size-title-sm);
     font-weight: var(--semantic-font-weight-display);
-    letter-spacing: var(--primitive-letter-spacing-tight);
+    letter-spacing: var(--semantic-letter-spacing-tight);
     line-height: var(--semantic-line-height-title);
   }
 
   .mol-practice-list span {
     display: block;
-    margin-top: var(--primitive-space-3xs);
+    margin-top: var(--semantic-space-component-3xs);
     max-width: var(--semantic-measure-lede);
     color: var(--semantic-color-text-secondary);
     font-size: var(--semantic-font-size-ui);
@@ -216,17 +216,17 @@
   }
 
   .mol-mark-group {
-    margin-top: var(--primitive-space-lg);
+    margin-top: var(--semantic-space-component-lg);
   }
 
   .mol-mark-group h3 {
     font-family: var(--semantic-font-family-ui);
     font-size: var(--semantic-font-size-caption);
-    font-weight: var(--primitive-font-weight-black);
-    letter-spacing: var(--primitive-letter-spacing-wider);
+    font-weight: var(--semantic-font-weight-display);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
     color: var(--semantic-color-text-muted);
-    padding-bottom: var(--primitive-space-xs);
+    padding-bottom: var(--semantic-space-component-xs);
     border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
   }
@@ -235,17 +235,17 @@
     list-style: none;
     display: flex;
     flex-wrap: wrap;
-    gap: var(--primitive-space-xs);
-    margin: var(--primitive-space-sm) 0 0;
+    gap: var(--semantic-space-component-xs);
+    margin: var(--semantic-space-component-sm) 0 0;
     padding: 0;
   }
 
   .mol-mark {
     display: inline-flex;
     align-items: center;
-    gap: var(--primitive-space-xs);
-    padding: var(--primitive-space-2xs) var(--primitive-space-sm)
-      var(--primitive-space-2xs) var(--primitive-space-xs);
+    gap: var(--semantic-space-component-xs);
+    padding: var(--semantic-space-component-2xs) var(--semantic-space-component-sm)
+      var(--semantic-space-component-2xs) var(--semantic-space-component-xs);
     border: var(--semantic-border-width) solid var(--semantic-color-border);
     border-radius: var(--semantic-radius-pill);
     color: var(--semantic-color-text-secondary);
@@ -263,7 +263,7 @@
 
   .mol-mark span {
     font-size: var(--semantic-font-size-ui);
-    font-weight: var(--primitive-font-weight-medium);
+    font-weight: var(--semantic-font-weight-medium);
     white-space: nowrap;
   }
 
@@ -287,7 +287,7 @@
     @include relative();
 
 // containing block for the tooltip
-    margin: var(--primitive-space-xl) 0 0;
+    margin: var(--semantic-space-component-xl) 0 0;
   }
 
   .mol-career-chart__svg {
@@ -308,7 +308,7 @@
     fill: var(--semantic-color-text-muted);
     font-family: var(--semantic-font-family-ui);
     font-size: 13px;
-    font-weight: var(--primitive-font-weight-bold);
+    font-weight: var(--semantic-font-weight-strong);
     letter-spacing: 0.1em;
     text-transform: uppercase;
   }
@@ -349,7 +349,7 @@
     fill: var(--semantic-color-text);
     font-family: var(--semantic-font-family-ui);
     font-size: 14px;
-    font-weight: var(--primitive-font-weight-bold);
+    font-weight: var(--semantic-font-weight-strong);
   }
 
   .mol-career-chart__bars .bar-dur {
@@ -362,7 +362,7 @@
     fill: var(--semantic-color-text-muted);
     font-family: var(--semantic-font-family-ui);
     font-size: 13px;
-    font-weight: var(--primitive-font-weight-black);
+    font-weight: var(--semantic-font-weight-display);
     font-variant-numeric: tabular-nums;
     letter-spacing: 0.08em;
   }
@@ -415,9 +415,9 @@
 
     z-index: var(--semantic-z-overlay);
     display: grid;
-    gap: var(--primitive-space-3xs);
+    gap: var(--semantic-space-component-3xs);
     width: min(22rem, 80vw);
-    padding: var(--primitive-space-md);
+    padding: var(--semantic-space-component-md);
     border-radius: var(--semantic-radius-surface);
     pointer-events: none;
   }
@@ -430,21 +430,21 @@
     font-family: var(--semantic-font-family-display);
     font-size: var(--semantic-font-size-body-lg);
     font-weight: var(--semantic-font-weight-display);
-    letter-spacing: var(--primitive-letter-spacing-tight);
+    letter-spacing: var(--semantic-letter-spacing-tight);
   }
 
   .mol-career-tip__meta,
   .mol-career-tip__scope {
     font-size: var(--semantic-font-size-caption);
-    font-weight: var(--primitive-font-weight-bold);
+    font-weight: var(--semantic-font-weight-strong);
     text-transform: uppercase;
-    letter-spacing: var(--primitive-letter-spacing-wide);
+    letter-spacing: var(--semantic-letter-spacing-wide);
     color: var(--semantic-color-text-muted);
   }
 
   .mol-career-tip__scope {
     justify-self: start;
-    margin-top: var(--primitive-space-3xs);
+    margin-top: var(--semantic-space-component-3xs);
     padding: 0.2rem 0.5rem;
     border: var(--semantic-border-width) solid var(--semantic-color-border);
     border-radius: var(--semantic-radius-pill);
@@ -458,9 +458,9 @@
 
   .mol-career-tip ul {
     display: grid;
-    gap: var(--primitive-space-3xs);
-    margin: var(--primitive-space-3xs) 0 0;
-    padding-left: var(--primitive-space-md);
+    gap: var(--semantic-space-component-3xs);
+    margin: var(--semantic-space-component-3xs) 0 0;
+    padding-left: var(--semantic-space-component-md);
     font-size: var(--semantic-font-size-ui);
     line-height: var(--semantic-line-height-ui);
     color: var(--semantic-color-text-secondary);
@@ -471,22 +471,22 @@
     list-style: none;
     display: grid;
     gap: 0;
-    margin: var(--primitive-space-xl) 0 0;
+    margin: var(--semantic-space-component-xl) 0 0;
     padding: 0;
     border-top: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   .mol-career-role {
     display: grid;
-    gap: var(--primitive-space-3xs);
-    padding: var(--primitive-space-md) 0;
+    gap: var(--semantic-space-component-3xs);
+    padding: var(--semantic-space-component-md) 0;
     border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
   }
 
   .mol-career-role__num {
     font-size: var(--semantic-font-size-caption);
-    font-weight: var(--primitive-font-weight-black);
+    font-weight: var(--semantic-font-weight-display);
     font-variant-numeric: tabular-nums;
     letter-spacing: 0.08em;
     color: var(--semantic-color-primary);
@@ -494,8 +494,8 @@
 
   .mol-career-role time {
     font-size: var(--semantic-font-size-caption);
-    font-weight: var(--primitive-font-weight-bold);
-    letter-spacing: var(--primitive-letter-spacing-wide);
+    font-weight: var(--semantic-font-weight-strong);
+    letter-spacing: var(--semantic-letter-spacing-wide);
     color: var(--semantic-color-text-muted);
     font-variant-numeric: tabular-nums;
   }
@@ -504,8 +504,8 @@
     font-family: var(--semantic-font-family-display);
     font-size: var(--semantic-font-size-title-sm);
     font-weight: var(--semantic-font-weight-display);
-    letter-spacing: var(--primitive-letter-spacing-tight);
-    line-height: var(--primitive-line-height-tight);
+    letter-spacing: var(--semantic-letter-spacing-tight);
+    line-height: var(--semantic-line-height-display);
   }
 
   .mol-career-role__role {
@@ -522,12 +522,12 @@
   .mol-career-role__meta {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--primitive-space-xs) var(--primitive-space-sm);
-    margin-top: var(--primitive-space-3xs);
+    gap: var(--semantic-space-component-xs) var(--semantic-space-component-sm);
+    margin-top: var(--semantic-space-component-3xs);
     font-size: var(--semantic-font-size-caption);
-    font-weight: var(--primitive-font-weight-bold);
+    font-weight: var(--semantic-font-weight-strong);
     text-transform: uppercase;
-    letter-spacing: var(--primitive-letter-spacing-wide);
+    letter-spacing: var(--semantic-letter-spacing-wide);
   }
 
   .mol-career-role__meta i {
@@ -558,8 +558,8 @@
     }
 
     .mol-career-role {
-      padding: var(--primitive-space-md) var(--primitive-space-md)
-        var(--primitive-space-lg) 0;
+      padding: var(--semantic-space-component-md) var(--semantic-space-component-md)
+        var(--semantic-space-component-lg) 0;
       border-top: var(--semantic-border-width) solid
         var(--semantic-color-border);
       border-bottom: 0;
@@ -569,7 +569,7 @@
   // Contact — the page's only real call to action
   .mol-contact-list {
     list-style: none;
-    margin: var(--primitive-space-3xs) 0 0;
+    margin: var(--semantic-space-component-3xs) 0 0;
     padding: 0;
     border-top: var(--semantic-border-width) solid var(--semantic-color-border);
   }
@@ -584,10 +584,10 @@
     align-items: center;
     justify-content: space-between;
     gap: var(--component-contact-row-gap);
-    padding: var(--primitive-space-md) 0;
+    padding: var(--semantic-space-component-md) 0;
     font-size: var(--semantic-font-size-title-sm);
-    font-weight: var(--primitive-font-weight-black);
-    letter-spacing: var(--primitive-letter-spacing-display);
+    font-weight: var(--semantic-font-weight-display);
+    letter-spacing: var(--semantic-letter-spacing-display);
     text-decoration: none;
   }
 
@@ -616,7 +616,7 @@
     .mol-contact-list a {
       flex-direction: column;
       align-items: flex-start;
-      gap: var(--primitive-space-3xs);
+      gap: var(--semantic-space-component-3xs);
     }
   }
 
@@ -709,14 +709,14 @@
 
     display: inline-flex;
     align-items: center;
-    gap: var(--primitive-space-xs);
-    padding: var(--primitive-space-xs) var(--primitive-space-md);
+    gap: var(--semantic-space-component-xs);
+    padding: var(--semantic-space-component-xs) var(--semantic-space-component-md);
     background: var(--component-work-enter-bg);
     color: var(--component-work-enter-fg);
     border-radius: var(--semantic-radius-pill);
     font-family: var(--semantic-font-family-ui);
     font-size: var(--semantic-font-size-eyebrow);
-    font-weight: var(--primitive-font-weight-bold);
+    font-weight: var(--semantic-font-weight-strong);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
     text-decoration: none;
@@ -757,9 +757,9 @@
   // actually spans — so it sits above the headline rather than under it.
   .mol-project-card__proof {
     display: grid;
-    gap: var(--primitive-space-3xs);
-    margin: 0 0 var(--primitive-space-md);
-    padding-bottom: var(--primitive-space-md);
+    gap: var(--semantic-space-component-3xs);
+    margin: 0 0 var(--semantic-space-component-md);
+    padding-bottom: var(--semantic-space-component-md);
     border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
   }
@@ -786,8 +786,8 @@
   }
 
   .mol-project-card__takeaway {
-    margin: var(--primitive-space-md) 0 0;
-    padding-top: var(--primitive-space-md);
+    margin: var(--semantic-space-component-md) 0 0;
+    padding-top: var(--semantic-space-component-md);
     border-top: var(--semantic-border-width) solid
       var(--semantic-color-border);
     font-size: var(--semantic-font-size-caption);
@@ -808,8 +808,8 @@
 
   .mol-evidence-system__meta {
     display: grid;
-    gap: var(--primitive-space-3xs);
-    padding: var(--primitive-space-md);
+    gap: var(--semantic-space-component-3xs);
+    padding: var(--semantic-space-component-md);
     border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
     background: var(--semantic-color-surface);
@@ -867,7 +867,7 @@
     z-index: 2;
 
 
-    padding: var(--primitive-space-3xs) var(--primitive-space-2xs);
+    padding: var(--semantic-space-component-3xs) var(--semantic-space-component-2xs);
     background: var(--semantic-color-surface);
     font-family: var(--semantic-font-family-ui);
     font-size: var(--semantic-font-size-eyebrow);
@@ -901,8 +901,8 @@
   .mol-evidence-system__foundation span {
     display: flex;
     align-items: center;
-    gap: var(--primitive-space-2xs);
-    padding: var(--primitive-space-sm) var(--primitive-space-md);
+    gap: var(--semantic-space-component-2xs);
+    padding: var(--semantic-space-component-sm) var(--semantic-space-component-md);
     border-right: var(--semantic-border-width) solid
       var(--semantic-color-border);
     border-top: var(--semantic-border-width) solid
@@ -946,7 +946,7 @@
   .mol-evidence-study {
     display: flex;
     flex-direction: column;
-    padding: var(--primitive-space-sm);
+    padding: var(--semantic-space-component-sm);
     background-color: var(--semantic-color-surface-alt);
     background-image: repeating-linear-gradient(
         to right,
@@ -976,8 +976,8 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    gap: var(--primitive-space-sm);
-    padding: var(--primitive-space-sm) var(--primitive-space-md);
+    gap: var(--semantic-space-component-sm);
+    padding: var(--semantic-space-component-sm) var(--semantic-space-component-md);
     border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
   }
@@ -1009,7 +1009,7 @@
 
   .mol-evidence-study th,
   .mol-evidence-study td {
-    padding: var(--primitive-space-xs) var(--primitive-space-md);
+    padding: var(--semantic-space-component-xs) var(--semantic-space-component-md);
     text-align: left;
     border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
@@ -1047,18 +1047,18 @@
   .mol-evidence-study__bars {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--primitive-space-md);
-    padding: var(--primitive-space-sm) var(--primitive-space-md);
+    gap: var(--semantic-space-component-md);
+    padding: var(--semantic-space-component-sm) var(--semantic-space-component-md);
     background: var(--semantic-color-surface-alt);
     border-top: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   .mol-evidence-study__bars span {
     display: grid;
-    gap: var(--primitive-space-3xs);
+    gap: var(--semantic-space-component-3xs);
     font-family: var(--semantic-font-family-ui);
     font-size: var(--semantic-font-size-caption);
-    font-weight: var(--primitive-font-weight-bold);
+    font-weight: var(--semantic-font-weight-strong);
     font-variant-numeric: tabular-nums;
   }
 
@@ -1066,7 +1066,7 @@
   // last column of the table; labelled, they are the summary of it.
   .mol-evidence-study__bars small {
     font-size: var(--semantic-font-size-eyebrow);
-    font-weight: var(--primitive-font-weight-regular);
+    font-weight: var(--semantic-font-weight-body);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
     color: var(--semantic-color-text-muted);
@@ -1099,9 +1099,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--primitive-space-sm);
+    gap: var(--semantic-space-component-sm);
     max-width: none;
-    padding: var(--primitive-space-2xs) var(--primitive-space-sm);
+    padding: var(--semantic-space-component-2xs) var(--semantic-space-component-sm);
     background: var(--semantic-color-surface-alt);
     border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
@@ -1137,7 +1137,7 @@
   }
 
   .mol-evidence-live__overlay {
-    @include absolute($bottom: var(--primitive-space-sm), $left: var(--primitive-space-sm));
+    @include absolute($bottom: var(--semantic-space-component-sm), $left: var(--semantic-space-component-sm));
 
 
     z-index: 2;
@@ -1147,7 +1147,7 @@
     max-width: none;
 
 
-    padding: var(--primitive-space-3xs) var(--primitive-space-2xs);
+    padding: var(--semantic-space-component-3xs) var(--semantic-space-component-2xs);
     background: var(--semantic-color-surface);
     border: var(--semantic-border-width) solid var(--semantic-color-border);
     font-family: var(--semantic-font-family-ui);
@@ -1259,14 +1259,14 @@
     // tightens its own spacing rather than growing past the bottom edge and
     // losing the last row, which is the row the study exists to show.
     .mol-evidence-study {
-      padding: var(--primitive-space-2xs);
+      padding: var(--semantic-space-component-2xs);
     }
 
     .mol-evidence-study__head {
       flex-direction: column;
       align-items: start;
-      gap: var(--primitive-space-3xs);
-      padding: var(--primitive-space-2xs) var(--primitive-space-sm);
+      gap: var(--semantic-space-component-3xs);
+      padding: var(--semantic-space-component-2xs) var(--semantic-space-component-sm);
     }
 
     .mol-evidence-study__head strong {
@@ -1275,7 +1275,7 @@
 
     .mol-evidence-study th,
     .mol-evidence-study td {
-      padding: var(--primitive-space-3xs) var(--primitive-space-sm);
+      padding: var(--semantic-space-component-3xs) var(--semantic-space-component-sm);
     }
 
     .mol-evidence-study__bars {
@@ -1349,9 +1349,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--primitive-space-sm);
+    gap: var(--semantic-space-component-sm);
     max-width: none;
-    padding: var(--primitive-space-2xs) var(--primitive-space-sm);
+    padding: var(--semantic-space-component-2xs) var(--semantic-space-component-sm);
     background: var(--semantic-color-surface-alt);
     border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
@@ -1401,9 +1401,9 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    gap: var(--primitive-space-3xs);
+    gap: var(--semantic-space-component-3xs);
     margin: 0;
-    padding: var(--primitive-space-md);
+    padding: var(--semantic-space-component-md);
     color: var(--semantic-color-on-primary);
   }
 
@@ -1435,9 +1435,9 @@
   .mol-register__ref {
     display: flex;
     align-items: baseline;
-    gap: var(--primitive-space-xs);
-    margin: 0 0 var(--primitive-space-sm);
-    padding-bottom: var(--primitive-space-xs);
+    gap: var(--semantic-space-component-xs);
+    margin: 0 0 var(--semantic-space-component-sm);
+    padding-bottom: var(--semantic-space-component-xs);
     border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
   }
@@ -1460,7 +1460,7 @@
 
   .mol-register__copy h3 {
     max-width: 15ch;
-    margin: 0 0 var(--primitive-space-sm);
+    margin: 0 0 var(--semantic-space-component-sm);
     font-size: var(--semantic-font-size-title);
     line-height: var(--semantic-line-height-title);
     letter-spacing: var(--semantic-letter-spacing-display);
@@ -1490,9 +1490,9 @@
   // section looked like it was wasting space.
   .mol-register__foot {
     display: grid;
-    gap: var(--primitive-space-md);
+    gap: var(--semantic-space-component-md);
     margin-top: auto;
-    padding-top: var(--primitive-space-lg);
+    padding-top: var(--semantic-space-component-lg);
   }
 
   // A spec list, not a row of pills. Four unlabelled chips said less than two
@@ -1500,16 +1500,16 @@
   .mol-register__spec {
     margin: 0;
     display: grid;
-    gap: var(--primitive-space-2xs);
+    gap: var(--semantic-space-component-2xs);
     border-top: var(--semantic-border-width) solid
       var(--semantic-color-border);
-    padding-top: var(--primitive-space-sm);
+    padding-top: var(--semantic-space-component-sm);
   }
 
   .mol-register__spec > div {
     display: grid;
     grid-template-columns: minmax(5rem, 7rem) minmax(0, 1fr);
-    gap: var(--primitive-space-sm);
+    gap: var(--semantic-space-component-sm);
     align-items: baseline;
   }
 
@@ -1545,7 +1545,7 @@
   .mol-register__links {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--primitive-space-lg);
+    gap: var(--semantic-space-component-lg);
     margin: 0;
     max-width: none;
   }
@@ -1584,22 +1584,22 @@
   // material fell into — and the map would come out ink-on-blue.
   .mol-map-shift {
     display: grid;
-    gap: var(--primitive-space-lg);
+    gap: var(--semantic-space-component-lg);
   }
 
   .mol-map-shift__panel {
     display: grid;
-    gap: var(--primitive-space-md);
+    gap: var(--semantic-space-component-md);
     align-content: start;
     margin: 0;
-    padding: var(--primitive-space-md);
+    padding: var(--semantic-space-component-md);
     border: var(--semantic-border-width) solid var(--semantic-color-border);
     background: var(--semantic-color-surface-alt);
   }
 
   .mol-map-shift__panel figcaption {
     display: grid;
-    gap: var(--primitive-space-3xs);
+    gap: var(--semantic-space-component-3xs);
   }
 
   .mol-map-shift__tag {
@@ -1637,7 +1637,7 @@
   // export and everything inside it is baked at that size.
   .mol-map-shift__panel--raster .mol-map-shift__stage {
     outline: var(--semantic-border-width) dashed var(--semantic-color-border);
-    outline-offset: var(--primitive-space-2xs);
+    outline-offset: var(--semantic-space-component-2xs);
   }
 
   .mol-map-shift__raster {
@@ -1683,7 +1683,7 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: var(--primitive-space-2xs);
+    gap: var(--semantic-space-component-2xs);
     margin: 0;
     font-family: var(--semantic-font-family-ui);
     font-size: var(--semantic-font-size-ui);
@@ -1711,7 +1711,7 @@
 
   .mol-map-shift__credit {
     max-width: 62ch;
-    margin: var(--primitive-space-md) 0 0;
+    margin: var(--semantic-space-component-md) 0 0;
     font-size: var(--semantic-font-size-caption);
     line-height: var(--semantic-line-height-body);
     color: var(--semantic-color-text-muted);
@@ -1745,9 +1745,9 @@
   .mol-map-pipeline li {
     display: grid;
     grid-template-columns: 2rem minmax(0, 1fr) auto;
-    gap: var(--primitive-space-xs);
+    gap: var(--semantic-space-component-xs);
     align-items: baseline;
-    padding: var(--primitive-space-md) 0;
+    padding: var(--semantic-space-component-md) 0;
     border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
   }
@@ -1781,9 +1781,9 @@
     .mol-map-pipeline li {
       display: flex;
       flex-direction: column;
-      gap: var(--primitive-space-3xs);
+      gap: var(--semantic-space-component-3xs);
       min-height: 8rem;
-      padding: var(--primitive-space-md);
+      padding: var(--semantic-space-component-md);
       border-right: var(--semantic-border-width) solid
         var(--semantic-color-border);
     }
@@ -1907,14 +1907,14 @@
   .mol-role-thesis strong {
     display: block;
     max-width: var(--semantic-measure-display);
-    font: var(--semantic-font-weight-display) var(--semantic-font-size-section) / var(--semantic-line-height-display) var(--v22-display);
+    font: var(--semantic-font-weight-display) var(--semantic-font-size-section) / var(--semantic-line-height-display) var(--semantic-font-family-display);
     letter-spacing: var(--semantic-letter-spacing-hero);
   }
 
   .mol-role-thesis p {
     margin: 1.2rem 0 0;
     max-width: 42rem;
-    font: 0.8rem/1.5 var(--v22-ui);
+    font: 0.8rem/1.5 var(--semantic-font-family-ui);
     opacity: 0.58;
   }
 
@@ -1982,5 +1982,41 @@
     height: 100%;
     border: 0;
     display: block;
+  }
+
+
+  // ── Ajustes que llegaban desde las hojas sueltas ──────────────────────
+  //
+  // Venían de typography-jlp, visual-jlp, mobile-first-v19 y
+  // progressive-enhancement-v20, que se cargaban después de portfolio.css y
+  // por eso ganaban a las definiciones de arriba. Aquí conservan esa
+  // posición: van al final del bloque de la capa, detrás de la definición
+  // base de cada componente.
+  .mol-nav {
+    gap: .9rem;
+    font-size: .72rem;
+  }
+
+  .mol-project-card__body h3 {
+    font-family: var(--semantic-font-family-display);
+    font-weight: 600;
+    letter-spacing: -.035em;
+    line-height: 1.02;
+  }
+
+  .mol-project-card__meta {
+    flex-direction: column;
+    gap: .35rem;
+  }
+
+  .mol-section-heading {
+    grid-template-columns: 1fr;
+    gap: .75rem;
+    margin-bottom: 2rem;
+    padding-top: .85rem;
+  }
+
+  .mol-section-heading h2 {
+    font-size: var(--semantic-font-size-section-compact);
   }
 }

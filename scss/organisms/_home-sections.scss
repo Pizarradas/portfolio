@@ -68,7 +68,7 @@
 }
 @layer syx.organisms {
   .org-role-evolution-v22 {
-    background: var(--v22-night);
+    background: var(--component-art-night);
     color: #fff;
     padding: clamp(4rem,8vw,8rem) var(--semantic-space-page-inline);
   }
@@ -79,14 +79,14 @@
   }
 
   .org-role-evolution-v22__intro h2 {
-    font: 600 clamp(3rem,11vw,5.5rem)/.9 var(--v22-display);
+    font: 600 clamp(3rem,11vw,5.5rem)/.9 var(--semantic-font-family-display);
     letter-spacing: -.06em;
     margin: 0;
   }
 
   .org-role-evolution-v22__intro p {
     max-width: 42rem;
-    font: .9rem/1.5 var(--v22-ui);
+    font: .9rem/1.5 var(--semantic-font-family-ui);
     opacity: .62;
   }
 
@@ -99,7 +99,7 @@
   }
 
   .org-role-evolution-v22__conclusion>p {
-    font: .55rem/1 var(--v22-ui);
+    font: .55rem/1 var(--semantic-font-family-ui);
     text-transform: uppercase;
     letter-spacing: .08em;
     opacity: .6;
@@ -108,7 +108,7 @@
   .org-role-evolution-v22__conclusion blockquote {
     grid-column: 1/-1;
     margin: 3rem 0 0;
-    font: 600 clamp(2.2rem,8vw,4.8rem)/.92 var(--v22-display);
+    font: 600 clamp(2.2rem,8vw,4.8rem)/.92 var(--semantic-font-family-display);
     letter-spacing: -.055em;
     max-width: 17ch;
     margin-left: auto;

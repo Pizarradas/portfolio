@@ -13,7 +13,7 @@
   .org-sport-opening {
     max-width: var(--component-story-max);
     margin-inline: auto;
-    padding: var(--mf-section) var(--mf-inline);
+    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -23,7 +23,7 @@
 
   .org-sport-opening__copy h2 {
     font-family: var(--semantic-font-family-display);
-    font-size: var(--mf-h2);
+    font-size: var(--semantic-font-size-section-compact);
     line-height: .98;
     letter-spacing: -.045em;
     margin: .4rem 0 1rem;
@@ -83,19 +83,19 @@
     gap: 3rem;
     padding: clamp(4rem,8vw,8rem) var(--semantic-space-page-inline);
     background: #fff;
-    color: var(--v22-ink);
+    color: var(--component-art-ink);
   }
 
   .org-sport-evidence-v22__story h2 {
-    font: 600 clamp(3rem,10vw,6rem)/.9 var(--v22-display);
+    font: 600 clamp(3rem,10vw,6rem)/.9 var(--semantic-font-family-display);
     letter-spacing: -.065em;
     margin: .75rem 0 1.2rem;
   }
 
   .org-sport-evidence-v22__story>p:last-of-type {
     max-width: 38rem;
-    font: .95rem/1.55 var(--v22-ui);
-    color: var(--v22-muted);
+    font: .95rem/1.55 var(--semantic-font-family-ui);
+    color: var(--component-art-muted);
   }
 
 }

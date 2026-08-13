@@ -38,5 +38,13 @@
     --semantic-z-sticky: var(--primitive-z-sticky);
     --semantic-z-overlay: var(--primitive-z-overlay);
     --semantic-z-skip: var(--primitive-z-skip);
+    // Los dos escalones que usan los componentes para ordenarse por dentro:
+    // el fondo de la caja y lo que va justo encima.
+    --semantic-z-base: var(--primitive-z-base);
+    --semantic-z-raised: var(--primitive-z-raised);
+
+    // El desenfoque de un panel translúcido. --semantic-glass-blur es el de la
+    // cabecera y vale un paso más.
+    --semantic-blur-panel: var(--primitive-blur-md);
   }
 }

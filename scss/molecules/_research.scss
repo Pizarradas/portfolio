@@ -303,7 +303,7 @@
     flex-wrap: wrap;
     gap: 1rem;
     margin-top: 2rem;
-    font: .62rem/1 var(--v22-ui);
+    font: .62rem/1 var(--semantic-font-family-ui);
     text-transform: uppercase;
     letter-spacing: .06em;
   }
@@ -317,16 +317,16 @@
   .mol-evidence-legend i {
     width: .55rem;
     height: .55rem;
-    border: 1px solid var(--v22-blue);
+    border: 1px solid var(--semantic-color-primary);
   }
 
   .mol-evidence-legend span:nth-child(2) i {
-    background: var(--v22-blue);
+    background: var(--semantic-color-primary);
   }
 
   .mol-dot-universe {
     padding: 1.25rem;
-    border: 1px solid var(--v22-line);
+    border: 1px solid var(--semantic-color-border);
   }
 
   .mol-dot-universe__head {
@@ -336,18 +336,18 @@
   }
 
   .mol-dot-universe__head strong {
-    font: 600 clamp(3.5rem,13vw,6rem)/.8 var(--v22-display);
+    font: 600 clamp(3.5rem,13vw,6rem)/.8 var(--semantic-font-family-display);
     letter-spacing: -.07em;
   }
 
   .mol-dot-universe__head span {
-    font: .68rem/1.3 var(--v22-ui);
-    color: var(--v22-muted);
+    font: .68rem/1.3 var(--semantic-font-family-ui);
+    color: var(--component-art-muted);
   }
 
   .mol-dot-universe__result span {
-    font: .68rem/1.3 var(--v22-ui);
-    color: var(--v22-muted);
+    font: .68rem/1.3 var(--semantic-font-family-ui);
+    color: var(--component-art-muted);
   }
 
   .mol-dot-universe__grid {
@@ -367,8 +367,8 @@
   }
 
   .mol-dot-universe__grid i.is-hot {
-    background: var(--v22-blue);
-    border-color: var(--v22-blue);
+    background: var(--semantic-color-primary);
+    border-color: var(--semantic-color-primary);
     opacity: 1;
     transform: scale(1);
   }
@@ -380,9 +380,9 @@
   }
 
   .mol-dot-universe__result strong {
-    font: 600 clamp(3.5rem,13vw,6rem)/.8 var(--v22-display);
+    font: 600 clamp(3.5rem,13vw,6rem)/.8 var(--semantic-font-family-display);
     letter-spacing: -.07em;
-    color: var(--v22-blue);
+    color: var(--semantic-color-primary);
   }
 
 }
@@ -403,27 +403,27 @@
 }
 @layer syx.molecules {
   .mol-sample-stats strong {
-    font: 600 clamp(3.5rem,13vw,6rem)/.8 var(--v22-display);
+    font: 600 clamp(3.5rem,13vw,6rem)/.8 var(--semantic-font-family-display);
     letter-spacing: -.07em;
   }
 
   .mol-sample-stats span {
-    font: .68rem/1.3 var(--v22-ui);
-    color: var(--v22-muted);
+    font: .68rem/1.3 var(--semantic-font-family-ui);
+    color: var(--component-art-muted);
   }
 
   .mol-sample-stats {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    border: 1px solid var(--v22-line);
+    border: 1px solid var(--semantic-color-border);
     border-top: 0;
   }
 
   .mol-sample-stats article {
     min-height: 9rem;
     padding: 1rem;
-    border-right: 1px solid var(--v22-line);
-    border-bottom: 1px solid var(--v22-line);
+    border-right: 1px solid var(--semantic-color-border);
+    border-bottom: 1px solid var(--semantic-color-border);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -438,12 +438,12 @@
   }
 
   .mol-sample-stats__method b {
-    font: 600 .8rem/1 var(--v22-ui);
+    font: 600 .8rem/1 var(--semantic-font-family-ui);
   }
 
   .mol-sample-stats__method i {
     font-style: normal;
-    color: var(--v22-blue);
+    color: var(--semantic-color-primary);
   }
 
 }

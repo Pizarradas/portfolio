@@ -3,10 +3,10 @@
 
 @layer syx.atoms {
   .atom-skip-link {
-    @include fixed($top: var(--primitive-space-md), $left: var(--primitive-space-md));
+    @include fixed($top: var(--semantic-space-component-md), $left: var(--semantic-space-component-md));
     z-index: var(--semantic-z-skip);
     transform: translateY(-180%);
-    padding: var(--primitive-space-sm) var(--primitive-space-md);
+    padding: var(--semantic-space-component-sm) var(--semantic-space-component-md);
     background: var(--semantic-color-primary);
     color: var(--semantic-color-on-primary);
     font-weight: var(--semantic-font-weight-display);
@@ -20,7 +20,7 @@
 
   .atom-wordmark {
     font-size: var(--semantic-font-size-body-lg);
-    font-weight: var(--primitive-font-weight-black);
+    font-weight: var(--semantic-font-weight-display);
     letter-spacing: -0.07em;
     text-decoration: none;
   }
@@ -32,7 +32,7 @@
   .atom-eyebrow,
   .atom-index {
     font-size: var(--semantic-font-size-eyebrow);
-    font-weight: var(--primitive-font-weight-black);
+    font-weight: var(--semantic-font-weight-display);
     text-transform: uppercase;
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
   }
@@ -73,7 +73,7 @@
   .atom-case-link {
     display: inline-flex;
     align-items: center;
-    gap: var(--primitive-space-xs);
+    gap: var(--semantic-space-component-xs);
     width: fit-content;
     font-family: var(--semantic-font-family-ui);
     font-size: var(--semantic-font-size-ui);
@@ -119,8 +119,8 @@
   .atom-lang-switch {
     display: flex;
     align-items: center;
-    gap: var(--primitive-space-2xs);
-    padding-inline-start: var(--primitive-space-sm);
+    gap: var(--semantic-space-component-2xs);
+    padding-inline-start: var(--semantic-space-component-sm);
     border-inline-start: var(--semantic-border-width) solid
       var(--semantic-color-border);
     font-family: var(--semantic-font-family-ui);
@@ -144,7 +144,7 @@
   // active language is legible at a glance without a second cue to decode.
   .atom-lang-switch a[aria-current] {
     color: inherit;
-    font-weight: var(--primitive-font-weight-semibold);
+    font-weight: var(--semantic-font-weight-emphasis);
     cursor: default;
   }
 
@@ -157,38 +157,72 @@
   // specificity. It is tightened there, next to the rule that already owns it.
   @include until($bp-sm) {
     .atom-lang-switch {
-      gap: var(--primitive-space-3xs);
-      padding-inline-start: var(--primitive-space-2xs);
+      gap: var(--semantic-space-component-3xs);
+      padding-inline-start: var(--semantic-space-component-2xs);
       font-size: var(--semantic-font-size-eyebrow);
     }
   }
 
   .atom-metric {
-    @include absolute($bottom: var(--primitive-space-md), $left: var(--primitive-space-md));
-    z-index: var(--primitive-z-raised);
+    @include absolute($bottom: var(--semantic-space-component-md), $left: var(--semantic-space-component-md));
+    z-index: var(--semantic-z-raised);
     max-width: 10rem;
-    padding: var(--primitive-space-md);
+    padding: var(--semantic-space-component-md);
     background: var(--component-metric-bg);
     color: var(--component-metric-color);
     font-size: var(--semantic-font-size-ui);
-    font-weight: var(--primitive-font-weight-black);
-    line-height: var(--primitive-line-height-tight);
+    font-weight: var(--semantic-font-weight-display);
+    line-height: var(--semantic-line-height-display);
     border-radius: var(--semantic-radius-control);
   }
 
   .atom-metric span {
     display: block;
     font-size: var(--semantic-font-size-title);
-    line-height: var(--primitive-line-height-flat);
+    line-height: var(--semantic-line-height-flat);
     letter-spacing: var(--semantic-letter-spacing-hero);
   }
 
   .atom-outcome-line {
-    margin-top: var(--primitive-space-3xs);
+    margin-top: var(--semantic-space-component-3xs);
     max-width: var(--semantic-measure-lede);
     font-size: var(--semantic-font-size-body-lg);
-    font-weight: var(--primitive-font-weight-black);
+    font-weight: var(--semantic-font-weight-display);
     line-height: var(--semantic-line-height-title);
-    letter-spacing: var(--primitive-letter-spacing-tight);
+    letter-spacing: var(--semantic-letter-spacing-tight);
+  }
+
+
+  // ── Ajustes que llegaban desde las hojas sueltas ──────────────────────
+  //
+  // Venían de typography-jlp, visual-jlp, mobile-first-v19 y
+  // progressive-enhancement-v20, que se cargaban después de portfolio.css y
+  // por eso ganaban a las definiciones de arriba. Aquí conservan esa
+  // posición: van al final del bloque de la capa, detrás de la definición
+  // base de cada componente.
+  .atom-wordmark {
+    font-family: var(--component-ui-font-family);
+    font-weight: 700;
+    letter-spacing: -.04em;
+  }
+
+  .atom-eyebrow {
+    font-family: var(--component-ui-font-family);
+    font-weight: 600;
+    letter-spacing: .11em;
+    font-size: .64rem;
+    line-height: 1.35;
+  }
+
+  .atom-index {
+    font-family: var(--component-ui-font-family);
+    font-weight: 600;
+    letter-spacing: .11em;
+    font-size: .64rem;
+    line-height: 1.35;
+  }
+
+  .mol-nav {
+    font-family: var(--component-ui-font-family);
   }
 }

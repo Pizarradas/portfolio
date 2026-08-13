@@ -39,6 +39,43 @@ for (const file of sheets) {
   }
 }
 
+/* ------------------------------------------------- tokens sin definición */
+
+// Un `var(--x)` cuyo --x no se declara en ningún sitio no da error: la
+// declaración entera se vuelve inválida en tiempo de cómputo y la propiedad
+// cae a su valor inicial, en silencio. Pasó al migrar las hojas a SCSS —
+// catorce custom properties con dígitos en el nombre se perdieron por el
+// camino y nada lo avisó.
+{
+  const build = readFileSync(join(ROOT, 'css', 'portfolio.css'), 'utf8');
+  const declared = new Set([...build.matchAll(/(--[\w-]+)\s*:/g)].map(m => m[1]));
+  const used = new Set([...build.matchAll(/var\(\s*(--[\w-]+)/g)].map(m => m[1]));
+  // Un var() con segundo argumento lleva su propio respaldo.
+  const withFallback = new Set([...build.matchAll(/var\(\s*(--[\w-]+)\s*,/g)].map(m => m[1]));
+
+  // Y hay tokens que fija el marcado o el JS sobre el elemento, no la hoja:
+  // style="--value:86%" o element.style.setProperty('--delay', …).
+  const inline = new Set();
+  const harvestVars = src => {
+    for (const m of src.matchAll(/style="[^"]*?(--[\w-]+)\s*:/g)) inline.add(m[1]);
+    for (const m of src.matchAll(/setProperty\(\s*['"`](--[\w-]+)/g)) inline.add(m[1]);
+    for (const m of src.matchAll(/(--[\w-]+)\s*:\s*\$\{/g)) inline.add(m[1]);
+  };
+  for (const f of readdirSync(ROOT).filter(f => f.endsWith('.html')))
+    harvestVars(readFileSync(join(ROOT, f), 'utf8'));
+  for (const f of readdirSync(join(ROOT, 'js')).filter(f => f.endsWith('.js')))
+    harvestVars(readFileSync(join(ROOT, 'js', f), 'utf8'));
+  for (const f of readdirSync(join(ROOT, 'scripts')))
+    harvestVars(readFileSync(join(ROOT, 'scripts', f), 'utf8'));
+
+  const undef = [...used].filter(t => !declared.has(t) && !withFallback.has(t) && !inline.has(t)).sort();
+  if (undef.length) {
+    console.error(`ERROR  ${undef.length} token(s) usados y nunca declarados:`);
+    for (const t of undef) console.error(`       ${t}`);
+    failed = true;
+  }
+}
+
 /* ------------------------------------------------------- clases sin uso */
 
 const live = new Set();

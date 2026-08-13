@@ -251,12 +251,20 @@ resultantes contra el build: 0 propiedades ausentes, 0 valores distintos.
 | R03 `transition:` en crudo | 19 | 0 — vía `@include transition()`, que añade la guarda de `prefers-reduced-motion` |
 | R04 `position:` en crudo | 23 | 0 fuera de `base/_reset` y `utilities` |
 
-**Lo que queda abierto.** Los tres `_shared-enhancements.scss` son ajustes de
-componentes definidos en `_portfolio.scss`; lo coherente sería plegarlos dentro
-de cada componente. Y `abstracts/tokens/components/_case-and-evidence.scss`
-todavía guarda tokens con prefijos ad-hoc (`--mf-`, `--pe-`, `--v22-`) que
-deberían promoverse a la capa semántica. Ambas cosas están señaladas en el
-propio código.
+**Coherencia cerrada.** Los tres puntos que quedaban abiertos están hechos:
+
+- **R01 a cero.** Las 187 referencias a `--primitive-*` desde componentes pasan
+  ahora por la capa semántica. Se añadió la escala
+  `--semantic-space-component-{3xs…xl}` siguiendo el patrón
+  `--semantic-space-{contexto}-{paso}` de SYX, más los pesos, el tracking, los
+  line-heights y los z-index que faltaban. Seis primitivos resultaron ser alias
+  exactos de tokens que ya existían y se apuntaron a ellos.
+- **Tokens ad-hoc retirados.** `--mf-`, `--pe-`, `--case42-` y `--v22-` ya no
+  existen. Cinco eran alias exactos de tokens semánticos y se sustituyeron por
+  ellos; el resto se renombró a su capa. Ningún valor cambió.
+- **Sin ficheros de enhancements.** Las reglas que ajustaban componentes
+  compartidos viven dentro del `_portfolio.scss` de su capa, al final del bloque,
+  que es la posición que ya ocupaban.
 
 `npm run check:css` avisa de comentarios sin cerrar y de clases declaradas que ya
 no existen en el marcado.

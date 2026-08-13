@@ -146,7 +146,7 @@
     grid-template-columns: 1fr;
     gap: 1rem;
     justify-content: center;
-    padding: var(--mf-section) var(--mf-inline);
+    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
     border-bottom: 1px solid var(--component-case-rule);
   }
 
@@ -156,7 +156,7 @@
     line-height: .98;
     letter-spacing: -.045em;
     margin: .6rem 0 0;
-    font-size: var(--mf-h2);
+    font-size: var(--semantic-font-size-section-compact);
   }
 
   .org-case-section__content {
@@ -236,7 +236,7 @@
 
   .org-case-next a {
     min-height: 8rem;
-    padding: 1.25rem var(--mf-inline);
+    padding: 1.25rem var(--semantic-space-shell-inline);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -283,7 +283,7 @@
   .org-case-hero {
     max-width: var(--component-case-max-width);
     margin-inline: auto;
-    padding: 4.25rem var(--mf-inline) 2.5rem;
+    padding: 4.25rem var(--semantic-space-shell-inline) 2.5rem;
   }
 
   .org-case-hero h1 {
@@ -293,7 +293,7 @@
     letter-spacing: -.055em;
     max-width: 100%;
     margin: .55rem 0 1.35rem;
-    font-size: var(--mf-title);
+    font-size: var(--semantic-font-size-hero-compact);
   }
 
   .org-case-hero__lede {

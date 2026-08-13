@@ -21,7 +21,7 @@
   // related — the border is reset to a bottom edge only, since it spans.
   .org-site-header {
     @include sticky($top: 0);
-    @include glass(var(--primitive-blur-md));
+    @include glass(var(--semantic-blur-panel));
 
     z-index: var(--semantic-z-sticky);
     display: flex;
@@ -38,7 +38,7 @@
     min-height: calc(96svh - var(--component-header-height));
     padding-block: var(--semantic-space-section-compact)
       var(--semantic-space-section-compact);
-    padding-top: var(--primitive-space-6xl);
+    padding-top: var(--semantic-space-layout-6xl);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -51,7 +51,7 @@
   .org-hero__field {
     @include absolute();
     inset: 0;
-    z-index: var(--primitive-z-base);
+    z-index: var(--semantic-z-base);
     display: block;
     width: 100%;
     height: 100%;
@@ -65,11 +65,11 @@
   .org-hero > *:not(.org-hero__field),
   .org-hero::before {
     @include relative();
-    z-index: var(--primitive-z-raised);
+    z-index: var(--semantic-z-raised);
   }
 
   .org-hero::before {
-    @include absolute($top: var(--primitive-space-4xl), $right: var(--semantic-pad-content));
+    @include absolute($top: var(--semantic-space-section-compact), $right: var(--semantic-pad-content));
     content: "";
     width: clamp(3.5rem, 8vw, 8rem);
     height: 0.55rem;
@@ -79,7 +79,7 @@
   .org-hero__footer {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: var(--primitive-space-xl);
+    gap: var(--semantic-space-component-xl);
     align-items: end;
   }
 
@@ -108,8 +108,8 @@
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    gap: var(--primitive-space-sm);
-    padding: var(--primitive-space-sm) var(--semantic-space-gutter);
+    gap: var(--semantic-space-component-sm);
+    padding: var(--semantic-space-component-sm) var(--semantic-space-gutter);
     text-decoration: none;
     border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
@@ -124,15 +124,15 @@
     font-family: var(--semantic-font-family-display);
     font-size: var(--semantic-font-size-title-sm);
     font-weight: var(--semantic-font-weight-display);
-    letter-spacing: var(--primitive-letter-spacing-tight);
-    line-height: var(--primitive-line-height-tight);
+    letter-spacing: var(--semantic-letter-spacing-tight);
+    line-height: var(--semantic-line-height-display);
   }
 
   .org-capability-scan span {
     font-size: var(--semantic-font-size-caption);
-    font-weight: var(--primitive-font-weight-bold);
+    font-weight: var(--semantic-font-weight-strong);
     text-transform: uppercase;
-    letter-spacing: var(--primitive-letter-spacing-wide);
+    letter-spacing: var(--semantic-letter-spacing-wide);
     text-align: right;
     color: var(--semantic-color-text-muted);
     @include transition(color var(--semantic-duration-hover) var(--semantic-ease));
@@ -161,9 +161,9 @@
       flex-direction: column;
       align-items: stretch;
       justify-content: space-between;
-      gap: var(--primitive-space-lg);
+      gap: var(--semantic-space-component-lg);
       min-height: 9.5rem;
-      padding: var(--primitive-space-md) var(--primitive-space-lg);
+      padding: var(--semantic-space-component-md) var(--semantic-space-component-lg);
       border-bottom: 0;
       border-right: var(--semantic-border-width) solid
         var(--semantic-color-border);
@@ -211,12 +211,12 @@
 
   .org-about h2 {
     font-size: var(--semantic-font-size-title-lg);
-    margin-top: var(--primitive-space-3xs);
+    margin-top: var(--semantic-space-component-3xs);
   }
 
   .org-about__copy {
     display: grid;
-    gap: var(--primitive-space-lg);
+    gap: var(--semantic-space-component-lg);
     max-width: var(--semantic-measure-prose);
     color: var(--semantic-color-text-secondary);
     font-size: var(--semantic-font-size-body-lg);
@@ -253,13 +253,13 @@
 
   .org-contact__body {
     display: grid;
-    gap: var(--primitive-space-md);
-    max-width: var(--primitive-width-sm);
+    gap: var(--semantic-space-component-md);
+    max-width: var(--semantic-width-compact);
   }
 
   .org-contact h2 {
     font-size: var(--semantic-font-size-title-lg);
-    margin-top: var(--primitive-space-3xs);
+    margin-top: var(--semantic-space-component-3xs);
   }
 
   .org-contact__lede {
@@ -269,10 +269,10 @@
   }
 
   .org-footer {
-    padding-block: var(--primitive-space-xl);
+    padding-block: var(--semantic-space-component-xl);
     display: flex;
     justify-content: space-between;
-    gap: var(--primitive-space-md);
+    gap: var(--semantic-space-component-md);
     border-top: var(--semantic-border-width) solid var(--semantic-color-border);
     color: var(--semantic-color-text-muted);
     font-size: var(--semantic-font-size-ui);
@@ -282,7 +282,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--primitive-space-3xs) var(--primitive-space-lg);
+    gap: var(--semantic-space-component-3xs) var(--semantic-space-component-lg);
     max-width: none;
   }
 
@@ -336,7 +336,7 @@
   // each one carries a live preview that has to stay legible.
   .org-new-work__grid {
     display: grid;
-    gap: var(--primitive-space-lg);
+    gap: var(--semantic-space-component-lg);
   }
 
   // Interactive media map — product decision
@@ -350,7 +350,7 @@
 
   .org-map-process__intro h2 {
     max-width: 20ch;
-    margin: var(--primitive-space-sm) 0 var(--primitive-space-md);
+    margin: var(--semantic-space-component-sm) 0 var(--semantic-space-component-md);
     font-size: var(--semantic-font-size-hero);
     line-height: var(--semantic-line-height-display);
     letter-spacing: var(--semantic-letter-spacing-hero);
@@ -487,5 +487,100 @@
     color: var(--semantic-color-text-secondary);
     font-size: 0.95rem;
     line-height: 1.55;
+  }
+
+
+  // ── Ajustes que llegaban desde las hojas sueltas ──────────────────────
+  //
+  // Venían de typography-jlp, visual-jlp, mobile-first-v19 y
+  // progressive-enhancement-v20, que se cargaban después de portfolio.css y
+  // por eso ganaban a las definiciones de arriba. Aquí conservan esa
+  // posición: van al final del bloque de la capa, detrás de la definición
+  // base de cada componente.
+  .mol-worldcup-stage {
+    min-height: 22rem;
+    padding: 1.25rem;
+  }
+
+  .mol-worldcup-stage>strong {
+    font-size: clamp(6rem,34vw,9rem);
+  }
+
+  .mol-atlas-architecture {
+    min-height: 22rem;
+    padding: 1.25rem;
+  }
+
+  .mol-atlas-architecture>strong {
+    font-size: 2.5rem;
+  }
+
+  .org-work h2 {
+    font-family: var(--component-section-title-font-family);
+    font-weight: var(--component-section-title-font-weight);
+    line-height: var(--component-section-title-line-height);
+    letter-spacing: var(--component-section-title-letter-spacing);
+  }
+
+  .org-about h2 {
+    font-family: var(--component-section-title-font-family);
+    font-weight: var(--component-section-title-font-weight);
+    line-height: var(--component-section-title-line-height);
+    letter-spacing: var(--component-section-title-letter-spacing);
+  }
+
+  .org-hero::before {
+    width: clamp(2.75rem,5vw,5rem);
+    height: .22rem;
+  }
+
+  .org-hero {
+    min-height: auto;
+    padding: 4.5rem var(--semantic-space-shell-inline) 3rem;
+    gap: 2rem;
+  }
+
+  .org-hero h1 {
+    font-family: var(--component-hero-title-font-family);
+    font-weight: var(--component-hero-title-font-weight);
+    line-height: .92;
+    letter-spacing: var(--component-hero-title-letter-spacing);
+    max-width: 100%;
+    font-size: var(--semantic-font-size-hero-compact);
+  }
+
+  .org-hero__footer {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .org-site-header {
+    min-height: 3.75rem;
+    padding-inline: var(--semantic-space-shell-inline);
+  }
+
+  .org-site-header .atom-wordmark {
+    font-size: 1rem;
+  }
+
+  .org-tools {
+    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
+    border-bottom: 1px solid var(--semantic-color-border);
+  }
+
+  .org-new-work {
+    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
+  }
+
+  .org-case-index {
+    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
+  }
+
+  .org-case-index__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .org-coded-hero {
+    padding: 1rem;
   }
 }

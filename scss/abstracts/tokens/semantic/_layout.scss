@@ -72,6 +72,28 @@
     --semantic-space-stack: var(--primitive-space-lg);
     --semantic-space-inline: var(--primitive-space-sm);
 
+    // Escala interna de componente.
+    //
+    // Los nombres de arriba dicen para qué sirve un hueco a nivel de página
+    // —una sección, un bloque, una pila— y eso funciona mientras el hueco
+    // tenga un papel. Dentro de un componente no lo tiene: el padding de una
+    // tarjeta es simplemente un paso de la escala. Antes los componentes
+    // llamaban directamente a `--primitive-space-*`, que es lo que R01
+    // prohíbe, porque un tema no puede reajustar la densidad sin tocar los
+    // valores en crudo. Sigue el patrón de SYX: --semantic-space-{contexto}-{paso}.
+    --semantic-space-component-3xs: var(--primitive-space-3xs);
+    --semantic-space-component-2xs: var(--primitive-space-2xs);
+    --semantic-space-component-xs: var(--primitive-space-xs);
+    --semantic-space-component-sm: var(--primitive-space-sm);
+    --semantic-space-component-md: var(--primitive-space-md);
+    --semantic-space-component-lg: var(--primitive-space-lg);
+    --semantic-space-component-xl: var(--primitive-space-xl);
+
+    // Único paso macro que ningún nombre de rol cubría.
+    --semantic-space-layout-6xl: var(--primitive-space-6xl);
+
+    --semantic-width-compact: var(--primitive-width-sm);
+
     // Measures. Apply to the element that sets the font-size, never to a wrapper.
     --semantic-measure-display: var(--primitive-measure-display);
     --semantic-measure-lede: var(--primitive-measure-lede);

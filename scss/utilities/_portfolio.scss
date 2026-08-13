@@ -370,4 +370,255 @@
       flex-direction: column;
     }
   }
+
+
+  // ── Ajustes que llegaban desde las hojas sueltas ──────────────────────
+  //
+  // Venían de typography-jlp, visual-jlp, mobile-first-v19 y
+  // progressive-enhancement-v20, que se cargaban después de portfolio.css y
+  // por eso ganaban a las definiciones de arriba. Aquí conservan esa
+  // posición: van al final del bloque de la capa, detrás de la definición
+  // base de cada componente.
+  @include from($bp-md) {
+    .mol-nav {
+      font-size: .9rem;
+      gap: clamp(1rem,3vw,2.75rem);
+    }
+
+  }
+
+  @media (min-width:1200px) {
+    .mol-project-card--featured {
+      display: grid;
+      grid-template-columns: minmax(0,1fr);
+      border-top: 1px solid var(--semantic-color-border);
+      padding-top: 1.5rem;
+      gap: clamp(1.5rem,2.5vw,2.5rem);
+    }
+
+    .mol-project-card--featured .mol-project-card__body h3 {
+      font-size: clamp(3rem,3.4vw,4.6rem);
+      line-height: .95;
+    }
+
+    .mol-project-card__body h3 {
+      font-size: clamp(2rem,2.4vw,3.2rem);
+    }
+
+  }
+
+  @media (min-width:768px) and (max-width:1199px) {
+    .mol-section-heading {
+      grid-template-columns: 3.5rem minmax(0,1.2fr) minmax(16rem,.8fr);
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .mol-section-heading p:last-child {
+      grid-column: auto;
+    }
+
+    .mol-section-heading h2 {
+      font-size: clamp(2.8rem,5vw,4.5rem);
+    }
+
+  }
+  @media (min-width:1200px) {
+    .mol-section-heading {
+      grid-template-columns: 4rem minmax(0,1.2fr) minmax(20rem,.65fr);
+      gap: 2rem;
+      align-items: start;
+      margin-bottom: clamp(3rem,5vw,5rem);
+    }
+
+    .mol-section-heading p:last-child {
+      grid-column: auto;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .mol-section-heading h2 {
+      font-size: clamp(3.5rem,4.8vw,5.8rem);
+      line-height: .94;
+    }
+
+  }
+
+  @media (min-width:1200px) {
+    .mol-worldcup-stage {
+      min-height: 38rem;
+      padding: clamp(3rem,5vw,5rem);
+    }
+
+  }
+
+  @media (min-width:1200px) {
+    .mol-atlas-architecture {
+      min-height: 38rem;
+      padding: clamp(3rem,5vw,5rem);
+    }
+
+  }
+
+  @media (min-width:768px) and (max-width:1199px) {
+    .org-work {
+      padding-block: var(--semantic-space-case-block);
+    }
+
+  }
+  @media (min-width:1200px) {
+    .org-work {
+      padding-block: var(--semantic-space-case-block);
+    }
+
+  }
+
+  @media (max-width:700px) {
+    .org-hero h1 {
+      font-size: clamp(3.3rem,14vw,5.4rem);
+    }
+
+  }
+
+  @media (min-width:768px) and (max-width:1199px) {
+    .org-hero {
+      min-height: calc(88svh - var(--component-header-height));
+      padding-block: clamp(5.5rem,9vw,8rem) clamp(3.5rem,6vw,5rem);
+      gap: clamp(3rem,6vw,5rem);
+    }
+
+    .org-hero h1 {
+      max-width: 15ch;
+      font-size: clamp(4.2rem,7.8vw,6.8rem);
+      line-height: .9;
+    }
+
+    .org-hero__footer {
+      grid-template-columns: minmax(0,34rem) auto;
+      gap: 2rem;
+    }
+
+    .org-hero .atom-lede {
+      font-size: clamp(1.15rem,1.7vw,1.45rem);
+      line-height: 1.45;
+    }
+
+    .org-hero::before {
+      display: block;
+      right: var(--semantic-pad-survey);
+    }
+
+  }
+  @media (min-width:1200px) {
+    .org-hero {
+      min-height: calc(94svh - var(--component-header-height));
+      padding-block: clamp(7rem,9vw,10rem) clamp(4rem,7vw,7rem);
+      gap: clamp(4rem,7vw,7rem);
+    }
+
+    .org-hero h1 {
+      max-width: 13.5ch;
+      font-size: clamp(5.8rem,7.6vw,9rem);
+      line-height: .88;
+      letter-spacing: -.062em;
+    }
+
+    .org-hero__footer {
+      grid-template-columns: minmax(0,38rem) auto;
+      gap: 4rem;
+      align-items: end;
+    }
+
+    .org-hero .atom-lede {
+      font-size: clamp(1.35rem,1.45vw,1.8rem);
+      line-height: 1.45;
+    }
+
+    .org-hero::before {
+      display: block;
+      right: var(--semantic-pad-survey);
+      top: calc(var(--component-header-height) + 3rem);
+    }
+
+  }
+
+  @include from($bp-md) {
+    .org-site-header {
+      min-height: var(--component-header-height);
+    }
+
+    .org-site-header .atom-wordmark {
+      font-size: 1.25rem;
+    }
+
+  }
+
+  @media (min-width:768px) and (max-width:1199px) {
+    .org-tools {
+      padding-block: var(--semantic-space-case-block);
+    }
+
+  }
+  @media (min-width:1200px) {
+    .org-tools {
+      padding-block: var(--semantic-space-case-block);
+    }
+
+  }
+
+  @media (min-width:768px) and (max-width:1199px) {
+    .org-new-work {
+      padding-block: var(--semantic-space-case-block);
+    }
+
+  }
+  @media (min-width:1200px) {
+    .org-new-work {
+      padding-block: var(--semantic-space-case-block);
+    }
+
+  }
+
+  @media (min-width:768px) and (max-width:1199px) {
+    .org-case-index {
+      padding-block: var(--semantic-space-case-block);
+    }
+
+    .org-case-index__grid {
+      grid-template-columns: repeat(2,1fr);
+    }
+
+  }
+  @media (min-width:1200px) {
+    .org-case-index {
+      padding-block: var(--semantic-space-case-block);
+    }
+
+    .org-case-index__grid {
+      grid-template-columns: repeat(3,1fr);
+    }
+
+  }
+
+  @media (min-width:1200px) {
+    .org-coded-hero {
+      padding: clamp(2rem,4vw,4rem);
+    }
+
+  }
+  @media (min-width:768px) and (max-width:1199px) {
+    .org-project-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+  }
+  @media (min-width:1200px) {
+    .org-project-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem,3vw,3.5rem);
+      margin-top: clamp(5rem,7vw,8rem);
+    }
+
+  }
 }

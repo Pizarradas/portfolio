@@ -39,6 +39,15 @@
     --semantic-font-weight-body: var(--primitive-font-weight-regular);
     --semantic-font-weight-emphasis: var(--primitive-font-weight-semibold);
     --semantic-font-weight-display: var(--primitive-font-weight-black);
+    // Los dos pesos que los componentes pedían en crudo: 700 para una etiqueta
+    // que tiene que leerse antes que su vecina, 500 para el estado activo de un
+    // control.
+    --semantic-font-weight-strong: var(--primitive-font-weight-bold);
+    --semantic-font-weight-medium: var(--primitive-font-weight-medium);
+
+    --semantic-letter-spacing-tight: var(--primitive-letter-spacing-tight);
+    --semantic-letter-spacing-wide: var(--primitive-letter-spacing-wide);
+    --semantic-line-height-flat: var(--primitive-line-height-flat);
 
     // Aliases used by the existing stylesheets
     --semantic-font-body: var(--semantic-font-family-body);
