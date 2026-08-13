@@ -1,0 +1,128 @@
+@use "../abstracts/breakpoints" as *;
+@use "../abstracts/mixins" as *;
+
+// Las dos piezas de la franja de resumen de un caso.
+//
+// Sustituyen a `.mol-architecture-stack` y `.mol-case42-thesis`, que ocupaban
+// este hueco y tenían dos problemas independientes.
+//
+// El primero era que no se veían. La animación escalonada del diagrama estaba
+// escrita con las especificidades invertidas, las dos reglas en la misma capa:
+//
+//   .js .mol-architecture-stack.js-reveal > div  { opacity: 0 }   (0,3,1)
+//   .mol-architecture-stack.is-visible > div     { opacity: 1 }   (0,2,1)
+//
+// El observador sí añadía `is-visible`, pero la regla que lo revertía perdía por
+// especificidad. Las cinco cajas estaban a opacidad cero siempre, y con
+// `min-height: 8rem` cada una dejaban unos 700px de blanco en mitad de la
+// página. El patrón correcto está en `base/_form-and-code.scss`: la clase de
+// estado va en el mismo elemento que la regla que apaga, nunca en un ancestro.
+// Aquí no hay escalonado propio por eso: el `.js-reveal` del organismo basta.
+//
+// El segundo era que el diagrama repetía las cinco capas que
+// `org-architecture-atlas` explica nueve líneas más abajo, con las mismas
+// palabras. El lector veía dos veces lo mismo en la misma pantalla.
+//
+// Lo que sí no tenía otro sitio en la página era la tesis: el arco del proyecto,
+// que no es lo mismo que la arquitectura del sistema. Eso es lo que se queda.
+
+@layer syx.molecules {
+  // La tesis, en sus tres pasos.
+  //
+  // Era una sola línea con dos flechas dentro —«standardise the foundations →
+  // compose reusable product patterns → make the system understandable to people
+  // and AI»— a `clamp(1.7rem,3vw,3rem)`. En una línea de ese cuerpo las flechas
+  // son el único indicio de que son tres cosas y no una frase larga, y en móvil
+  // se perdían en el reflujo. Como son tres pasos ordenados, se marcan como
+  // tres pasos ordenados: un `<ol>` los cuenta sin que haga falta escribir los
+  // números a mano ni que el lector los deduzca de una puntuación.
+  .mol-case-thesis ol {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--semantic-space-stack);
+    margin: var(--semantic-space-component-lg) 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: thesis;
+  }
+
+  .mol-case-thesis li {
+    counter-increment: thesis;
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+    padding-top: var(--semantic-space-component-md);
+  }
+
+  // El ordinal lo pone el contador, no el marcado: si mañana hay un cuarto paso
+  // no hay que renumerar nada a mano.
+  .mol-case-thesis li::before {
+    content: counter(thesis, decimal-leading-zero);
+    display: block;
+    margin-bottom: var(--semantic-space-component-xs);
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-eyebrow);
+    font-weight: var(--semantic-font-weight-emphasis);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    color: var(--semantic-color-primary);
+  }
+
+  // `title-sm` en vez del `clamp(1.7rem,3vw,3rem)` de antes, que a 3rem competía
+  // con el titular de la portada. Un resumen no puede pesar lo mismo que aquello
+  // a lo que resume.
+  .mol-case-thesis strong {
+    font-family: var(--semantic-font-family-display);
+    font-weight: var(--semantic-font-weight-emphasis);
+    font-size: var(--semantic-font-size-title-sm);
+    line-height: var(--semantic-line-height-title);
+    letter-spacing: var(--semantic-letter-spacing-display);
+  }
+
+  // Las cifras del caso.
+  //
+  // Un `<dl>`: cada cifra es el valor de un término, que es exactamente lo que
+  // un `dl` describe. El orden del marcado es `dt` (qué se mide) y luego `dd`
+  // (cuánto), que es como hay que leerlo; el `column-reverse` solo cambia dónde
+  // se pinta cada uno, para que la cifra entre primero por el ojo.
+  .mol-case-metrics {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--semantic-space-stack);
+    margin: 0;
+  }
+
+  .mol-case-metrics > div {
+    display: flex;
+    flex-direction: column-reverse;
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+    padding-top: var(--semantic-space-component-md);
+  }
+
+  .mol-case-metrics dt {
+    font-size: var(--semantic-font-size-caption);
+    text-transform: uppercase;
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-case-metrics dd {
+    margin: 0 0 var(--semantic-space-component-2xs);
+    font-family: var(--component-metric-font-family);
+    font-weight: var(--component-metric-font-weight);
+    font-size: var(--semantic-font-size-title);
+    line-height: var(--semantic-line-height-flat);
+    letter-spacing: var(--component-metric-letter-spacing);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer syx.utilities {
+  // Tres pasos, tres columnas: la forma de la retícula dice lo mismo que dice el
+  // texto. Por debajo de tablet es una columna, y ahí el `<ol>` numerado es lo
+  // único que mantiene legible que son pasos en orden.
+  @include from($bp-md) {
+    .mol-case-thesis ol,
+    .mol-case-metrics {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--semantic-space-block);
+    }
+  }
+}

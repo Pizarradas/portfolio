@@ -47,6 +47,7 @@
 @use "molecules/portfolio" as molecules-portfolio;
 @use "molecules/research" as molecules-research;
 @use "molecules/case-intro" as molecules-case-intro;
+@use "molecules/case-glance" as molecules-case-glance;
 @use "molecules/case-diagrams" as molecules-case-diagrams;
 @use "molecules/code-visuals" as molecules-code-visuals;
 @use "molecules/header-system" as molecules-header-system;
@@ -55,6 +56,7 @@
 
 @use "organisms/portfolio" as organisms-portfolio;
 @use "organisms/case-opener" as organisms-case-opener;
+@use "organisms/case-glance" as organisms-case-glance;
 @use "organisms/case-shell" as organisms-case-shell;
 @use "organisms/case-42ds" as organisms-case-42ds;
 // Después de los dos armazones que sustituye: dentro de una misma capa manda el

@@ -1,0 +1,44 @@
+@use "../abstracts/breakpoints" as *;
+@use "../abstracts/mixins" as *;
+
+// La franja de resumen que sigue a la portada de un caso.
+//
+// Sustituye a `.org-case42-overview`. Aquella declaraba `padding: 2rem` en la
+// capa de organismos y `clamp(4rem,6vw,6rem)` a partir de 1200px: ninguno de los
+// dos es escalón de `PROPORTIONS.md` §4.2, y el salto entre ambos era un φ⁴
+// —2rem a 6rem— sin nada en medio para todo el rango de tablet.
+//
+// Aquí el ritmo lo pone el banco de espaciado macro, que ya interpola solo. Y el
+// hueco entre la tesis y las cifras es un escalón mayor que los huecos de dentro
+// de cada una, que es lo que §5.2 pide para que se lean como dos bloques y no
+// como seis columnas sueltas.
+@layer syx.organisms {
+  .org-case-glance {
+    max-width: none;
+    padding: var(--semantic-space-section-compact)
+      var(--semantic-space-shell-inline);
+    background: var(--semantic-color-surface-alt);
+    border-block: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+  }
+
+  .org-case-glance > * {
+    max-width: var(--component-case-opener-max-width);
+    margin-inline: auto;
+  }
+
+  .org-case-glance > * + * {
+    margin-top: var(--semantic-space-section-compact);
+  }
+}
+
+@layer syx.utilities {
+  // A partir de 1200px el resto de la página de caso se centra sobre
+  // `--semantic-space-case-inline`. La franja lo sigue, o es el único bloque que
+  // arranca en otra vertical.
+  @media (min-width: 1200px) {
+    .org-case-glance {
+      padding-inline: var(--semantic-space-case-inline);
+    }
+  }
+}

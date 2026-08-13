@@ -1,27 +1,8 @@
 @use "../abstracts/breakpoints" as *;
 @use "../abstracts/mixins" as *;
 
-@layer syx.organisms {
-  .org-case42-overview>* {
-    max-width: var(--component-case42-max-width);
-    margin-inline: auto;
-  }
-
-  .org-case42-overview {
-    padding: 2rem var(--semantic-space-shell-inline);
-    background: var(--semantic-color-surface-alt);
-    border-block: 1px solid var(--semantic-color-border);
-  }
-
-}
-@layer syx.utilities {
-  @media (min-width:1200px) {
-    .org-case42-overview {
-      padding: clamp(4rem,6vw,6rem) var(--semantic-space-case-inline);
-    }
-
-  }
-}
+// `.org-case42-overview` vivía aquí. Lo sustituye `.org-case-glance`, en
+// `organisms/_case-glance.scss`.
 @layer syx.organisms {
   .org-case42-section__content>p:first-child {
     margin-top: 0;
