@@ -155,6 +155,17 @@
     // on both sides: a rule above, a rule below, and enough air inside that the
     // space between the title and the standfirst is obviously the composition
     // rather than a gap left over from the layout.
+    //
+    // The rule below is not drawn here. A border on this element spans its
+    // border box, which at this width is the whole page — so the opener was
+    // closing on an edge the content underneath does not use: at 3440px that is
+    // ~820px wider per side than the survey cap, with the first card's own
+    // hairline repeating the same line a block further down. The closing rule
+    // belongs to the content block, where it lands on the verticals the cards
+    // actually have, and the opener reads as page width handing over the width
+    // the section is going to use. Three of the four bands already draw it —
+    // the work card, the case index grid and the register all carry a top
+    // border of their own; only `.org-stack` had to be given one.
     .mol-section-heading.syx-bleed {
       // The index track is fixed, so every section title on the page starts on
       // the same vertical — an auto track would put "Work" and "Self-directed"
@@ -162,8 +173,6 @@
       grid-template-columns: 10rem minmax(0, 1fr) auto;
       column-gap: var(--semantic-space-block);
       padding-block: var(--primitive-space-2xl) var(--primitive-space-3xl);
-      border-bottom: var(--semantic-border-width) solid
-        var(--semantic-color-border);
     }
 
     // At 4rem the index column was narrow enough to break "Self-directed" over

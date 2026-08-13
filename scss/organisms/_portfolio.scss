@@ -241,6 +241,23 @@
     }
   }
 
+  // The rule that closes the band.
+  //
+  // At band width the opener stops drawing its own bottom border, so the block
+  // underneath is what closes the section — on the content verticals rather
+  // than on the page edges. The other three bands are followed by something
+  // that already has a border (a card, the case index grid, a register); this
+  // one is followed by two bare text columns, so the rule is declared here.
+  // Gated at the same breakpoint as the band: below it the opener never had a
+  // bottom border, so there is nothing to replace.
+  @include from($bp-2xl) {
+    .org-stack {
+      padding-block-start: var(--semantic-space-component-lg);
+      border-top: var(--semantic-border-width) solid
+        var(--semantic-color-border);
+    }
+  }
+
   .org-contact {
     padding-block: var(--semantic-space-section-compact)
       var(--semantic-space-section);
