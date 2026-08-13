@@ -1,3 +1,5 @@
+@use "../abstracts/breakpoints" as *;
+
 @layer syx.atoms {
   .atom-skip-link {
     position: fixed;
@@ -106,6 +108,65 @@
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
+  }
+
+  // Language switch — the EN / ES pair in the header.
+  //
+  // Two languages means two visible links rather than a <select>: the language
+  // being read stays legible without opening anything, and switching costs one
+  // click instead of open-menu, read, choose. It sits behind a rule because it
+  // is not a fifth navigation item — it re-renders the page you are already on
+  // rather than taking you somewhere else, and each link points at the
+  // translated twin of that exact page, never back at the home page.
+  .atom-lang-switch {
+    display: flex;
+    align-items: center;
+    gap: var(--primitive-space-2xs);
+    padding-inline-start: var(--primitive-space-sm);
+    border-inline-start: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+    font-family: var(--semantic-font-family-ui);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    // The header is a single non-wrapping row; four nav labels plus this pair
+    // is the widest it ever gets, and the Spanish labels are the long ones.
+    white-space: nowrap;
+  }
+
+  .atom-lang-switch > span,
+  .atom-lang-switch a {
+    color: var(--semantic-color-text-muted);
+    transition: color var(--semantic-duration-hover) var(--semantic-ease);
+  }
+
+  .atom-lang-switch a:hover {
+    color: inherit;
+  }
+
+  // The language being read is not a destination. It keeps full contrast so the
+  // active language is legible at a glance without a second cue to decode.
+  .atom-lang-switch a[aria-current] {
+    color: inherit;
+    font-weight: var(--primitive-font-weight-semibold);
+    cursor: default;
+  }
+
+  // Phone. The header row was already sized for four nav labels and a wordmark;
+  // this pair is a fifth item, and the Spanish labels are longer than the
+  // English ones, so both the switch and the gap around it give ground here.
+  //
+  // The nav gap is reached through `.org-site-header` on purpose:
+  // mobile-first-v19.css sets `.mol-nav { gap: .9rem }` in the same cascade
+  // layer and is linked after portfolio.css, so a bare `.mol-nav` would lose.
+  @include until($bp-sm) {
+    .atom-lang-switch {
+      gap: var(--primitive-space-3xs);
+      padding-inline-start: var(--primitive-space-2xs);
+      font-size: var(--semantic-font-size-eyebrow);
+    }
+
+    .org-site-header .mol-nav {
+      gap: var(--primitive-space-xs);
+    }
   }
 
   .atom-metric {

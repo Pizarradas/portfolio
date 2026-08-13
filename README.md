@@ -182,3 +182,37 @@ The ordering is intentional: first impression = current Product Designer + syste
 
 ## V30 — original Interactive Media Map development
 The abstract map proof has been replaced by a standalone reconstruction from the supplied original HTML. Leaflet, IGN tiles, real locations, publication-specific SVG markers, popups and the original bounds/reset logic are preserved. Only unrelated page chrome, ads, footer and long link lists were removed for portfolio presentation.
+
+## V31 — bilingual site (EN root, ES mirror)
+The site ships in English and Spanish. English lives at the repo root and is the
+single source of truth for markup; Spanish lives in `es/` and is **generated**,
+never hand-edited.
+
+```
+npm run build:i18n     # regenerate es/ from the English pages
+npm run check:i18n     # fail if any string is missing a translation
+npm run extract:i18n   # write i18n/_missing.json with the untranslated strings
+```
+
+`scripts/build-i18n.mjs` walks each English page without parsing it into a tree,
+swaps every text run and human-readable attribute through `i18n/es.json`,
+rewrites relative URLs one level down, sets `lang="es"` and fills two marked
+blocks: the `hreflang`/canonical set and the language switch. Both markers exist
+in the English pages too, so `EN`/`ES` links and alternates never drift apart.
+
+Editing workflow: change the English page, run `npm run build:i18n`, and add any
+new sentence it reports to `i18n/es.json`. Strings that read the same in both
+languages — proper nouns, job titles, tool names, code fragments — go in the
+`__same` array rather than as identical key/value pairs.
+
+`build-timeline.mjs` and `build-map-process.mjs` inject into `index.html`, so
+they must run **before** `build-i18n.mjs`; `npm run build` already orders them.
+
+### The switcher
+Two languages, so two always-visible links (`EN / ES`) rather than a `<select>`:
+the current language stays readable without opening anything and switching costs
+one click. Each link points at the translated twin of the page being read, not at
+the home page, and `js/lang-switch.js` carries the current `#anchor` across so the
+reader lands where they already were. There is no stored preference and no
+automatic redirect — a redirect would fire after the page had already painted,
+and a Spanish speaker may be reading the English version on purpose.

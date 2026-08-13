@@ -29,6 +29,15 @@
     right: 0;
   }
 
+  // The language switch lives inside the nav, so it inherits the sliding
+  // underline — which is the right hover affordance for the language you can
+  // move to, and the wrong one for the language you are already reading, since
+  // that link resolves to the current page. Killed here rather than in the atom
+  // because syx.molecules wins over syx.atoms whatever the specificity.
+  .mol-nav .atom-lang-switch a[aria-current]::after {
+    content: none;
+  }
+
   .mol-section-heading {
     display: grid;
     grid-template-columns: minmax(2rem, 7rem) minmax(0, 1fr) minmax(16rem, 28rem);
