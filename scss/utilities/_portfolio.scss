@@ -48,6 +48,19 @@
     padding-inline: var(--semantic-pad-survey);
   }
 
+  // One register above survey, and the page gets one section in it.
+  //
+  // Below 1792px it is identical to survey — both resolve to the gutter — so
+  // this only exists on a display wide enough for the difference to be a
+  // composition rather than a rounding error. What it buys is not "bigger": the
+  // flagship evidence is a 1920px source that survey was showing at 1045px, and
+  // the extra width goes to that column, not to the copy beside it.
+  .syx-span-showcase {
+    --syx-register-width: var(--semantic-width-showcase);
+
+    padding-inline: var(--semantic-pad-showcase);
+  }
+
   // No cap. A section in this register needs no band host either: its opener is
   // already the width of the page, so `.syx-bleed` on the heading only has to
   // carry the band's own styling and has nothing left to break out of.
@@ -297,6 +310,35 @@
       border-inline-end: 0;
       border-inline-start: var(--semantic-border-width) solid
         var(--semantic-color-border);
+    }
+  }
+
+  // Where the showcase register goes, and where it does not.
+  //
+  // The two tracks are a ratio, so widening the section widened both: at 2304px
+  // the copy column reached 960px, and its outcome line is caption-sized, so
+  // that is about 140 characters a line — the register would have bought worse
+  // typography with the room it gained.
+  //
+  // The copy column stops at `--semantic-width-compact` and the evidence takes
+  // everything else. That is the right way round for this section anyway: the
+  // headline wants 16ch of display measure and gets about 29 inside this cap
+  // once the body padding is off, while the flagship frame is a 1920px source
+  // that survey was cropping to 1045. It ends up near 1610 — most of the asset,
+  // still under it, so nothing is scaled up.
+  //
+  // Gated at 2xl because below it `showcase` and `survey` resolve to the same
+  // gutter: there is no extra width to place, and capping the column there
+  // would narrow the copy on a laptop for nothing.
+  @include from($bp-2xl) {
+    .org-work .mol-project-card {
+      grid-template-columns: minmax(0, 1fr)
+        minmax(24rem, var(--semantic-width-compact));
+    }
+
+    .org-work .org-project-grid .mol-project-card:nth-of-type(odd) {
+      grid-template-columns: minmax(24rem, var(--semantic-width-compact))
+        minmax(0, 1fr);
     }
   }
 

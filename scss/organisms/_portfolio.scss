@@ -7,9 +7,14 @@
   // across the page and stops widening past the cap. This replaces the old mix
   // of 90rem, 112rem and no cap at all, which read as three different sites
   // stacked on top of each other on a wide display.
+  // `.org-work` is no longer in the list: it runs at `showcase`, and leaving a
+  // survey padding here that the utilities layer silently beats is how a
+  // section ends up with two answers to how wide it is. The rest keep it, but
+  // it is dead weight for them too — every section in this selector carries its
+  // register in the markup, and the utilities layer wins on layer position
+  // whatever the specificity.
   .org-site-header,
   .org-hero,
-  .org-work,
   .org-about,
   .org-contact,
   .org-footer {
@@ -152,9 +157,18 @@
   }
 
   @include from($bp-md) {
+    // The capability strip is a survey section whose rules run the width of the
+    // page: the border is on this element, so it bleeds, while the five cells
+    // sit inside the register's padding. Same shape as the band openers, and
+    // the reason it reads as deliberate rather than as a block that failed to
+    // line up.
+    //
+    // It said `--semantic-pad-content`, a legacy alias that resolves to the
+    // same value. Named for its register instead, so the width is readable
+    // here rather than through an alias kept for the old stylesheets.
     .org-capability-scan {
       grid-template-columns: repeat(5, 1fr);
-      padding-inline: var(--semantic-pad-content);
+      padding-inline: var(--semantic-pad-survey);
     }
 
     .org-capability-scan a {

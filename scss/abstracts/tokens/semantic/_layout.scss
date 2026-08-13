@@ -25,9 +25,14 @@
     // The background still bleeds to the viewport edge; only the content is
     // capped. That is what makes a wide band feel wide without the text inside
     // it running to 2400px, which is what the blue map section was doing.
+    //   showcase 144rem  one section, and it has to earn it: the evidence a
+    //                    case is arguing from, shown at the size the argument
+    //                    needs. Above survey the page has room for exactly one
+    //                    of these before every section is the widest section.
     --semantic-width-read: var(--primitive-width-md);
     --semantic-width-scan: var(--primitive-width-xl);
     --semantic-width-survey: var(--primitive-width-2xl);
+    --semantic-width-showcase: var(--primitive-width-3xl);
 
     --semantic-pad-read: max(
       var(--semantic-space-gutter),
@@ -41,13 +46,26 @@
       var(--semantic-space-gutter),
       calc((100% - var(--semantic-width-survey)) / 2)
     );
+    --semantic-pad-showcase: max(
+      var(--semantic-space-gutter),
+      calc((100% - var(--semantic-width-showcase)) / 2)
+    );
 
     // A fourth register, and the only one with no cap: the page itself, minus
     // its gutter. For a section whose content is the spatial relationship
     // between whole blocks rather than anything to be read — the work mosaic —
     // where the cap was leaving 700px of empty page either side on a wide
     // display and making three cases look like three small cards.
+    // The work mosaic it was written for now runs at `showcase` instead: a
+    // register with no cap is, by definition, off the width scale, and at
+    // 3440px it takes 96 % of the viewport. Nothing reads this one today.
     --semantic-pad-full: var(--semantic-space-gutter);
+
+    // Column cap, not a section register. The copy column of a work card stops
+    // here so the width above survey goes to the evidence beside it instead of
+    // to the line length — at `showcase` an uncapped column would run to 960px
+    // of caption text, which is about 140 characters a line.
+    --semantic-width-compact: var(--primitive-width-sm);
 
     // Names the existing stylesheets already reference. They keep the values
     // they had, so nothing shifts implicitly: a section changes width when it
@@ -91,8 +109,6 @@
 
     // Único paso macro que ningún nombre de rol cubría.
     --semantic-space-layout-6xl: var(--primitive-space-6xl);
-
-    --semantic-width-compact: var(--primitive-width-sm);
 
     // Suelo de objetivo táctil. NO es un escalón de la escala de espaciado y
     // no debe buscarse en `scss/PROPORTIONS.md`: son los 24 CSS px que exige
