@@ -79,17 +79,18 @@
 
   }
 }
-@layer syx.organisms {
-  .mol-token-flow {
-    grid-template-columns: 1fr;
-  }
-
-  .mol-token-flow>i {
-    transform: rotate(90deg);
-    justify-self: center;
-  }
-
-}
+// Aquí vivía una copia literal del bloque `max-width:850` de arriba, sin la
+// media query y en la capa de organismos —que gana a la de moléculas—, así que
+// el flujo de tokens se dibujaba **apilado a cualquier ancho**. En una pantalla
+// de 3440px, «Primitive → Semantic → Component» —que es una tubería, y el
+// argumento entero de esa sección— se veía como tres listas una debajo de otra
+// con flechas girando 90°, y el panel se estiraba a mil y pico píxeles de alto
+// dejando el de al lado vacío.
+//
+// Es el mismo mecanismo que las parejas rotas de la entrada: una regla en una
+// capa posterior mata en silencio a la que se escribió para desktop. Borrar la
+// copia devuelve la tubería horizontal por encima de 850px; el apilado sigue
+// donde tiene que estar, en su media query.
 @layer syx.molecules {
   .mol-code-visual {
     background: #fff;
@@ -129,17 +130,27 @@
 
   }
 }
-@layer syx.organisms {
-  .mol-code-visual {
-    min-height: 0;
-    padding: 1rem;
-  }
+@layer syx.utilities {
+  // Este bloque estaba en la capa de organismos y sin media query, así que los
+  // cuatro paneles de la galería corrían con su caja de móvil en todas partes:
+  // sin la altura mínima que los iguala y con el padding fijo en 1rem en vez
+  // del fluido. Es lo que dejaba la retícula desigual —un panel de mil píxeles
+  // al lado de uno de trescientos—. A diferencia de sus vecinos, este no tenía
+  // pareja `max-width` que lo justificara, así que en vez de borrarlo se le
+  // pone la guarda que le faltaba: en móvil la caja de móvil, y de 768 para
+  // arriba la del componente.
+  @include until($bp-md) {
+    .mol-code-visual {
+      min-height: 0;
+      padding: 1rem;
+    }
 
-  .mol-code-visual__head {
-    display: grid;
-    gap: .5rem;
-  }
+    .mol-code-visual__head {
+      display: grid;
+      gap: .5rem;
+    }
 
+  }
 }
 @layer syx.molecules {
   .mol-button-system {
@@ -250,16 +261,10 @@
 
   }
 }
-@layer syx.organisms {
-  .mol-form-system {
-    grid-template-columns: 1fr;
-  }
-
-  .mol-form-system__check {
-    grid-column: auto;
-  }
-
-}
+// Otra copia del bloque `max-width:850` de arriba, sin media query: el
+// formulario de ejemplo corría a una columna a cualquier ancho. `grid-column:
+// auto` en el check era además redundante —con una sola pista, `1/-1` y `auto`
+// son lo mismo—.
 @layer syx.molecules {
   .mol-nav-system {
     margin: auto 0 1.2rem;
@@ -321,16 +326,11 @@
 
   }
 }
-@layer syx.organisms {
-  .mol-nav-system a {
-    display: none;
-  }
-
-  .mol-nav-system__mobile {
-    display: flex;
-  }
-
-}
+// La copia más cara de todas. Ocultaba los enlaces del nav y encendía la barra
+// de móvil a cualquier ancho, así que el panel «04 / NAVIGATION — la
+// arquitectura de información se convierte en un patrón reutilizable» enseñaba
+// únicamente un logo y tres rayas de hamburguesa. La demostración de la
+// arquitectura de información no se veía nunca.
 @layer syx.molecules {
   .mol-anatomy-card {
     @include relative();
@@ -403,22 +403,19 @@
 
   }
 }
-@layer syx.organisms {
-  .mol-anatomy-card {
-    grid-template-columns: 1fr;
-    min-height: 0;
-  }
+@layer syx.utilities {
+  // La tarjeta anotada apilaba a cualquier ancho por la misma copia sin media
+  // query, así que la sección «un componente es un contrato» enseñaba el
+  // contrato partido en dos trozos en vez de la pieza —36 % de media y el resto
+  // de contenido— que es lo que se está anotando. Su pareja real es el bloque
+  // `max-width:600` de arriba; lo único que no estaba allí es el padding
+  // reducido del contenido, que baja aquí.
+  @media(max-width:600px) {
+    .mol-anatomy-card__content {
+      padding: 1.2rem;
+    }
 
-  .mol-anatomy-card__visual {
-    min-height: 9rem;
-    border-right: 0;
-    border-bottom: 1px solid var(--semantic-color-border);
   }
-
-  .mol-anatomy-card__content {
-    padding: 1.2rem;
-  }
-
 }
 @layer syx.molecules {
   .mol-anatomy-pin {
@@ -453,14 +450,21 @@
   }
 
 }
-@layer syx.organisms {
-  .mol-anatomy-pin {
-    position: static;
-    display: inline-block;
-    margin: .2rem;
-    width: max-content;
-  }
+@layer syx.utilities {
+  // Los pines dejaban de ser pines a cualquier ancho: `position: static` los
+  // convertía en una fila de etiquetas debajo de la tarjeta, así que ninguna
+  // anotación anotaba nada. En móvil eso es lo correcto —cuatro pines sobre una
+  // tarjeta estrecha se pisan—, pero solo en móvil, y era lo único que le
+  // faltaba a este bloque: su guarda.
+  @include until($bp-md) {
+    .mol-anatomy-pin {
+      position: static;
+      display: inline-block;
+      margin: .2rem;
+      width: max-content;
+    }
 
+  }
 }
 @layer syx.atoms {
   .mol-token-lab__switcher button {

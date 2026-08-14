@@ -47,8 +47,11 @@
     color: var(--semantic-color-text-secondary);
   }
 
+  // Apagado por defecto: el dibujo solo es cierto con las marcas en una fila de
+  // cuatro, y eso pasa a partir de `2xl`. Ver el bloque de utilidades.
   .mol-header-architecture__connector {
     @include relative();
+    display: none;
     height: 2.2rem;
   }
 
@@ -95,10 +98,6 @@
       grid-template-columns: 1fr;
     }
 
-    .mol-header-architecture__connector {
-      display: none;
-    }
-
   }
 }
 @layer syx.organisms {
@@ -110,19 +109,35 @@
     margin-bottom: 1rem;
   }
 
-  .mol-header-architecture__connector {
-    display: none;
-  }
-
-  .mol-header-architecture__brands {
-    grid-template-columns: 1fr;
-  }
-
 }
 @layer syx.utilities {
   @media (min-width:1200px) {
     .mol-header-architecture__brands {
       grid-template-columns: 1fr 1fr;
+    }
+
+  }
+
+  // El conector y las cuatro marcas, que solo son ciertos juntos.
+  //
+  // El dibujo del conector no es genérico: es una línea de 12,5 % a 87,5 % con
+  // cuatro bajadas en 12,5 · 37,5 · 62,5 · 87,5 %, o sea el centro de cada
+  // columna **de cuatro**. Con las marcas en dos columnas las bajadas caen en
+  // mitad de las tarjetas, y por eso el conector estaba apagado. Apagado a
+  // cualquier ancho, eso sí: la copia sin guarda lo escondía también donde sí
+  // habría sido cierto, así que la sección enseñaba el núcleo y las marcas sin
+  // nada que dijera que unas cuelgan del otro.
+  //
+  // A partir de `2xl` la sección corre en `showcase` —144rem— y las cuatro
+  // cabeceras caben en una fila de ~576px cada una. Ahí el dibujo es cierto y
+  // se enciende. Por debajo siguen en dos columnas y el conector, apagado.
+  @include from($bp-2xl) {
+    .mol-header-architecture__brands {
+      grid-template-columns: repeat(4,1fr);
+    }
+
+    .mol-header-architecture__connector {
+      display: block;
     }
 
   }
@@ -238,17 +253,12 @@
 
   }
 }
-@layer syx.organisms {
-  .mol-brand-header__bar nav {
-    display: none;
-  }
-
-  .mol-brand-header__meta {
-    grid-template-columns: 1fr;
-    gap: .25rem;
-  }
-
-}
+// Aquí había otra copia sin media query del bloque `max-width:560` de arriba, y
+// esta se llevaba por delante el argumento de la sección: escondía el `nav` de
+// las cuatro cabeceras de marca **a cualquier ancho**. «One structure. Many
+// identities.» se demostraba con cuatro barras que solo enseñaban logo y menú
+// hamburguesa; la estructura compartida —los enlaces de navegación, que son lo
+// único que se repite igual en las cuatro— no se veía en ninguna.
 @layer syx.molecules {
   .mol-header-rule-strip {
     display: grid;
@@ -294,12 +304,9 @@
 
   }
 }
-@layer syx.organisms {
-  .mol-header-rule-strip {
-    grid-template-columns: 1fr 1fr;
-  }
-
-}
+// Copia sin guarda del `max-width:850` de arriba. Con el `min-width:1200` que
+// viene detrás la tira volvía a cuatro columnas en pantalla grande, así que
+// esta solo hacía daño entre 851 y 1199: dos columnas donde caben cuatro.
 @layer syx.utilities {
   @media (min-width:1200px) {
     .mol-header-rule-strip {

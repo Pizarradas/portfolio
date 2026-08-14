@@ -611,12 +611,8 @@
 
   }
 }
-@layer syx.organisms {
-  .mol-ai-metrics {
-    grid-template-columns: 1fr;
-  }
-
-}
+// Copia del bloque `max-width:800` de arriba sin su media query: las métricas
+// de la sección de IA corrían a una columna a cualquier ancho.
 // `.mol-system-map` vivía aquí: cuatro raíles, un split y un connector de tres
 // `<i>` vacíos que dibujaban las conexiones con bordes CSS. Lo sustituye
 // `.mol-arch-map`, en `molecules/_case-glance.scss`, generado por
@@ -832,14 +828,7 @@
 
   }
 }
-@layer syx.organisms {
-  .mol-ai-layers__layer {
-    grid-template-columns: 1fr;
-    gap: .5rem;
-  }
-
-  .mol-ai-layers__layer--modes div {
-    grid-column: auto;
-  }
-
-}
+// Lo mismo con las capas: la retícula de tres pistas —`.7fr 1fr 1.6fr`, que es
+// la que separa el nombre de la capa de su contenido— quedaba anulada a
+// cualquier ancho por esta copia. Su pareja con guarda está en el
+// `max-width:800` de arriba.
