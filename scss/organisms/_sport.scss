@@ -1,58 +1,13 @@
 @use "../abstracts/breakpoints" as *;
 @use "../abstracts/mixins" as *;
 
+// `.org-sport-opening` vivía aquí: la apertura del caso partida en dos columnas
+// —1.15fr de tarjeta de investigación y .85fr de texto—, con su propio tope de
+// 90rem y su propio `h2`. Eran tres desviaciones a la vez: un registro distinto
+// del resto de la página, un acto en dos columnas y un titular dimensionado a
+// mano. Ahora es un acto como los otros seis: la pregunta que abre el caso
+// arriba, la tarjeta de evidencia debajo, las dos a ancho de registro.
 @layer syx.utilities {
-  @media (max-width:900px) {
-    .org-sport-opening {
-      grid-template-columns: 1fr;
-    }
-
-  }
-}
-@layer syx.organisms {
-  .org-sport-opening {
-    max-width: var(--component-story-max);
-    margin-inline: auto;
-    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    align-items: center;
-    border-bottom: 1px solid var(--semantic-color-border);
-  }
-
-  .org-sport-opening__copy h2 {
-    font-family: var(--semantic-font-family-display);
-    font-size: var(--semantic-font-size-section-compact);
-    line-height: .98;
-    letter-spacing: -.045em;
-    margin: .4rem 0 1rem;
-  }
-
-  .org-sport-opening__copy p:not(.atom-eyebrow) {
-    font-size: .95rem;
-    color: var(--semantic-color-text-secondary);
-    margin-top: 1rem;
-  }
-
-}
-@layer syx.utilities {
-  @include from($bp-md) {
-    .org-sport-opening {
-      grid-template-columns: 1.25fr .75fr;
-      padding: var(--semantic-space-section) var(--semantic-space-page-inline);
-      gap: clamp(2rem,6vw,7rem);
-    }
-
-  }
-  @media (min-width:1200px) {
-    .org-sport-opening {
-      max-width: 90rem;
-      grid-template-columns: 1.15fr .85fr;
-      gap: clamp(3rem,6vw,7rem);
-    }
-
-  }
   @media (max-width:560px) {
     .org-card-comparison {
       grid-template-columns: 1fr;

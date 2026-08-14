@@ -126,6 +126,25 @@
     max-width: var(--semantic-measure-prose);
   }
 
+  // El ritmo de un acto con prosa suelta.
+  //
+  // La banda cierra con `section-compact` y el párrafo que la sigue traía su
+  // propio margen pequeño hacia la figura: 100px por arriba y 40 por abajo, o
+  // sea el párrafo más cerca del dibujo que del titular al que pertenece. Es la
+  // inversión que describe `PROPORTIONS.md` §5.2 —el hueco de dentro tiene que
+  // ser menor que el que separa del bloque siguiente—.
+  //
+  // Ahora: `stack` entre la banda y su párrafo, `section-compact` entre ese
+  // párrafo y lo que venga detrás. Razón φ entre los dos, que es lo que pide la
+  // regla.
+  .org-case__act > .mol-section-heading:has(+ p) {
+    margin-bottom: var(--semantic-space-stack);
+  }
+
+  .org-case__act > p + * {
+    margin-block-start: var(--semantic-space-section-compact);
+  }
+
   // La cita de cierre.
   //
   // Es lo último que se lee de un caso, así que tiene voz propia, pero por
@@ -224,8 +243,19 @@
   // en retícula para eso, y así no se tocan los cinco actos con figura: una
   // retícula cambiaría el colapso de márgenes entre la banda y el diagrama.
   @include from($bp-md) {
+    // La columna de contenido de un acto: donde empieza el titular.
+    //
+    // La pista de la izquierda es margen de etiquetas. Todo lo que no sea una
+    // figura a ancho de registro comparte la vertical del titular: la prosa, la
+    // cita y cualquier bloque topado a un registro menor que el de su sección.
+    //
+    // Sin esto, una tarjeta de datos topada a `scan` arrancaba en la vertical
+    // del eyebrow y moría 356px antes del borde derecho del registro: tres
+    // verticales distintas en un mismo acto. Metida en la columna, arranca
+    // donde el titular y acaba a 122px del borde, o sea prácticamente a ras.
     .org-case__act > p,
-    .org-case__act > blockquote {
+    .org-case__act > blockquote,
+    .org-case__act > .syx-inset {
       margin-inline-start: calc(
         var(--component-heading-label-track) + var(--semantic-space-block)
       );

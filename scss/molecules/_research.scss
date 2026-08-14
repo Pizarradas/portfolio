@@ -2,7 +2,10 @@
 @use "../abstracts/mixins" as *;
 
 @layer syx.molecules {
+  // Misma naturaleza que la tarjeta de investigacion: cuatro cifras que se leen
+  // de un vistazo, no una superficie espacial. Mismo tope.
   .mol-stat-strip {
+    max-width: var(--semantic-width-scan);
     display: grid;
     grid-template-columns: repeat(4,1fr);
     margin-top: 2.5rem;
@@ -169,7 +172,24 @@
     letter-spacing: .12em;
   }
 
+  // Una tabla no mejora al ensancharse.
+  //
+  // El registro de la seccion es `survey` —112rem— porque asi corren los
+  // diagramas espaciales, los que «llevan su significado en la relacion entre
+  // las partes». Esta tarjeta no es eso: es un encabezado, cuatro cifras, tres
+  // criterios y una tabla de cuatro columnas, o sea justo la definicion del
+  // registro `scan` —«un titular y una reticula de tarjetas o filas: el ojo
+  // salta entre unos pocos elementos en vez de leer de corrido»—.
+  //
+  // A 1792px las celdas de cifra median 500px con el numero pegado a la
+  // izquierda, y en la tabla habia 400px entre «Sample» y «Image»: leer una
+  // fila obligaba a cruzar la pantalla. A 90rem las cuatro columnas caen a la
+  // distancia de un golpe de vista.
+  //
+  // El tope va en la molecula y no en la seccion: quien decide el ancho es la
+  // naturaleza del contenido, no donde este colocado.
   .mol-research-model {
+    max-width: var(--semantic-width-scan);
     border: 1px solid var(--semantic-color-border);
     background: #fff;
     min-width: 0;

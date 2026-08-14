@@ -85,41 +85,12 @@
     margin-top: 0;
   }
 
-  .org-case-section--dark {
-    background: var(--component-case-dark-bg);
-    color: var(--component-case-dark-fg);
-    border-color: #34352f;
-  }
-
-  .org-case-section--dark .atom-eyebrow {
-    color: inherit;
-  }
-
-  .org-case-section--dark .atom-index {
-    color: inherit;
-  }
-
-  .org-case-section--accent {
-    background: var(--component-case-accent-bg);
-    color: var(--component-case-accent-fg);
-  }
-
-  .org-case-section--accent .atom-eyebrow {
-    color: inherit;
-  }
-
-  .org-case-section--accent .atom-index {
-    color: inherit;
-  }
-
-  .org-case-section--outcome blockquote {
-    font-family: var(--semantic-font-family-display);
-    font-weight: 600;
-    letter-spacing: -.025em;
-    margin: 3rem 0 0;
-    font-size: clamp(1.5rem,2.4vw,2.3rem);
-    line-height: 1.25;
-  }
+  // Las cuatro variantes de color de este armazón vivían aquí: `--dark` con su
+  // propio negro cálido —un tercer oscuro del sitio, ni el navy ni el ink—,
+  // `--accent` con el azul, `--outcome` con su cita y `--chart` con el lavado
+  // gris. Solo las usaba SPORT, que ya corre la plantilla: el oscuro y el azul
+  // son ahora contextos, la cita la dimensiona la plantilla y el gris se retira
+  // por el criterio de `BRAND.md` §4 —dos bandas a sangre, no cinco—.
 
 }
 @layer syx.utilities {
@@ -150,9 +121,6 @@
   }
 }
 @layer syx.organisms {
-  .org-case-section--chart {
-    background: var(--semantic-color-surface-alt);
-  }
 
   .org-case-section {
     display: grid;

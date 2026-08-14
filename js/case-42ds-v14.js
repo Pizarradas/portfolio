@@ -1,41 +1,7 @@
-
+// El grafico de inventario de componentes. La entrada por scroll que vivia
+// aqui es ahora `js/reveal.js`, que cargan las seis paginas de caso.
 (() => {
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const revealEls = [...document.querySelectorAll('.js-reveal')];
-
-  const show = el => {
-    el.classList.add('is-visible');
-    el.querySelectorAll('.js-count').forEach(counter => {
-      if (counter.dataset.done) return;
-      counter.dataset.done = '1';
-      const target = Number(counter.dataset.count || 0);
-      if (reduced) { counter.textContent = target; return; }
-      const start = performance.now();
-      const duration = 750;
-      const tick = now => {
-        const t = Math.min(1, (now - start) / duration);
-        const eased = 1 - Math.pow(1 - t, 3);
-        counter.textContent = Math.round(target * eased);
-        if (t < 1) requestAnimationFrame(tick);
-      };
-      requestAnimationFrame(tick);
-    });
-  };
-
-  if ('IntersectionObserver' in window && !reduced) {
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          show(entry.target);
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: .18 });
-    revealEls.forEach(el => io.observe(el));
-  } else {
-    revealEls.forEach(show);
-  }
-
   const chartEl = document.getElementById('chart-component-inventory');
   let chart;
   const initChart = () => {
