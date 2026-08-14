@@ -7,7 +7,7 @@ Este documento manda sobre el gusto de quien esté escribiendo, incluido el mío
 
 ## 1. La tesis
 
-> **Estudié periodismo. Construyo los sistemas que hay detrás de los periódicos.**
+> **Estudié periodismo. Construyo los sistemas sobre los que construyen otros.**
 
 No es un titular bonito: es el eje de todo. El diferencial de JLP no es «diseñador
 que además programa» —eso hay a miles— sino **rigor editorial aplicado a
@@ -15,6 +15,26 @@ sistemas**. Viene de una redacción, y eso se nota en cómo decide: mide antes d
 opinar, cita la fuente, distingue el dato de la interpretación.
 
 Cualquier pieza que no pueda apoyarse en esa tesis sobra.
+
+### Por qué la segunda frase ya no dice «periódicos»
+
+Decía «los sistemas que hay detrás de los periódicos», y se cambió por dos
+razones, en este orden:
+
+1. **Repetía lo que el lede ya prueba.** Dos líneas más abajo, en el mismo primer
+   vistazo, está «42DS: la arquitectura compartida que hay detrás de El
+   Periódico, SPORT y La Nueva España» —con nombres propios. El titular gastaba
+   su segunda mitad en afirmar sin pruebas lo que la línea siguiente demuestra
+   con ellas.
+2. **El sector no es el diferencial; el método sí.** La redacción es el **origen**
+   del rigor, no su techo: un design system es, por definición, aquello sobre lo
+   que construyen otros, y eso es igual de cierto en un grupo editorial que fuera
+   de él. «Otros» no nombra ningún gremio y los admite todos.
+
+Lo que **no** cambió, y no debe cambiar: la primera frase. «Estudié periodismo»
+es el origen del criterio y es lo que hace que la segunda no suene a cualquiera.
+Si alguien propone quitarla para «sonar más de producto», ha entendido la tesis
+al revés.
 
 ### Lo que sostiene la tesis
 

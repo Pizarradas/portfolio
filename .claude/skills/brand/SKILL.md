@@ -16,8 +16,11 @@ prioridad 3 de `CLAUDE.md`, y a la 2 cuando el cambio toca color o contraste.
 
 ## Procedimiento
 
-1. **Localiza la tesis.** «Estudié periodismo. Construyo los sistemas que hay
-   detrás de los periódicos.» Lo que no se apoye en ella, sobra.
+1. **Localiza la tesis.** «Estudié periodismo. Construyo los sistemas sobre los
+   que construyen otros.» Lo que no se apoye en ella, sobra. La segunda frase
+   dejó de decir «periódicos» a propósito: el sector es el origen del criterio,
+   no su techo, y el lede de la home ya lo prueba con nombres propios. Ver
+   `BRAND.md` §1 antes de proponer volver atrás.
 2. **Identifica a qué registro sirve la pieza** —escala, evidencia, de principio
    a fin, gobernanza de IA, oficio visual (`BRAND.md` §1). Si no sirve a ninguno,
    pregunta antes de escribirla.

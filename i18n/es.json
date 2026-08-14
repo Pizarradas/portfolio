@@ -258,7 +258,6 @@
   "About": "Sobre mí",
   "Contact": "Contacto",
   "Product Design · Design Systems · Front-End · AI": "Product Design · Design Systems · Front-End · IA",
-  "I studied journalism. I build the systems behind the newspapers.": "Estudié periodismo. Construyo los sistemas que hay detrás de los periódicos.",
   "Product Designer &amp; Front-End Engineer at Prensa Ibérica. Nineteen years across agency, telecom and media. Since 2021 I build design systems — first Brickee at Aliseda, now 42DS: the shared architecture behind El Periódico, SPORT and La Nueva España.": "Product Designer &amp; Front-End Engineer en Prensa Ibérica. Diecinueve años entre agencia, telecomunicaciones y medios. Desde 2021 construyo design systems: primero Brickee en Aliseda y ahora 42DS, la arquitectura compartida que hay detrás de El Periódico, SPORT y La Nueva España.",
   "Selected work": "Proyectos seleccionados",
   "Capability map": "Mapa de capacidades",
@@ -1037,5 +1036,6 @@
   "No !important": "Sin !important",
   "Design + code": "Diseño + código",
   "Still shipping": "Sigo publicando",
-  "Built in SCSS": "Hecho en SCSS"
+  "Built in SCSS": "Hecho en SCSS",
+  "I studied journalism. I build the systems other people build on.": "Estudié periodismo. Construyo los sistemas sobre los que construyen otros."
 }
