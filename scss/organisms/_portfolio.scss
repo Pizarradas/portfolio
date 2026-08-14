@@ -238,26 +238,76 @@
   // Y la pista de etiqueta pasa a ser la del sitio. Tenían una propia
   // —2–7rem— que dejaba sus eyebrows en una vertical distinta de la de todas
   // las bandas de encabezado de la página.
+  // About — the headline opens the band, it does not sit beside the prose.
+  //
+  // It used to be three columns of one row: label, headline, copy. With
+  // `align-items: start` the headline column held three lines and then stopped,
+  // while the copy column ran on for some 700px — about 45 % of the band was
+  // empty, and it was empty in the middle of the composition rather than at its
+  // edge.
+  //
+  // Worse, the copy column was the narrow one. At scan (1440px) it resolved to
+  // roughly 509px, which is ~48 characters at body-lg: the `measure-prose` cap
+  // below it never applied, because the column was already narrower than the
+  // 66ch it was capping to. The section was reading at the bottom edge of a
+  // comfortable measure while a third of the band went unused.
+  //
+  // So the headline now spans the content column as an opening band, and the
+  // body splits below it. Two rows, not three columns.
   .org-about {
     padding-block: var(--semantic-space-section);
     display: grid;
-    grid-template-columns: var(--component-heading-label-track) 1.35fr 1fr;
-    gap: var(--semantic-space-block);
+    grid-template-columns: var(--component-heading-label-track) minmax(0, 1fr);
+    column-gap: var(--semantic-space-block);
+    row-gap: var(--semantic-space-block);
     align-items: start;
     border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+  }
+
+  .org-about__head,
+  .org-about__body {
+    grid-column: 2;
+  }
+
+  // The hairline is the same device the rest of the page uses to show its grid:
+  // it separates the claim from the evidence for it without adding a component.
+  .org-about__head {
+    padding-bottom: var(--semantic-space-block);
+    border-bottom: var(--semantic-border-width) solid
+      var(--semantic-color-border);
   }
 
   .org-about h2 {
     font-size: var(--semantic-font-size-title-lg);
     margin-top: var(--semantic-space-component-3xs);
+    max-width: var(--semantic-measure-lede);
   }
 
-  .org-about__copy {
+  // φ, and it is the ratio that makes the measure work rather than a proportion
+  // chosen for looking right: the content column is ~1238px at scan, so 1.618fr
+  // gives the prose ~765px and the facts ~473px. 66ch at body-lg needs ~730px,
+  // so `measure-prose` on the prose finally bites instead of being dead code.
+  .org-about__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1.618fr) minmax(0, 1fr);
+    gap: var(--semantic-space-block);
+    align-items: start;
+  }
+
+  .org-about__prose {
     display: grid;
     gap: var(--semantic-space-component-lg);
     max-width: var(--semantic-measure-prose);
     color: var(--semantic-color-text-secondary);
     font-size: var(--semantic-font-size-body-lg);
+  }
+
+  // The three paragraphs live inside `.syx-fold`, so the grid gap above never
+  // reached them: it spaced the fold, the toggle and the facts list, and the
+  // bio ran as one unbroken wall of text. Nothing failed — the paragraphs were
+  // simply touching, on the desktop layout where the fold is inert.
+  .org-about__prose p + p {
+    margin-top: var(--semantic-space-component-lg);
   }
 
   .org-stack {
@@ -280,11 +330,27 @@
   }
 
 
+  // Contact — the ask on the left, the actions on the right.
+  //
+  // It was one column capped at `width-compact` (692px) inside a band 1238px
+  // wide, so ~590px sat empty to the right of the only call to action on the
+  // page, and the three links weighed the same although only one of them is
+  // what the section is asking for.
+  //
+  // Not a full-bleed band, tempting as it is for a closing section: the home
+  // already spends both of the bleed cuts BRAND.md §4 allows — `syx-on-night`
+  // on Role Evolution and `syx-on-brand` on Map Process. A third would make
+  // them a pattern instead of a rhythm.
+  //
+  // The φ split runs the other way here than in About: the actions take the
+  // wide column because the email address is a single unbreakable string set at
+  // display size, and the headline is the half that can afford to wrap.
   .org-contact {
     padding-block: var(--semantic-space-section-compact)
       var(--semantic-space-section);
     display: grid;
-    grid-template-columns: var(--component-heading-label-track) minmax(0, 1fr);
+    grid-template-columns: var(--component-heading-label-track) minmax(0, 1fr)
+      minmax(0, 1.618fr);
     gap: var(--semantic-space-block);
     align-items: start;
     border-top: var(--semantic-border-width) solid var(--semantic-color-border);
@@ -293,7 +359,6 @@
   .org-contact__body {
     display: grid;
     gap: var(--semantic-space-component-md);
-    max-width: var(--semantic-width-compact);
   }
 
   .org-contact h2 {
@@ -305,6 +370,31 @@
     color: var(--semantic-color-text-secondary);
     font-size: var(--semantic-font-size-body-lg);
     max-width: var(--semantic-measure-lede);
+  }
+
+  // Both φ splits are gated at xl, and the number is why.
+  //
+  // At 1002px the scan band carries about 720px of content once the label track
+  // and the gap are paid for. Split by φ that leaves the About prose at ~445px,
+  // which is ~42 characters — below the 45 a measure needs, and the exact fault
+  // the three-column layout had in the first place. Contact is worse: its copy
+  // column would be ~275px, and a title-lg headline does not survive that.
+  //
+  // So between md and xl both sections stack their body. The prose keeps its
+  // own 66ch cap, so widening the column never widens the line.
+  @include until($bp-xl) {
+    .org-about__body {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .org-contact {
+      grid-template-columns: var(--component-heading-label-track) minmax(0, 1fr);
+    }
+
+    .org-contact__body,
+    .org-contact .mol-contact-list {
+      grid-column: 2;
+    }
   }
 
   .org-footer {
@@ -351,6 +441,15 @@
     .org-about,
     .org-contact {
       grid-template-columns: 1fr;
+    }
+
+    // The label track is gone at this width, so nothing may still be pinned to
+    // the second column of a grid that now has one.
+    .org-about__head,
+    .org-about__body,
+    .org-contact__body,
+    .org-contact .mol-contact-list {
+      grid-column: auto;
     }
 
     .org-project-grid {

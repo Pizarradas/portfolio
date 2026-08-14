@@ -221,17 +221,24 @@
     border-top: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
+  // Stacked, not label-beside-value.
+  //
+  // The list used to sit at the foot of a full-width copy column, where a 9rem
+  // label track beside its value was the right form. It is now a column of its
+  // own beside the prose, ~473px wide at scan, and a fixed label track eats a
+  // fifth of that before the value gets a character — "Ciencias de la
+  // Información, UCM · Graphic design, Escuela Arteneo" broke to four lines.
+  // Stacked, the value gets the whole column and the label reads as the
+  // caption it already was.
   .mol-about-facts div {
     display: grid;
-    grid-template-columns: minmax(6rem, 9rem) minmax(0, 1fr);
-    gap: var(--semantic-space-component-3xs) var(--semantic-space-component-md);
+    gap: var(--semantic-space-component-3xs);
     padding: var(--semantic-space-component-sm) 0;
     border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
   }
 
   .mol-about-facts dt {
-    padding-top: 0.15rem;
     font-size: var(--semantic-font-size-caption);
     font-weight: var(--semantic-font-weight-display);
     text-transform: uppercase;
@@ -658,7 +665,7 @@
     justify-content: space-between;
     gap: var(--component-contact-row-gap);
     padding: var(--semantic-space-component-md) 0;
-    font-size: var(--semantic-font-size-title-sm);
+    font-size: var(--semantic-font-size-lede);
     font-weight: var(--semantic-font-weight-display);
     letter-spacing: var(--semantic-letter-spacing-display);
     text-decoration: none;
@@ -675,6 +682,29 @@
     overflow-wrap: anywhere;
   }
 
+  // The one action the section is actually asking for.
+  //
+  // The other two rows are ways of reading the same person somewhere else, and
+  // the footer repeats all three anyway — so the hierarchy has to come from
+  // this list or it does not exist. The arrow says "do this" rather than "go
+  // there", and the row is two steps of the type scale above its neighbours.
+  //
+  // The hierarchy is built by demoting the other two, not by promoting this
+  // one, and the reason is a measurement: the actions column is 635px at
+  // 1440px, and the address set at `title` needs about 690px once the gap and
+  // the arrow are paid for. It broke as "…gmail.co / m" — `overflow-wrap:
+  // anywhere` below is what lets it, and that rule has to stay for 360px. So
+  // the list sits at `lede` and its lead row at `title-sm`, which is where the
+  // whole list used to be: same distance, and the address never breaks.
+  //
+  // Size and weight only: no brand blue. The accent in this region is already
+  // spent on the CONTACT label, and BRAND.md §4 allows one per region — two
+  // blue things here would mean neither is the important one.
+  .mol-contact-list__lead a {
+    font-size: var(--semantic-font-size-title-sm);
+    padding-block: var(--semantic-space-component-lg);
+  }
+
   .mol-contact-list a:hover {
     text-decoration: underline;
     text-decoration-thickness: 0.07em;
@@ -682,10 +712,8 @@
   }
 
   @include until($bp-sm) {
-    .mol-about-facts div {
-      grid-template-columns: 1fr;
-    }
-
+    // The facts list stacks at every width now, so the rule that used to undo
+    // its label track here has nothing left to undo.
     .mol-contact-list a {
       flex-direction: column;
       align-items: flex-start;
