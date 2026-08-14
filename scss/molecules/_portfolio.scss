@@ -1925,88 +1925,129 @@
 // ---------------------------------------------------------------------------
 
 @layer syx.molecules {
-  // portfolio-v12.css — los dos escenarios oscuros comparten caja.
-  .mol-worldcup-stage,
-  .mol-atlas-architecture {
-    max-width: 90rem;
+  // LA FIRMA DE UN CASO
+  //
+  // El panel oscuro que abre el Mundial y ATLAS. Eran dos moleculas con dos
+  // nombres —`.mol-worldcup-stage` y `.mol-atlas-architecture`— que compartian
+  // caja por una regla de dos selectores y divergian en el contenido. Ahora la
+  // caja tiene nombre propio y el contenido es una variante, que es lo que de
+  // verdad cambia entre un caso y otro.
+  //
+  // La caja: fondo del contexto oscuro, tope de registro `scan` —es un panel,
+  // no una superficie de datos— y una altura minima para que se lea como una
+  // portada y no como una tira.
+  // El fondo y los colores los pone `.syx-on-night` desde el marcado, no esta
+  // regla. No es preferencia: dentro de la molecula hay texto secundario y
+  // bordes, y esos tokens fuera de un contexto oscuro resuelven a sus valores
+  // claros —gris tinta sobre navy, 1.8:1—. Con el contexto encima resuelven a
+  // blancos con alfa y el panel entero queda por encima de AA.
+  .mol-case-signature {
+    max-width: var(--semantic-width-scan);
     min-height: 32rem;
     margin: auto;
     padding: clamp(2rem, 5vw, 5rem);
-    background: #080f2f;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
   }
 
-  .mol-worldcup-stage > span {
-    font: 600 0.65rem/1 var(--semantic-font-family-ui);
-    letter-spacing: 0.15em;
+  // Variante de despliegue: una cifra o una palabra que manda, su glosa al lado
+  // y la pila tecnica al pie.
+  //
+  // Iba en columna con `space-between`, asi que los cuatro elementos se
+  // apilaban a la izquierda y el panel quedaba con dos tercios de azul vacio a
+  // la derecha —en la captura, mas de mil pixeles—. En dos pistas, la cifra
+  // ocupa la suya y la glosa la de al lado: el ancho se usa en vez de sobrar.
+  .mol-case-signature--display {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: space-between;
+    gap: var(--semantic-space-block);
   }
 
-  .mol-worldcup-stage > strong {
+  .mol-case-signature__label {
+    grid-column: 1 / -1;
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-eyebrow);
+    font-weight: var(--semantic-font-weight-emphasis);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+  }
+
+  .mol-case-signature__display {
     font-family: var(--semantic-font-family-display);
     font-size: clamp(8rem, 20vw, 20rem);
     line-height: 0.65;
     letter-spacing: -0.08em;
   }
 
-  .mol-worldcup-stage > p {
-    max-width: 38ch;
-    font-size: 1.15rem;
+  .mol-case-signature__note {
+    align-self: end;
+    max-width: var(--semantic-measure-lede);
+    font-size: var(--semantic-font-size-body-lg);
+    color: var(--semantic-color-text-secondary);
   }
 
-  .mol-worldcup-stage__tech {
+  .mol-case-signature__tech {
+    grid-column: 1 / -1;
     display: flex;
-    gap: 0.5rem;
+    gap: var(--semantic-space-component-sm);
     flex-wrap: wrap;
   }
 
-  .mol-worldcup-stage__tech b {
-    padding: 0.5rem 0.65rem;
-    border: var(--semantic-border-width) solid rgba(255, 255, 255, 0.28);
-    font: 600 0.62rem/1 var(--semantic-font-family-ui);
+  .mol-case-signature__tech b {
+    padding: var(--semantic-space-component-sm) var(--semantic-space-component-xs);
+    border: var(--semantic-border-width) solid var(--semantic-color-border-strong);
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-caption);
+    font-weight: var(--semantic-font-weight-emphasis);
   }
 
-  .mol-atlas-architecture {
-    background: #0b0b0d;
+  // Variante de flujo: ATLAS → dos registros → ejecución gobernada. Centrada,
+  // porque lo que se lee es una cadena y no una jerarquia.
+  //
+  // El `#0b0b0d` propio se va: dos negros distintos para dos paneles que hacen
+  // el mismo papel eran justo la clase de decision que esta consolidacion viene
+  // a deshacer. El lila del rotulo tambien: dentro de la firma, el color de
+  // acento es el del contexto.
+  .mol-case-signature--flow {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    text-align: center;
     justify-content: center;
-    gap: 1.4rem;
+    text-align: center;
+    gap: var(--semantic-space-component-lg);
   }
 
-  .mol-atlas-architecture > span {
-    font: 700 1rem/1 var(--semantic-font-family-ui);
-    letter-spacing: 0.2em;
-    color: #7187ff;
+  .mol-case-signature--flow > span {
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-ui);
+    font-weight: var(--semantic-font-weight-display);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
   }
 
-  .mol-atlas-architecture > strong {
+  .mol-case-signature--flow > strong {
     font-family: var(--semantic-font-family-display);
     font-size: clamp(2.8rem, 6vw, 6rem);
     letter-spacing: -0.05em;
   }
 
-  .mol-atlas-architecture > i {
+  .mol-case-signature--flow > i {
     font-style: normal;
-    font-size: 2rem;
-    opacity: 0.4;
+    font-size: var(--semantic-font-size-lede);
+    color: var(--semantic-color-text-muted);
   }
 
-  .mol-atlas-architecture > div {
+  .mol-case-signature--flow > div {
     display: flex;
-    gap: 0.7rem;
+    gap: var(--semantic-space-component-sm);
   }
 
-  .mol-atlas-architecture > div b {
-    border: var(--semantic-border-width) solid rgba(255, 255, 255, 0.3);
-    padding: 0.7rem 1rem;
-    letter-spacing: 0.1em;
+  .mol-case-signature--flow > div b {
+    border: var(--semantic-border-width) solid var(--semantic-color-border-strong);
+    padding: var(--semantic-space-component-sm) var(--semantic-space-component-md);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
   }
 
-  .mol-atlas-architecture > small {
-    opacity: 0.6;
+  .mol-case-signature--flow > small {
+    color: var(--semantic-color-text-muted);
   }
 
   // timeline-v29.css

@@ -515,18 +515,20 @@
     }
   }
 
-  @media (min-width:1200px) {
-    .mol-worldcup-stage {
-      min-height: 38rem;
-      padding: clamp(3rem,5vw,5rem);
+  // La firma de un caso, en movil: caja mas baja y padding de componente. El
+  // resto de anchos lo sirve la molecula.
+  @include until($bp-md) {
+    .mol-case-signature {
+      min-height: 22rem;
+      padding: var(--semantic-space-component-md);
     }
 
-  }
+    .mol-case-signature__display {
+      font-size: clamp(6rem,34vw,9rem);
+    }
 
-  @media (min-width:1200px) {
-    .mol-atlas-architecture {
-      min-height: 38rem;
-      padding: clamp(3rem,5vw,5rem);
+    .mol-case-signature--flow > strong {
+      font-size: var(--semantic-font-size-title);
     }
 
   }

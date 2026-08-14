@@ -39,9 +39,26 @@
     color: var(--semantic-color-text-muted);
   }
 
+  // La escala de la previsualización la fija su propio ancho, no un número.
+  //
+  // El iframe se renderiza a 1440×1100 y se encogía con un `scale(.62)` fijo:
+  // 893px de contenido dentro de una caja que mide lo que mida su sección. Con
+  // la sección en registro `showcase` —2304px— eso deja **1.400px de azul
+  // muerto a la derecha**, que es lo que se ve en la captura.
+  //
+  // El contenedor declara `container-type: inline-size` y la escala se calcula
+  // contra `100cqw`: la página embebida ocupa siempre el ancho exacto de su
+  // marco, en cualquier registro y en cualquier ventana. El alto sale de la
+  // misma cuenta —la proporción real del render, 1440×1100— en vez de un
+  // `clamp` que no tenía por qué coincidir con ella: así no hay ni franja negra
+  // arriba ni recorte abajo.
+  //
+  // `--browser-scale` sigue existiendo como escape para un caso que necesite
+  // enseñar la página a otro tamaño, pero ya no es lo que decide el encaje.
   .mol-browser-preview__viewport {
     @include relative();
-    height: clamp(27rem,42vw,46rem);
+    container-type: inline-size;
+    height: calc(100cqw * var(--component-preview-ratio));
     overflow: hidden;
     background: #080f1a;
   }
@@ -49,12 +66,14 @@
   .mol-browser-preview__viewport iframe {
     @include absolute($top: 0, $left: 0);
     z-index: 2;
-    width: 1440px;
-    height: 1100px;
+    width: calc(var(--component-preview-width) * 1px);
+    height: var(--component-preview-height);
     border: 0;
     pointer-events: none;
     transform-origin: 0 0;
-    transform: scale(var(--browser-scale,.62));
+    transform: scale(
+      var(--browser-scale, calc(100cqw / (var(--component-preview-width) * 1px)))
+    );
     background: #fff;
   }
 
@@ -81,9 +100,8 @@
 }
 @layer syx.utilities {
   @include until($bp-md) {
-    .mol-browser-preview__viewport {
-      height: 22rem;
-    }
+    // El alto de móvil ya no se fija a mano: sale de la misma proporción que en
+    // cualquier otro ancho, así que la página embebida nunca se recorta.
 
     .mol-browser-preview>footer {
       align-items: flex-start;

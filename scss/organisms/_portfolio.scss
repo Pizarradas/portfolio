@@ -513,23 +513,9 @@
   // por eso ganaban a las definiciones de arriba. Aquí conservan esa
   // posición: van al final del bloque de la capa, detrás de la definición
   // base de cada componente.
-  .mol-worldcup-stage {
-    min-height: 22rem;
-    padding: 1.25rem;
-  }
-
-  .mol-worldcup-stage>strong {
-    font-size: clamp(6rem,34vw,9rem);
-  }
-
-  .mol-atlas-architecture {
-    min-height: 22rem;
-    padding: 1.25rem;
-  }
-
-  .mol-atlas-architecture>strong {
-    font-size: 2.5rem;
-  }
+  // La caja de movil de los dos paneles de firma vivia aqui, sin guarda y en
+  // esta capa, con un `min-width:1200` mas abajo que la devolvia a su tamano.
+  // Ahora es una sola regla con `until()` sobre la molecula consolidada.
 
   .org-work h2 {
     font-family: var(--component-section-title-font-family);
