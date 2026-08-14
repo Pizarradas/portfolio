@@ -27,6 +27,7 @@ import {
   titleOf,
   descriptionOf,
   headlineOf,
+  FONT_PRELOAD,
   plain,
 } from './site.config.mjs';
 
@@ -304,6 +305,15 @@ function headBlock(html, page, lang) {
     `<meta content="${description}" name="twitter:description"/>`,
     `<meta content="${image}" name="twitter:image"/>`,
     `<meta content="${cardAlt}" name="twitter:image:alt"/>`,
+    '',
+    // The LCP element on every page is a headline, so the face it paints in is
+    // on the critical path. Self-hosted and preloaded, it arrives on the
+    // connection the browser already has; through Google Fonts it cost a
+    // render-blocking third-party stylesheet plus two handshakes first.
+    // Only the latin cuts: latin-ext is fetched on demand by unicode-range.
+    ...FONT_PRELOAD.map(
+      f => `<link as="font" crossorigin="" href="${up}assets/fonts/${f}" rel="preload" type="font/woff2"/>`,
+    ),
     '',
     `<link href="${up}assets/favicon.svg" rel="icon" type="image/svg+xml"/>`,
     `<link href="${up}assets/favicon.ico" rel="alternate icon" sizes="32x32"/>`,

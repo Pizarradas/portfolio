@@ -1536,6 +1536,55 @@
     background: var(--semantic-color-surface-inverse);
   }
 
+  // The facade that stands in for the iframe until someone asks for it.
+  //
+  // Three of these embedded a published site each, and between them they put
+  // over 2 MB of third-party JavaScript on the critical path of the home page —
+  // Three.js, Leaflet and GSAP, for a frame that carries `pointer-events: none`
+  // two rules above and cannot be interacted with at all. The screenshot is the
+  // same picture at 1/25th the weight; the iframe is one click away, and the
+  // real thing one click away in the chrome bar.
+  .mol-register__facade {
+    @include absolute($top: 0, $left: 0);
+
+    z-index: 3;
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: var(--semantic-color-surface-inverse);
+    cursor: pointer;
+  }
+
+  // `object-position: 0 0` for the same reason the iframe is scaled from its
+  // top-left: the shot is the top of the page, so any crop has to eat the
+  // bottom, never the masthead.
+  .mol-register__facade img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 0 0;
+  }
+
+  .mol-register__cue {
+    @include absolute($bottom: 0, $right: 0);
+
+    z-index: 1;
+    padding: var(--semantic-space-component-2xs) var(--semantic-space-component-sm);
+    background: var(--semantic-color-surface-inverse);
+    color: var(--semantic-color-on-primary);
+    font-family: var(--semantic-font-family-mono);
+    font-size: var(--semantic-font-size-caption);
+  }
+
+  .mol-register__facade:hover .mol-register__cue,
+  .mol-register__facade:focus-visible .mol-register__cue {
+    background: var(--semantic-color-primary);
+  }
+
   .mol-register__fallback {
     @include absolute();
 
