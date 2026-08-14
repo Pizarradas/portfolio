@@ -557,28 +557,12 @@
 
   }
 }
-@layer syx.organisms {
-  .mol-token-lab__header {
-    display: grid;
-    gap: 1rem;
-    align-items: start;
-  }
-
-  .mol-token-lab__switcher {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: 100%;
-  }
-
-  .mol-token-lab__switcher button {
-    width: 100%;
-  }
-
-  .mol-token-lab__stage {
-    grid-template-columns: 1fr;
-  }
-
-}
+// Aquí había una copia sin guarda de los dos bloques de arriba —el de 900 y el
+// de 600— en la capa de organismos. El `stage` volvía a dos columnas gracias al
+// `min-width` de abajo, pero la cabecera y el selector no: se quedaban con su
+// composición de móvil a cualquier ancho. Por eso las cuatro marcas se veían
+// como un bloque de 2×2 al 40 % del ancho y colgando debajo del titular, en vez
+// de como una fila de cuatro botones a la derecha, alineados con su línea base.
 @layer syx.utilities {
   @media (min-width:768px) and (max-width:1199px) {
     .mol-token-lab__stage {
@@ -589,6 +573,27 @@
   @media (min-width:1200px) {
     .mol-token-lab__stage {
       grid-template-columns: .65fr 1.35fr;
+    }
+
+    // La tarjeta, debajo del token que la pinta.
+    //
+    // Con las tres piezas colocándose solas, la tarjeta caía en una fila propia
+    // a todo lo ancho: 640px de tarjeta y 1.200 de blanco al lado, que era el
+    // hueco más grande de la página. Y colocada así tampoco decía nada: la
+    // demostración es que **este** token produce **esta** tarjeta, y estaban en
+    // filas distintas.
+    //
+    // La tabla de tokens pasa a ocupar las dos filas y la tarjeta se mete
+    // debajo del panel del token, en su misma columna. La lectura queda en dos
+    // columnas: a la izquierda el token y lo que produce, a la derecha la API
+    // entera. El hueco desaparece sin inventar contenido: lo que se estira es
+    // el panel gris de la tabla, que ya es el fondo del propio `stage`.
+    .mol-token-groups {
+      grid-row: 1/3;
+    }
+
+    .mol-token-application {
+      grid-column: 1;
     }
 
   }
@@ -802,28 +807,9 @@
 
   }
 }
-@layer syx.organisms {
-  .mol-grid-lab__header {
-    display: grid;
-    gap: 1rem;
-    align-items: start;
-  }
-
-  .mol-grid-lab__switcher {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: 100%;
-  }
-
-  .mol-grid-lab__switcher button {
-    width: 100%;
-  }
-
-  .mol-grid-lab__metrics {
-    grid-template-columns: 1fr 1fr;
-  }
-
-}
+// El gemelo exacto del laboratorio de tokens, con el mismo defecto: cabecera y
+// selector de breakpoint clavados en su composición de móvil a cualquier ancho.
+// Las métricas sí volvían a cuatro columnas por el `min-width` de abajo.
 @layer syx.utilities {
   @media (min-width:768px) and (max-width:1199px) {
     .mol-grid-lab__metrics {
