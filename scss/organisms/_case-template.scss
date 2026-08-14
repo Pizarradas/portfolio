@@ -126,6 +126,25 @@
     max-width: var(--semantic-measure-prose);
   }
 
+  // La cita de cierre.
+  //
+  // Es lo último que se lee de un caso, así que tiene voz propia, pero por
+  // debajo del titular de su sección: 24→32px contra los 28→44 del `h2`. La que
+  // había corría a `clamp(1.7rem,3vw,3rem)` —hasta 48px— y adelantaba al
+  // titular que la presenta, que es el mismo empate de niveles que ya se
+  // deshizo en los capítulos.
+  //
+  // Medida `lede`: a 32px, la de prosa daría líneas de más de mil píxeles.
+  .org-case__act blockquote {
+    margin: var(--semantic-space-block) 0 0;
+    max-width: var(--semantic-measure-lede);
+    font-family: var(--semantic-font-family-display);
+    font-weight: var(--semantic-font-weight-display);
+    font-size: var(--semantic-font-size-title-sm);
+    line-height: var(--semantic-line-height-title);
+    letter-spacing: var(--semantic-letter-spacing-display);
+  }
+
   // ------------------------------------------------------------------ figura
   //
   // Todo diagrama es una figura y toda figura lleva pie. Es lo que convierte un
@@ -205,7 +224,8 @@
   // en retícula para eso, y así no se tocan los cinco actos con figura: una
   // retícula cambiaría el colapso de márgenes entre la banda y el diagrama.
   @include from($bp-md) {
-    .org-case__act > p {
+    .org-case__act > p,
+    .org-case__act > blockquote {
       margin-inline-start: calc(
         var(--component-heading-label-track) + var(--semantic-space-block)
       );

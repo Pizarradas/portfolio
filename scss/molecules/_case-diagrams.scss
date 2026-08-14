@@ -426,25 +426,18 @@
   }
 
 }
-@layer syx.organisms {
-  .mol-pipeline {
-    grid-template-columns: 1fr;
-  }
-
-  .mol-pipeline i {
-    transform: rotate(90deg);
-    justify-self: center;
-  }
-
-}
-@layer syx.utilities {
-  @media (min-width:1200px) {
-    .mol-pipeline {
-      grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
-    }
-
-  }
-}
+// La restauración a medias, y la más visible de todas.
+//
+// Aquí había otra copia sin guarda del bloque `max-width:900` de arriba: pista
+// única **y** flechas giradas 90°. El `min-width:1200` que venía detrás
+// devolvía la retícula de siete pistas… pero no deshacía el giro. Resultado en
+// pantalla grande: cuatro cajas en fila horizontal —Figma, HTML/SCSS/JS,
+// Storybook, Vue— separadas por flechas que apuntan **hacia abajo**. El
+// diagrama contradecía su propia dirección de lectura.
+//
+// Con la copia fuera, la base sirve el flujo horizontal con sus `→` y el
+// bloque de 900 sigue apilando y girando en móvil, que es donde toca. El
+// `min-width:1200` se va con ella: ya no restaura nada que no sea la base.
 @layer syx.molecules {
   .mol-ai-system {
     display: grid;

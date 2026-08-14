@@ -207,24 +207,43 @@
     font-size: 1rem;
   }
 
+  // Las etiquetas iban por opacidad, que es lo que este mismo fichero ya
+  // corrigió en `.mol-case-facts dt`: la opacidad compone contra lo que haya
+  // detrás, así que el contraste real depende de la celda y deja de poder
+  // calcularse. Con color se calcula: 4.83:1 sobre blanco.
   .org-case-next span {
     font-size: .75rem;
     text-transform: uppercase;
     letter-spacing: .12em;
-    opacity: .55;
+    color: var(--semantic-color-text-muted);
   }
 
   .org-case-next strong {
     font-size: clamp(1.5rem,3vw,3rem);
   }
 
-  .org-case-next__contact {
+  // El CTA se estaba sirviendo en tinta sobre azul de marca: 2.85:1.
+  //
+  // La regla escribía `color: var(--semantic-color-on-primary)` —blanco— pero
+  // `.org-case-next a` lleva `color: inherit`, y ese selector tiene una
+  // pseudo-clase más: 0,1,1 contra 0,1,0, misma capa, así que ganaba siempre.
+  // El texto heredaba la tinta de la página y la llamada a la acción principal
+  // de las seis páginas de caso quedaba por debajo del mínimo AA —4.5 para el
+  // rótulo pequeño, 3 para los 48px del titular—.
+  //
+  // Con el ancla en el selector, 0,2,1: el blanco gana y sube a 6.76:1.
+  .org-case-next a.org-case-next__contact {
     background: var(--semantic-color-primary);
     color: var(--semantic-color-on-primary);
   }
 
+  // La etiqueta de esa celda, al 80 % del blanco: 4.82:1 sobre el azul.
   .org-case-next__contact span {
-    opacity: .8;
+    color: color-mix(
+      in srgb,
+      var(--semantic-color-on-primary) 80%,
+      transparent
+    );
   }
 
 }
@@ -242,9 +261,21 @@
   }
 }
 @layer syx.organisms {
+  // El paginador entra en el registro.
+  //
+  // Era lo único que quedaba de la página fuera de él: sus celdas repartían de
+  // borde a borde de la ventana, así que a 3440px «BACK» arrancaba a 64px del
+  // borde mientras el pie que va justo debajo —y todas las secciones de
+  // arriba— arrancan a 826. Dos verticales distintas en dos elementos pegados.
+  //
+  // El padding sale de `--semantic-pad-content`, que es el mismo mecanismo por
+  // el que la cabecera y el pie de las seis páginas de caso se quedan dentro
+  // del registro sin llevar clase propia en el marcado. Al ponerlo en la regla
+  // del componente, las seis páginas se alinean a la vez.
   .org-case-next {
     display: grid;
     grid-template-columns: 1fr;
+    padding-inline: var(--semantic-pad-content);
   }
 
   .org-case-next a {
@@ -277,15 +308,51 @@
       border-right: 1px solid var(--component-case-rule);
     }
 
+    // El paginador cruza la ventana; su texto se queda en el registro.
+    //
+    // Es la misma gramática que `.org-case__band`: el fondo sangra hasta el
+    // borde y el contenido respeta el eje de la página. Aquí se resuelve con la
+    // retícula en vez de con padding: dos pistas de sangrado —las del propio
+    // registro, calculadas contra el ancho del `nav`, así que son exactas y no
+    // dependen de `100vw` ni del ancho de la barra de scroll— y las celdas
+    // repartiendo el resto.
+    //
+    // La primera empieza donde empieza la página y la última acaba donde acaba,
+    // así que sus rótulos caen sobre las mismas verticales que el pie de abajo
+    // y que todas las secciones de arriba.
+    .org-case-next {
+      grid-template-columns:
+        var(--semantic-pad-content) 1fr 1fr var(--semantic-pad-content);
+      padding-inline: 0;
+    }
+
+    .org-case-next a:first-child {
+      grid-column: 2;
+      padding-inline-start: 0;
+    }
+
     .org-case-next a:last-child {
+      padding-inline-end: 0;
       text-align: right;
     }
 
     .org-case-next:has(.org-case-next__contact) {
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns:
+        var(--semantic-pad-content) repeat(3,1fr) var(--semantic-pad-content);
     }
 
+    // La celda de contacto es la única que sí sangra: lo que cruza la ventana
+    // es su fondo azul, no su texto. Ocupa su pista y la de sangrado de la
+    // derecha —`span 2 / -1`—, así que el color llega al borde mientras el
+    // rótulo se queda donde lo dejó su padding, sobre el registro.
+    //
+    // Y recupera su padding derecho: la regla de arriba lo quita porque en las
+    // páginas sin contacto la última celda es texto alineado a la derecha, que
+    // tiene que morir en la vertical del registro. Aquí no: aquí hay fondo, y
+    // un texto pegado al borde de su color no se lee.
     .org-case-next a.org-case-next__contact {
+      grid-column: span 2 / -1;
+      padding-inline-end: clamp(1.25rem,4vw,4rem);
       text-align: left;
       border-right: 0;
     }
