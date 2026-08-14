@@ -100,12 +100,17 @@
     color: var(--semantic-color-text-secondary);
   }
 
-  // Variante de línea base, de `.mol-case-intro--baseline`. Alinea el titular y
-  // la entradilla contra el mismo suelo antes de una figura ancha. Se conserva
-  // porque es una decisión de composición, no una copia.
-  .mol-section-heading--baseline {
-    align-items: end;
-  }
+  // `.mol-section-heading--baseline` vivía aquí: `align-items: end`, para
+  // alinear titular y entradilla contra el mismo suelo antes de una figura
+  // ancha. La llevaban tres de las ocho bandas de la página de caso y las otras
+  // cinco no, con el mismo tipo de figura debajo, así que no era un criterio:
+  // era una copia que se quedó a medias.
+  //
+  // Y el criterio que gana es el de arriba. La pista de etiqueta existe para
+  // que el eyebrow arranque en la misma línea que el titular —«dejan de arrancar
+  // en tres verticales distintas y arrancan en dos»—; con `end`, en una banda
+  // cuya entradilla ocupa cuatro líneas, el eyebrow se descuelga hasta el pie
+  // de la entradilla y esa vertical se pierde.
 
   // La galería de código pone el hueco con el `gap` de su propia retícula.
   .org-code-gallery .mol-section-heading {

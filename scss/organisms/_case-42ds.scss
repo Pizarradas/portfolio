@@ -3,159 +3,16 @@
 
 // `.org-case42-overview` vivía aquí. Lo sustituye `.org-case-glance`, en
 // `organisms/_case-glance.scss`.
-@layer syx.organisms {
-  .org-case42-section__content>p:first-child {
-    margin-top: 0;
-  }
-
-  // `.org-case42-section--dark` vivía aquí, con sus cuatro reglas: el navy en
-  // crudo, el blanco del eyebrow, el del índice y el .78 de los párrafos. Era
-  // la definición a mano de lo que `.syx-on-night` ya hace —y el `#080f2f` que
-  // repetía es exactamente el escalón `brand-950` de la paleta, el navy de
-  // `BRAND.md` §4—, así que la sección de fundamentos usa el contexto y estas
-  // cuatro se van sin cambiar un solo color.
-  //
-  // `--ai` sigue en pie porque su sección todavía no está normalizada. Cuando
-  // lo esté, este bloque entero desaparece.
-  .org-case42-section--ai {
-    background: #080f2f;
-    color: #fff;
-  }
-
-  .org-case42-section--ai .atom-eyebrow {
-    color: #fff;
-  }
-
-  .org-case42-section--ai .atom-index {
-    color: #fff;
-  }
-
-  .org-case42-section--ai p {
-    color: rgba(255,255,255,.78);
-  }
-
-  .org-case42-section--brand {
-    background: var(--semantic-color-primary-soft);
-  }
-
-  // `--targets` vivía aquí: el gris de la sección de realidad de producción.
-  // Esa sección ya usa la plantilla y no lleva fondo: el corte de ritmo a color
-  // lo hacen las dos bandas a sangre que `BRAND.md` §4 autoriza —navy y azul—,
-  // y un lavado gris de más no es una tercera, es ruido.
-
-  // La cita del cierre vivía aquí, con su propio clamp de hasta 48px. La define
-  // ahora la plantilla, en `.org-case__act blockquote`, un escalón por debajo
-  // del titular de su sección.
-
-}
-@layer syx.utilities {
-  @media(max-width:900px) {
-    .org-case42-section {
-      grid-template-columns: 1fr;
-    }
-
-  }
-}
-@layer syx.organisms {
-  .org-case42-section {
-    @include relative();
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.2rem;
-    justify-content: center;
-    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
-    border-bottom: 1px solid var(--semantic-color-border);
-  }
-
-  // La etiqueta de acto se va de las seis secciones que quedaban.
-  //
-  // Se posicionaba a `space-case-inline` del borde de la **ventana**, mientras
-  // que la retícula de la sección va centrada en el registro: a 3440px la
-  // etiqueta caía a 64px del borde y el contenido empezaba a 826, o sea 762px
-  // de distancia entre el rótulo y lo que rotulaba.
-  //
-  // Y no rotulaba nada nuevo. Iba repetida de dos en dos —«03 · Scale» en dos
-  // secciones seguidas, «04 · Reality» en otras dos—, porque no es un dato de
-  // sección: es el acto, y el acto ya lo anuncia su marcador de capítulo, que
-  // está justo encima y con la misma vertical que el contenido.
-  //
-  // Tercer motivo, y no menor: el texto vivía en un atributo consumido por
-  // `content: attr()`, así que el extractor de i18n no lo veía. Las seis
-  // etiquetas se servían **en inglés en la página en español**.
-
-  .org-case42-section__heading h2 {
-    font: 600 clamp(2.5rem,5vw,5rem)/.95 var(--semantic-font-family-display);
-    letter-spacing: -.055em;
-    margin: .5rem 0 0;
-    font-size: var(--semantic-font-size-section-compact);
-    line-height: .98;
-  }
-
-  .org-case42-section__content {
-    font-size: .98rem;
-    line-height: 1.65;
-  }
-
-  // La medida va en el párrafo, no en la columna.
-  //
-  // La puse en `__content` en la pasada anterior y estaba mal: esa columna no
-  // solo lleva prosa, lleva también el diagrama de la sección, así que capar la
-  // columna a 66ch metía mapas de cinco columnas y tablas de cuatro dentro de
-  // 620px. Es exactamente la trampa que avisa el comentario de las utilidades:
-  // una medida puesta en un envoltorio en vez de en el elemento que fija el
-  // tamaño de letra.
-  //
-  // El defecto que la motivaba sigue siendo real: a 48rem y 1.08rem de cuerpo,
-  // la línea salía a ~89 caracteres, un 35 % por encima de los 66ch.
-  .org-case42-section__content>p {
-    max-width: var(--semantic-measure-prose);
-  }
-
-}
-@layer syx.utilities {
-  @media (min-width:768px) and (max-width:1199px) {
-    .org-case42-section {
-      grid-template-columns: minmax(14rem,22rem) minmax(0,46rem);
-      gap: clamp(3rem,6vw,6rem);
-    }
-
-    .org-case42-section__heading h2 {
-      font-size: clamp(3rem,5vw,4.5rem);
-    }
-
-  }
-  @media (min-width:1200px) {
-    // La columna de contenido pasa de 48rem a 76rem.
-    //
-    // Ahí no vive solo el párrafo: viven también los seis diagramas de estas
-    // secciones —el mapa de fundaciones de cinco columnas, la tabla de targets
-    // de cuatro, el pipeline de siete pistas—. A 48rem estaban dibujándose en
-    // 768px mientras la sección disponía de 1792, y eso es la mitad del vacío
-    // que se ve en la captura a 3440.
-    //
-    // 76rem no es un escalón de la curva de anchos y no tiene por qué serlo: es
-    // el resto. 27 de titular + 9 de gap + 76 de contenido = 112rem, que es
-    // `survey` exacto. Se dimensiona el hueco para que el total caiga en el
-    // registro, en vez de inventar un tope nuevo.
-    //
-    // La prosa no se ensancha con él: la medida está en el `<p>`, así que la
-    // línea sigue en 66ch y quien se queda los 28rem extra es el diagrama.
-    .org-case42-section {
-      grid-template-columns: minmax(18rem,27rem) minmax(0,76rem);
-      gap: clamp(5rem,8vw,9rem);
-      padding: var(--semantic-space-case-block) var(--semantic-space-case-inline);
-    }
-
-    .org-case42-section__heading h2 {
-      font-size: clamp(3.5rem,4.8vw,5.5rem);
-    }
-
-    .org-case42-section__content {
-      font-size: 1.08rem;
-    }
-
-  }
-}
+// `.org-case42-section` vivía aquí, en 153 líneas: el armazón de dos columnas
+// —titular estrecho a la izquierda, contenido a la derecha— con el que nacieron
+// las ocho secciones de este caso, más sus cuatro variantes de color, su
+// etiqueta de acto en `::before` y sus tres juegos de media queries.
+//
+// Ya no lo usa nadie. Las ocho secciones corren la plantilla —`.org-case__act`
+// y `.org-case__band` con `.mol-section-heading`—, que es la que usan los seis
+// casos del sitio. Es el final de la migración que anuncia el comentario de
+// cabecera de `_case-template.scss`: «la misma idea reimplementada entera para
+// una sola página».
 @layer syx.organisms {
   // El fondo, el color y el blanco del eyebrow los pone `.syx-on-brand`, que es
   // el contexto que existe justo para esta banda —«brand-blue ground, same
@@ -473,10 +330,10 @@
   }
 }
 @layer syx.organisms {
-  .org-component-anatomy__copy>p:last-child {
-    color: var(--semantic-color-text-secondary);
-    max-width: 40ch;
-  }
+  // `.org-component-anatomy__copy` era la séptima copia de la banda de
+  // encabezado y la última que quedaba fuera de la consolidación: su
+  // `max-width: 40ch` en crudo es `--semantic-measure-lede` y su color el
+  // secundario, los dos ya en `.mol-section-heading`.
 
 }
 @layer syx.utilities {
@@ -572,16 +429,30 @@
   }
 }
 @layer syx.organisms {
-  // Lo único de esta banda que no es la molécula: va sobre fondo oscuro, así
-  // que el eyebrow y el párrafo llevan sus propios colores. Siguen en crudo
-  // porque esta sección no declara contexto de superficie; el arreglo de fondo
-  // es darle uno, no repetir dos hex aquí.
+  // Esta banda es la única oscura que **no** puede llevar `.syx-on-night`, y
+  // conviene dejar escrito por qué antes de que alguien se lo aplique por
+  // simetría: su contenido son dos paneles blancos —el laboratorio de tokens y
+  // el de la retícula— que entre los dos leen 47 tokens semánticos de color. El
+  // contexto los reasignaría a sus valores para fondo oscuro y esos paneles se
+  // quedarían con texto blanco sobre blanco y bordes invisibles.
+  //
+  // Lo que sí se iguala es el navy: era `#080f1a` en crudo, un segundo azul
+  // oscuro distinto del de las otras dos bandas. Ahora las tres salen del mismo
+  // token. Y los dos colores del encabezado se derivan del inverso en vez de
+  // inventar un lila y un blanco al 65 %.
+  //
+  // El arreglo de fondo sigue siendo un contexto claro que se pueda anidar
+  // dentro de uno oscuro. El sistema no lo tiene todavía.
   .org-foundation-showcase .mol-section-heading .atom-eyebrow {
-    color: #8fa0ff;
+    color: var(--semantic-color-text-inverse);
   }
 
   .org-foundation-showcase .mol-section-heading>p:last-child {
-    color: rgba(255,255,255,.65);
+    color: color-mix(
+      in srgb,
+      var(--semantic-color-text-inverse) 78%,
+      transparent
+    );
   }
 
   .org-foundation-showcase>.mol-token-lab {
@@ -606,8 +477,9 @@
 
 }
 @layer syx.organisms {
-  .org-foundation-showcase {    background: #080f1a;
-    color: #fff;
+  .org-foundation-showcase {
+    background: var(--semantic-color-surface-night);
+    color: var(--semantic-color-text-inverse);
   }
 
 

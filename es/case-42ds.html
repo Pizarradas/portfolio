@@ -111,7 +111,7 @@
 <p class="atom-index">Acto 02</p>
 <h2>Lo que había que decidir</h2>
 </section>
-<section aria-labelledby="business-problem-title" class="org-case__act syx-span-survey">
+<section aria-labelledby="business-problem-title" class="org-case__act syx-span-survey js-reveal">
 <div class="mol-section-heading">
 <p class="atom-eyebrow">El problema de negocio</p>
 <h2 id="business-problem-title">Unificar sin parar la compañía.</h2>
@@ -119,7 +119,7 @@
 </div>
 <p>Así que el primer trabajo no fue «diseñar el sistema nuevo». Fue entender el que ya existía: auditar el rendimiento y la complejidad del CSS, aprender el legacy e identificar qué podía pasar a ser compartido.</p>
 </section>
-<section aria-labelledby="foundations-title" class="org-case__band syx-span-survey syx-on-night">
+<section aria-labelledby="foundations-title" class="org-case__band syx-span-survey syx-on-night js-reveal">
 <div class="mol-section-heading">
 <p class="atom-eyebrow">Fundamentos</p>
 <h2 id="foundations-title">Separar lo global de lo específico de cada marca.</h2>
@@ -143,7 +143,7 @@
 <h2>El sistema en producción</h2>
 </section>
 <section aria-labelledby="code-gallery-title" class="org-case__act syx-span-survey org-code-gallery js-reveal">
-<div class="mol-section-heading mol-section-heading--baseline">
+<div class="mol-section-heading">
 <p class="atom-eyebrow">Fundamentos de diseño · reconstruidos en código</p>
 <h2 id="code-gallery-title">Enseñar el sistema, no la portada de Figma.</h2>
 <p>En lugar de mostrar miniaturas de archivos, el portfolio reconstruye las decisiones de diseño subyacentes como piezas front-end en vivo: tokens, controles, formularios y navegación.</p>
@@ -208,7 +208,7 @@
 </div>
 </article>
 </section><section aria-labelledby="foundation-showcase-title" class="org-case__band syx-span-survey org-foundation-showcase js-reveal">
-<div class="mol-section-heading mol-section-heading--baseline">
+<div class="mol-section-heading">
 <p class="atom-eyebrow">Fundamentos · sistema en vivo</p>
 <h2 id="foundation-showcase-title">Los tokens definen la identidad. La rejilla define el ritmo.</h2>
 <p>Estas piezas están reconstruidas a partir de la arquitectura SCSS de 42DS: custom properties de CSS para el contexto de marca y una rejilla responsive de 12 columnas con breakpoints y reglas de espaciado reales.</p>
@@ -292,7 +292,7 @@
 </article>
 </section>
 <section aria-labelledby="component-anatomy-title" class="org-case__act syx-span-survey org-component-anatomy js-reveal">
-<div class="org-component-anatomy__copy">
+<div class="mol-section-heading">
 <p class="atom-eyebrow">Anatomía de un componente</p>
 <h2 id="component-anatomy-title">Un componente es un contrato, no solo un dibujo.</h2>
 <p>Cada pieza conecta la intención de diseño, la estructura reutilizable y el comportamiento de la implementación. Eso hace que la entrega sea comprensible tanto para diseñadores como para desarrolladores.</p>
@@ -310,9 +310,12 @@
 <i class="mol-anatomy-pin mol-anatomy-pin--3">responsive</i>
 <i class="mol-anatomy-pin mol-anatomy-pin--4">accesible</i>
 </div>
-</section><section class="org-case42-section">
-<div class="org-case42-section__heading"><p class="atom-index">03</p><p class="atom-eyebrow">Composición</p><h2>Reutilizar antes que crear.</h2></div>
-<div class="org-case42-section__content">
+</section><section aria-labelledby="composition-title" class="org-case__act syx-span-survey js-reveal">
+<div class="mol-section-heading">
+<p class="atom-eyebrow">Composición</p>
+<h2 id="composition-title">Reutilizar antes que crear.</h2>
+<p>La regla útil no era la etiqueta de Atomic Design. Era el modelo de decisión: reutilizar primero, extender cuando la estructura sigue siendo compatible y crear un componente nuevo solo cuando la semántica o la arquitectura cambian de verdad.</p>
+</div>
 <div class="mol-inventory-visual js-reveal">
 <div class="mol-inventory-visual__summary">
 <span><b class="js-count" data-count="134">134</b><small>familias de componentes</small></span>
@@ -326,18 +329,17 @@
 </div>
 </div>
 </div>
-<p>La regla útil no era la etiqueta de Atomic Design. Era el modelo de decisión: reutilizar primero, extender cuando la estructura sigue siendo compatible y crear un componente nuevo solo cuando la semántica o la arquitectura cambian de verdad.</p>
-</div>
 </section>
-<section class="org-case42-section org-case42-section--brand">
-<div class="org-case42-section__heading"><p class="atom-index">04</p><p class="atom-eyebrow">Multimarca</p><h2>Un único núcleo. Distintas identidades.</h2></div>
-<div class="org-case42-section__content">
-<div class="mol-brand-tree js-reveal"><div class="mol-brand-tree__core">NÚCLEO 42DS</div><div class="mol-brand-tree__branches"><span>SPORT<small>sport-setup</small></span><span>EL PERIÓDICO<small>ep-setup</small></span><span>EPE<small>epe-setup</small></span><span>REGIONALES<small>regionales-setup</small></span><span>REVISTAS<small>revistas-setup</small></span></div></div>
+<section aria-labelledby="multi-brand-title" class="org-case__act syx-span-survey js-reveal">
+<div class="mol-section-heading">
+<p class="atom-eyebrow">Multimarca</p>
+<h2 id="multi-brand-title">Un único núcleo. Distintas identidades.</h2>
 <p>Las configuraciones de marca controlan la tipografía, el color, los helpers y el comportamiento específico. Los componentes consumen ese contexto en lugar de duplicar toda la implementación.</p>
 </div>
+<div class="mol-brand-tree js-reveal"><div class="mol-brand-tree__core">NÚCLEO 42DS</div><div class="mol-brand-tree__branches"><span>SPORT<small>sport-setup</small></span><span>EL PERIÓDICO<small>ep-setup</small></span><span>EPE<small>epe-setup</small></span><span>REGIONALES<small>regionales-setup</small></span><span>REVISTAS<small>revistas-setup</small></span></div></div>
 </section>
 <section aria-labelledby="header-system-title" class="org-case__act syx-span-showcase org-header-system js-reveal">
-<div class="mol-section-heading mol-section-heading--baseline">
+<div class="mol-section-heading">
 <p class="atom-eyebrow">Caso de uso · cabeceras</p>
 <h2 id="header-system-title">Una estructura. Muchas identidades.</h2>
 <p>La cabecera fue una prueba de esfuerzo exigente: una única arquitectura de información y estructura semántica, y después la expresión de marca a través de logos, tipografía, color y variantes seleccionadas.</p>
@@ -379,7 +381,7 @@
 <p class="atom-index">Acto 04</p>
 <h2>Lo que costó llevarlo a producción</h2>
 </section>
-<section aria-labelledby="production-reality-title" class="org-case__act syx-span-survey">
+<section aria-labelledby="production-reality-title" class="org-case__act syx-span-survey js-reveal">
 <div class="mol-section-heading">
 <p class="atom-eyebrow">La realidad de producción</p>
 <h2 id="production-reality-title">Un design system construido para restricciones imperfectas.</h2>
@@ -387,7 +389,7 @@
 </div>
 <div class="mol-targets js-reveal"><span><b>HTML5</b><small>núcleos de marca + extensiones de cabecera</small></span><span><b>AMP</b><small>abstracts, mixins y configuraciones de marca en paralelo</small></span><span><b>PIANO</b><small>bundles de núcleo específicos del paywall</small></span><span><b>LEGACY</b><small>migración + compatibilidad mientras seguía el día a día</small></span></div>
 </section>
-<section aria-labelledby="hand-off-title" class="org-case__act syx-span-survey">
+<section aria-labelledby="hand-off-title" class="org-case__act syx-span-survey js-reveal">
 <div class="mol-section-heading">
 <p class="atom-eyebrow">Diseño ↔ ingeniería</p>
 <h2 id="hand-off-title">La entrega forma parte del sistema.</h2>
@@ -423,9 +425,12 @@
 <small>Principio por defecto</small><b>REUSE-FIRST</b><em>inspeccionar → componer → extender → crear</em>
 </div>
 </div>
-</section><section class="org-case42-section org-case42-section--ai">
-<div class="org-case42-section__heading"><p class="atom-index">07</p><p class="atom-eyebrow">Arquitectura operable por IA</p><h2>Después, el sistema tenía que volverse comprensible para la IA.</h2></div>
-<div class="org-case42-section__content">
+</section><section aria-labelledby="ai-operable-title" class="org-case__band syx-span-survey syx-on-night js-reveal">
+<div class="mol-section-heading">
+<p class="atom-eyebrow">Arquitectura operable por IA</p>
+<h2 id="ai-operable-title">Después, el sistema tenía que volverse comprensible para la IA.</h2>
+<p>Lo que empezó como apoyo de IA para tareas aisladas de JavaScript acabó siendo un mind-system portable. Cada modo es dueño de un dominio; la gobernanza define el orden de ejecución y la resolución de conflictos, de modo que la IA pueda trabajar con las reglas reales de 42DS en lugar de inventar a su alrededor.</p>
+</div>
 <div class="mol-ai-metrics js-reveal">
 <span><b class="js-count" data-count="13">13</b><small>modos especializados</small></span>
 <span><b>1</b><small>capa de gobernanza</small></span>
@@ -437,9 +442,7 @@
 <i>↓</i>
 <div class="mol-ai-system__governance"><b>GOBERNANZA</b><span>propiedad del dominio · orden de ejecución · resolución de conflictos</span></div>
 </div>
-<p>Lo que empezó como apoyo de IA para tareas aisladas de JavaScript acabó siendo un mind-system portable. Cada modo es dueño de un dominio; la gobernanza define el orden de ejecución y la resolución de conflictos, de modo que la IA pueda trabajar con las reglas reales de 42DS en lugar de inventar a su alrededor.</p>
 <aside class="mol-case42-principle js-reveal"><strong>REUSE-FIRST</strong><span>La IA debería inspeccionar el inventario real del design system antes de inventar una solución nueva.</span></aside>
-</div>
 </section>
 <section aria-labelledby="enabled-title" class="org-case__band syx-span-survey syx-on-brand org-case42-enabled js-reveal">
 <div class="mol-section-heading">
@@ -452,7 +455,7 @@
 <span><b>Caminos de producción</b><small>HTML5, AMP, Piano y legacy pueden convivir.</small></span>
 <span><b>Reutilización por IA</b><small>Los agentes inspeccionan y componen el sistema existente antes de inventar.</small></span>
 </div>
-</section><section aria-labelledby="what-changed-title" class="org-case__act syx-span-survey">
+</section><section aria-labelledby="what-changed-title" class="org-case__act syx-span-survey js-reveal">
 <div class="mol-section-heading">
 <p class="atom-eyebrow">Qué cambió</p>
 <h2 id="what-changed-title">La arquitectura creció. Mi rol creció con ella.</h2>
