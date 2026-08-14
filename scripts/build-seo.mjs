@@ -21,7 +21,7 @@ import { execFileSync } from 'node:child_process';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { BASE, PAGES } from './site.config.mjs';
+import { BASE, PAGES, pageUrl } from './site.config.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const check = process.argv.includes('--check');
@@ -59,8 +59,8 @@ function sitemap() {
   const entries = [];
 
   for (const page of PAGES) {
-    const en = `${BASE}/${page.file}`;
-    const es = `${BASE}/es/${page.file}`;
+    const en = pageUrl(page.file, 'en');
+    const es = pageUrl(page.file, 'es');
     const alternates = [
       ['en', en],
       ['es', es],
@@ -84,11 +84,29 @@ function sitemap() {
   ].join('\n');
 }
 
+// Everything in the repository is served, not just the pages: GitHub Pages
+// publishes the whole tree, so https://joseluispizarro.com/CLAUDE.md answers 200
+// and so does every SCSS partial and build script. None of it is linked from
+// anywhere, but none of it is protected either, and it is not what the site is
+// for. Disallow is the right lever here precisely because nothing links to it —
+// robots.txt stops crawling, not indexing, and a URL with no inbound links has
+// no other way in.
+//
+// assets/demos/ is deliberately NOT on this list. That page carries its own
+// `noindex` meta, and a crawler has to be allowed to fetch a page before it can
+// read the tag telling it to stay away. Disallowing it would preserve the very
+// thing the tag exists to prevent.
+const PRIVATE = ['/scss/', '/scripts/', '/i18n/', '/.claude/', '/node_modules/'];
+const PRIVATE_FILES = ['/*.md$', '/package.json', '/package-lock.json', '/prepros.config'];
+
 function robots() {
   return [
-    `# Static portfolio. Everything here is meant to be indexed.`,
+    `# Static portfolio. Every page is meant to be indexed; the sources that`,
+    `# build them are served by GitHub Pages but are not part of the site.`,
     `User-agent: *`,
     `Allow: /`,
+    ...PRIVATE.map(p => `Disallow: ${p}`),
+    ...PRIVATE_FILES.map(p => `Disallow: ${p}`),
     ``,
     `Sitemap: ${BASE}/sitemap.xml`,
     ``,

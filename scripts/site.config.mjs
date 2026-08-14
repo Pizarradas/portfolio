@@ -6,7 +6,16 @@
 // drift apart — a canonical URL that disagrees with the sitemap is the classic
 // way a static site loses its indexing.
 
-export const BASE = 'https://pizarradas.github.io/portfolio';
+// El dominio propio, declarado en el CNAME de la raíz. El sitio se sirve en el
+// ápex, no bajo /portfolio/, así que aquí no va ninguna ruta.
+//
+// Esto era `https://pizarradas.github.io/portfolio` y cambiarlo no es cosmético:
+// de aquí salen los canónicos, los hreflang, `og:url`, las URLs de las tarjetas
+// sociales, los `@id` del JSON-LD y las catorce entradas del sitemap. Con el
+// CNAME puesto, GitHub Pages redirige la URL vieja con un 301 — y un canónico
+// que apunta a una redirección es una señal contradictoria: se le está diciendo
+// al buscador «indexa esta», y esa manda a otra.
+export const BASE = 'https://joseluispizarro.com';
 
 // Identity for the Person / ProfilePage graph. Everything here is already
 // public on the page itself, and the email is the professional one — BRAND.md
@@ -93,6 +102,19 @@ export const PAGES = [
 
 export const PAGE_FILES = PAGES.map(p => p.file);
 export const PAGE_BY_FILE = new Map(PAGES.map(p => [p.file, p]));
+
+// La URL pública de una página. Un solo sitio la decide, porque el canónico del
+// <head>, el par hreflang y el <loc> del sitemap tienen que decir exactamente lo
+// mismo — si discrepan en un carácter dejan de ser la misma URL.
+//
+// La home se declara en su forma corta. `/` y `/index.html` sirven el mismo
+// documento, así que son un duplicado; en un dominio propio lo que se enlaza y
+// se comparte es el dominio pelado, de modo que es esa la forma que recibe los
+// enlaces y la que debe llevarse la señal.
+export const pageUrl = (file, lang) => {
+  const base = lang === 'es' ? `${BASE}/es/` : `${BASE}/`;
+  return file === 'index.html' ? base : base + file;
+};
 
 // The three self-directed registers on the home page.
 //

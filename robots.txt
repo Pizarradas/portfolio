@@ -1,5 +1,15 @@
-# Static portfolio. Everything here is meant to be indexed.
+# Static portfolio. Every page is meant to be indexed; the sources that
+# build them are served by GitHub Pages but are not part of the site.
 User-agent: *
 Allow: /
+Disallow: /scss/
+Disallow: /scripts/
+Disallow: /i18n/
+Disallow: /.claude/
+Disallow: /node_modules/
+Disallow: /*.md$
+Disallow: /package.json
+Disallow: /package-lock.json
+Disallow: /prepros.config
 
-Sitemap: https://pizarradas.github.io/portfolio/sitemap.xml
+Sitemap: https://joseluispizarro.com/sitemap.xml

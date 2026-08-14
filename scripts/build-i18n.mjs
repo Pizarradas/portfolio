@@ -24,6 +24,7 @@ import {
   PAGE_BY_FILE,
   OG_IMAGE_SIZE,
   ogImage,
+  pageUrl,
   titleOf,
   descriptionOf,
   headlineOf,
@@ -250,7 +251,9 @@ function headBlock(html, page, lang) {
   const meta = PAGE_BY_FILE.get(page);
   const ui = UI[lang];
   const up = lang === 'es' ? '../' : ''; // Spanish pages sit one level deeper
-  const url = lang === 'es' ? `${BASE}/es/${page}` : `${BASE}/${page}`;
+  const url = pageUrl(page, lang);
+  const enUrl = pageUrl(page, 'en');
+  const esUrl = pageUrl(page, 'es');
 
   const title = titleOf(html).replace(/"/g, '&quot;');
   const description = descriptionOf(html);
@@ -260,9 +263,9 @@ function headBlock(html, page, lang) {
 
   const lines = [
     `<link href="${url}" rel="canonical"/>`,
-    `<link href="${BASE}/${page}" hreflang="en" rel="alternate"/>`,
-    `<link href="${BASE}/es/${page}" hreflang="es" rel="alternate"/>`,
-    `<link href="${BASE}/${page}" hreflang="x-default" rel="alternate"/>`,
+    `<link href="${enUrl}" hreflang="en" rel="alternate"/>`,
+    `<link href="${esUrl}" hreflang="es" rel="alternate"/>`,
+    `<link href="${enUrl}" hreflang="x-default" rel="alternate"/>`,
     '',
     // max-image-preview:large is what makes the social card eligible to show up
     // in Google's own result cards; the default crops it to a thumbnail.
@@ -333,7 +336,7 @@ function headBlock(html, page, lang) {
 // @id so a crawler merges them instead of reading seven unrelated people.
 function jsonLd(page, lang, { url, title, description, headline, image }) {
   const meta = PAGE_BY_FILE.get(page);
-  const home = lang === 'es' ? `${BASE}/es/index.html` : `${BASE}/index.html`;
+  const home = pageUrl('index.html', lang);
   const person = `${BASE}/#person`;
   const website = `${BASE}/#website`;
   const inLanguage = lang === 'es' ? 'es-ES' : 'en-GB';
