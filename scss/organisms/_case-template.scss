@@ -151,10 +151,15 @@
   // maneras —«míralo funcionando» y «mira cómo está hecho»—, y separarlas obliga
   // al lector a decidir dos veces. Con `flex-wrap`, en pantalla estrecha caen
   // una debajo de otra sin que nada se apriete.
+  // No es prosa, así que no lleva medida: la regla de arriba topa todo `<p>` del
+  // acto a 66ch, y con tres salidas —ATLAS tiene dos experiencias en vivo— eso
+  // partía la fila a mitad de ancho por una medida de lectura que aquí no
+  // significa nada.
   .mol-case-exits {
     display: flex;
     flex-wrap: wrap;
     gap: var(--semantic-space-component-lg) var(--semantic-space-block);
+    max-width: none;
   }
 
   // La cita de cierre.

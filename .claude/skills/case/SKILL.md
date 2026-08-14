@@ -55,6 +55,13 @@ las seis páginas, no se tocan por página.
    que el repositorio existe y es público antes de enlazarlo, y reutiliza la
    cadena «Explore repository ↗», que ya está traducida.
 
+   **Y otra vez en el cierre, junto a las salidas en vivo** (`.mol-case-exits`,
+   una fila con todas las salidas del caso). No es duplicar por duplicar: en la
+   portada es un dato de ficha —quien lo busca lo busca antes de leer— y en el
+   cierre es la llamada a la acción de quien acaba de leerlo. Si el caso tiene
+   más de una experiencia en vivo, la fila las nombra («Open ATELIER ↗», «Open
+   OBSIDIANA ↗»): un «abrir en vivo» genérico no diría cuál.
+
 ## Procedimiento
 
 **Una sección por vuelta, con render antes y después.** Es lo que permitió cazar
