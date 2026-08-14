@@ -68,13 +68,15 @@
   }
 
   // Caso destacado. La diferencia con una portada normal no es que sea más
-  // grande: es que se anuncia. Una regla de acento arriba y el eyebrow en el
-  // color de marca bastan para decirlo, y no mueven ni un número de la escala.
-  .org-case-opener--flagship {
-    border-top: var(--semantic-border-width-strong) solid
-      var(--component-case-opener-accent);
-  }
-
+  // grande: es que se anuncia. Y para anunciarse le basta el eyebrow en el
+  // color de marca, sin mover un número de la escala.
+  //
+  // Llevaba además una regla de acento de 2px sobre el titular. Se retira: la
+  // página ya abre con la línea inferior de la cabecera fija justo encima, así
+  // que la regla azul aparecía a unos píxeles de otra línea horizontal y se
+  // leía como un borde doble del armazón, no como el distintivo de un caso. El
+  // eyebrow, que está a la izquierda y en azul, dice lo mismo sin duplicar una
+  // arista que ya existe.
   .org-case-opener--flagship > .atom-eyebrow {
     color: var(--component-case-opener-accent);
   }
