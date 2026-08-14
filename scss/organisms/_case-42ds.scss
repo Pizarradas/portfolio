@@ -318,15 +318,21 @@
   }
 }
 @layer syx.organisms {
-  .org-ai-architecture .atom-eyebrow {
-    color: #8fa0ff;
-  }
-
-  .org-ai-architecture__copy>p:last-child {
-    color: rgba(255,255,255,.65);
-    max-width: 42ch;
-  }
-
+  // De este organismo no queda regla propia.
+  //
+  // Tenía cuatro cosas y las cuatro las hace ya el sistema: el fondo y el color
+  // los pone `.syx-on-night`; el eyebrow en #8fa0ff era un lila inventado —el
+  // contexto lo deja en blanco, como en la banda de fundamentos—; el
+  // `rgba(255,255,255,.65)` de la entradilla es `text-secondary` y el `42ch`
+  // en crudo es `--semantic-measure-lede`, que la molécula de encabezado ya
+  // aplica.
+  //
+  // También se va su retícula de dos columnas —.75/1.25 y .7/1.3—, que era
+  // justo lo que el comentario de `.org-case__act` describe como el error de la
+  // página: el diagrama se dibujaba en el 65 % del ancho disponible mientras la
+  // columna de texto se quedaba con 240px de vacío por debajo del párrafo.
+  // Apilado, la banda de encabezado reparte en tres pistas y las cuatro capas
+  // se dibujan a ancho de registro.
 }
 @layer syx.utilities {
   .org-ai-architecture.is-visible .mol-ai-layers__layer {
@@ -345,49 +351,15 @@
     animation-delay: .3s;
   }
 
-  @media(max-width:800px) {
-    .org-ai-architecture {
-      grid-template-columns: 1fr;
-    }
-
-  }
-}
-@layer syx.organisms {
-  .org-ai-architecture {    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    align-items: start;
-    background: #080f1a;
-    color: #fff;
-    border-color: rgba(255,255,255,.15);
-  }
-
-  .org-ai-architecture h2 {
-    font: 600 clamp(2.5rem,5vw,5.5rem)/.92 var(--semantic-font-family-display);
-    letter-spacing: -.06em;
-    margin: 0;
-    font-size: var(--semantic-font-size-section-compact);
-  }
-
 }
 @layer syx.utilities {
-  @media (min-width:768px) and (max-width:1199px) {
-    .org-ai-architecture {
-      grid-template-columns: .75fr 1.25fr;
-    }
+  // El `h2` tampoco necesita regla propia: declaraba un `font:` abreviado con un
+  // `clamp(2.5rem,5vw,5.5rem)` y lo pisaba con `font-size` en la línea
+  // siguiente —el clamp muerto que ya se retiró de las otras bandas—. El tamaño
+  // que quedaba en pie era `section-compact`, 48px, medio escalón por encima de
+  // los 44 que llevan las demás secciones de este caso. Ahora lo pone la regla
+  // de la plantilla, que es la misma para actos y bandas.
 
-  }
-  @media (min-width:1200px) {
-    .org-ai-architecture>* {
-      max-width: var(--semantic-width-case-max);
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .org-ai-architecture {      grid-template-columns: .7fr 1.3fr;
-    }
-
-  }
   // La entrada del modelo operativo. Mismo mecanismo que el atlas de
   // arquitectura: los nodos salen del generador en orden de declaración —el
   // núcleo primero y los cinco consumidores detrás— así que el escalonado se

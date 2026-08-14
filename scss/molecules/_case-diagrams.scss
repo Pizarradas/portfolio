@@ -742,9 +742,13 @@
     gap: .6rem;
   }
 
+  // Los ocho blancos en crudo de esta molécula eran, como los del mapa de
+  // fundaciones, la respuesta a que su sección no declaraba contexto. Ahora
+  // lleva `.syx-on-night` y los tokens resuelven solos, con un 1–5 % de
+  // diferencia respecto a los literales que sustituyen.
   .mol-ai-layers__layer {
     padding: 1.2rem;
-    border: 1px solid rgba(255,255,255,.25);
+    border: var(--semantic-border-width) solid var(--semantic-color-border-strong);
     display: grid;
     grid-template-columns: .7fr 1fr 1.6fr;
     gap: 1rem;
@@ -755,7 +759,7 @@
     font: 600 .56rem/1 var(--semantic-font-family-ui);
     letter-spacing: .12em;
     text-transform: uppercase;
-    color: rgba(255,255,255,.55);
+    color: var(--semantic-color-text-muted);
   }
 
   .mol-ai-layers__layer b {
@@ -765,28 +769,40 @@
 
   .mol-ai-layers__layer em {
     font-style: normal;
-    color: rgba(255,255,255,.65);
+    color: var(--semantic-color-text-muted);
   }
 
   .mol-ai-layers__layer--knowledge {
-    background: rgba(255,255,255,.06);
+    background: var(--semantic-color-surface-muted);
   }
 
+  // El azul de esta capa no puede salir de `--semantic-color-primary`: dentro
+  // de un contexto oscuro, `primary` **es blanco**. Sale del token de superficie
+  // de marca, que es el mismo azul en cualquier contexto.
   .mol-ai-layers__layer--governance {
-    background: rgba(30,58,255,.28);
+    background: color-mix(
+      in srgb,
+      var(--semantic-color-surface-brand) 28%,
+      transparent
+    );
   }
 
+  // La capa invertida: dentro del contexto oscuro, el fondo es el color de
+  // texto y el texto el inverso. No hace falta un blanco ni un `#080f1a` en
+  // crudo —ese hex es exactamente `text-inverse` en este contexto—, y así la
+  // capa sigue al tema si el contexto cambia.
   .mol-ai-layers__layer--output {
-    background: #fff;
-    color: #080f1a;
+    background: var(--semantic-color-text);
+    color: var(--semantic-color-text-inverse);
   }
 
-  .mol-ai-layers__layer--output small {
-    color: #687083;
-  }
-
+  .mol-ai-layers__layer--output small,
   .mol-ai-layers__layer--output em {
-    color: #687083;
+    color: color-mix(
+      in srgb,
+      var(--semantic-color-text-inverse) 62%,
+      transparent
+    );
   }
 
   .mol-ai-layers__layer--modes div {
@@ -798,13 +814,13 @@
 
   .mol-ai-layers__layer--modes span {
     padding: .5rem .65rem;
-    border: 1px solid rgba(255,255,255,.25);
+    border: var(--semantic-border-width) solid var(--semantic-color-border-strong);
     font-size: .65rem;
   }
 
   .mol-ai-layers__arrow {
     text-align: center;
-    color: rgba(255,255,255,.45);
+    color: var(--semantic-color-text-muted);
   }
 
 }
