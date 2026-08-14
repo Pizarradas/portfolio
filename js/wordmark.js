@@ -54,11 +54,27 @@
   // every await is what keeps a cancelled run from writing to the DOM.
   let run = 0;
 
+  // Los cinco números del efecto, juntos a propósito.
+  //
+  // Calibrados hacia lo pausado: esto vive en una cabecera fija, en la periferia
+  // de la vista, y a ritmo rápido se percibe como un parpadeo molesto al borde
+  // del ojo en vez de como alguien escribiendo. Un ciclo completo dura ~19 s.
+  //
+  // El borrado va a la mitad que el tecleo porque así es como se escribe: una
+  // persona teclea pensando y borra de un tirón.
+  const PACE = {
+    type: [88, 48], // ms por carácter al escribir  [base, dispersión]
+    erase: [46, 26], // ms por carácter al borrar
+    hold: [3000, 800], // el mensaje, quieto y legible
+    rest: [9000, 5000], // de vuelta a ser wordmark antes del siguiente
+    first: [4500, 2000], // margen para que la página se asiente
+  };
+
   const type = async (text, token) => {
     for (let i = 1; i <= text.length; i++) {
       if (token !== run) return false;
       el.textContent = text.slice(0, i);
-      await wait(jitter(58, 52));
+      await wait(jitter(...PACE.type));
     }
     return token === run;
   };
@@ -67,7 +83,7 @@
     for (let i = from.length; i >= 0; i--) {
       if (token !== run) return false;
       el.textContent = from.slice(0, i);
-      await wait(jitter(34, 26));
+      await wait(jitter(...PACE.erase));
     }
     return token === run;
   };
@@ -94,20 +110,20 @@
   };
 
   const loop = async token => {
-    await wait(jitter(3200, 1800)); // let the page settle before the first word
+    await wait(jitter(...PACE.first));
     while (token === run) {
       if (!(await erase(BRAND, token))) return;
-      await wait(jitter(160, 120));
+      await wait(jitter(220, 160)); // el titubeo antes de empezar a escribir
 
       const message = nextMessage();
       if (!(await type(message, token))) return;
-      await wait(jitter(2100, 900)); // hold, long enough to read
+      await wait(jitter(...PACE.hold));
 
       if (!(await erase(message, token))) return;
-      await wait(jitter(180, 140));
+      await wait(jitter(240, 180));
 
       if (!(await type(BRAND, token))) return;
-      await wait(jitter(6500, 4500)); // and back to being a wordmark
+      await wait(jitter(...PACE.rest));
     }
   };
 

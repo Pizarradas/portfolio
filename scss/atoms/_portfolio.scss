@@ -40,17 +40,23 @@
   // script, que no la pone si hay `prefers-reduced-motion` o si la ventana está
   // por debajo de escritorio — así que en reposo esto no dibuja nada.
   //
-  // Todos los valores son token o se derivan de la propia letra: el grosor es
-  // la hairline del sistema y el alto es `1em`, o sea la altura de la fuente
-  // que lo rodea, no una medida elegida a ojo.
+  // Tumbado y en tinta, no vertical y en azul, y las dos decisiones tienen la
+  // misma causa: al lado hay un punto. Dos marcas azules pegadas incumplen
+  // BRAND.md §4 —el acento se gasta una vez— y dos marcas verticales de peso
+  // parecido se leen como una sola mancha. Recto contra redondo, tinta contra
+  // azul: se distinguen por forma y por color a la vez. Y de paso es el gesto
+  // de una máquina de escribir de verdad, que es lo que esto imita.
+  //
+  // Ningún valor a ojo: el ancho es `1ch` —la celda de un carácter de la propia
+  // fuente— y el grosor es el token de borde fuerte. La hairline, a este
+  // tamaño, se lee como una mota de polvo.
   .atom-wordmark__type.is-typing::after {
     content: "";
     display: inline-block;
-    width: var(--semantic-border-width);
-    height: 1em;
-    margin-left: var(--semantic-space-component-3xs);
+    width: 1ch;
+    height: var(--semantic-border-width-strong);
     vertical-align: text-bottom;
-    background: var(--component-wordmark-accent);
+    background: currentcolor;
     animation: atom-wordmark-caret var(--semantic-duration-reveal) step-end
       infinite;
   }
