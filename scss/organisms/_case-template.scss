@@ -190,7 +190,12 @@
     margin: var(--semantic-space-block) 0 0;
   }
 
-  .mol-case-figure figcaption {
+  // Hijo directo, no descendiente. Una figura puede contener otras figuras con
+  // su propio pie —la plancha de ilustraciones son diecisiete—, y esta regla
+  // vive en la capa de organismos: escrita como descendiente le ganaba a la
+  // molecula sin que nada fallara, y los diecisiete pies de la plancha se
+  // servían con el tamaño y el borde del pie de la figura grande.
+  .mol-case-figure > figcaption {
     margin-top: var(--semantic-space-component-md);
     padding-top: var(--semantic-space-component-sm);
     border-top: var(--semantic-border-width) solid var(--semantic-color-border);

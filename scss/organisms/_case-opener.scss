@@ -94,22 +94,9 @@
     color: var(--component-case-opener-accent);
   }
 
-  // Caso visual. Su contenido de debajo va a sangre, así que la portada usa el
-  // gutter de página en vez del del armazón y renuncia al tope de ancho: la
-  // primera arista vertical de la página es la misma de arriba abajo.
-  .org-case-opener--visual {
-    max-width: none;
-    padding-inline: var(--semantic-space-page-inline);
-  }
-
-  // A partir de 1200px el resto de la página de ilustraciones se centra sobre el
-  // registro `survey` con `--semantic-pad-content`. La portada lo sigue: si no,
-  // es el único bloque de la página que arranca en otra vertical.
-  @media (min-width: 1200px) {
-    .org-case-opener--visual {
-      padding-inline: var(--semantic-pad-content);
-    }
-  }
+  // Aquí vivía `.org-case-opener--visual`, la variante a sangre de la página de
+  // ilustraciones. Esa página ya corre en `survey` como las otras cinco, así
+  // que la variante se quedó sin usuarios: seis portadas, un solo eje.
 
   // En móvil la ficha de datos es una lista vertical larga y empuja el contenido
   // real de la página fuera de la primera pantalla. Sigue ahí —es información

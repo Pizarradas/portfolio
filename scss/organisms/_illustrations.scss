@@ -1,13 +1,24 @@
 @use "../abstracts/breakpoints" as *;
 @use "../abstracts/mixins" as *;
 
+// Los dos bloques de ilustración de la home. La página de caso ya no tiene
+// armazón propio: usa la plantilla, igual que las otras cinco.
+//
+// Aquí vivían cuatro secciones —`__statement`, `__mosaic`, `__system` y
+// `__closing`— que reimplementaban lo que `.org-case__act` y `.org-case__band`
+// ya hacen, con tres fondos en crudo (`#fff`, `#08101f`, `var(--ill-paper)`),
+// tres titulares fuera de escala —el cierre llegaba a 7rem, o sea 112px, más
+// que el titular de la portada del caso— y una retícula propia por sección.
+// Las sustituyen las secciones de la plantilla; el mosaico lo sustituye
+// `.mol-ill-sheet`, en `molecules/_illustrations.scss`.
 @layer syx.organisms {
   .org-illustration-showcase {
     display: grid;
     gap: 2rem;
     padding: var(--semantic-space-section) var(--semantic-space-page-inline);
-    background: #fff;
-    border-bottom: 1px solid var(--ill-line);
+    background: var(--semantic-color-surface);
+    border-bottom: var(--semantic-border-width) solid
+      var(--semantic-color-border);
   }
 
   .org-illustration-showcase__intro h2 {
@@ -48,211 +59,82 @@
   }
 }
 @layer syx.organisms {
-  // `.org-illustration-case__hero` vivía aquí. Lo sustituye
-  // `.org-case-opener--visual`, en `organisms/_case-opener.scss`.
-
-  .org-illustration-case__statement {
-    display: grid;
-    gap: 1rem;
-    padding: var(--semantic-space-section) var(--semantic-space-page-inline);
-    background: var(--semantic-color-primary);
-    color: #fff;
-  }
-
-  .org-illustration-case__statement>span {
-    font: .58rem/1 var(--semantic-font-family-ui);
-    letter-spacing: .1em;
-  }
-
-  .org-illustration-case__statement h2 {
-    font: 600 clamp(3rem,9vw,6.5rem)/.9 var(--semantic-font-family-display);
-    letter-spacing: -.06em;
-    margin: 0;
-    max-width: 13ch;
-  }
-
-  .org-illustration-case__statement p {
-    max-width: 42rem;
-    opacity: .78;
-  }
-
-  .org-illustration-case__mosaic {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: var(--ill-line);
-    padding: 1px;
-  }
-
-  .org-illustration-case__mosaic .mol-ill-case-card--feature {
-    grid-column: 1/-1;
-  }
-
-  .org-illustration-case__mosaic .mol-ill-case-card--feature>div {
-    min-height: 26rem;
-  }
-
-  .org-illustration-case__system {
-    display: grid;
-    gap: 2rem;
-    padding: var(--semantic-space-section) var(--semantic-space-page-inline);
-    background: var(--ill-paper);
-  }
-
-  .org-illustration-case__system h2 {
-    font: 600 clamp(3rem,8vw,5.5rem)/.92 var(--semantic-font-family-display);
-    letter-spacing: -.06em;
-    margin: .5rem 0 0;
-  }
-
-  .org-illustration-case__closing {
-    padding: var(--semantic-space-section) var(--semantic-space-page-inline);
-    background: #08101f;
-    color: #fff;
-  }
-
-  .org-illustration-case__closing blockquote {
-    font: 600 clamp(3rem,9vw,7rem)/.9 var(--semantic-font-family-display);
-    letter-spacing: -.06em;
-    max-width: 15ch;
-    margin: 1rem 0 0 auto;
-  }
-
-}
-@layer syx.utilities {
-  @include from($bp-md) {
-    .org-illustration-case__statement {
-      grid-template-columns: .35fr 1.2fr .8fr;
-      align-items: start;
-    }
-
-    .org-illustration-case__statement h2 {
-      grid-column: 2;
-    }
-
-    .org-illustration-case__statement p {
-      grid-column: 3;
-    }
-
-    .org-illustration-case__mosaic {
-      grid-template-columns: repeat(4,1fr);
-    }
-
-    .org-illustration-case__mosaic .mol-ill-case-card--feature {
-      grid-column: span 2;
-      grid-row: span 2;
-    }
-
-    .org-illustration-case__system {
-      grid-template-columns: .7fr 1.3fr;
-      gap: 4rem;
-    }
-
-  }
-  @media(min-width:1200px) {
-    .org-illustration-case__statement {
-      padding-left: var(--semantic-pad-content);
-      padding-right: var(--semantic-pad-content);
-    }
-
-    .org-illustration-case__system {
-      padding-left: var(--semantic-pad-content);
-      padding-right: var(--semantic-pad-content);
-    }
-
-    .org-illustration-case__closing {
-      padding-left: var(--semantic-pad-content);
-      padding-right: var(--semantic-pad-content);
-    }
-
-    .org-illustration-case__mosaic {
-      grid-template-columns: repeat(5,1fr);
-    }
-
-  }
-}
-@layer syx.molecules {
-  .org-illustration-collage-v26.is-visible .mol-ill-collage {
-    opacity: 1;
-    transform: none;
-  }
-
-}
-@layer syx.organisms {
-  .org-illustration-collage-v26 {
+  // El collage de la home. Iba con sufijo de versión —`-v26`—, que es el patrón
+  // que costó la migración entera: se retira sin cambiar una sola declaración.
+  .org-illustration-collage {
     display: grid;
     grid-template-columns: repeat(2,minmax(0,1fr));
     grid-auto-rows: 10rem;
     gap: .35rem;
-    background: #fff;
+    background: var(--semantic-color-surface);
   }
 
-  .org-illustration-collage-v26 .mol-ill-collage--hero {
+  .org-illustration-collage .mol-ill-collage--hero {
     grid-column: 1/-1;
     grid-row: span 3;
   }
 
-  .org-illustration-collage-v26 .mol-ill-collage--wide {
+  .org-illustration-collage .mol-ill-collage--wide {
     grid-column: 1/-1;
     grid-row: span 2;
   }
 
-  .org-illustration-collage-v26 .mol-ill-collage--tall {
+  .org-illustration-collage .mol-ill-collage--tall {
     grid-row: span 2;
   }
 
-  .org-illustration-collage-v26 .mol-ill-collage--small {
+  .org-illustration-collage .mol-ill-collage--small {
     grid-row: span 1;
   }
 
 }
 @layer syx.utilities {
   @include from($bp-md) {
-    .org-illustration-collage-v26 {
+    .org-illustration-collage {
       grid-template-columns: repeat(6,minmax(0,1fr));
       grid-auto-rows: 8rem;
       gap: .45rem;
       align-content: start;
     }
 
-    .org-illustration-collage-v26 .mol-ill-collage--hero {
+    .org-illustration-collage .mol-ill-collage--hero {
       grid-column: 1/4;
       grid-row: 1/5;
     }
 
-    .org-illustration-collage-v26 .mol-ill-collage--wide {
+    .org-illustration-collage .mol-ill-collage--wide {
       grid-column: 3/7;
       grid-row: 5/8;
     }
 
-    .org-illustration-collage-v26 .mol-ill-collage--tall {
+    .org-illustration-collage .mol-ill-collage--tall {
       grid-column: 5/7;
       grid-row: 1/5;
     }
 
-    .org-illustration-collage-v26 .mol-ill-collage--small:nth-of-type(2) {
+    .org-illustration-collage .mol-ill-collage--small:nth-of-type(2) {
       grid-column: 4/5;
       grid-row: 1/3;
     }
 
-    .org-illustration-collage-v26 .mol-ill-collage--small:nth-of-type(3) {
+    .org-illustration-collage .mol-ill-collage--small:nth-of-type(3) {
       grid-column: 4/5;
       grid-row: 3/5;
     }
 
-    .org-illustration-collage-v26 .mol-ill-collage--small:nth-of-type(5) {
+    .org-illustration-collage .mol-ill-collage--small:nth-of-type(5) {
       grid-column: 1/2;
       grid-row: 5/7;
     }
 
-    .org-illustration-collage-v26 .mol-ill-collage--small:nth-of-type(6) {
+    .org-illustration-collage .mol-ill-collage--small:nth-of-type(6) {
       grid-column: 2/3;
       grid-row: 5/7;
     }
 
   }
   @media(min-width:1200px) {
-    .org-illustration-collage-v26 {
+    .org-illustration-collage {
       grid-auto-rows: 9.5rem;
     }
 

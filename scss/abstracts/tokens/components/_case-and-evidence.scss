@@ -182,10 +182,17 @@
     --preview-chrome: #f5f7fa;
     --preview-border: var(--semantic-color-border);
     --preview-radius: .2rem;
-    --ill-red: #ef1632;
-    --ill-ink: #08101f;
-    --ill-paper: #f7f8fb;
-    --ill-line: #dfe4ec;
+    // Aquí había cuatro tokens propios de la página de ilustraciones, y ninguno
+    // decía nada que el sistema no dijera ya:
+    //
+    //   --ill-paper  #f7f8fb  es exactamente --semantic-color-surface-alt
+    //   --ill-line   #dfe4ec  a tres puntos de --semantic-color-border, o sea
+    //                         dos grises que nadie puede distinguir
+    //   --ill-ink    #08101f  a un paso de --semantic-color-surface-night
+    //   --ill-red    #ef1632  sin un solo uso en toda la hoja
+    //
+    // Mantener un juego paralelo para una sola página es lo que hacía que esa
+    // página no pudiera heredar un cambio de tema. Ahora lee los semánticos.
   }
 
 }

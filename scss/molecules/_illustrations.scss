@@ -1,122 +1,255 @@
 @use "../abstracts/breakpoints" as *;
 @use "../abstracts/mixins" as *;
 
+// La plancha de ilustraciones.
+//
+// Sustituye a `.org-illustration-case__mosaic` + `.mol-ill-case-card`, que
+// componían el mosaico con tres defectos que se veían todos a la vez en
+// pantalla grande:
+//
+//   1. Tres fichas destacadas ocupaban `span 2 / span 2`, pero dentro solo
+//      había un pozo con `min-height: 26rem` y su pie. La ficha se estiraba a
+//      las dos filas y el contenido se quedaba arriba: **media celda en blanco**
+//      por cada destacada, con el rótulo flotando a mitad de altura.
+//   2. La retícula pintaba el fondo con la línea y dejaba `gap: 1px`, y además
+//      cada ficha llevaba `border: 1px`. Entre dos fichas había 3px de gris y
+//      contra el borde exterior 2px: la trama no era regular en ningún sitio.
+//   3. Diecisiete fichas en cinco columnas dejan tres celdas huérfanas al
+//      final, y esas celdas vacías enseñaban el fondo de la retícula: **un
+//      bloque gris macizo** cerrando la página.
+//
+// Lo que hace la de ahora:
+//
+//   · La celda la fija el pozo con `aspect-ratio`, no un `min-height`, así que
+//     todas las fichas miden lo mismo y ninguna puede quedarse con hueco.
+//   · Las juntas las dibujan las fichas por su lado derecho e inferior, y el
+//     marco de arriba y de la izquierda lo pone la plancha: exactamente un
+//     píxel en toda la trama, sin dobles.
+//   · Dos, tres o seis columnas. Con 17 ilustraciones más la celda de colofón
+//     son 18, que es divisible por las tres: la última fila cierra completa en
+//     cualquier ancho, y el bloque gris desaparece porque no queda ni una celda
+//     vacía.
 @layer syx.molecules {
-  .mol-ill-case-card {
+  .mol-ill-sheet {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-block-start: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+    border-inline-start: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+  }
+
+  .mol-ill-card {
+    display: grid;
+    grid-template-rows: 1fr auto;
     margin: 0;
-    background: #fff;
-    border: 1px solid var(--ill-line);
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(18px);
-    @include transition(opacity .55s ease var(--delay),transform .55s ease var(--delay));
+    background: var(--semantic-color-surface);
+    border-inline-end: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+    border-block-end: var(--semantic-border-width) solid
+      var(--semantic-color-border);
   }
 
-  .js-ill-gallery.is-visible .mol-ill-case-card {
-    opacity: 1;
-    transform: none;
-  }
-
-  .mol-ill-case-card>div {
+  // El pozo es cuadrado y la ilustración lo llena por su lado mayor. Antes iba
+  // `place-items: center` con `max-width/max-height: 100%`, que en un SVG
+  // apaisado dejaba la figura a media altura de la celda: diecisiete piezas
+  // dibujadas al mismo tamaño se veían a siete tamaños distintos.
+  .mol-ill-card__well {
     display: grid;
     place-items: center;
-    background: #fff;
-    min-height: 14rem;
-    padding: 1rem;
+    aspect-ratio: 1;
+    padding: var(--semantic-space-component-lg);
     overflow: hidden;
   }
 
-  .mol-ill-case-card img {
+  .mol-ill-card img {
     display: block;
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
+    @include transition(transform var(--semantic-duration-hover) ease);
   }
 
-  .mol-ill-case-card figcaption {
+  // Número y rótulo empiezan en la misma vertical.
+  //
+  // Iban con `justify-content: space-between`, y en una ficha destacada de dos
+  // columnas eso separaba el «01» de «Social media» por setecientos píxeles de
+  // blanco: dejaban de leerse como una pareja. Juntos y a la izquierda, el pie
+  // se lee de un golpe y la columna de números queda alineada de arriba abajo.
+  .mol-ill-card figcaption {
     display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    align-items: center;
-    padding: .7rem .8rem;
-    border-top: 1px solid var(--ill-line);
-    font: .6rem/1.2 var(--semantic-font-family-ui);
+    flex-wrap: wrap;
+    gap: var(--semantic-space-component-sm);
+    align-items: baseline;
+    padding: var(--semantic-space-component-sm) var(--semantic-space-component-md);
+    border-block-start: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-caption);
+    line-height: var(--semantic-line-height-ui);
     text-transform: uppercase;
-    letter-spacing: .07em;
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
   }
 
-  .mol-ill-case-card figcaption span {
+  .mol-ill-card figcaption span {
     color: var(--semantic-color-primary);
+    font-variant-numeric: tabular-nums;
   }
 
-  .mol-ill-case-card figcaption b {
-    font-weight: 600;
-    text-align: right;
+  .mol-ill-card figcaption b {
+    font-weight: var(--semantic-font-weight-emphasis);
   }
 
+  .mol-ill-card:hover {
+    background: var(--semantic-color-surface-alt);
+  }
+
+  .mol-ill-card:hover img {
+    transform: scale(1.04);
+  }
+
+  // El colofón cierra la plancha y dice la muestra: cuántas piezas y en qué
+  // formato. `BRAND.md` §3 pide que toda cifra vaya con su muestra; aquí la
+  // cifra vive dentro de la propia evidencia, en la celda que completa la
+  // última fila.
+  .mol-ill-card--colophon {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: var(--semantic-space-component-sm);
+    padding: var(--semantic-space-component-md);
+    background: var(--semantic-color-surface-alt);
+  }
+
+  .mol-ill-card--colophon span {
+    font-family: var(--semantic-font-family-display);
+    font-size: var(--semantic-font-size-title-sm);
+    font-weight: var(--semantic-font-weight-display);
+    line-height: var(--semantic-line-height-title);
+    letter-spacing: var(--semantic-letter-spacing-tight);
+  }
+
+  .mol-ill-card--colophon b {
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-caption);
+    font-weight: var(--semantic-font-weight-emphasis);
+    line-height: var(--semantic-line-height-ui);
+    text-transform: uppercase;
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    // `text-muted` sobre `surface-alt` da 4,55:1 — pasa AA por cinco
+    // centésimas, y esto es versalita a tamaño de pie. `text-secondary` da
+    // 9,8:1 sin cambiar el papel del rótulo.
+    color: var(--semantic-color-text-secondary);
+  }
 }
+
 @layer syx.utilities {
-  @include reduced-motion {
-    .mol-ill-case-card {
-      opacity: 1;
-      transform: none;
-      @include transition(none);
+  @include from($bp-md) {
+    .mol-ill-sheet {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
+  }
 
+  @include from($bp-xl) {
+    .mol-ill-sheet {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
   }
 }
+
 @layer syx.molecules {
+  // Los cuatro principios de la gramática visual.
+  //
+  // Antes se quedaban en dos columnas a cualquier ancho a partir de 768px, así
+  // que a 3400px eran dos cajas enormes con tres líneas dentro. Van a cuatro en
+  // el mismo punto en que la plancha pasa a seis columnas: las dos retículas de
+  // la página cambian a la vez.
   .mol-ill-principles {
     display: grid;
-    gap: 1px;
-    background: var(--ill-line);
-    border: 1px solid var(--ill-line);
+    border-block-start: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+    border-inline-start: var(--semantic-border-width) solid
+      var(--semantic-color-border);
   }
 
   .mol-ill-principles article {
-    background: #fff;
-    padding: 1rem;
-    min-height: 10rem;
     display: flex;
     flex-direction: column;
+    gap: var(--semantic-space-component-sm);
+    padding: var(--semantic-space-component-lg);
+    background: var(--semantic-color-surface);
+    border-inline-end: var(--semantic-border-width) solid
+      var(--semantic-color-border);
+    border-block-end: var(--semantic-border-width) solid
+      var(--semantic-color-border);
   }
 
-  .mol-ill-principles article>b {
-    font: .58rem/1 var(--semantic-font-family-ui);
+  .mol-ill-principles article > b {
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-caption);
+    font-weight: var(--semantic-font-weight-emphasis);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     color: var(--semantic-color-primary);
+    font-variant-numeric: tabular-nums;
   }
 
   .mol-ill-principles strong {
-    font: 600 1.35rem/1 var(--semantic-font-family-display);
-    letter-spacing: -.035em;
-    margin: auto 0 .5rem;
+    margin-block-start: auto;
+    font-family: var(--semantic-font-family-display);
+    font-size: var(--semantic-font-size-title-sm);
+    font-weight: var(--semantic-font-weight-display);
+    line-height: var(--semantic-line-height-title);
+    letter-spacing: var(--semantic-letter-spacing-tight);
   }
 
   .mol-ill-principles p {
-    font: .75rem/1.45 var(--semantic-font-family-ui);
-    color: var(--semantic-color-text-secondary);
     margin: 0;
+    font-size: var(--semantic-font-size-caption);
+    line-height: var(--semantic-line-height-body);
+    color: var(--semantic-color-text-secondary);
   }
-
 }
+
 @layer syx.utilities {
   @include from($bp-md) {
     .mol-ill-principles {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+  }
 
+  @include from($bp-xl) {
+    .mol-ill-principles {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
   }
 }
+
 @layer syx.molecules {
   .mol-ill-collage {
     @include relative();
     margin: 0;
     min-width: 0;
     overflow: hidden;
-    background: #fff;
+    background: var(--semantic-color-surface);
+  }
+
+  // El apagado va detrás de `.js`, como el resto del sitio: sin script —o sin
+  // scroll: un rastreador, una captura de página completa, `print`— el collage
+  // de la home se quedaba invisible para siempre. La animación es la mejora,
+  // nunca la condición para ver.
+  .js .mol-ill-collage {
     opacity: 0;
     transform: translateY(16px);
     @include transition(opacity .55s ease var(--delay),transform .55s ease var(--delay));
+  }
+
+  // La encendia `.org-illustration-collage-v26.is-visible`, escrita en el
+  // fichero de organismos pero declarada en la capa de moleculas: funcionaba
+  // solo por el orden de los `@use`. Va donde vive lo que enciende, y se apoya
+  // en el gancho que el script toca de verdad.
+  .js-ill-gallery.is-visible .mol-ill-collage {
+    opacity: 1;
+    transform: none;
   }
 
   .mol-ill-collage img {
