@@ -341,48 +341,28 @@
     animation: code-visual-in .55s both;
   }
 
-  @media(max-width:850px) {
-    .org-component-anatomy {
-      grid-template-columns: 1fr;
-    }
-
-  }
 }
 @layer syx.organisms {
-  .org-component-anatomy h2 {
-    font: 600 clamp(2.8rem,5vw,5.5rem)/.92 var(--semantic-font-family-display);
-    letter-spacing: -.06em;
-    margin: 0;
-    font-size: var(--semantic-font-size-section-compact);
-  }
-
-  .org-component-anatomy {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    align-items: center;
-    background: var(--semantic-color-surface-alt);
-  }
-
-}
-@layer syx.utilities {
-  @media (min-width:768px) and (max-width:1199px) {
-    .org-component-anatomy {
-      grid-template-columns: .75fr 1.25fr;
-    }
-
-  }
-  @media (min-width:1200px) {
-    .org-component-anatomy>* {
-      max-width: var(--semantic-width-case-max);
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .org-component-anatomy {      grid-template-columns: .7fr 1.3fr;
-    }
-
-  }
+  // De este acto tampoco queda regla propia, y la última que se fue es la que
+  // rompió la sección al migrarla.
+  //
+  // Seguía partido en dos columnas —.7fr / 1.3fr—, así que la banda de
+  // encabezado, que es a su vez una retícula de tres pistas, entró dentro de
+  // una columna de ~627px. Las pistas de etiqueta y de entradilla tienen mínimo
+  // propio —10rem y 16rem, más dos huecos de 68px— y suman 552; la del titular
+  // es `minmax(0, 1fr)`, o sea que **puede encogerse hasta cero**, y se quedó
+  // con los 75px que sobraban. Con `overflow-wrap: break-word` en la base, un
+  // titular de 44px en 75px de ancho se rompe letra a letra, en vertical.
+  //
+  // El fallo no era la banda: era meterla en media sección. Apilado —banda
+  // arriba, tarjeta anotada debajo, las dos a ancho de registro— es como corren
+  // los otros once actos.
+  //
+  // Se va también el gris de fondo, por el mismo criterio que en la sección de
+  // realidad de producción: los cortes de ritmo son las bandas a sangre que
+  // autoriza `BRAND.md` §4, no un lavado claro de más. Y el `h2` declaraba otro
+  // `font:` abreviado con un clamp que la línea siguiente pisaba: el tamaño lo
+  // pone la plantilla.
 }
 @layer syx.utilities {
   .org-header-system.is-visible .mol-brand-header {
