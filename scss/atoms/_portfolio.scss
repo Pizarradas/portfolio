@@ -25,8 +25,54 @@
     text-decoration: none;
   }
 
-  .atom-wordmark span {
+  // El punto. Es lo único del wordmark que js/wordmark.js no reescribe nunca:
+  // las letras se borran y se vuelven a escribir, la firma se queda.
+  //
+  // El `:not()` no es defensivo, es obligatorio: las letras viven ahora en su
+  // propio `<span>` para que el script las reescriba sin tocar el punto, y ese
+  // span heredaba esta regla. Sin la exclusión, el wordmark entero sale en azul
+  // de marca y el acento deja de gastarse una sola vez (BRAND.md §4).
+  .atom-wordmark span:not(.atom-wordmark__type) {
     color: var(--component-wordmark-accent);
+  }
+
+  // El cursor solo existe mientras se está escribiendo. La clase la pone el
+  // script, que no la pone si hay `prefers-reduced-motion` o si la ventana está
+  // por debajo de escritorio — así que en reposo esto no dibuja nada.
+  //
+  // Todos los valores son token o se derivan de la propia letra: el grosor es
+  // la hairline del sistema y el alto es `1em`, o sea la altura de la fuente
+  // que lo rodea, no una medida elegida a ojo.
+  .atom-wordmark__type.is-typing::after {
+    content: "";
+    display: inline-block;
+    width: var(--semantic-border-width);
+    height: 1em;
+    margin-left: var(--semantic-space-component-3xs);
+    vertical-align: text-bottom;
+    background: var(--component-wordmark-accent);
+    animation: atom-wordmark-caret var(--semantic-duration-reveal) step-end
+      infinite;
+  }
+
+  // Segunda guarda, además de la del script: si alguien añade la clase por otra
+  // vía, el parpadeo sigue sin ocurrir. El cursor se queda fijo y visible.
+  @media (prefers-reduced-motion: reduce) {
+    .atom-wordmark__type.is-typing::after {
+      animation: none;
+    }
+  }
+
+  @keyframes atom-wordmark-caret {
+    0%,
+    50% {
+      opacity: 1;
+    }
+
+    50.01%,
+    100% {
+      opacity: 0;
+    }
   }
 
   .atom-eyebrow,

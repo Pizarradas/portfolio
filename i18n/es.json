@@ -247,7 +247,8 @@
     "ATLAS",
     "ATELIER",
     "OBSIDIANA",
-    "Halloween"
+    "Halloween",
+    "Madrid"
   ],
   "José Luis Pizarro Feo — Product Designer &amp; Front-End Engineer in Madrid. Nineteen years across agency, telecom and media; design systems at Aliseda (Brickee) and Prensa Ibérica (42DS).": "José Luis Pizarro Feo — Product Designer &amp; Front-End Engineer en Madrid. Diecinueve años entre agencia, telecomunicaciones y medios; design systems en Aliseda (Brickee) y Prensa Ibérica (42DS).",
   "Skip to content": "Saltar al contenido",
@@ -1027,5 +1028,14 @@
   "Visual grammar": "Gramática visual",
   "Four rules hold the set together. They are what let a Halloween asset and a failed-process asset belong to the same family.": "Cuatro reglas sostienen el conjunto. Son las que permiten que una pieza de Halloween y una de proceso fallido pertenezcan a la misma familia.",
   "The grammar is what makes seventeen assets readable as one set; the scenarios are what keep them from looking like seventeen copies.": "La gramática es lo que hace que diecisiete piezas se lean como un conjunto; los escenarios son lo que evita que parezcan diecisiete copias.",
-  "Load live preview": "Cargar la vista previa"
+  "Load live preview": "Cargar la vista previa",
+  "Hi": "Hola",
+  "Nineteen years": "Diecinueve años",
+  "Measure first": "Medir primero",
+  "Reuse first": "Reutilizar antes",
+  "Tokens first": "Tokens primero",
+  "No !important": "Sin !important",
+  "Design + code": "Diseño + código",
+  "Still shipping": "Sigo publicando",
+  "Built in SCSS": "Hecho en SCSS"
 }
