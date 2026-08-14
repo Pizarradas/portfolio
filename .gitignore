@@ -5,6 +5,10 @@ node_modules/
 # Salida de `npm run extract:i18n`. Se regenera a demanda y no debe commitearse.
 i18n/_missing.json
 
+# Plantillas y perfil de Chrome que usa `npm run build:og`. Las tarjetas que
+# genera (assets/og/) sí se versionan: son el asset publicado.
+.tmp-og/
+
 # Basura del sistema operativo
 .DS_Store
 Thumbs.db

@@ -17,20 +17,24 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const BASE = 'https://pizarradas.github.io/portfolio';
+import {
+  BASE,
+  SITE,
+  PAGE_FILES as PAGES,
+  PAGE_BY_FILE,
+  OG_IMAGE_SIZE,
+  ogImage,
+  titleOf,
+  descriptionOf,
+  headlineOf,
+  plain,
+} from './site.config.mjs';
 
-// Every page that exists in both languages. Anything linked from here that is
-// NOT in this list is treated as a shared asset and gets a ../ prefix.
-const PAGES = [
-  'index.html',
-  'case-42ds.html',
-  'case-sport.html',
-  'case-map.html',
-  'case-worldcup.html',
-  'case-atlas.html',
-  'case-illustrations.html',
-];
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+
+// Every page that exists in both languages lives in site.config.mjs. Anything
+// linked from here that is NOT in that list is treated as a shared asset and
+// gets a ../ prefix.
 const PAGE_SET = new Set(PAGES);
 
 // Shared, language-neutral directories. The Spanish pages sit one level deeper.
@@ -42,9 +46,26 @@ const TEXT_ATTRS = ['alt', 'title', 'aria-label', 'aria-description', 'aria-role
 // Elements whose content is not markup and must not be tokenised as text.
 const RAW_ELEMENTS = new Set(['script', 'style', 'textarea']);
 
+// Copy that only ever exists in one language because it is generated, never
+// authored. It must not reach i18n/es.json: the dictionary is for strings a
+// human wrote in the English page.
 const UI = {
-  en: { switchLabel: 'Language', otherTitle: 'Ver esta página en español', selfTitle: 'Viewing in English', locale: 'en_GB' },
-  es: { switchLabel: 'Idioma', otherTitle: 'View this page in English', selfTitle: 'Estás viendo la versión en español', locale: 'es_ES' },
+  en: {
+    switchLabel: 'Language',
+    otherTitle: 'Ver esta página en español',
+    selfTitle: 'Viewing in English',
+    locale: 'en_GB',
+    altLocale: 'es_ES',
+    cardAlt: headline => `Share card: “${headline}” — José Luis Pizarro`,
+  },
+  es: {
+    switchLabel: 'Idioma',
+    otherTitle: 'View this page in English',
+    selfTitle: 'Estás viendo la versión en español',
+    locale: 'es_ES',
+    altLocale: 'en_GB',
+    cardAlt: headline => `Tarjeta para compartir: «${headline}» — José Luis Pizarro`,
+  },
 };
 
 const mode = process.argv.includes('--extract')
@@ -217,15 +238,173 @@ const HEAD_END = '<!-- i18n:head:end -->';
 const SWITCH_START = '<!-- i18n:switch:start -->';
 const SWITCH_END = '<!-- i18n:switch:end -->';
 
-function headBlock(page, lang) {
-  const self = lang === 'es' ? `${BASE}/es/${page}` : `${BASE}/${page}`;
-  return [
-    `<link href="${self}" rel="canonical"/>`,
+// Everything in the head that depends on the URL or on the language. Written
+// into both the English source and its Spanish twin, so neither is hand-kept.
+//
+// The social titles and descriptions are READ BACK OUT of the page rather than
+// declared here: <title> and <meta name="description"> have already been
+// translated by the time this runs, so og:title can never disagree with the
+// title, and no sentence has to exist twice in i18n/es.json.
+function headBlock(html, page, lang) {
+  const meta = PAGE_BY_FILE.get(page);
+  const ui = UI[lang];
+  const up = lang === 'es' ? '../' : ''; // Spanish pages sit one level deeper
+  const url = lang === 'es' ? `${BASE}/es/${page}` : `${BASE}/${page}`;
+
+  const title = titleOf(html).replace(/"/g, '&quot;');
+  const description = descriptionOf(html);
+  const headline = plain(headlineOf(html)) || plain(title);
+  const image = `${BASE}/${ogImage(page)}`;
+  const cardAlt = ui.cardAlt(headline).replace(/"/g, '&quot;');
+
+  const lines = [
+    `<link href="${url}" rel="canonical"/>`,
     `<link href="${BASE}/${page}" hreflang="en" rel="alternate"/>`,
     `<link href="${BASE}/es/${page}" hreflang="es" rel="alternate"/>`,
     `<link href="${BASE}/${page}" hreflang="x-default" rel="alternate"/>`,
-    `<meta content="${UI[lang].locale}" property="og:locale"/>`,
-  ].join('\n');
+    '',
+    // max-image-preview:large is what makes the social card eligible to show up
+    // in Google's own result cards; the default crops it to a thumbnail.
+    `<meta content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" name="robots"/>`,
+    `<meta content="${SITE.legalName}" name="author"/>`,
+    `<meta content="${SITE.locality}" name="geo.placename"/>`,
+    // The site has no dark mode (no prefers-color-scheme rule in scss/), so it
+    // declares one scheme instead of pretending to support both.
+    `<meta content="light" name="color-scheme"/>`,
+    `<meta content="#ffffff" name="theme-color"/>`,
+    '',
+    `<meta content="${SITE.siteName[lang]}" property="og:site_name"/>`,
+    `<meta content="${meta.ogType}" property="og:type"/>`,
+    `<meta content="${url}" property="og:url"/>`,
+    `<meta content="${title}" property="og:title"/>`,
+    `<meta content="${description}" property="og:description"/>`,
+    `<meta content="${image}" property="og:image"/>`,
+    `<meta content="image/png" property="og:image:type"/>`,
+    `<meta content="${OG_IMAGE_SIZE.width}" property="og:image:width"/>`,
+    `<meta content="${OG_IMAGE_SIZE.height}" property="og:image:height"/>`,
+    `<meta content="${cardAlt}" property="og:image:alt"/>`,
+    `<meta content="${ui.locale}" property="og:locale"/>`,
+    `<meta content="${ui.altLocale}" property="og:locale:alternate"/>`,
+  ];
+
+  if (meta.ogType === 'profile') {
+    lines.push(
+      `<meta content="José Luis" property="profile:first_name"/>`,
+      `<meta content="Pizarro Feo" property="profile:last_name"/>`,
+    );
+  }
+
+  lines.push(
+    '',
+    // Twitter falls back to Open Graph, but several other scrapers read only
+    // the twitter:* pair, and summary_large_image has to be declared explicitly
+    // or the card renders as a thumbnail.
+    `<meta content="summary_large_image" name="twitter:card"/>`,
+    `<meta content="${title}" name="twitter:title"/>`,
+    `<meta content="${description}" name="twitter:description"/>`,
+    `<meta content="${image}" name="twitter:image"/>`,
+    `<meta content="${cardAlt}" name="twitter:image:alt"/>`,
+    '',
+    `<link href="${up}assets/favicon.svg" rel="icon" type="image/svg+xml"/>`,
+    `<link href="${up}assets/favicon.ico" rel="alternate icon" sizes="32x32"/>`,
+    `<link href="${up}assets/apple-touch-icon.png" rel="apple-touch-icon"/>`,
+    // rel="me" ties the page to the profile that claims authorship of it.
+    `<link href="${SITE.sameAs[0]}" rel="me"/>`,
+    '',
+    jsonLd(page, lang, { url, title: plain(title), description: plain(description), headline, image }),
+  );
+
+  return lines.join('\n');
+}
+
+/* ------------------------------------------------------------- structured data */
+
+// One @graph per page. Person and WebSite repeat on every page under a stable
+// @id so a crawler merges them instead of reading seven unrelated people.
+function jsonLd(page, lang, { url, title, description, headline, image }) {
+  const meta = PAGE_BY_FILE.get(page);
+  const home = lang === 'es' ? `${BASE}/es/index.html` : `${BASE}/index.html`;
+  const person = `${BASE}/#person`;
+  const website = `${BASE}/#website`;
+  const inLanguage = lang === 'es' ? 'es-ES' : 'en-GB';
+
+  const picture = { '@type': 'ImageObject', url: image, width: OG_IMAGE_SIZE.width, height: OG_IMAGE_SIZE.height };
+
+  const graph = [
+    {
+      '@type': 'Person',
+      '@id': person,
+      name: SITE.name,
+      alternateName: SITE.legalName,
+      url: home,
+      jobTitle: SITE.jobTitle,
+      email: `mailto:${SITE.email}`,
+      address: { '@type': 'PostalAddress', addressLocality: SITE.locality, addressCountry: SITE.country },
+      knowsAbout: SITE.knowsAbout,
+      knowsLanguage: [
+        { '@type': 'Language', name: 'Spanish', alternateName: 'es' },
+        { '@type': 'Language', name: 'English', alternateName: 'en' },
+      ],
+      sameAs: SITE.sameAs,
+    },
+    {
+      '@type': 'WebSite',
+      '@id': website,
+      url: `${BASE}/`,
+      name: SITE.siteName[lang],
+      inLanguage,
+      author: { '@id': person },
+      publisher: { '@id': person },
+      copyrightHolder: { '@id': person },
+    },
+  ];
+
+  const webPage = {
+    '@type': meta.schema === 'ProfilePage' ? 'ProfilePage' : 'WebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: title,
+    description,
+    inLanguage,
+    isPartOf: { '@id': website },
+    primaryImageOfPage: picture,
+    about: { '@id': person },
+  };
+
+  if (meta.schema === 'ProfilePage') {
+    webPage.mainEntity = { '@id': person };
+    graph.push(webPage);
+  } else {
+    const work = `${url}#work`;
+    webPage.mainEntity = { '@id': work };
+    webPage.breadcrumb = { '@id': `${url}#breadcrumb` };
+    graph.push(webPage, {
+      '@type': 'CreativeWork',
+      '@id': work,
+      name: headline,
+      headline,
+      description,
+      url,
+      inLanguage,
+      image: picture,
+      author: { '@id': person },
+      creator: { '@id': person },
+      isPartOf: { '@id': website },
+    });
+    graph.push({
+      '@type': 'BreadcrumbList',
+      '@id': `${url}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: PAGE_BY_FILE.get('index.html').crumb[lang], item: home },
+        { '@type': 'ListItem', position: 2, name: meta.crumb[lang], item: url },
+      ],
+    });
+  }
+
+  // The block sits inside a <script>, so a literal < in any string would end it
+  // early — the same escape build-timeline.mjs applies to its JSON island.
+  const body = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c');
+  return `<script type="application/ld+json">${body}</script>`;
 }
 
 // Two languages, so two always-visible links rather than a select: the current
@@ -254,7 +433,7 @@ function betweenMarkers(source, start, end, body, page, where) {
 }
 
 function fillMarkers(html, page, lang) {
-  let out = betweenMarkers(html, HEAD_START, HEAD_END, `\n${headBlock(page, lang)}\n`, page, 'i18n:head');
+  let out = betweenMarkers(html, HEAD_START, HEAD_END, `\n${headBlock(html, page, lang)}\n`, page, 'i18n:head');
   return betweenMarkers(out, SWITCH_START, SWITCH_END, `\n${switchBlock(page, lang)}\n`, page, 'i18n:switch');
 }
 
