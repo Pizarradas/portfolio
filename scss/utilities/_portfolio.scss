@@ -297,22 +297,37 @@
       margin-top: var(--semantic-space-block);
     }
 
+    // El filete entre la evidencia y el texto es el fondo de la tarjeta
+    // asomando por un hueco de 1px, no un borde de uno de los dos paneles.
+    //
+    // Lo dibujaba el `border-inline-end` del marco con `height: 100%`. Un borde
+    // solo llega hasta donde llega su caja, así que cualquier cosa que deje al
+    // marco más corto que la fila —y el marco depende del alto de su
+    // contenido— deja el filete sin llegar al suelo de la tarjeta.
+    //
+    // Con el hueco, la separación no la dibuja nadie: es el fondo de la
+    // tarjeta, que por construcción mide la fila entera. Es el mismo mecanismo
+    // que usa la galería de código del caso 42DS. De paso, al invertir el orden
+    // de los paneles en las filas impares ya no hay que mover ningún borde de
+    // lado: el hueco está donde tiene que estar siempre.
     .org-work .mol-project-card {
       grid-template-columns: minmax(0, 1.4fr) minmax(24rem, 1fr);
-      gap: 0;
+      gap: var(--semantic-border-width);
       min-height: var(--component-register-min-height);
       border: var(--semantic-border-width) solid var(--semantic-color-border);
+      background: var(--semantic-color-border);
+    }
+
+    .org-work .mol-project-card__frame,
+    .org-work .mol-project-card__body {
       background: var(--semantic-color-surface);
     }
 
-    // The frame stops carrying a ratio and fills the row. Its own border drops
-    // to the single edge that faces the copy: the card owns the outline now.
+    // El marco deja de llevar proporción y llena su celda; el contorno lo pone
+    // la tarjeta.
     .org-work .mol-project-card__frame {
-      height: 100%;
       aspect-ratio: auto;
       border: 0;
-      border-inline-end: var(--semantic-border-width) solid
-        var(--semantic-color-border);
     }
 
     .org-work .mol-project-card__body {
@@ -367,9 +382,6 @@
       .mol-project-card:nth-of-type(odd)
       .mol-project-card__frame {
       order: 2;
-      border-inline-end: 0;
-      border-inline-start: var(--semantic-border-width) solid
-        var(--semantic-color-border);
     }
   }
 
