@@ -485,32 +485,13 @@
     display: none;
   }
 
-  // map-live-v30.css
-  .org-map-live-case-v30 {
-    padding: var(--semantic-space-section) var(--semantic-space-page-inline);
-    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
-    background: #fff;
-  }
-
-  .org-map-live-case-v30__intro {
-    display: grid;
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-
-  .org-map-live-case-v30__intro h2 {
-    margin: 0;
-    font: 600 clamp(3rem, 9vw, 6rem)/0.9 var(--semantic-font-family-display);
-    letter-spacing: -0.06em;
-  }
-
-  .org-map-live-case-v30__intro > p:last-child {
-    max-width: 48rem;
-    color: var(--semantic-color-text-secondary);
-    font-size: 0.95rem;
-    line-height: 1.55;
-  }
-
+  // `.org-map-live-case-v30` vivía aquí: la octava copia de la banda de
+  // encabezado, con su retícula de tres pistas hecha a mano, su `align-items:
+  // end` y un `h2` a `clamp(3rem, 9vw, 6rem)` —hasta 96px, el tamaño de la
+  // portada del caso—. Lo sustituye `.mol-section-heading` dentro de un
+  // `.org-case__act`, que da las mismas tres pistas y el tamaño que le toca a
+  // una sección. Con él se va también el sufijo `-v30` de la molécula del
+  // navegador de mapa, que es el patrón que `scss` prohíbe.
 
   // ── Ajustes que llegaban desde las hojas sueltas ──────────────────────
   //

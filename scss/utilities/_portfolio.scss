@@ -452,31 +452,8 @@
     }
   }
 
-  // map-live-v30.css
-  @include from($bp-md) {
-    .org-map-live-case-v30__intro {
-      grid-template-columns: 0.35fr 1fr 0.75fr;
-      align-items: end;
-    }
-
-    .org-map-live-case-v30__intro h2 {
-      grid-column: 2;
-    }
-
-    .org-map-live-case-v30__intro > p:last-child {
-      grid-column: 3;
-    }
-  }
-
-  @media (min-width: 1200px) {
-    .org-map-live-case-v30 {
-      padding-left: var(--semantic-pad-content);
-      padding-right: var(--semantic-pad-content);
-    }
-  }
-
   @include until($bp-md) {
-    .mol-map-browser-v30 > footer {
+    .mol-map-browser > footer {
       flex-direction: column;
     }
   }
