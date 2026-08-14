@@ -67,6 +67,19 @@
     color: var(--semantic-color-text-muted);
   }
 
+  // El repositorio, cuando lo hay.
+  //
+  // Va en la portada y no al final del caso: es información de ficha —como el
+  // rol o el sistema— y quien la busca, la busca antes de leer, no después. En
+  // ATLAS vivía al pie de la última sección, donde solo la encontraba quien
+  // llegaba hasta abajo.
+  //
+  // Debajo de la ficha y no dentro: `.mol-case-facts` reparte en cuatro
+  // columnas exactas y un quinto dato abriría una segunda fila con tres huecos.
+  .org-case-opener__repo {
+    margin: var(--semantic-space-component-lg) 0 0;
+  }
+
   // Caso destacado. La diferencia con una portada normal no es que sea más
   // grande: es que se anuncia. Y para anunciarse le basta el eyebrow en el
   // color de marca, sin mover un número de la escala.

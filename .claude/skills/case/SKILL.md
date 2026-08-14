@@ -1,6 +1,6 @@
 ---
 name: case
-description: Reconstruir una página de caso (case-*.html) sobre la plantilla del sistema. Cubre las cinco piezas del vocabulario, los criterios que igualan las seis páginas entre sí, el procedimiento sección a sección y las diecisiete trampas que ya costaron una reconstrucción entera en 42DS. Úsala en cuanto toque migrar, rediseñar o auditar cualquier case-*.html.
+description: Reconstruir una página de caso (case-*.html) sobre la plantilla del sistema. Cubre las cinco piezas del vocabulario, los criterios que igualan las seis páginas entre sí, el procedimiento sección a sección y las trampas que ya costaron una reconstrucción entera en 42DS. Úsala en cuanto toque migrar, rediseñar o auditar cualquier case-*.html.
 ---
 
 # Página de caso
@@ -31,7 +31,7 @@ que no se rompió).
 El paginador (`.org-case-next`) y el pie son de armazón: ya están resueltos para
 las seis páginas, no se tocan por página.
 
-## Los seis criterios
+## Los siete criterios
 
 1. **Un registro para toda la página: `syx-span-survey`.** `showcase` una vez
    por página como mucho, y hay que poder explicar por qué esa sección es la
@@ -47,6 +47,13 @@ las seis páginas, no se tocan por página.
    un hex. `BRAND.md` §4: dos bandas a sangre, no cinco.
 6. **Todo diagrama es una figura y toda figura lleva pie.** El pie dice qué se
    mira y de dónde sale.
+7. **Si el proyecto tiene repositorio público, se enlaza —y se enlaza en la
+   portada.** Es información de ficha, como el rol o el sistema: quien la busca
+   la busca antes de leer, no al final. Va en `.org-case-opener__repo`, justo
+   debajo de la ficha —dentro no: `.mol-case-facts` reparte en cuatro columnas
+   exactas y un quinto dato abre una segunda fila con tres huecos—. Comprueba
+   que el repositorio existe y es público antes de enlazarlo, y reutiliza la
+   cadena «Explore repository ↗», que ya está traducida.
 
 ## Procedimiento
 
@@ -68,7 +75,7 @@ una pasada de siete secciones eso no se ve.
 
 ## Trampas
 
-Las diecisiete que aparecieron en 42DS. Ninguna da error; todas se ven en el
+Las que ya han aparecido en la reconstrucción de las seis páginas. Ninguna da error; todas se ven en el
 render o en ninguna parte.
 
 ### De capa
@@ -123,6 +130,18 @@ render o en ninguna parte.
   línea siguiente que lo pisa. Está en casi todos los organismos viejos.
 - **La medida va en el elemento que fija el tamaño de letra**, nunca en el
   envoltorio: eso es lo que metió mapas de cinco columnas dentro de 66ch.
+
+### De marcado y scripts
+
+- **Un `style` en línea de un script gana a cualquier hoja.** Antes de tocar una
+  regla por segunda vez, comprueba si hay JS escribiendo sobre ese elemento:
+  `grep -rn "style\." js/`. Costó cuatro rondas en la previsualización en vivo
+  —dos arreglos de CSS que el script pisaba, y un `transform-origin` que se
+  perdió al limpiar la hoja mientras el `transform` seguía vivo en el script—.
+- **Quien escribe `transform` escribe su origen.** Repartidos entre hoja y
+  script, cualquier limpieza en uno rompe al otro sin que nada falle.
+- **El alto de un `iframe` es la ventana que ve la página embebida.** Forzarlo a
+  un valor mayor que el marco descoloca cualquier héroe a `100vh` de dentro.
 
 ### De contenido
 
