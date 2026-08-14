@@ -222,28 +222,39 @@
     font-size: clamp(1.5rem,3vw,3rem);
   }
 
-  // El CTA se estaba sirviendo en tinta sobre azul de marca: 2.85:1.
+  // El cierre de la página, con color en vez de con otra línea.
   //
-  // La regla escribía `color: var(--semantic-color-on-primary)` —blanco— pero
-  // `.org-case-next a` lleva `color: inherit`, y ese selector tiene una
-  // pseudo-clase más: 0,1,1 contra 0,1,0, misma capa, así que ganaba siempre.
-  // El texto heredaba la tinta de la página y la llamada a la acción principal
-  // de las seis páginas de caso quedaba por debajo del mínimo AA —4.5 para el
-  // rótulo pequeño, 3 para los 48px del titular—.
+  // La tira quedaba al aire: dos celdas blancas sobre fondo blanco, sin suelo
+  // ni techo, y lo único que la delimitaba eran filetes grises —de los que esta
+  // página ya tiene de sobra—. Ahora es un bloque: el navy del sitio, con la
+  // llamada a la acción en azul de marca dentro. Los dos colores ya están en la
+  // página, así que no entra una tinta nueva; lo que entra es un final.
   //
-  // Con el ancla en el selector, 0,2,1: el blanco gana y sube a 6.76:1.
+  // El contexto va en el marcado (`.syx-on-night`) y con él llegan el fondo, el
+  // blanco del texto y el filete interno en blanco al 16 %, que dentro de un
+  // bloque de color se lee como estructura y no como una regla más de página.
+  //
+  // ---
+  //
+  // Esta celda arrastraba además un fallo de contraste: servía el CTA en tinta
+  // sobre azul, 2.85:1. La regla escribía `color: var(--semantic-color-on-primary)`
+  // —blanco— pero `.org-case-next a` lleva `color: inherit` y ese selector tiene
+  // una pseudo-clase más: 0,1,1 contra 0,1,0, misma capa, así que ganaba
+  // siempre. La llamada a la acción principal de las seis páginas de caso
+  // quedaba por debajo del mínimo AA. Con el ancla en el selector, 0,2,1.
+  //
+  // Y los dos tokens que usaba se dan la vuelta dentro del contexto oscuro:
+  // ahí `primary` **es blanco** y `on-primary` es el navy. El azul sale del
+  // token de superficie de marca —el mismo en cualquier contexto— y el texto,
+  // del color de texto del contexto. Blanco sobre azul: 6.76:1.
   .org-case-next a.org-case-next__contact {
-    background: var(--semantic-color-primary);
-    color: var(--semantic-color-on-primary);
+    background: var(--semantic-color-surface-brand);
+    color: var(--semantic-color-text);
   }
 
   // La etiqueta de esa celda, al 80 % del blanco: 4.82:1 sobre el azul.
   .org-case-next__contact span {
-    color: color-mix(
-      in srgb,
-      var(--semantic-color-on-primary) 80%,
-      transparent
-    );
+    color: color-mix(in srgb, var(--semantic-color-text) 80%, transparent);
   }
 
 }
@@ -255,7 +266,7 @@
 
     .org-case-next a {
       border-right: 0;
-      border-bottom: 1px solid var(--component-case-rule);
+      border-bottom: 1px solid var(--semantic-color-border);
     }
 
   }
@@ -287,7 +298,7 @@
     text-decoration: none;
     color: inherit;
     border-right: 0;
-    border-bottom: 1px solid var(--component-case-rule);
+    border-bottom: 1px solid var(--semantic-color-border);
   }
 
   .org-case-next a:last-child {
@@ -305,7 +316,7 @@
     .org-case-next a {
       min-height: 13rem;
       padding: 2rem clamp(1.25rem,4vw,4rem);
-      border-right: 1px solid var(--component-case-rule);
+      border-right: 1px solid var(--semantic-color-border);
     }
 
     // El paginador cruza la ventana; su texto se queda en el registro.
