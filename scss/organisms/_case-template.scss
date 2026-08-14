@@ -145,6 +145,18 @@
     margin-block-start: var(--semantic-space-section-compact);
   }
 
+  // Las dos salidas de un caso: el producto en marcha y su código.
+  //
+  // Van juntas y en la misma línea porque son la misma invitación vista de dos
+  // maneras —«míralo funcionando» y «mira cómo está hecho»—, y separarlas obliga
+  // al lector a decidir dos veces. Con `flex-wrap`, en pantalla estrecha caen
+  // una debajo de otra sin que nada se apriete.
+  .mol-case-exits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--semantic-space-component-lg) var(--semantic-space-block);
+  }
+
   // La cita de cierre.
   //
   // Es lo último que se lee de un caso, así que tiene voz propia, pero por
