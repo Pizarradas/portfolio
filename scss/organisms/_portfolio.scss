@@ -225,10 +225,23 @@
   // Tools with two section paddings between them and not a single edge, so the
   // read register looked less like a decision and more like the page running
   // out. Same rule as Contact, at its own register width.
+  // About y Contact cierran la página en el mismo eje que el resto.
+  //
+  // Corrían en registro `read` —62rem, centrado— mientras la sección de arriba
+  // corre en `scan` —90rem—, así que su borde izquierdo caia 224px a la derecha
+  // del de todo lo demás y las dos últimas secciones de la home flotaban hacia
+  // el centro. Es el mismo defecto que se corrigió en los capitulos del caso, y
+  // con el mismo argumento: el registro decide el ancho de la caja, la medida
+  // decide el largo de la línea, y el eje se comparte. La prosa sigue topada a
+  // 66ch en `__copy`, así que la línea no se alarga: solo se mueve el borde.
+  //
+  // Y la pista de etiqueta pasa a ser la del sitio. Tenían una propia
+  // —2–7rem— que dejaba sus eyebrows en una vertical distinta de la de todas
+  // las bandas de encabezado de la página.
   .org-about {
     padding-block: var(--semantic-space-section);
     display: grid;
-    grid-template-columns: minmax(2rem, 7rem) 1.35fr 1fr;
+    grid-template-columns: var(--component-heading-label-track) 1.35fr 1fr;
     gap: var(--semantic-space-block);
     align-items: start;
     border-top: var(--semantic-border-width) solid var(--semantic-color-border);
@@ -271,7 +284,7 @@
     padding-block: var(--semantic-space-section-compact)
       var(--semantic-space-section);
     display: grid;
-    grid-template-columns: minmax(2rem, 7rem) minmax(0, 1fr);
+    grid-template-columns: var(--component-heading-label-track) minmax(0, 1fr);
     gap: var(--semantic-space-block);
     align-items: start;
     border-top: var(--semantic-border-width) solid var(--semantic-color-border);
