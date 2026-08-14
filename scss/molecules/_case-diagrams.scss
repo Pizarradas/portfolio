@@ -438,81 +438,14 @@
 // Con la copia fuera, la base sirve el flujo horizontal con sus `→` y el
 // bloque de 900 sigue apilando y girando en móvil, que es donde toca. El
 // `min-width:1200` se va con ella: ya no restaura nada que no sea la base.
+// `.mol-ai-system` vivía aquí: el diagrama de conocimiento → modos →
+// gobernanza. Era un subconjunto del de `.mol-ai-layers` —las mismas tres capas
+// y el mismo rótulo de gobernanza palabra por palabra— dibujado una sección más
+// abajo, sobre el mismo navy. Se queda el completo, que además llega hasta el
+// principio por defecto.
 @layer syx.molecules {
-  .mol-ai-system {
-    display: grid;
-    gap: 1rem;
-    margin: 2rem 0;
-  }
-
-  .mol-ai-system>div {
-    padding: 1rem;
-    border: 1px solid rgba(255,255,255,.25);
-    display: flex;
-    flex-wrap: wrap;
-    gap: .45rem;
-  }
-
-  .mol-ai-system b {
-    width: 100%;
-    font: 600 .7rem/1 var(--semantic-font-family-ui);
-    letter-spacing: .1em;
-    color: #fff;
-  }
-
-  .mol-ai-system span {
-    padding: .5rem .6rem;
-    border: 1px solid rgba(255,255,255,.22);
-    font-size: .7rem;
-  }
-
-  .mol-ai-system>i {
-    justify-self: center;
-    font-style: normal;
-    opacity: .5;
-  }
-
-  .mol-ai-system__governance {
-    background: rgba(255,255,255,.06);
-  }
-
-}
-@layer syx.utilities {
-  .js .mol-ai-system.js-reveal>div {
-    opacity: 0;
-    transform: translateY(.8rem);
-    @include transition(opacity .5s ease,transform .5s ease);
-  }
-
-  // Misma pareja rota que la del mapa de fundaciones, y mismo arreglo.
-  .js .mol-ai-system.is-visible>div {
-    opacity: 1;
-    transform: none;
-  }
-
-  .mol-ai-system.is-visible>div:nth-of-type(2) {
-    transition-delay: .09s;
-  }
-
-  .mol-ai-system.is-visible>div:nth-of-type(3) {
-    transition-delay: .18s;
-  }
-
-}
-@layer syx.molecules {
-  .mol-case42-principle {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 1rem;
-    margin-top: 2rem;
-    padding: 1rem;
-    border-left: 4px solid #fff;
-    background: rgba(255,255,255,.06);
-  }
-
-  .mol-case42-principle strong {
-    font-family: var(--semantic-font-family-display);
-  }
+  // `.mol-case42-principle` vivía aquí: el aside que repetía REUSE-FIRST por
+  // cuarta vez en la misma pantalla. Lo dice ya la última capa del diagrama.
 
   .mol-inventory-visual {
     margin: 2.2rem 0;
@@ -560,52 +493,10 @@
 
   }
 }
-@layer syx.molecules {
-  .mol-ai-metrics {
-    display: grid;
-    grid-template-columns: .6fr .6fr 1.4fr;
-    margin: 0 0 1.2rem;
-    border: 1px solid rgba(255,255,255,.24);
-  }
-
-  .mol-ai-metrics span {
-    min-height: 7rem;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border-right: 1px solid rgba(255,255,255,.2);
-  }
-
-  .mol-ai-metrics span:last-child {
-    border-right: 0;
-  }
-
-  .mol-ai-metrics b {
-    font: 600 clamp(1.8rem,3vw,3rem)/1 var(--semantic-font-family-display);
-    letter-spacing: -.05em;
-  }
-
-  .mol-ai-metrics small {
-    color: rgba(255,255,255,.62);
-  }
-
-}
-@layer syx.utilities {
-  @media(max-width:800px) {
-    .mol-ai-metrics {
-      grid-template-columns: 1fr;
-    }
-
-    .mol-ai-metrics span {
-      border-right: 0;
-      border-bottom: 1px solid rgba(255,255,255,.2);
-    }
-
-  }
-}
-// Copia del bloque `max-width:800` de arriba sin su media query: las métricas
-// de la sección de IA corrían a una columna a cualquier ancho.
+// `.mol-ai-metrics` vivía aquí: la tira de 13 / 1 / REUSE-FIRST. Sus tres
+// cifras estaban ya en el diagrama de capas —«13 specialised modes» es el
+// rótulo de su segunda capa y REUSE-FIRST su cuarta—, así que la tira repetía
+// el dibujo que tenía justo debajo.
 // `.mol-system-map` vivía aquí: cuatro raíles, un split y un connector de tres
 // `<i>` vacíos que dibujaban las conexiones con bordes CSS. Lo sustituye
 // `.mol-arch-map`, en `molecules/_case-glance.scss`, generado por
