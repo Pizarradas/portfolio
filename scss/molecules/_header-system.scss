@@ -62,6 +62,23 @@
     background: var(--semantic-color-primary);
   }
 
+  // El tronco. Faltaba, y sin él el dibujo no era un árbol: la barra horizontal
+  // y sus cuatro bajadas empezaban en el aire, a 40px por debajo del núcleo y
+  // sin nada que las uniera a él. Lo que la sección afirma es que las cuatro
+  // marcas salen de un núcleo compartido, y eso es exactamente el trazo que no
+  // estaba dibujado.
+  //
+  // Sube por el margen inferior del núcleo con un `top` negativo en vez de
+  // recortar ese margen: así el hueco entre núcleo y marcas no cambia, y por
+  // debajo de `2xl` —donde el conector está apagado— la caja sigue igual.
+  .mol-header-architecture__connector::after {
+    @include absolute($top: -2.5rem, $left: 50%);
+    content: "";
+    width: 1px;
+    height: 2.7rem;
+    background: var(--semantic-color-primary);
+  }
+
   .mol-header-architecture__connector i {
     @include absolute($top: .2rem);
     width: 1px;
@@ -156,9 +173,21 @@
     padding: .9rem 1rem;
   }
 
+  // La cabecera no se leía como una cabecera.
+  //
+  // Cada tarjeta mide ~576px de ancho y la mancheta iba a 1.05rem, casi el
+  // mismo cuerpo que sus propios enlaces de navegación: cuatro barras planas,
+  // más parecidas a filas de una tabla que a la portada de un periódico. En una
+  // cabecera de verdad la mancheta manda sobre el nav, y esa jerarquía es parte
+  // de lo que la sección dice que se comparte.
+  //
+  // 1.378rem es S(2) de la escala tipográfica —`PROPORTIONS.md` §1—, dos
+  // escalones por encima del cuerpo. De paso mejora el contraste de las cuatro:
+  // a 22px en negrita cuentan como texto grande, y el rojo de El Periódico
+  // sobre blanco pasa de 4.72:1 exigiéndosele 4.5 a exigírsele 3.
   .mol-brand-header__bar strong {
     margin-right: auto;
-    font: 700 1.05rem/1 var(--semantic-font-family-display);
+    font: 700 1.378rem/1 var(--semantic-font-family-display);
   }
 
   .mol-brand-header__bar nav {
@@ -197,8 +226,19 @@
     font: 600 .68rem/1 var(--semantic-font-family-ui);
   }
 
+  // «same structure», cuatro veces en azul de marca.
+  //
+  // `BRAND.md` §4: si hay dos cosas en azul, ninguna es la importante. En esta
+  // sección el acento estaba en el eyebrow, en el rótulo del núcleo, en las
+  // líneas del conector, en las cuatro cifras de la tira y además en estas
+  // cuatro etiquetas —seis usos en una pantalla—. Y es la que menos lo
+  // necesita: que la estructura se repita ya lo dice el dibujo entero.
+  //
+  // Pasa al gris de anotación, que es el papel que tiene y el mismo que lleva
+  // «IDENTITY» a su izquierda. Contraste sobre la fila gris: 4.55:1, por encima
+  // del 4.5 que pide AA para texto normal.
   .mol-brand-header__meta small {
-    color: var(--semantic-color-primary);
+    color: var(--semantic-color-text-muted);
     font-size: .58rem;
   }
 
@@ -287,6 +327,18 @@
   .mol-header-rule-strip small {
     font-size: .65rem;
     color: var(--semantic-color-text-muted);
+  }
+
+  // La cuarta celda no es una cifra, es una afirmación.
+  //
+  // Las tres primeras son un tríada —1, 1, N— y se leen de un vistazo porque
+  // son un glifo cada una. «WCAG 2.1 AA» con el mismo cuerpo son 64px y once
+  // caracteres: rompe la serie y se convierte en lo más alto de la sección,
+  // por encima del titular. Baja al escalón `title-sm`, que es el que le
+  // corresponde a una afirmación, y la tríada vuelve a leerse como tríada.
+  .mol-header-rule-strip__claim b {
+    font-size: var(--semantic-font-size-title-sm);
+    line-height: var(--semantic-line-height-title);
   }
 
 }

@@ -38,9 +38,10 @@
     background: var(--semantic-color-primary-soft);
   }
 
-  .org-case42-section--targets {
-    background: var(--semantic-color-surface-alt);
-  }
+  // `--targets` vivía aquí: el gris de la sección de realidad de producción.
+  // Esa sección ya usa la plantilla y no lleva fondo: el corte de ritmo a color
+  // lo hacen las dos bandas a sangre que `BRAND.md` §4 autoriza —navy y azul—,
+  // y un lavado gris de más no es una tercera, es ruido.
 
   .org-case42-section--closing blockquote {
     font: 600 clamp(1.7rem,3vw,3rem)/1.12 var(--semantic-font-family-display);
@@ -58,10 +59,6 @@
   }
 }
 @layer syx.organisms {
-  .org-case42-section--ai[data-act]::before {
-    color: rgba(255,255,255,.7);
-  }
-
   .org-case42-section {
     @include relative();
     display: grid;
@@ -72,14 +69,21 @@
     border-bottom: 1px solid var(--semantic-color-border);
   }
 
-  .org-case42-section[data-act]::before {
-    @include absolute($top: .85rem, $left: var(--semantic-space-shell-inline));
-    content: attr(data-act);
-    font: 600 .58rem/1 var(--semantic-font-family-ui);
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--semantic-color-primary);
-  }
+  // La etiqueta de acto se va de las seis secciones que quedaban.
+  //
+  // Se posicionaba a `space-case-inline` del borde de la **ventana**, mientras
+  // que la retícula de la sección va centrada en el registro: a 3440px la
+  // etiqueta caía a 64px del borde y el contenido empezaba a 826, o sea 762px
+  // de distancia entre el rótulo y lo que rotulaba.
+  //
+  // Y no rotulaba nada nuevo. Iba repetida de dos en dos —«03 · Scale» en dos
+  // secciones seguidas, «04 · Reality» en otras dos—, porque no es un dato de
+  // sección: es el acto, y el acto ya lo anuncia su marcador de capítulo, que
+  // está justo encima y con la misma vertical que el contenido.
+  //
+  // Tercer motivo, y no menor: el texto vivía en un atributo consumido por
+  // `content: attr()`, así que el extractor de i18n no lo veía. Las seis
+  // etiquetas se servían **en inglés en la página en español**.
 
   .org-case42-section__heading h2 {
     font: 600 clamp(2.5rem,5vw,5rem)/.95 var(--semantic-font-family-display);

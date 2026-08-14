@@ -310,7 +310,7 @@
 <i class="mol-anatomy-pin mol-anatomy-pin--3">responsive</i>
 <i class="mol-anatomy-pin mol-anatomy-pin--4">accessible</i>
 </div>
-</section><section class="org-case42-section" data-act="03 · Scale">
+</section><section class="org-case42-section">
 <div class="org-case42-section__heading"><p class="atom-index">03</p><p class="atom-eyebrow">Composition</p><h2>Reuse before create.</h2></div>
 <div class="org-case42-section__content">
 <div class="mol-inventory-visual js-reveal">
@@ -329,7 +329,7 @@
 <p>The useful rule was not the Atomic Design label. It was the decision model: reuse first, extend when structure stays compatible, and create a new component only when semantics or architecture really change.</p>
 </div>
 </section>
-<section class="org-case42-section org-case42-section--brand" data-act="03 · Scale">
+<section class="org-case42-section org-case42-section--brand">
 <div class="org-case42-section__heading"><p class="atom-index">04</p><p class="atom-eyebrow">Multi-brand</p><h2>One core. Different identities.</h2></div>
 <div class="org-case42-section__content">
 <div class="mol-brand-tree js-reveal"><div class="mol-brand-tree__core">42DS CORE</div><div class="mol-brand-tree__branches"><span>SPORT<small>sport-setup</small></span><span>EL PERIÓDICO<small>ep-setup</small></span><span>EPE<small>epe-setup</small></span><span>REGIONALES<small>regionales-setup</small></span><span>REVISTAS<small>revistas-setup</small></span></div></div>
@@ -372,21 +372,22 @@
 <span><b>1</b><small>semantic DOM</small></span>
 <span><b>1</b><small>information architecture</small></span>
 <span><b>N</b><small>brand expressions</small></span>
-<span><b>WCAG 2.1 AA</b><small>implemented, not aspirational</small></span>
+<span class="mol-header-rule-strip__claim"><b>WCAG 2.1 AA</b><small>implemented, not aspirational</small></span>
 </div>
 </section>
 <section class="org-case__chapter syx-span-survey">
 <p class="atom-index">Act 04</p>
 <h2>What it cost to ship</h2>
 </section>
-<section class="org-case42-section org-case42-section--targets" data-act="04 · Reality">
-<div class="org-case42-section__heading"><p class="atom-index">05</p><p class="atom-eyebrow">Production reality</p><h2>A design system built for imperfect constraints.</h2></div>
-<div class="org-case42-section__content">
-<div class="mol-targets js-reveal"><span><b>HTML5</b><small>brand cores + header extensions</small></span><span><b>AMP</b><small>parallel abstracts, mixins and brand setups</small></span><span><b>PIANO</b><small>paywall-specific core bundles</small></span><span><b>LEGACY</b><small>migration + compatibility while BAU continued</small></span></div>
+<section aria-labelledby="production-reality-title" class="org-case__act syx-span-survey">
+<div class="mol-section-heading">
+<p class="atom-eyebrow">Production reality</p>
+<h2 id="production-reality-title">A design system built for imperfect constraints.</h2>
 <p>42DS had to support parallel AMP entry points, brand bundles, paywall variants and legacy compatibility. The architecture was designed for a live business, not a clean-room rebuild.</p>
 </div>
+<div class="mol-targets js-reveal"><span><b>HTML5</b><small>brand cores + header extensions</small></span><span><b>AMP</b><small>parallel abstracts, mixins and brand setups</small></span><span><b>PIANO</b><small>paywall-specific core bundles</small></span><span><b>LEGACY</b><small>migration + compatibility while BAU continued</small></span></div>
 </section>
-<section class="org-case42-section" data-act="04 · Reality">
+<section class="org-case42-section">
 <div class="org-case42-section__heading"><p class="atom-index">06</p><p class="atom-eyebrow">Design ↔ engineering</p><h2>The hand-off is part of the system.</h2></div>
 <div class="org-case42-section__content">
 <div class="mol-pipeline js-reveal"><span><b>Figma</b><small>foundations · variants · states</small></span><i>→</i><span><b>HTML / SCSS / JS</b><small>canonical implementation</small></span><i>→</i><span><b>Storybook</b><small>documentation · testing · shared language</small></span><i>→</i><span><b>Vue</b><small>Tech integration</small></span></div>
@@ -421,7 +422,7 @@
 <small>Default principle</small><b>REUSE-FIRST</b><em>inspect → compose → extend → create</em>
 </div>
 </div>
-</section><section class="org-case42-section org-case42-section--ai" data-act="05 · Evolution">
+</section><section class="org-case42-section org-case42-section--ai">
 <div class="org-case42-section__heading"><p class="atom-index">07</p><p class="atom-eyebrow">AI-operable architecture</p><h2>Then the system had to become understandable to AI.</h2></div>
 <div class="org-case42-section__content">
 <div class="mol-ai-metrics js-reveal">
@@ -450,7 +451,7 @@
 <span><b>Production paths</b><small>HTML5, AMP, Piano and legacy can coexist.</small></span>
 <span><b>AI reuse</b><small>Agents inspect and compose the existing system before inventing.</small></span>
 </div>
-</section><section class="org-case42-section org-case42-section--closing" data-act="06 · Role">
+</section><section class="org-case42-section org-case42-section--closing">
 <div class="org-case42-section__heading"><p class="atom-index">08</p><p class="atom-eyebrow">What changed</p><h2>The architecture grew. My role grew with it.</h2></div>
 <div class="org-case42-section__content"><p>I joined mainly as a designer/front-end profile inside the architecture. As the system expanded, my role moved toward end-to-end Product Design and AI-assisted execution.</p><blockquote>The most important evolution was not adding more components. It was turning implicit knowledge into an explicit system — first for people, and eventually for AI.</blockquote></div>
 </section>

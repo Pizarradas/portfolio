@@ -477,10 +477,28 @@
     cursor: pointer;
   }
 
+  // El botón activo lleva la marca que selecciona, no el azul del portfolio.
+  //
+  // El control estaba a dos centímetros de un panel rojo que decía
+  // `--color-primary: #f53036`, y se pintaba de azul: el selector quedaba fuera
+  // de la demostración que encabeza. El color lo pone el JS en `--brand-ink`
+  // desde el mismo mapa que alimenta el panel, así que no hay cuatro hex
+  // repetidos aquí.
+  //
+  // Va como regla superior y borde, no como relleno, y el rótulo se queda en
+  // tinta. Con relleno habría que poner el texto en blanco, y dos de las cuatro
+  // marcas son rojos que a 10px se quedan en 3.9:1 —por debajo del 4.5 de AA—.
+  // Además es la misma firma que llevan las cuatro cabeceras de marca de la
+  // sección siguiente: una regla de color arriba sobre fondo blanco.
   .mol-token-lab__switcher button.is-active {
-    background: var(--semantic-color-primary);
-    border-color: var(--semantic-color-primary);
-    color: #fff;
+    border-color: var(--brand-ink, var(--semantic-color-primary));
+    border-top-width: var(--semantic-border-width-heavy);
+    background: color-mix(
+      in srgb,
+      var(--brand-ink, var(--semantic-color-primary)) 8%,
+      #fff
+    );
+    color: var(--semantic-color-text);
   }
 
 }
@@ -988,10 +1006,14 @@
     @include transition(color .35s ease);
   }
 
+  // 18ch era una medida por debajo de cualquier escalón del sistema: partía el
+  // titular de la tarjeta en tres líneas dentro de una columna que da para dos.
+  // `title` —26ch, §6.2— es el escalón que existe justo para esto: una frase
+  // que tiene que seguir leyéndose como titular.
   .mol-token-demo-card h4 {
     font: 600 clamp(1.5rem,2.6vw,2.5rem)/1 var(--semantic-font-family-display);
     letter-spacing: -.04em;
-    max-width: 18ch;
+    max-width: var(--semantic-measure-title);
     margin: .6rem 0;
   }
 

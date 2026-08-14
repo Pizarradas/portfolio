@@ -310,7 +310,7 @@
 <i class="mol-anatomy-pin mol-anatomy-pin--3">responsive</i>
 <i class="mol-anatomy-pin mol-anatomy-pin--4">accesible</i>
 </div>
-</section><section class="org-case42-section" data-act="03 · Scale">
+</section><section class="org-case42-section">
 <div class="org-case42-section__heading"><p class="atom-index">03</p><p class="atom-eyebrow">Composición</p><h2>Reutilizar antes que crear.</h2></div>
 <div class="org-case42-section__content">
 <div class="mol-inventory-visual js-reveal">
@@ -329,7 +329,7 @@
 <p>La regla útil no era la etiqueta de Atomic Design. Era el modelo de decisión: reutilizar primero, extender cuando la estructura sigue siendo compatible y crear un componente nuevo solo cuando la semántica o la arquitectura cambian de verdad.</p>
 </div>
 </section>
-<section class="org-case42-section org-case42-section--brand" data-act="03 · Scale">
+<section class="org-case42-section org-case42-section--brand">
 <div class="org-case42-section__heading"><p class="atom-index">04</p><p class="atom-eyebrow">Multimarca</p><h2>Un único núcleo. Distintas identidades.</h2></div>
 <div class="org-case42-section__content">
 <div class="mol-brand-tree js-reveal"><div class="mol-brand-tree__core">NÚCLEO 42DS</div><div class="mol-brand-tree__branches"><span>SPORT<small>sport-setup</small></span><span>EL PERIÓDICO<small>ep-setup</small></span><span>EPE<small>epe-setup</small></span><span>REGIONALES<small>regionales-setup</small></span><span>REVISTAS<small>revistas-setup</small></span></div></div>
@@ -372,21 +372,22 @@
 <span><b>1</b><small>DOM semántico</small></span>
 <span><b>1</b><small>arquitectura de la información</small></span>
 <span><b>N</b><small>expresiones de marca</small></span>
-<span><b>WCAG 2.1 AA</b><small>implementadas, no aspiracionales</small></span>
+<span class="mol-header-rule-strip__claim"><b>WCAG 2.1 AA</b><small>implementadas, no aspiracionales</small></span>
 </div>
 </section>
 <section class="org-case__chapter syx-span-survey">
 <p class="atom-index">Acto 04</p>
 <h2>Lo que costó llevarlo a producción</h2>
 </section>
-<section class="org-case42-section org-case42-section--targets" data-act="04 · Reality">
-<div class="org-case42-section__heading"><p class="atom-index">05</p><p class="atom-eyebrow">La realidad de producción</p><h2>Un design system construido para restricciones imperfectas.</h2></div>
-<div class="org-case42-section__content">
-<div class="mol-targets js-reveal"><span><b>HTML5</b><small>núcleos de marca + extensiones de cabecera</small></span><span><b>AMP</b><small>abstracts, mixins y configuraciones de marca en paralelo</small></span><span><b>PIANO</b><small>bundles de núcleo específicos del paywall</small></span><span><b>LEGACY</b><small>migración + compatibilidad mientras seguía el día a día</small></span></div>
+<section aria-labelledby="production-reality-title" class="org-case__act syx-span-survey">
+<div class="mol-section-heading">
+<p class="atom-eyebrow">La realidad de producción</p>
+<h2 id="production-reality-title">Un design system construido para restricciones imperfectas.</h2>
 <p>42DS tenía que soportar puntos de entrada AMP en paralelo, bundles de marca, variantes de paywall y compatibilidad con legacy. La arquitectura se diseñó para un negocio vivo, no para una reconstrucción de laboratorio.</p>
 </div>
+<div class="mol-targets js-reveal"><span><b>HTML5</b><small>núcleos de marca + extensiones de cabecera</small></span><span><b>AMP</b><small>abstracts, mixins y configuraciones de marca en paralelo</small></span><span><b>PIANO</b><small>bundles de núcleo específicos del paywall</small></span><span><b>LEGACY</b><small>migración + compatibilidad mientras seguía el día a día</small></span></div>
 </section>
-<section class="org-case42-section" data-act="04 · Reality">
+<section class="org-case42-section">
 <div class="org-case42-section__heading"><p class="atom-index">06</p><p class="atom-eyebrow">Diseño ↔ ingeniería</p><h2>La entrega forma parte del sistema.</h2></div>
 <div class="org-case42-section__content">
 <div class="mol-pipeline js-reveal"><span><b>Figma</b><small>fundamentos · variantes · estados</small></span><i>→</i><span><b>HTML / SCSS / JS</b><small>implementación canónica</small></span><i>→</i><span><b>Storybook</b><small>documentación · testing · lenguaje compartido</small></span><i>→</i><span><b>Vue</b><small>Integración con tecnología</small></span></div>
@@ -421,7 +422,7 @@
 <small>Principio por defecto</small><b>REUSE-FIRST</b><em>inspeccionar → componer → extender → crear</em>
 </div>
 </div>
-</section><section class="org-case42-section org-case42-section--ai" data-act="05 · Evolution">
+</section><section class="org-case42-section org-case42-section--ai">
 <div class="org-case42-section__heading"><p class="atom-index">07</p><p class="atom-eyebrow">Arquitectura operable por IA</p><h2>Después, el sistema tenía que volverse comprensible para la IA.</h2></div>
 <div class="org-case42-section__content">
 <div class="mol-ai-metrics js-reveal">
@@ -450,7 +451,7 @@
 <span><b>Caminos de producción</b><small>HTML5, AMP, Piano y legacy pueden convivir.</small></span>
 <span><b>Reutilización por IA</b><small>Los agentes inspeccionan y componen el sistema existente antes de inventar.</small></span>
 </div>
-</section><section class="org-case42-section org-case42-section--closing" data-act="06 · Role">
+</section><section class="org-case42-section org-case42-section--closing">
 <div class="org-case42-section__heading"><p class="atom-index">08</p><p class="atom-eyebrow">Qué cambió</p><h2>La arquitectura creció. Mi rol creció con ella.</h2></div>
 <div class="org-case42-section__content"><p>Entré sobre todo con un perfil de diseñador/front-end dentro de la arquitectura. A medida que el sistema se expandía, mi rol se fue moviendo hacia el Product Design de principio a fin y la ejecución asistida por IA.</p><blockquote>La evolución más importante no fue añadir más componentes. Fue convertir el conocimiento implícito en un sistema explícito: primero para las personas y, con el tiempo, para la IA.</blockquote></div>
 </section>

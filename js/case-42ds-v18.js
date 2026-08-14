@@ -8,6 +8,13 @@
   };
   const stage = document.querySelector('.mol-token-lab__stage');
   document.querySelectorAll('[data-brand]').forEach(btn => {
+    // El color de cada marca lo escribe el botón en su propia custom property,
+    // una vez, al cargar. Así el CSS lo lee sin que haya que repetir los cuatro
+    // hex en la hoja: el mapa de arriba sigue siendo la única fuente, y el
+    // botón activo de arranque también lo tiene sin esperar a un clic.
+    const own = brandData[btn.dataset.brand];
+    if (own) btn.style.setProperty('--brand-ink', own.color);
+
     btn.addEventListener('click', () => {
       const d = brandData[btn.dataset.brand];
       if (!stage || !d) return;
