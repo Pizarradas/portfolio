@@ -884,13 +884,40 @@
     background: var(--semantic-color-surface-alt);
   }
 
+  // La marca de 42DS, que es el argumento del módulo dibujado.
+  //
+  // Sus tres cuadrados son rojo, azul y petróleo: los colores de las cabeceras
+  // que se apilan justo debajo. La marca dice «un sistema, varias identidades»
+  // sin una palabra, que es exactamente lo que el titular afirma y lo que las
+  // cuatro capturas demuestran. Aquí no ilustra: firma.
+  //
+  // Va en la pista de la etiqueta, a la izquierda del rótulo y del titular, así
+  // que el bloque pasa de dos filas a una retícula de marca + texto.
   .mol-evidence-system__meta {
     display: grid;
-    gap: var(--semantic-space-component-3xs);
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: var(--semantic-space-component-sm);
+    row-gap: var(--semantic-space-component-3xs);
     padding: var(--semantic-space-component-md);
     border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
     background: var(--semantic-color-surface);
+  }
+
+  // La marca ocupa las dos filas de texto y toma su altura, no una medida
+  // inventada: `--component-heading-label-track` es ancho de pista, no alto.
+  // Dos escalones de la escala de espaciado, que es lo que miden juntas la
+  // etiqueta y el titular del panel.
+  // Sin `color:` a propósito: la marca entra como `<img>`, y un SVG servido así
+  // es opaco al CSS de la página —su `currentColor` resuelve contra su propio
+  // documento, no contra este—. Los dos trazos del logotipo van en negro por
+  // decisión del fichero. Si algún día este panel corre sobre fondo oscuro,
+  // habrá que traerlo en línea, no añadir aquí una declaración que no aplica.
+  .mol-evidence-system__mark {
+    grid-row: 1 / 3;
+    width: auto;
+    height: var(--semantic-space-component-xl);
   }
 
   // Rótulo del panel, no acento: mismo criterio que en `__proof span`.
@@ -918,51 +945,57 @@
   // the middle of a word. Stacked full-width, each band is a complete masthead,
   // the four line up on the same left edge, and the claim above the frame —
   // one architecture, four identities — is something the eye can verify.
+  // Las cuatro se separan con aire, no con un filete: el hueco deja ver el
+  // fondo del panel y ya distingue una captura de la siguiente sin añadir otra
+  // linea a una tarjeta que va llena de ellas.
   .mol-evidence-system__stack {
     flex: 1;
     min-height: 0;
     display: grid;
     grid-template-rows: repeat(4, minmax(0, 1fr));
+    gap: var(--semantic-space-component-xs);
+    padding-block: var(--semantic-space-component-xs);
   }
 
+  // Cada marca, una fila: nombre en la pista de etiqueta y captura al lado.
+  //
+  // El nombre iba encima de la captura, en una chapa blanca pegada a la
+  // derecha. Tres problemas: tapaba contenido real de cada cabecera, caia en un
+  // sitio distinto en cada una —porque cada periódico pone otra cosa en esa
+  // esquina— y obligaba a las cuatro tiras a tocarse entre si para no separar
+  // la chapa de su imagen. Las cuatro juntas se leian como una banda a rayas.
+  //
+  // Fuera de la imagen, los cuatro nombres caen en **una sola vertical** y las
+  // cuatro capturas en otra, que es la misma reticula de etiqueta + contenido
+  // que usa el resto del sitio —y la misma pista, `--component-heading-label-track`,
+  // asi que la marca del panel y los cuatro nombres comparten eje—. El modulo
+  // afirma que las cuatro comparten arquitectura: alinearlas es la forma de
+  // demostrarlo.
   .mol-evidence-system__stack figure {
-    @include relative();
-
-
+    display: grid;
+    grid-template-columns: var(--component-heading-label-track) minmax(0, 1fr);
+    align-items: center;
     min-height: 0;
     margin: 0;
     overflow: hidden;
-    border-bottom: var(--semantic-border-width) solid
-      var(--semantic-color-border);
   }
 
-  // The name sits on the band as an annotation. It lands on the right, over
-  // the subscribe furniture every one of these headers carries, so it never
-  // covers the logo — which is the part doing the work.
   .mol-evidence-system__stack figcaption {
-    @include absolute($top: 0, $right: 0);
-
-
-    z-index: 2;
-
-
-    padding: var(--semantic-space-component-3xs) var(--semantic-space-component-2xs);
-    background: var(--semantic-color-surface);
+    padding-inline: var(--semantic-space-component-md);
     font-family: var(--semantic-font-family-ui);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
     color: var(--semantic-color-text-muted);
-    border-left: var(--semantic-border-width) solid
-      var(--semantic-color-border);
-    border-bottom: var(--semantic-border-width) solid
-      var(--semantic-color-border);
   }
 
+  // La proporcion pasa de la figura a la imagen: ahora la figura tiene una
+  // pista de texto al lado y su alto lo fija la captura, no al reves.
   .mol-evidence-system__stack img {
     display: block;
     width: 100%;
-    height: 100%;
+    height: auto;
+    aspect-ratio: 1920/110;
     object-fit: cover;
     // Left, so the masthead is the thing that survives the crop at every
     // width. Top, so the crop always eats page content and never the header.
@@ -1256,16 +1289,16 @@
     }
 
     // The crop is pinned to the header instead of being whatever is left after
-    // the other two rows have taken their share. Each band shows the top 130px
-    // of a 1920×290 screenshot — the masthead and its navigation — at every
+    // the other two rows have taken their share. Each band shows the top 110px
+    // of a 1920×300 screenshot — the masthead and its navigation — at every
     // width, so widening the frame never lets the advertising back in.
+    //
+    // La proporción la lleva ahora la imagen, no la figura: la figura tiene una
+    // pista de nombre al lado, así que fijarle a ella el 1920/110 aplastaría la
+    // fila entera —texto incluido— en vez de recortar la captura.
     .mol-evidence-system__stack {
       flex: none;
       grid-template-rows: none;
-    }
-
-    .mol-evidence-system__stack figure {
-      aspect-ratio: 1920 / 110;
     }
 
     // The height the bands no longer take goes to the claim they support.
