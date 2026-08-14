@@ -81,87 +81,13 @@
   }
 }
 @layer syx.organisms {
-  .org-case-section__content > p:first-child {
-    margin-top: 0;
-  }
-
-  // Las cuatro variantes de color de este armazón vivían aquí: `--dark` con su
-  // propio negro cálido —un tercer oscuro del sitio, ni el navy ni el ink—,
-  // `--accent` con el azul, `--outcome` con su cita y `--chart` con el lavado
-  // gris. Solo las usaba SPORT, que ya corre la plantilla: el oscuro y el azul
-  // son ahora contextos, la cita la dimensiona la plantilla y el gris se retira
-  // por el criterio de `BRAND.md` §4 —dos bandas a sangre, no cinco—.
-
-}
-@layer syx.utilities {
-  @media (max-width: 900px) {
-    .org-case-section {
-      grid-template-columns: 2.5rem 1fr;
-      gap: 1.5rem;
-    }
-
-    .org-case-section__content {
-      grid-column: 2;
-    }
-
-  }
-  @media (max-width: 600px) {
-    .org-case-section {
-      grid-template-columns: 1fr;
-    }
-
-    .org-case-section > .atom-index {
-      grid-column: auto;
-    }
-
-    .org-case-section__content {
-      grid-column: auto;
-    }
-
-  }
-}
-@layer syx.organisms {
-
-  .org-case-section {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    justify-content: center;
-    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
-    border-bottom: 1px solid var(--component-case-rule);
-  }
-
-  .org-case-section__heading h2 {
-    font-family: var(--component-section-title-font-family);
-    font-weight: var(--component-section-title-font-weight);
-    line-height: .98;
-    letter-spacing: -.045em;
-    margin: .6rem 0 0;
-    font-size: var(--semantic-font-size-section-compact);
-  }
-
-  .org-case-section__content {
-    font-size: .98rem;
-    line-height: 1.6;
-    grid-column: auto;
-    min-width: 0;
-  }
-
-}
-@layer syx.utilities {
-  @include from($bp-md) {
-    .org-case-section {
-      grid-template-columns: 5rem minmax(15rem,25rem) minmax(0,var(--component-case-reading-width));
-      gap: var(--component-case-gap);
-      padding: clamp(5rem,10vw,10rem) clamp(1.25rem,4vw,4rem);
-    }
-
-    .org-case-section__content {
-      grid-column: auto;
-      font-size: clamp(1.05rem,1.3vw,1.25rem);
-    }
-
-  }
+  // `.org-case-section` vivía aquí: el segundo armazón de sección del sitio
+  // —pista de índice, columna de titular y columna de contenido— con el que
+  // corrían SPORT, ATLAS, el mapa y el Mundial. Con el de 42DS retirado hace
+  // unas tandas, este era el último que quedaba: las cuatro páginas usan ya
+  // `.org-case__act` y `.org-case__band`, así que las seis del sitio hablan por
+  // fin el mismo vocabulario y la plantilla es la única descripción de qué es
+  // una sección de caso.
 }
 @layer syx.organisms {
   .mol-quote {

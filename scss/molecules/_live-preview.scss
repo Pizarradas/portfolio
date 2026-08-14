@@ -112,3 +112,20 @@
   }
 
 }
+
+@layer syx.molecules {
+  // Dos previsualizaciones una al lado de la otra. Venía de
+  // `.org-live-project-showcase__grid--duo`, en un organismo que ya no existe;
+  // como es una composición de dos figuras y no una sección, su sitio es aquí.
+  .mol-preview-duo {
+    display: grid;
+    gap: var(--semantic-space-component-md);
+  }
+}
+@layer syx.utilities {
+  @include from($bp-md) {
+    .mol-preview-duo {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+}

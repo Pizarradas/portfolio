@@ -1,71 +1,20 @@
 @use "../abstracts/breakpoints" as *;
 @use "../abstracts/mixins" as *;
 
-@layer syx.organisms {
-  .org-live-project-showcase {
-    padding: clamp(5rem,9vw,9rem) var(--semantic-space-page-inline);
-    border-bottom: 1px solid var(--semantic-color-border);
-    background: var(--semantic-color-surface-alt);
-  }
+// `.org-live-project-showcase` vivía aquí: la sección de evidencia en vivo de
+// ATLAS y del Mundial. Era otra copia de la banda de encabezado —tres pistas a
+// mano, `align-items: end`— con un `h2` a `clamp(3rem, 6vw, 6.5rem)`: hasta
+// 104px, más que la portada del propio caso. Las dos secciones corren ahora
+// `.org-case__act` en registro `showcase` con `.mol-section-heading`, que es
+// donde ese titular vale 44px y la evidencia se lleva el ancho.
+//
+// Su tope de 108rem tampoco era un escalón de la escala: `showcase` son 144 y
+// `survey` 112. Y el lavado gris se retira por el criterio de `BRAND.md` §4.
+//
+// La única pieza que sobrevive es la parrilla de dos previsualizaciones de
+// ATLAS, que es una molécula —dos figuras una al lado de la otra— y vive con
+// las demás en `molecules/_live-preview.scss`.
 
-  .org-live-project-showcase__intro {
-    display: grid;
-    grid-template-columns: .45fr 1fr .75fr;
-    gap: 2rem;
-    align-items: end;
-    margin-bottom: 3rem;
-  }
-
-  .org-live-project-showcase__intro h2 {
-    font: 600 clamp(3rem,6vw,6.5rem)/.9 var(--semantic-font-family-display);
-    letter-spacing: -.06em;
-    margin: 0;
-  }
-
-  .org-live-project-showcase__intro>p:last-child {
-    max-width: 44ch;
-    color: var(--semantic-color-text-secondary);
-  }
-
-  .org-live-project-showcase__grid {
-    display: grid;
-    gap: 1rem;
-  }
-
-  .org-live-project-showcase__grid--duo {
-    grid-template-columns: 1fr 1fr;
-  }
-
-}
-@layer syx.utilities {
-  @include until($bp-md) {
-    .org-live-project-showcase {
-      padding: 3.5rem 1rem;
-    }
-
-    .org-live-project-showcase__intro {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-
-    .org-live-project-showcase__intro h2 {
-      font-size: clamp(2.2rem,10vw,3rem);
-    }
-
-    .org-live-project-showcase__grid--duo {
-      grid-template-columns: 1fr;
-    }
-
-  }
-  @media(min-width:1200px) {
-    .org-live-project-showcase>* {
-      max-width: 108rem;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-  }
-}
 @layer syx.organisms {
   .org-role-evolution-v22 {
     background: var(--component-art-night);
