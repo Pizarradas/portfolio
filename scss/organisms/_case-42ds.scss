@@ -8,21 +8,17 @@
     margin-top: 0;
   }
 
-  .org-case42-section--dark {
-    background: #080f2f;
-    color: #fff;
-  }
-
+  // `.org-case42-section--dark` vivía aquí, con sus cuatro reglas: el navy en
+  // crudo, el blanco del eyebrow, el del índice y el .78 de los párrafos. Era
+  // la definición a mano de lo que `.syx-on-night` ya hace —y el `#080f2f` que
+  // repetía es exactamente el escalón `brand-950` de la paleta, el navy de
+  // `BRAND.md` §4—, así que la sección de fundamentos usa el contexto y estas
+  // cuatro se van sin cambiar un solo color.
+  //
+  // `--ai` sigue en pie porque su sección todavía no está normalizada. Cuando
+  // lo esté, este bloque entero desaparece.
   .org-case42-section--ai {
     background: #080f2f;
-    color: #fff;
-  }
-
-  .org-case42-section--dark .atom-eyebrow {
-    color: #fff;
-  }
-
-  .org-case42-section--dark .atom-index {
     color: #fff;
   }
 
@@ -32,10 +28,6 @@
 
   .org-case42-section--ai .atom-index {
     color: #fff;
-  }
-
-  .org-case42-section--dark p {
-    color: rgba(255,255,255,.78);
   }
 
   .org-case42-section--ai p {
@@ -66,10 +58,6 @@
   }
 }
 @layer syx.organisms {
-  .org-case42-section--dark[data-act]::before {
-    color: rgba(255,255,255,.7);
-  }
-
   .org-case42-section--ai[data-act]::before {
     color: rgba(255,255,255,.7);
   }

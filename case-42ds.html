@@ -111,22 +111,32 @@
 <p class="atom-index">Act 02</p>
 <h2>What had to be decided</h2>
 </section>
-<section class="org-case42-section org-case42-section--split" data-act="01 · Context">
-<div class="org-case42-section__heading"><p class="atom-index">01</p><p class="atom-eyebrow">The business problem</p><h2>Unify without stopping the company.</h2></div>
-<div class="org-case42-section__content"><p>Prensa Ibérica had grown into a multi-brand ecosystem with different technologies, identities and legacy decisions. Unification had to happen while BAU work — fixes, sponsorships, visual changes and editorial requests — continued.</p><p>So the first job was not “design the new system”. It was understand the existing one: audit performance and CSS complexity, learn the legacy and identify what could become shared.</p></div>
+<section aria-labelledby="business-problem-title" class="org-case__act syx-span-survey">
+<div class="mol-section-heading">
+<p class="atom-eyebrow">The business problem</p>
+<h2 id="business-problem-title">Unify without stopping the company.</h2>
+<p>Prensa Ibérica had grown into a multi-brand ecosystem with different technologies, identities and legacy decisions. Unification had to happen while BAU work — fixes, sponsorships, visual changes and editorial requests — continued.</p>
+</div>
+<p>So the first job was not “design the new system”. It was understand the existing one: audit performance and CSS complexity, learn the legacy and identify what could become shared.</p>
 </section>
-<section class="org-case42-section org-case42-section--dark" data-act="02 · System">
-<div class="org-case42-section__heading"><p class="atom-index">02</p><p class="atom-eyebrow">Foundations</p><h2>Separate what is global from what is brand-specific.</h2></div>
-<div class="org-case42-section__content">
+<section aria-labelledby="foundations-title" class="org-case__band syx-span-survey syx-on-night">
+<div class="mol-section-heading">
+<p class="atom-eyebrow">Foundations</p>
+<h2 id="foundations-title">Separate what is global from what is brand-specific.</h2>
+<p>I drew the line by what a brand can redefine, not by where the code lives. Four of the five layers are shared. Only the brand setup changes.</p>
+</div>
+<figure class="mol-case-figure">
 <div class="mol-foundation-map js-reveal">
+<p class="mol-foundation-map__group">Shared by every brand</p>
 <div><b>ABSTRACTS</b><span>variables</span><span>mixins</span><span>maps</span><span>functions</span></div>
 <div><b>BASE</b><span>reset</span><span>helpers</span><span>dark</span></div>
-<div><b>BRANDS</b><span>setup</span><span>typography</span><span>colour</span><span>behaviours</span></div>
 <div><b>LAYOUT</b><span>grid</span><span>breakpoints</span></div>
 <div><b>FOURTIES</b><span>atoms</span><span>molecules</span><span>organisms</span><small>internal package name</small></div>
+<p class="mol-foundation-map__group mol-foundation-map__group--brand">Per brand</p>
+<div class="mol-foundation-map__brand"><b>BRANDS</b><span>setup</span><span>typography</span><span>colour</span><span>behaviours</span></div>
 </div>
-<p class="mol-case42-caption">Shared foundations first. Brand configuration and component composition sit on top.</p>
-</div>
+<figcaption>Shared foundations first. Brand configuration and component composition sit on top.</figcaption>
+</figure>
 </section>
 <section class="org-case__chapter syx-span-survey">
 <p class="atom-index">Act 03</p>

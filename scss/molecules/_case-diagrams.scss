@@ -5,23 +5,77 @@
 // `.mol-case-thesis` y `.mol-case-figures`, en `molecules/_case-glance.scss`.
 
 @layer syx.molecules {
+  // Los cuatro rgba() blancos que había aquí eran la respuesta a que la sección
+  // no declaraba contexto: el mapa solo vive sobre navy, así que se pintaba a
+  // mano para ese fondo. Ahora la sección lleva `.syx-on-night` y los tokens
+  // resuelven solos —.24 el contorno, .16 las divisiones internas, .60 el texto
+  // secundario—, que es a lo que apuntaban los literales con un 1–4 % de
+  // diferencia. El mapa deja de depender del fondo que tenga detrás.
+  // El mapa dice ahora lo que dice el titular de su sección.
+  //
+  // Cinco columnas iguales no separan «lo global» de «lo específico de cada
+  // marca»: eso era exactamente lo único que esta figura aportaba sobre el
+  // atlas del Acto 01, que ya enseña las mismas cuatro capas con las mismas
+  // subetiquetas. Sin el reparto, la sección repetía un diagrama anterior.
+  //
+  // El reparto es 4 + 1, y la asimetría es el argumento: casi todo se comparte
+  // y solo una capa se configura por marca. Se marca con un baño —no con color
+  // de acento, que sobre navy no contrasta y que `BRAND.md` §4 ya tiene
+  // gastado— y con el rótulo del grupo en blanco frente al gris de los otros.
+  //
+  // Las líneas: contorno arriba e izquierda, y cada celda cierra por derecha y
+  // abajo. Es el patrón de `.org-case42-enabled__grid` y evita la doble línea
+  // en el borde con cualquier número de columnas, así que no hacen falta reglas
+  // de `:last-child` por tramo. Un solo grosor para toda la figura: los dos
+  // literales anteriores eran .25 y .20, y este los recoge a un 1–4 %.
   .mol-foundation-map {
     display: grid;
-    grid-template-columns: repeat(5,1fr);
-    border: 1px solid rgba(255,255,255,.25);
+    grid-template-columns: 1fr;
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border-strong);
+    border-left: var(--semantic-border-width) solid var(--semantic-color-border-strong);
+  }
+
+  .mol-foundation-map>* {
+    border-right: var(--semantic-border-width) solid var(--semantic-color-border-strong);
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border-strong);
   }
 
   .mol-foundation-map>div {
-    min-height: 11rem;
-    padding: 1rem;
-    border-right: 1px solid rgba(255,255,255,.2);
+    min-height: 7rem;
+    padding: var(--semantic-space-component-md);
     display: flex;
     flex-direction: column;
-    gap: .35rem;
+    gap: var(--semantic-space-component-2xs);
   }
 
-  .mol-foundation-map>div:last-child {
-    border-right: 0;
+  // El rótulo de grupo. Papel de anotación, no de ítem: por eso va al escalón
+  // de pie de figura y en gris, y solo el del grupo excepcional va en blanco.
+  // `max-width: none` no es decorativo: `base/_elements.scss` topa **todo**
+  // `<p>` a la medida de prosa, y un rótulo de grupo es una etiqueta, no un
+  // párrafo. Con los 66ch puestos, el rótulo de las cuatro columnas compartidas
+  // ocupaba sus cuatro pistas como celda pero dibujaba su caja —fondo y línea
+  // inferior— solo hasta los 66ch de su cuerpo de 12px: ~500px de los 1433 que
+  // le tocaban. Se veía como una pestaña suelta sobre la primera columna en vez
+  // de como el rótulo del grupo.
+  .mol-foundation-map__group {
+    grid-column: 1/-1;
+    max-width: none;
+    margin: 0;
+    padding: var(--semantic-space-component-sm) var(--semantic-space-component-md);
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-caption);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-foundation-map__group--brand {
+    color: var(--semantic-color-text);
+  }
+
+  .mol-foundation-map__group--brand,
+  .mol-foundation-map__brand {
+    background: var(--semantic-color-surface-muted);
   }
 
   .mol-foundation-map b {
@@ -31,60 +85,81 @@
 
   .mol-foundation-map span {
     font-size: .78rem;
-    color: rgba(255,255,255,.62);
+    color: var(--semantic-color-text-muted);
+  }
+
+  // Colgaba como un ítem más de la lista de FOURTIES, en blanco y al mismo
+  // peso que `atoms`, `molecules` y `organisms`. Es una nota de esa columna.
+  //
+  // `margin-top: auto` la mandaba al fondo de la celda, y con la altura mínima
+  // de la fila eso la dejaba a media pulgada de `organisms`, flotando sola: se
+  // leía como una sexta entrada de otra lista. Un paso de separación la ata a
+  // la lista que anota, que es lo que es.
+  .mol-foundation-map small {
+    margin-top: var(--semantic-space-component-sm);
+    font-size: var(--semantic-font-size-caption);
+    color: var(--semantic-color-text-muted);
   }
 
 }
 @layer syx.utilities {
-  @media(max-width:900px) {
+  // La escalera de columnas. Había tres tramos escritos hacia abajo —900 y 580
+  // en `max-width`, más un `1fr` de base en la capa de organismos— contra uno
+  // hacia arriba a 1200, y entre 901 y 1199 no ganaba ninguno de los dos: el
+  // mapa caía a una sola columna en toda esa banda, más estrecho que a 900.
+  // Ahora es una escalera de tres peldaños en el mismo sentido, con los
+  // breakpoints del sistema.
+  @include from($bp-md) {
     .mol-foundation-map {
       grid-template-columns: 1fr 1fr;
     }
 
-  }
-  @media(max-width:580px) {
-    .mol-foundation-map {
-      grid-template-columns: 1fr;
+    // El grupo excepcional ocupa la fila entera mientras no haya cinco pistas:
+    // media columna sobrante a su lado se leería como un hueco, no como un
+    // reparto.
+    .mol-foundation-map__brand {
+      grid-column: 1/-1;
     }
 
   }
+  // La entrada del mapa. La regla que apaga lleva `.js` —tres clases— y la que
+  // enciende no llevaba ninguna referencia a `.js`: dos clases contra tres, así
+  // que `is-visible` no ganaba nunca y el mapa se quedaba **permanentemente
+  // invisible** con JavaScript activo. Lo que se veía en la sección era el
+  // borde de la caja y nada dentro.
+  //
+  // Es la tercera de las «parejas rotas» que menciona el comentario de
+  // `.mol-composition-nest` más abajo, y se arregla igual: misma especificidad
+  // en las dos y la que enciende va después.
   .js .mol-foundation-map.js-reveal>div {
     opacity: 0;
     transform: translateY(.8rem);
     @include transition(opacity .5s ease,transform .5s ease);
   }
 
-  .mol-foundation-map.is-visible>div {
+  .js .mol-foundation-map.is-visible>div {
     opacity: 1;
     transform: none;
   }
 
-  .mol-foundation-map.is-visible>div:nth-child(2) {
+  // El escalonado va por `nth-of-type` y no por `nth-child`: los dos rótulos de
+  // grupo son hermanos de las celdas, así que contando hijos el retardo de la
+  // segunda columna le tocaba al rótulo y el de la quinta a la cuarta columna.
+  // Contando por tipo, las cinco celdas se numeran solas.
+  .mol-foundation-map.is-visible>div:nth-of-type(2) {
     transition-delay: .09s;
   }
 
-  .mol-foundation-map.is-visible>div:nth-child(3) {
+  .mol-foundation-map.is-visible>div:nth-of-type(3) {
     transition-delay: .18s;
   }
 
-  .mol-foundation-map.is-visible>div:nth-child(4) {
+  .mol-foundation-map.is-visible>div:nth-of-type(4) {
     transition-delay: .27s;
   }
 
-  .mol-foundation-map.is-visible>div:nth-child(5) {
+  .mol-foundation-map.is-visible>div:nth-of-type(5) {
     transition-delay: .36s;
-  }
-
-}
-@layer syx.organisms {
-  .mol-foundation-map {
-    grid-template-columns: 1fr;
-  }
-
-  .mol-foundation-map>div {
-    min-height: 7rem;
-    border-right: 0;
-    border-bottom: 1px solid rgba(255,255,255,.2);
   }
 
 }
@@ -94,13 +169,38 @@
       grid-template-columns: repeat(5,1fr);
     }
 
+    // Dos filas explícitas: los rótulos arriba —uno sobre las cuatro columnas
+    // compartidas, otro sobre la de marca— y las cinco celdas debajo. Con la
+    // fila fijada, la columna la reparte la colocación automática en el orden
+    // del marcado, que ya es el del reparto.
+    .mol-foundation-map__group {
+      grid-column: 1/5;
+      grid-row: 1;
+    }
+
+    .mol-foundation-map__group--brand {
+      grid-column: 5;
+      grid-row: 1;
+    }
+
+    .mol-foundation-map>div {
+      grid-row: 2;
+      min-height: 11rem;
+    }
+
+    // Con cinco pistas ya hay una para él, así que deja de ocupar la fila.
+    .mol-foundation-map__brand {
+      grid-column: 5;
+    }
+
   }
 }
 @layer syx.molecules {
-  .mol-case42-caption {
-    font-size: .8rem;
-    color: rgba(255,255,255,.62);
-  }
+  // `.mol-case42-caption` vivía aquí: el pie del mapa de fundaciones, con su
+  // tamaño y su blanco al .62 propios. Lo sustituye `.mol-case-figure
+  // figcaption`, que es el pie que la plantilla ya define para cualquier
+  // diagrama —«todo diagrama es una figura y toda figura lleva pie»— y que
+  // además le pone la regla superior que lo ata al dibujo.
 
   .mol-brand-tree {
     margin: 2rem 0;
@@ -162,7 +262,8 @@
     @include transition(opacity .5s ease,transform .5s ease);
   }
 
-  .mol-brand-tree.is-visible .mol-brand-tree__branches span {
+  // Misma pareja rota que la del mapa de fundaciones, y mismo arreglo.
+  .js .mol-brand-tree.is-visible .mol-brand-tree__branches span {
     opacity: 1;
     transform: none;
   }
@@ -306,7 +407,8 @@
     @include transition(opacity .5s ease,transform .5s ease);
   }
 
-  .mol-pipeline.is-visible span {
+  // Misma pareja rota que la del mapa de fundaciones, y mismo arreglo.
+  .js .mol-pipeline.is-visible span {
     opacity: 1;
     transform: none;
   }
@@ -389,7 +491,8 @@
     @include transition(opacity .5s ease,transform .5s ease);
   }
 
-  .mol-ai-system.is-visible>div {
+  // Misma pareja rota que la del mapa de fundaciones, y mismo arreglo.
+  .js .mol-ai-system.is-visible>div {
     opacity: 1;
     transform: none;
   }

@@ -111,22 +111,32 @@
 <p class="atom-index">Acto 02</p>
 <h2>Lo que había que decidir</h2>
 </section>
-<section class="org-case42-section org-case42-section--split" data-act="01 · Context">
-<div class="org-case42-section__heading"><p class="atom-index">01</p><p class="atom-eyebrow">El problema de negocio</p><h2>Unificar sin parar la compañía.</h2></div>
-<div class="org-case42-section__content"><p>Prensa Ibérica había crecido hasta convertirse en un ecosistema multimarca con distintas tecnologías, identidades y decisiones heredadas. La unificación tenía que ocurrir mientras el trabajo del día a día —correcciones, patrocinios, cambios visuales y peticiones editoriales— seguía adelante.</p><p>Así que el primer trabajo no fue «diseñar el sistema nuevo». Fue entender el que ya existía: auditar el rendimiento y la complejidad del CSS, aprender el legacy e identificar qué podía pasar a ser compartido.</p></div>
+<section aria-labelledby="business-problem-title" class="org-case__act syx-span-survey">
+<div class="mol-section-heading">
+<p class="atom-eyebrow">El problema de negocio</p>
+<h2 id="business-problem-title">Unificar sin parar la compañía.</h2>
+<p>Prensa Ibérica había crecido hasta convertirse en un ecosistema multimarca con distintas tecnologías, identidades y decisiones heredadas. La unificación tenía que ocurrir mientras el trabajo del día a día —correcciones, patrocinios, cambios visuales y peticiones editoriales— seguía adelante.</p>
+</div>
+<p>Así que el primer trabajo no fue «diseñar el sistema nuevo». Fue entender el que ya existía: auditar el rendimiento y la complejidad del CSS, aprender el legacy e identificar qué podía pasar a ser compartido.</p>
 </section>
-<section class="org-case42-section org-case42-section--dark" data-act="02 · System">
-<div class="org-case42-section__heading"><p class="atom-index">02</p><p class="atom-eyebrow">Fundamentos</p><h2>Separar lo global de lo específico de cada marca.</h2></div>
-<div class="org-case42-section__content">
+<section aria-labelledby="foundations-title" class="org-case__band syx-span-survey syx-on-night">
+<div class="mol-section-heading">
+<p class="atom-eyebrow">Fundamentos</p>
+<h2 id="foundations-title">Separar lo global de lo específico de cada marca.</h2>
+<p>La línea la tracé por lo que una marca puede redefinir, no por dónde vive el código. Cuatro de las cinco capas son compartidas. Solo cambia la configuración de marca.</p>
+</div>
+<figure class="mol-case-figure">
 <div class="mol-foundation-map js-reveal">
+<p class="mol-foundation-map__group">Compartido por todas las marcas</p>
 <div><b>ABSTRACTS</b><span>variables</span><span>mixins</span><span>mapas</span><span>funciones</span></div>
 <div><b>BASE</b><span>reset</span><span>helpers</span><span>oscuro</span></div>
-<div><b>MARCAS</b><span>configuración</span><span>tipografía</span><span>color</span><span>comportamientos</span></div>
 <div><b>LAYOUT</b><span>rejilla</span><span>breakpoints</span></div>
 <div><b>FOURTIES</b><span>átomos</span><span>moléculas</span><span>organismos</span><small>nombre interno del paquete</small></div>
+<p class="mol-foundation-map__group mol-foundation-map__group--brand">Por marca</p>
+<div class="mol-foundation-map__brand"><b>MARCAS</b><span>configuración</span><span>tipografía</span><span>color</span><span>comportamientos</span></div>
 </div>
-<p class="mol-case42-caption">Primero los fundamentos compartidos. La configuración de marca y la composición de componentes van encima.</p>
-</div>
+<figcaption>Primero los fundamentos compartidos. La configuración de marca y la composición de componentes van encima.</figcaption>
+</figure>
 </section>
 <section class="org-case__chapter syx-span-survey">
 <p class="atom-index">Acto 03</p>

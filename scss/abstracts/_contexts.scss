@@ -35,6 +35,25 @@
   --semantic-color-border-subtle: var(--semantic-color-border);
   --semantic-color-accent: var(--semantic-color-primary);
 
+  // El alias que faltaba en esa lista, y el que más caro salía.
+  //
+  // `--component-eyebrow-color` se declara en `:root` como
+  // `var(--semantic-color-primary)`, así que su valor se resuelve **ahí** —azul
+  // de marca— y los descendientes heredan el color ya calculado. Repuntar
+  // `--semantic-color-primary` en el contexto no lo arrastra. Resultado sobre
+  // los dos fondos oscuros del sitio:
+  //
+  //   sobre navy   #1e3aff / #080f2f  →  2.78:1   falla AA (mínimo 4.5)
+  //   sobre azul   #1e3aff / #1e3aff  →  1:1      invisible
+  //
+  // Es literalmente el fallo que `BRAND.md` describe en sus trampas —«una
+  // sección sirviendo texto a 2.8:1 con el eyebrow invisible sobre su propio
+  // fondo»— y seguía vivo en tres sitios: el eyebrow del proceso del mapa y el
+  // índice «Path» de la home, más los fundamentos del caso 42DS. Declarado
+  // aquí, se resuelve contra el `primary` del contexto, que es blanco:
+  // 18.8:1 sobre navy y 6.76:1 sobre el azul.
+  --component-eyebrow-color: var(--semantic-color-primary);
+
   background: var(--semantic-color-surface);
   color: var(--semantic-color-text);
 }

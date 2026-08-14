@@ -181,8 +181,35 @@
   // página no cambia con el viewport. Dentro de `from($bp-md)`, en móvil el
   // capítulo y su primera sección volverían a medir los dos 32px, que es el
   // empate que esta regla existe para deshacer.
-  .org-case__act > .mol-section-heading h2 {
+  // Y cubre también la banda. El tamaño lo decide el nivel que ocupa la sección
+  // en la página, no si tiene fondo de color: una banda es una sección igual
+  // que un acto, y con el selector solo en `__act` las dos que hay —fundamentos
+  // y el escaparate de tokens— abrían a 64px, empatadas con el capítulo que las
+  // presenta. Es el mismo empate que describe el párrafo de arriba, colándose
+  // por la puerta de al lado.
+  .org-case__act > .mol-section-heading h2,
+  .org-case__band > .mol-section-heading h2 {
     font-size: var(--semantic-font-size-title);
+  }
+
+  // La prosa suelta de un acto arranca donde arranca el titular.
+  //
+  // La banda de encabezado reparte en tres pistas y deja la primera —10rem—
+  // para la etiqueta. Un párrafo hermano de la banda no está en esa retícula,
+  // así que empezaba en el borde del registro, es decir, dentro de la pista de
+  // la etiqueta: el acto de contexto tenía el titular en una vertical y su
+  // segundo párrafo en otra, 160px a la izquierda.
+  //
+  // El desplazamiento es la pista más el hueco de columna, o sea el borde
+  // izquierdo exacto de la columna del titular. No hace falta convertir el acto
+  // en retícula para eso, y así no se tocan los cinco actos con figura: una
+  // retícula cambiaría el colapso de márgenes entre la banda y el diagrama.
+  @include from($bp-md) {
+    .org-case__act > p {
+      margin-inline-start: calc(
+        var(--component-heading-label-track) + var(--semantic-space-block)
+      );
+    }
   }
 
   @include from($bp-md) {
