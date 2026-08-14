@@ -178,14 +178,6 @@
     --grid-fill: rgba(30,58,255,.08);
     // La base del armazón se declara una sola vez, arriba. Aquí estaba
     // repetida porque venía de mobile-first-v19.css; --mf-gap no lo usaba nadie.
-    // El render embebido de una previsualizacion: su tamano real y la
-    // proporcion que sale de el. La escala del marco se calcula contra estos
-    // tres, asi que cambiar el tamano del render es cambiar un token y no tres
-    // numeros repartidos por la molecula.
-    --component-preview-width: 1440;
-    --component-preview-height: 1100px;
-    --component-preview-ratio: calc(1100 / 1440);
-
     --preview-bg: #080f1a;
     --preview-chrome: #f5f7fa;
     --preview-border: var(--semantic-color-border);

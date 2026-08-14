@@ -39,26 +39,31 @@
     color: var(--semantic-color-text-muted);
   }
 
-  // La escala de la previsualización la fija su propio ancho, no un número.
+  // La previsualizacion es una ventana, no una miniatura de la pagina entera.
   //
-  // El iframe se renderiza a 1440×1100 y se encogía con un `scale(.62)` fijo:
-  // 893px de contenido dentro de una caja que mide lo que mida su sección. Con
-  // la sección en registro `showcase` —2304px— eso deja **1.400px de azul
-  // muerto a la derecha**, que es lo que se ve en la captura.
+  // Historia corta de dos intentos fallidos, para que nadie repita ninguno:
   //
-  // El contenedor declara `container-type: inline-size` y la escala se calcula
-  // contra `100cqw`: la página embebida ocupa siempre el ancho exacto de su
-  // marco, en cualquier registro y en cualquier ventana. El alto sale de la
-  // misma cuenta —la proporción real del render, 1440×1100— en vez de un
-  // `clamp` que no tenía por qué coincidir con ella: así no hay ni franja negra
-  // arriba ni recorte abajo.
+  // 1. Un `scale(.62)` fijo sobre un render de 1440. Encajaba en un marco de
+  //    ~900px y dejaba 1.400px de fondo muerto en cuanto la seccion paso a
+  //    registro `showcase`.
+  // 2. Escalar contra el ancho del contenedor: `scale(100cqw / 1440px)`. **Eso
+  //    es CSS invalido** —en `calc()` no se puede dividir por una longitud, y
+  //    `scale()` pide un numero, no una longitud—, asi que el navegador tiraba
+  //    la declaracion entera y el iframe volvia a su ancho fijo. El bloque de
+  //    fondo seguia ahi y el fallo no daba ningun error.
   //
-  // `--browser-scale` sigue existiendo como escape para un caso que necesite
-  // enseñar la página a otro tamaño, pero ya no es lo que decide el encaje.
+  // Lo que si es valido y ademas es mas simple: el iframe mide lo que mide su
+  // marco. La pagina embebida reflowea a ese ancho —que es lo que hace una
+  // pagina de verdad— y no hay escalado, asi que tampoco hay emborronado. El
+  // alto lo decide el marco, como una ventana de navegador, y lo que sobra se
+  // recorta.
+  //
+  // El precio: por debajo de ~1000px se ve la composicion movil del sitio
+  // embebido en lugar de la de escritorio encogida. Es mas honesto: eso es lo
+  // que un visitante veria ahi.
   .mol-browser-preview__viewport {
     @include relative();
-    container-type: inline-size;
-    height: calc(100cqw * var(--component-preview-ratio));
+    height: clamp(27rem, 42vw, 46rem);
     overflow: hidden;
     background: #080f1a;
   }
@@ -66,14 +71,10 @@
   .mol-browser-preview__viewport iframe {
     @include absolute($top: 0, $left: 0);
     z-index: 2;
-    width: calc(var(--component-preview-width) * 1px);
-    height: var(--component-preview-height);
+    width: 100%;
+    height: 100%;
     border: 0;
     pointer-events: none;
-    transform-origin: 0 0;
-    transform: scale(
-      var(--browser-scale, calc(100cqw / (var(--component-preview-width) * 1px)))
-    );
     background: #fff;
   }
 
@@ -123,11 +124,11 @@
     background: #090a0c;
   }
 
-  .mol-browser-preview__viewport--editorial-crop iframe {
-    width: 1440px;
-    height: 860px;
-    min-height: 860px;
-  }
+  // El tamaño del render lo escribe `js/live-previews-v21.js` en línea, así que
+  // estas tres declaraciones no ganaban nunca: eran la contradicción que hizo
+  // falta descubrir tres veces antes de mirar el script. Lo que sí manda desde
+  // aquí es la proporción del marco —1440/860—, que es el recorte editorial que
+  // esta variante existe para fijar; el script la lee y calcula contra ella.
 
 }
 
