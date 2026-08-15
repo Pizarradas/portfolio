@@ -1,3 +1,5 @@
+@use "../../ink";
+
 @layer syx.tokens {
   // SEMANTIC — colour
   //
@@ -9,42 +11,41 @@
   // same names. Computed values are unchanged: blue always won by load order.
 
   :root {
-    // Brand
-    --semantic-color-primary: var(--primitive-color-brand-500);
-    --semantic-color-primary-hover: var(--primitive-color-brand-600);
-    --semantic-color-primary-active: var(--primitive-color-brand-700);
-    --semantic-color-primary-soft: var(--primitive-color-brand-50);
-    --semantic-color-primary-subtle: var(--primitive-color-brand-100);
-    --semantic-color-on-primary: var(--primitive-color-white);
+    // Los tokens que cambian de valor entre claro y oscuro ya no se escriben
+    // aquí: viven en `abstracts/_ink.scss`, que es el único sitio donde se
+    // decide qué color tiene cada rol en cada tema. Este `@include` es el mapa
+    // claro — superficies, contenido, líneas y la familia de marca.
+    //
+    // Lo que sigue debajo es lo que NO depende del tema, más los derivados,
+    // que se quedan aquí porque están declarados sobre `:root` y se recalculan
+    // solos cuando el tema cambia en `:root`. La explicación larga de por qué
+    // eso funciona en `:root` pero no en una sección está en `_ink.scss`.
+    @include ink.base-light;
 
+    // Fondos absolutos. No son «el fondo de la página»: son el navy y el azul
+    // de marca con los que se pintan las secciones invertidas, y valen lo
+    // mismo en cualquier tema.
+    --semantic-color-surface-brand: var(--primitive-color-brand-500);
+    --semantic-color-surface-night: var(--primitive-color-brand-950);
+
+    // Complementarios — solo acentos, nunca una superficie dominante.
     --semantic-color-accent-cyan: var(--primitive-color-cyan-500);
     --semantic-color-accent-violet: var(--primitive-color-violet-500);
     --semantic-color-accent-fuchsia: var(--primitive-color-fuchsia-500);
 
-    // Surfaces
-    --semantic-color-surface: var(--primitive-color-white);
-    --semantic-color-surface-alt: var(--primitive-color-gray-50);
-    --semantic-color-surface-muted: var(--primitive-color-gray-100);
-    --semantic-color-surface-sunken: var(--primitive-color-gray-200);
-    --semantic-color-surface-inverse: var(--primitive-color-ink-1000);
-    --semantic-color-surface-brand: var(--primitive-color-brand-500);
-    --semantic-color-surface-night: var(--primitive-color-brand-950);
-
-    // Content
-    --semantic-color-text: var(--primitive-color-ink-1000);
-    --semantic-color-text-secondary: var(--primitive-color-ink-700);
-    --semantic-color-text-muted: var(--primitive-color-gray-500);
-    --semantic-color-text-inverse: var(--primitive-color-white);
-
-    // Lines
-    --semantic-color-border: var(--primitive-color-gray-200);
-    --semantic-color-border-strong: var(--primitive-color-gray-300);
-    --semantic-color-focus: var(--semantic-color-primary);
-
-    // State
+    // Estado — reservado para señal, apartado del tono de marca a propósito.
+    //
+    // Los tres son colores oscuros para fondo claro y hoy no los lee nadie, así
+    // que no tienen mapa oscuro. El día que aparezca el primer consumidor hay
+    // que darles su primitiva clara y su entrada en `ink.base-dark-page`, o
+    // caerán a un verde/ámbar/rojo oscuro sobre fondo casi negro.
     --semantic-color-positive: var(--primitive-color-positive-600);
     --semantic-color-caution: var(--primitive-color-caution-600);
     --semantic-color-critical: var(--primitive-color-critical-600);
+
+    // Derivados. Repetidos en `ink.derived` para los contextos, que son otro
+    // elemento; aquí basta declararlos una vez.
+    --semantic-color-focus: var(--semantic-color-primary);
 
     // Aliases kept because 27 stylesheets still read these names. They are not a
     // second vocabulary: each one points at a canonical token above, so removing

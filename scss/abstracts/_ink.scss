@@ -1,0 +1,303 @@
+// TINTA — la mitad de color del tema, en un solo sitio.
+//
+// Aquí no se emite ni una regla. Este fichero solo declara mapas; quien los
+// aplica es `_contexts.scss` (las secciones y, cuando llegue, la página) y
+// `tokens/semantic/_color.scss` (el `:root` claro).
+//
+// ---------------------------------------------------------------------------
+// Por qué hay TRES mapas y no dos
+// ---------------------------------------------------------------------------
+//
+//   on-light         la página en claro — y una sección invertida sobre una
+//                    página oscura, que es el mismo problema del revés
+//   on-dark-section  una sección invertida sobre una página clara
+//   on-dark-page     la página entera en oscuro
+//
+// Los dos mapas oscuros se diferencian en un token, y no es cosmético.
+//
+// Una sección navy dentro de una página clara puede permitirse tirar el azul
+// de marca y correr sus acentos en blanco: dura una pantalla y el blanco se
+// lee como la voz de esa sección. Un sitio entero no puede — el blanco como
+// acento en todas partes significa que el portfolio no tiene color de marca
+// en modo oscuro.
+//
+// Así que el mapa de página conserva el azul, un escalón más arriba de la
+// rampa. Medido sobre el fondo de página `#080f1a`:
+//
+//   --primitive-color-brand-500  #1e3aff   2,84:1   falla AA
+//   --primitive-color-brand-400  #7187ff   6,05:1   pasa AA
+//
+// Ese 2,84 es el mismo fallo que `_contexts.scss` ya documentaba a 2,78:1
+// contra el navy: el azul de marca está demasiado saturado para sentarse
+// sobre su propio fondo oscuro. Subirlo un escalón lo arregla y no cuesta
+// nada, porque `brand-400` ya estaba en la rampa.
+//
+// La consecuencia viaja: con `primary` en `#7187ff`, `on-primary` no puede
+// seguir siendo blanco (3,18:1). Pasa a ser la tinta de página, que devuelve
+// los 6,05:1.
+//
+// ---------------------------------------------------------------------------
+// Los colores que NO tienen mapa oscuro
+// ---------------------------------------------------------------------------
+//
+// `--semantic-color-positive`, `-caution`, `-critical` y los tres acentos
+// secundarios (`-accent-cyan`, `-violet`, `-fuchsia`) se quedan fuera a
+// propósito: hoy no los lee nadie. Están declarados en la capa semántica y
+// tienen cero consumidores en `atoms/`, `molecules/` y `organisms/`.
+//
+// Los tres de estado son colores oscuros pensados para fondo claro, así que
+// el día que aparezca el primer consumidor van a necesitar su primitiva
+// clara y su entrada en `base-dark-page`. Inventarles ahora una variante que
+// nadie usa sería añadir cuatro primitivas muertas a la paleta.
+
+// ---------------------------------------------------------------------------
+// 1. when-dark — la prueba del tema efectivo, escrita una sola vez
+// ---------------------------------------------------------------------------
+//
+// Tres estados no son una media query, son dos selectores:
+//
+//   auto            sin atributo → manda el sistema
+//   claro forzado   [data-theme="light"] → gana al sistema
+//   oscuro forzado  [data-theme="dark"]  → gana al sistema
+//
+// El `:not([data-theme="light"])` de dentro de la media query es lo que hace
+// que forzar claro venza a un sistema en oscuro. Sin él, el tercer estado no
+// existe: la media query se impondría igual.
+//
+// Escrito a mano en cada regla que dependa del tema, esto son dos bloques por
+// regla. En las doce secciones invertidas serían treinta y seis.
+//
+// De aquí sale la regla que no se puede saltar: **ningún color puede tener su
+// única definición dentro de la media query.** Si vive solo ahí, forzar claro
+// no tiene a dónde volver.
+//
+// Sirve anidado y sin anidar. Sin anidar apunta al propio `:root`; anidado
+// dentro de un selector, a ese selector bajo un `:root` oscuro.
+
+@mixin when-dark {
+  @if & {
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) & {
+        @content;
+      }
+    }
+
+    :root[data-theme="dark"] & {
+      @content;
+    }
+  } @else {
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        @content;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      @content;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 2. Bases — los tokens que cambian de valor entre un tema y otro
+// ---------------------------------------------------------------------------
+
+@mixin base-light {
+  --semantic-color-surface: var(--primitive-color-white);
+  --semantic-color-surface-alt: var(--primitive-color-gray-50);
+  --semantic-color-surface-muted: var(--primitive-color-gray-100);
+  --semantic-color-surface-sunken: var(--primitive-color-gray-200);
+  --semantic-color-surface-inverse: var(--primitive-color-ink-1000);
+
+  --semantic-color-text: var(--primitive-color-ink-1000);
+  --semantic-color-text-secondary: var(--primitive-color-ink-700);
+  --semantic-color-text-muted: var(--primitive-color-gray-500);
+  --semantic-color-text-inverse: var(--primitive-color-white);
+
+  --semantic-color-border: var(--primitive-color-gray-200);
+  --semantic-color-border-strong: var(--primitive-color-gray-300);
+
+  --semantic-color-primary: var(--primitive-color-brand-500);
+  --semantic-color-primary-hover: var(--primitive-color-brand-600);
+  --semantic-color-primary-active: var(--primitive-color-brand-700);
+  --semantic-color-primary-soft: var(--primitive-color-brand-50);
+  --semantic-color-primary-subtle: var(--primitive-color-brand-100);
+  --semantic-color-on-primary: var(--primitive-color-white);
+}
+
+// La página en oscuro. Fondo `ink-1000`, que es un carbón azulado y no negro
+// puro: sobre `#000` el texto blanco produce halación —ese halo que hace
+// vibrar las letras— y se le nota especialmente a quien tiene astigmatismo.
+//
+// La profundidad no la dan las sombras. Una sombra sobre fondo casi negro no
+// se ve, así que las superficies elevadas suben en blanco translúcido: cuanto
+// más alta la capa, más claro el relleno. Es el mismo idioma de alfas que ya
+// usaba el sistema para las secciones invertidas.
+@mixin base-dark-page {
+  --semantic-color-surface: var(--primitive-color-ink-1000);
+  --semantic-color-surface-alt: var(--primitive-alpha-light-04);
+  --semantic-color-surface-muted: var(--primitive-alpha-light-08);
+  --semantic-color-surface-sunken: var(--primitive-alpha-light-08);
+  // El inverso de la página también se invierte: es «lo contrario del fondo»,
+  // no «negro».
+  --semantic-color-surface-inverse: var(--primitive-color-white);
+
+  --semantic-color-text: var(--primitive-color-white);
+  --semantic-color-text-secondary: var(--primitive-alpha-light-78);
+  --semantic-color-text-muted: var(--primitive-alpha-light-60);
+  --semantic-color-text-inverse: var(--primitive-color-ink-1000);
+
+  --semantic-color-border: var(--primitive-alpha-light-16);
+  --semantic-color-border-strong: var(--primitive-alpha-light-24);
+
+  // El escalón de la rampa que sí pasa AA sobre el fondo de página. Ver la
+  // cabecera de este fichero para los dos números.
+  --semantic-color-primary: var(--primitive-color-brand-400);
+  // En claro el hover oscurece; sobre fondo oscuro tiene que aclarar, o el
+  // estado activo se aleja del ojo en vez de acercarse.
+  --semantic-color-primary-hover: var(--primitive-color-brand-300);
+  --semantic-color-primary-active: var(--primitive-color-brand-200);
+  // `soft` y `subtle` son fondos. En claro son los dos escalones más claros
+  // de la rampa; en oscuro, los dos más profundos, conservando el orden: soft
+  // es el que menos se separa del fondo.
+  --semantic-color-primary-soft: var(--primitive-color-brand-900);
+  --semantic-color-primary-subtle: var(--primitive-color-brand-800);
+  --semantic-color-on-primary: var(--primitive-color-ink-1000);
+}
+
+// Una sección invertida sobre página clara. Es el mapa que ya existía como
+// `on-dark`, con los mismos valores.
+//
+// Deliberadamente más corto que `base-dark-page`: no toca la familia
+// `primary-hover/active/soft/subtle` ni `surface-inverse`. Una sección no
+// necesita una escala de marca completa, y ampliarla cambiaría el render de
+// las secciones que hay hoy. `--semantic-color-surface` y `-on-primary` los
+// pone cada clase de contexto, porque son lo único que distingue el navy del
+// azul de marca.
+@mixin base-dark-section {
+  --semantic-color-surface-alt: var(--primitive-alpha-light-04);
+  --semantic-color-surface-muted: var(--primitive-alpha-light-08);
+  --semantic-color-surface-sunken: var(--primitive-alpha-light-08);
+
+  --semantic-color-text: var(--primitive-color-white);
+  --semantic-color-text-secondary: var(--primitive-alpha-light-78);
+  --semantic-color-text-muted: var(--primitive-alpha-light-60);
+  --semantic-color-text-inverse: var(--primitive-color-ink-1000);
+
+  --semantic-color-border: var(--primitive-alpha-light-16);
+  --semantic-color-border-strong: var(--primitive-alpha-light-24);
+
+  --semantic-color-primary: var(--primitive-color-white);
+}
+
+// ---------------------------------------------------------------------------
+// 3. Derivados — lo que hay que repetir cuando cambia el ELEMENTO
+// ---------------------------------------------------------------------------
+//
+// Esta es la parte que ya costó cara una vez, y conviene entender la regla
+// exacta antes de tocarla.
+//
+// Un `--a: var(--b)` se resuelve contra el valor computado de `--b` **en el
+// mismo elemento** donde está escrito `--a`. Los descendientes heredan el
+// resultado ya calculado, no la referencia.
+//
+// De ahí salen dos casos opuestos:
+//
+//   Mismo elemento (`:root` claro vs `:root[data-theme="dark"]`)
+//     Los alias y los tokens de componente están declarados en `:root`, y el
+//     mapa oscuro también se aplica a `:root`. Se recalculan solos. **No hace
+//     falta repetir nada.**
+//
+//   Elemento distinto (una sección dentro de la página)
+//     Los alias se calcularon arriba, contra el tema de la página, y bajan ya
+//     resueltos. Repuntar la base no los arrastra. **Hay que repetirlos.**
+//
+// El segundo caso es exactamente el fallo de `--component-eyebrow-color`: se
+// declaraba en `:root` como `var(--semantic-color-primary)`, se resolvía ahí
+// en azul de marca, y dentro de una sección navy quedaba a 2,78:1 —o a 1:1
+// sobre el propio azul, es decir, invisible.
+//
+// Por eso `derived` y `repoint-component-colors` van en los mapas completos
+// (`on-light`, `on-dark-page`, `on-dark-section`) y no en las bases.
+
+@mixin derived {
+  --semantic-color-focus: var(--semantic-color-primary);
+
+  // Los alias. No son un segundo vocabulario: cada uno apunta a un token
+  // canónico, y por eso mismo tienen que recalcularse aquí.
+  --semantic-color-surface-page: var(--semantic-color-surface);
+  --semantic-color-surface-soft: var(--semantic-color-surface-alt);
+  --semantic-color-content-primary: var(--semantic-color-text);
+  --semantic-color-content-secondary: var(--semantic-color-text-secondary);
+  --semantic-color-content-muted: var(--semantic-color-text-muted);
+  --semantic-color-content-inverse: var(--semantic-color-text-inverse);
+  --semantic-color-border-subtle: var(--semantic-color-border);
+  --semantic-color-accent: var(--semantic-color-primary);
+  --semantic-color-accent-hover: var(--semantic-color-primary-hover);
+}
+
+// Los tokens de componente que dependen del color.
+//
+// Copia deliberada: la declaración canónica de cada uno vive en su fichero de
+// `tokens/components/`, junto al comentario que explica para qué existe, y
+// sacarla de ahí dejaría esos comentarios hablando de tokens ausentes. Lo que
+// se repite aquí es la MISMA expresión, para que se vuelva a resolver contra
+// la base del contexto.
+//
+// Que las dos listas no se separen no depende de que alguien se acuerde: lo
+// comprueba `scripts/check-css.mjs`, que falla si un token de componente
+// declarado con `var(--semantic-color-…)` no aparece en este mixin.
+@mixin repoint-component-colors {
+  --component-card-visual-bg: var(--semantic-color-surface-alt);
+  --component-work-veil: color-mix(in srgb, var(--semantic-color-surface-night) 34%, transparent);
+  --component-work-enter-bg: var(--semantic-color-text);
+  --component-work-enter-fg: var(--semantic-color-text-inverse);
+  --component-work-field-line: color-mix(in srgb, var(--semantic-color-border) 65%, transparent);
+  --component-metric-bg: var(--semantic-color-primary);
+  --component-metric-color: var(--semantic-color-on-primary);
+  --component-link-color: var(--semantic-color-text);
+  --component-link-hover-color: var(--semantic-color-primary);
+  --component-text-link-rule: var(--semantic-color-border);
+  --component-eyebrow-color: var(--semantic-color-primary);
+  --component-wordmark-accent: var(--semantic-color-primary);
+  --component-selection-bg: var(--semantic-color-primary);
+  --component-selection-fg: var(--semantic-color-on-primary);
+  --component-card-accent: var(--semantic-color-primary);
+  --component-case-accent-fg: var(--semantic-color-on-primary, #fff);
+  --component-case-opener-accent: var(--semantic-color-primary);
+  --component-case42-rule: var(--semantic-color-border);
+  --component-media-border: var(--semantic-color-border);
+  --component-media-label-bg: color-mix(in srgb, var(--semantic-color-surface) 94%, transparent);
+  --component-media-label-color: var(--semantic-color-text);
+  --component-rule-color: var(--semantic-color-border);
+  --component-case-rule: var(--semantic-color-border, #c9c8c1);
+  --component-chart-bg: var(--semantic-color-surface);
+  --component-chart-border: var(--semantic-color-border);
+  --component-evidence-bg: var(--semantic-color-surface-alt);
+  --preview-border: var(--semantic-color-border);
+}
+
+// ---------------------------------------------------------------------------
+// 4. Mapas completos — lo que se aplica a un contexto
+// ---------------------------------------------------------------------------
+//
+// `:root` no usa estos: le basta la base, porque todo lo derivado ya está
+// declarado sobre `:root` y se recalcula solo. Ver el bloque 3.
+
+@mixin on-light {
+  @include base-light;
+  @include derived;
+  @include repoint-component-colors;
+}
+
+@mixin on-dark-page {
+  @include base-dark-page;
+  @include derived;
+  @include repoint-component-colors;
+}
+
+@mixin on-dark-section {
+  @include base-dark-section;
+  @include derived;
+  @include repoint-component-colors;
+}

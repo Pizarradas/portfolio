@@ -1,77 +1,57 @@
+@use "ink";
+
 // CONTEXTS
 //
 // A context reassigns the semantic layer for a region of the page, so the
 // components inside it need no dark variants of their own.
 //
-// This is what the system was missing. Every dark section currently re-invents
+// This is what the system was missing. Every dark section used to re-invent
 // its own palette inline — rgba(255,255,255,.16) for hairlines, #aaa89f for
-// muted text, opacity:.55 for labels — which is why the same hairline has four
+// muted text, opacity:.55 for labels — which is why the same hairline had four
 // different values across four stylesheets. Put a context on the section and
 // the components inside read the right colours automatically.
 //
 // Usage:  <section class="syx-on-night"> … </section>
-
-@mixin on-dark {
-  --semantic-color-surface-alt: var(--primitive-alpha-light-04);
-  --semantic-color-surface-muted: var(--primitive-alpha-light-08);
-  --semantic-color-surface-sunken: var(--primitive-alpha-light-08);
-
-  --semantic-color-text: var(--primitive-color-white);
-  --semantic-color-text-secondary: var(--primitive-alpha-light-78);
-  --semantic-color-text-muted: var(--primitive-alpha-light-60);
-  --semantic-color-text-inverse: var(--primitive-color-ink-1000);
-
-  --semantic-color-border: var(--primitive-alpha-light-16);
-  --semantic-color-border-strong: var(--primitive-alpha-light-24);
-  --semantic-color-focus: var(--primitive-color-white);
-
-  --semantic-color-primary: var(--primitive-color-white);
-
-  // Aliases have to be re-pointed too: they were resolved against the
-  // light-mode values in :root and do not follow automatically.
-  --semantic-color-content-primary: var(--semantic-color-text);
-  --semantic-color-content-secondary: var(--semantic-color-text-secondary);
-  --semantic-color-content-muted: var(--semantic-color-text-muted);
-  --semantic-color-border-subtle: var(--semantic-color-border);
-  --semantic-color-accent: var(--semantic-color-primary);
-
-  // El alias que faltaba en esa lista, y el que más caro salía.
-  //
-  // `--component-eyebrow-color` se declara en `:root` como
-  // `var(--semantic-color-primary)`, así que su valor se resuelve **ahí** —azul
-  // de marca— y los descendientes heredan el color ya calculado. Repuntar
-  // `--semantic-color-primary` en el contexto no lo arrastra. Resultado sobre
-  // los dos fondos oscuros del sitio:
-  //
-  //   sobre navy   #1e3aff / #080f2f  →  2.78:1   falla AA (mínimo 4.5)
-  //   sobre azul   #1e3aff / #1e3aff  →  1:1      invisible
-  //
-  // Es literalmente el fallo que `BRAND.md` describe en sus trampas —«una
-  // sección sirviendo texto a 2.8:1 con el eyebrow invisible sobre su propio
-  // fondo»— y seguía vivo en tres sitios: el eyebrow del proceso del mapa y el
-  // índice «Path» de la home, más los fundamentos del caso 42DS. Declarado
-  // aquí, se resuelve contra el `primary` del contexto, que es blanco:
-  // 18.8:1 sobre navy y 6.76:1 sobre el azul.
-  --component-eyebrow-color: var(--semantic-color-primary);
-
-  background: var(--semantic-color-surface);
-  color: var(--semantic-color-text);
-}
+//
+// ---------------------------------------------------------------------------
+//
+// El mapa de color ya no se escribe aquí. Vive en `abstracts/_ink.scss`, que
+// es el único sitio donde se decide qué color tiene cada rol en cada tema.
+// Este fichero solo decide qué contexto usa qué mapa y sobre qué fondo.
+//
+// El cambio de comportamiento respecto al `on-dark` que había: el mapa nuevo
+// incluye `repoint-component-colors`, y el viejo solo repuntaba
+// `--component-eyebrow-color`. Los otros veintiséis tokens de componente se
+// estaban resolviendo contra el tema CLARO dentro de estas dos secciones —el
+// mismo fallo que ya documentaba el eyebrow, veintiséis veces más. Entre ellos
+// `--component-link-color`, que es tinta casi negra, y `--component-metric-bg`,
+// que es azul de marca: los dos, sobre navy.
+//
+// Lo que este fichero todavía NO hace es aplicar `on-dark-page` a `:root`. El
+// tema de página entra en su propio paso, junto con la inversión de estas
+// secciones y el interruptor. Emitirlo antes dejaría a cualquiera con el
+// sistema en oscuro viendo secciones oscuras sobre una página oscura.
 
 @layer syx.utilities {
   .syx-on-night {
-    @include on-dark;
+    @include ink.on-dark-section;
 
     --semantic-color-surface: var(--semantic-color-surface-night);
     --semantic-color-on-primary: var(--primitive-color-brand-950);
+
+    background: var(--semantic-color-surface);
+    color: var(--semantic-color-text);
   }
 
   // Brand-blue ground. Same idea, different surface.
   .syx-on-brand {
-    @include on-dark;
+    @include ink.on-dark-section;
 
     --semantic-color-surface: var(--semantic-color-surface-brand);
     --semantic-color-border: var(--primitive-alpha-light-24);
     --semantic-color-on-primary: var(--primitive-color-brand-500);
+
+    background: var(--semantic-color-surface);
+    color: var(--semantic-color-text);
   }
 }
