@@ -267,7 +267,16 @@
     align-items: end;
     gap: .7rem;
     padding: .42rem .5rem;
-    background: rgba(255,255,255,.88);
+    // El color de texto de este caption se hereda, así que el fondo tenía que
+    // heredar con él. Con `rgba(255,255,255,.88)` fijo, en claro salía tinta
+    // oscura sobre casi blanco y en oscuro blanco sobre casi blanco: el
+    // caption desaparecía al pasar el ratón sobre las siete ilustraciones.
+    // Solo se veía en hover, que es por lo que no salta en una captura.
+    //
+    // El 88% se conserva: en claro `surface` es blanco y el valor calculado es
+    // exactamente el de antes.
+    background: color-mix(in srgb, var(--semantic-color-surface) 88%, transparent);
+    color: var(--semantic-color-text);
     backdrop-filter: blur(8px);
     font: 600 .52rem/1 var(--semantic-font-family-ui);
     letter-spacing: .07em;

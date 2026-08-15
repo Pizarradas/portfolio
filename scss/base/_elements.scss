@@ -22,6 +22,20 @@
     color: var(--component-selection-fg);
   }
 
+  // Las imágenes son lo único de la página que un cambio de tema no puede
+  // repintar. El token vale `none` en claro, así que aquí no pasa nada; en un
+  // contexto oscuro baja un punto el brillo para que una captura blanca se lea
+  // como una imagen y no como un agujero.
+  //
+  // Sin puerta de salida mientras no haga falta una: una clase de exclusión
+  // que no usa nadie es una clase muerta, y `check-css.mjs` la delata. El día
+  // que una imagen tenga que llegar intacta —una prueba de color, una captura
+  // citada como evidencia— se añade el `:not()` y ya está.
+  img,
+  video {
+    filter: var(--semantic-media-filter);
+  }
+
   // Headings share one ramp. Each level picks a step from the type scale
   // instead of inventing its own clamp(), and tracking tightens as size grows.
   h1,

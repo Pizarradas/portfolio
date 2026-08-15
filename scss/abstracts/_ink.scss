@@ -186,6 +186,8 @@ $follow-system: false;
   --semantic-color-primary-soft: var(--primitive-color-brand-900);
   --semantic-color-primary-subtle: var(--primitive-color-brand-800);
   --semantic-color-on-primary: var(--primitive-color-ink-1000);
+
+  --semantic-media-filter: brightness(0.9);
 }
 
 // Una sección invertida sobre página clara. Es el mapa que ya existía como
@@ -211,6 +213,10 @@ $follow-system: false;
   --semantic-color-border-strong: var(--primitive-alpha-light-24);
 
   --semantic-color-primary: var(--primitive-color-white);
+
+  // También aquí: una captura dentro de una sección navy sobre página clara
+  // deslumbra exactamente igual que sobre página oscura.
+  --semantic-media-filter: brightness(0.9);
 }
 
 // ---------------------------------------------------------------------------

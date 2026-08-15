@@ -140,14 +140,12 @@ const LITERAL_BUDGET = {
   'molecules/_case-diagrams.scss': 1,
   'molecules/_code-visuals.scss': 27,
   'molecules/_header-system.scss': 10,
-  'molecules/_illustrations.scss': 1,
   'molecules/_live-preview.scss': 7,
   'molecules/_portfolio.scss': 4,
   'molecules/_research.scss': 7,
   'organisms/_case-42ds.scss': 2,
   'organisms/_case-shell.scss': 1,
   'organisms/_home-sections.scss': 1,
-  'organisms/_sport.scss': 1,
 };
 
 {

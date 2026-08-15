@@ -35,6 +35,19 @@
     --semantic-glass-edge: 18%;
     --semantic-glass-sheen: 14%;
 
+    // El tratamiento de las imágenes, que es un problema de material y no de
+    // color: una captura no se puede repintar con un token.
+    //
+    // La home carga quince —cuatro cabeceras de periódico, tres capturas de
+    // producto y siete ilustraciones—, y la mayoría son mayoritariamente
+    // blancas. Sobre un fondo casi negro eso es un foco. Invertirlas está
+    // descartado: el rojo de SPORT y el de El Periódico son colores de marca
+    // ajena, y una foto invertida es una radiografía.
+    //
+    // `none` y no `brightness(1)` a propósito: `filter: none` no crea contexto
+    // de apilado ni capa de composición, así que en claro esto no cuesta nada.
+    --semantic-media-filter: none;
+
     --semantic-duration-hover: var(--primitive-duration-fast);
     --semantic-duration-transition: var(--primitive-duration-base);
     --semantic-duration-reveal: var(--primitive-duration-slow);

@@ -37,8 +37,13 @@
     display: grid;
     gap: 3rem;
     padding: var(--semantic-space-section) var(--semantic-space-page-inline);
-    background: #fff;
-    color: var(--component-art-ink);
+    // Era `#fff` con `--component-art-ink`, y los dos están congelados en un
+    // literal: en oscuro esta sección se quedaba blanca de ancho completo con
+    // tinta casi negra. Los valores en claro no se mueven —`#06101f` y
+    // `#080f1a` son el mismo negro a efectos prácticos, 19,4:1 contra 19,2:1
+    // sobre blanco— y a cambio la sección sigue al tema.
+    background: var(--semantic-color-surface);
+    color: var(--semantic-color-text);
   }
 
   .org-sport-evidence-v22__story h2 {
@@ -50,7 +55,12 @@
   .org-sport-evidence-v22__story>p:last-of-type {
     max-width: 38rem;
     font: .95rem/1.55 var(--semantic-font-family-ui);
-    color: var(--component-art-muted);
+    // `--component-art-muted` (#6c7484) es la trampa de esta sección: sobre
+    // blanco da 4,70:1 y pasa, pero sobre el fondo oscuro se queda en 4,09:1 y
+    // falla AA. Al voltear el fondo había que voltear también la tinta, o el
+    // arreglo del fondo habría creado un fallo de contraste nuevo. El token
+    // semántico da 4,83:1 en claro y 7,23:1 en oscuro.
+    color: var(--semantic-color-text-muted);
   }
 
 }
