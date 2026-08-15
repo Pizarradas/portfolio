@@ -30,6 +30,7 @@ import {
   headlineOf,
   FONT_PRELOAD,
   plain,
+  CV,
 } from './site.config.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -220,6 +221,10 @@ function mapJsonStrings(source, translate) {
 // Spanish pages live in es/, one level below the shared assets.
 function rewriteUrl(url) {
   if (!url || /^(https?:|mailto:|tel:|data:|javascript:|#|\/\/|\/)/i.test(url)) return url;
+  // El CV es el único activo que no es el mismo fichero en los dos idiomas: se
+  // sustituye, no solo se reubica. Va antes que nada porque si no cayera en la
+  // rama de abajo y la página española serviría el CV en inglés.
+  if (url === CV.en) return `../${CV.es}`;
   if (SHARED_DIR.test(url)) return `../${url}`;
   const [path] = url.split('#');
   if (PAGE_SET.has(path)) return url; // the Spanish sibling has the same name

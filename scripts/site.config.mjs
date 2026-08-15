@@ -41,6 +41,21 @@ export const SITE = {
   siteName: { en: 'José Luis Pizarro — Portfolio', es: 'José Luis Pizarro — Portfolio' },
 };
 
+// El CV, que existe en los dos idiomas y no es una página.
+//
+// No puede resolverlo `rewriteUrl` como un activo compartido cualquiera: los
+// demás —hojas, scripts, imágenes— son el mismo fichero para los dos idiomas y
+// solo cambian de ruta. Este cambia de fichero, así que la versión española
+// tiene que sustituirlo, no solo prefijarlo con `../`.
+//
+// Declarado aquí porque lo leen el marcado inglés y el generador, y porque un
+// enlace que apunta a un PDF que no existe es un 404 silencioso: el navegador
+// no avisa, simplemente no descarga nada.
+export const CV = {
+  en: 'jose-luis-pizarro-cv-en.pdf',
+  es: 'jose-luis-pizarro-cv-es.pdf',
+};
+
 // Every page that exists in both languages. Order is the crawl order in the
 // sitemap and, on the home page, the order of the argument (BRAND.md §1).
 //
