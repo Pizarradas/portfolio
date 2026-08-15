@@ -4,7 +4,6 @@
   :root {
     --semantic-radius-control: var(--primitive-radius-xs);
     --semantic-radius-surface: var(--primitive-radius-md);
-    --semantic-radius-media: var(--primitive-radius-md);
     --semantic-radius-pill: var(--primitive-radius-pill);
 
     --semantic-border-width: var(--primitive-border-hairline);
@@ -18,7 +17,6 @@
     --semantic-focus-width: var(--primitive-border-heavy);
     --semantic-focus-offset: var(--primitive-space-3xs);
 
-    --semantic-shadow-raised: var(--primitive-shadow-sm);
     --semantic-shadow-floating: var(--primitive-shadow-md);
     --semantic-shadow-overlay: var(--primitive-shadow-lg);
 

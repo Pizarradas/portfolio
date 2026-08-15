@@ -81,13 +81,13 @@
     .js .js-reveal {
       opacity: 1;
       transform: none;
-      @include transition(none);
+      @include transition-off;
     }
 
     .js .js-reveal>* {
       opacity: 1;
       transform: none;
-      @include transition(none);
+      @include transition-off;
     }
 
   }

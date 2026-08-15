@@ -569,7 +569,7 @@
   }
   @include reduced-motion {
     .mol-token-lab {
-      @include transition(none);
+      @include transition-off;
       animation: none;
     }
 
@@ -819,7 +819,7 @@
   }
   @include reduced-motion {
     .mol-grid-lab {
-      @include transition(none);
+      @include transition-off;
       animation: none;
     }
 
@@ -886,7 +886,7 @@
 @layer syx.utilities {
   @include reduced-motion {
     .mol-token-hero {
-      @include transition(none);
+      @include transition-off;
       animation: none;
     }
 
@@ -1036,7 +1036,7 @@
 @layer syx.utilities {
   @include reduced-motion {
     .mol-token-demo-card {
-      @include transition(none);
+      @include transition-off;
       animation: none;
     }
 
@@ -1155,7 +1155,7 @@
 @layer syx.utilities {
   @include reduced-motion {
     .mol-grid-content {
-      @include transition(none);
+      @include transition-off;
       animation: none;
     }
 

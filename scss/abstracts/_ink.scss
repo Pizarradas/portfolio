@@ -37,18 +37,18 @@
 // los 6,05:1.
 //
 // ---------------------------------------------------------------------------
-// Los colores que NO tienen mapa oscuro
+// Lo que estos mapas NO cubren
 // ---------------------------------------------------------------------------
 //
-// `--semantic-color-positive`, `-caution`, `-critical` y los tres acentos
-// secundarios (`-accent-cyan`, `-violet`, `-fuchsia`) se quedan fuera a
-// propósito: hoy no los lee nadie. Están declarados en la capa semántica y
-// tienen cero consumidores en `atoms/`, `molecules/` y `organisms/`.
+// Los colores de estado (positivo, precaución, crítico) y los complementarios
+// (cyan, violeta, fucsia) no aparecen porque ya no existen: una auditoría los
+// encontró declarados y sin un solo lector, y se borraron con los otros
+// ochenta tokens muertos.
 //
-// Los tres de estado son colores oscuros pensados para fondo claro, así que
-// el día que aparezca el primer consumidor van a necesitar su primitiva
-// clara y su entrada en `base-dark-page`. Inventarles ahora una variante que
-// nadie usa sería añadir cuatro primitivas muertas a la paleta.
+// Cuando vuelva a hacer falta un color de estado hay que declarar las dos
+// versiones a la vez —la clara y la oscura— y medirlas. Los tres que había
+// eran tonos oscuros pensados para fondo claro: sobre `#080f1a` habrían caído
+// por debajo de AA sin que nada avisara.
 
 // ---------------------------------------------------------------------------
 // 1. when-dark — la prueba del tema efectivo, escrita una sola vez
@@ -129,7 +129,6 @@ $follow-system: false;
   --semantic-color-surface: var(--primitive-color-white);
   --semantic-color-surface-alt: var(--primitive-color-gray-50);
   --semantic-color-surface-muted: var(--primitive-color-gray-100);
-  --semantic-color-surface-sunken: var(--primitive-color-gray-200);
   --semantic-color-surface-inverse: var(--primitive-color-ink-1000);
 
   --semantic-color-text: var(--primitive-color-ink-1000);
@@ -141,8 +140,6 @@ $follow-system: false;
   --semantic-color-border-strong: var(--primitive-color-gray-300);
 
   --semantic-color-primary: var(--primitive-color-brand-500);
-  --semantic-color-primary-hover: var(--primitive-color-brand-600);
-  --semantic-color-primary-active: var(--primitive-color-brand-700);
   --semantic-color-primary-soft: var(--primitive-color-brand-50);
   --semantic-color-primary-subtle: var(--primitive-color-brand-100);
   --semantic-color-on-primary: var(--primitive-color-white);
@@ -160,7 +157,6 @@ $follow-system: false;
   --semantic-color-surface: var(--primitive-color-ink-1000);
   --semantic-color-surface-alt: var(--primitive-alpha-light-04);
   --semantic-color-surface-muted: var(--primitive-alpha-light-08);
-  --semantic-color-surface-sunken: var(--primitive-alpha-light-08);
   // El inverso de la página también se invierte: es «lo contrario del fondo»,
   // no «negro».
   --semantic-color-surface-inverse: var(--primitive-color-white);
@@ -178,8 +174,6 @@ $follow-system: false;
   --semantic-color-primary: var(--primitive-color-brand-400);
   // En claro el hover oscurece; sobre fondo oscuro tiene que aclarar, o el
   // estado activo se aleja del ojo en vez de acercarse.
-  --semantic-color-primary-hover: var(--primitive-color-brand-300);
-  --semantic-color-primary-active: var(--primitive-color-brand-200);
   // `soft` y `subtle` son fondos. En claro son los dos escalones más claros
   // de la rampa; en oscuro, los dos más profundos, conservando el orden: soft
   // es el que menos se separa del fondo.
@@ -193,16 +187,14 @@ $follow-system: false;
 // Una sección invertida sobre página clara. Es el mapa que ya existía como
 // `on-dark`, con los mismos valores.
 //
-// Deliberadamente más corto que `base-dark-page`: no toca la familia
-// `primary-hover/active/soft/subtle` ni `surface-inverse`. Una sección no
-// necesita una escala de marca completa, y ampliarla cambiaría el render de
-// las secciones que hay hoy. `--semantic-color-surface` y `-on-primary` los
-// pone cada clase de contexto, porque son lo único que distingue el navy del
-// azul de marca.
+// Deliberadamente más corto que `base-dark-page`: no toca `primary-soft`,
+// `primary-subtle` ni `surface-inverse`. Una sección no necesita una escala de
+// marca completa, y ampliarla cambiaría el render de las secciones que hay
+// hoy. `--semantic-color-surface` y `-on-primary` los pone cada clase de
+// contexto, porque son lo único que distingue el navy del azul de marca.
 @mixin base-dark-section {
   --semantic-color-surface-alt: var(--primitive-alpha-light-04);
   --semantic-color-surface-muted: var(--primitive-alpha-light-08);
-  --semantic-color-surface-sunken: var(--primitive-alpha-light-08);
 
   --semantic-color-text: var(--primitive-color-white);
   --semantic-color-text-secondary: var(--primitive-alpha-light-78);
@@ -233,13 +225,13 @@ $follow-system: false;
 // De ahí salen dos casos opuestos:
 //
 //   Mismo elemento (`:root` claro vs `:root[data-theme="dark"]`)
-//     Los alias y los tokens de componente están declarados en `:root`, y el
-//     mapa oscuro también se aplica a `:root`. Se recalculan solos. **No hace
-//     falta repetir nada.**
+//     `--semantic-color-focus` y los tokens de componente están declarados en
+//     `:root`, y el mapa oscuro también se aplica a `:root`. Se recalculan
+//     solos. **No hace falta repetir nada.**
 //
 //   Elemento distinto (una sección dentro de la página)
-//     Los alias se calcularon arriba, contra el tema de la página, y bajan ya
-//     resueltos. Repuntar la base no los arrastra. **Hay que repetirlos.**
+//     Se calcularon arriba, contra el tema de la página, y bajan ya resueltos.
+//     Repuntar la base no los arrastra. **Hay que repetirlos.**
 //
 // El segundo caso es exactamente el fallo de `--component-eyebrow-color`: se
 // declaraba en `:root` como `var(--semantic-color-primary)`, se resolvía ahí
@@ -249,20 +241,13 @@ $follow-system: false;
 // Por eso `derived` y `repoint-component-colors` van en los mapas completos
 // (`on-light`, `on-dark-page`, `on-dark-section`) y no en las bases.
 
+// Queda un solo token. Antes había diez: los nueve alias de compatibilidad se
+// borraron al comprobar que no los leía nadie, y con ellos las veintisiete
+// declaraciones que este mixin metía en el build. El mixin sigue existiendo
+// porque la regla que documenta —repetir lo derivado cuando cambia el
+// elemento— es la que hay que recordar al añadir el siguiente.
 @mixin derived {
   --semantic-color-focus: var(--semantic-color-primary);
-
-  // Los alias. No son un segundo vocabulario: cada uno apunta a un token
-  // canónico, y por eso mismo tienen que recalcularse aquí.
-  --semantic-color-surface-page: var(--semantic-color-surface);
-  --semantic-color-surface-soft: var(--semantic-color-surface-alt);
-  --semantic-color-content-primary: var(--semantic-color-text);
-  --semantic-color-content-secondary: var(--semantic-color-text-secondary);
-  --semantic-color-content-muted: var(--semantic-color-text-muted);
-  --semantic-color-content-inverse: var(--semantic-color-text-inverse);
-  --semantic-color-border-subtle: var(--semantic-color-border);
-  --semantic-color-accent: var(--semantic-color-primary);
-  --semantic-color-accent-hover: var(--semantic-color-primary-hover);
 }
 
 // Los tokens de componente que dependen del color.
@@ -282,9 +267,6 @@ $follow-system: false;
   --component-work-enter-bg: var(--semantic-color-text);
   --component-work-enter-fg: var(--semantic-color-text-inverse);
   --component-work-field-line: color-mix(in srgb, var(--semantic-color-border) 65%, transparent);
-  --component-metric-bg: var(--semantic-color-primary);
-  --component-metric-color: var(--semantic-color-on-primary);
-  --component-link-color: var(--semantic-color-text);
   --component-link-hover-color: var(--semantic-color-primary);
   --component-text-link-rule: var(--semantic-color-border);
   --component-eyebrow-color: var(--semantic-color-primary);
@@ -292,18 +274,11 @@ $follow-system: false;
   --component-selection-bg: var(--semantic-color-primary);
   --component-selection-fg: var(--semantic-color-on-primary);
   --component-card-accent: var(--semantic-color-primary);
-  --component-case-accent-fg: var(--semantic-color-on-primary, #fff);
   --component-case-opener-accent: var(--semantic-color-primary);
   --component-case42-rule: var(--semantic-color-border);
-  --component-media-border: var(--semantic-color-border);
-  --component-media-label-bg: color-mix(in srgb, var(--semantic-color-surface) 94%, transparent);
-  --component-media-label-color: var(--semantic-color-text);
-  --component-rule-color: var(--semantic-color-border);
   --component-case-rule: var(--semantic-color-border, #c9c8c1);
   --component-chart-bg: var(--semantic-color-surface);
   --component-chart-border: var(--semantic-color-border);
-  --component-evidence-bg: var(--semantic-color-surface-alt);
-  --preview-border: var(--semantic-color-border);
 }
 
 // ---------------------------------------------------------------------------

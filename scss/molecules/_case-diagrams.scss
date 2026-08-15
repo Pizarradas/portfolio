@@ -613,7 +613,7 @@
   @include reduced-motion {
     .js .org-hierarchy-diagram.js-reveal .mol-composition-nest__level {
       opacity: 1;
-      @include transition(none);
+      @include transition-off;
     }
   }
 }
@@ -722,7 +722,7 @@
   @include reduced-motion {
     .mol-ai-layers__layer {
       animation: none;
-      @include transition(none);
+      @include transition-off;
       opacity: 1;
     }
 

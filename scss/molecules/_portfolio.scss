@@ -354,7 +354,7 @@
 
   @include reduced-motion {
     .mol-mark {
-      @include transition(none);
+      @include transition-off;
     }
   }
 
@@ -1442,7 +1442,7 @@
     .mol-project-card__enter,
     .mol-project-card__enter i,
     .mol-project-card__meta::before {
-      @include transition(none);
+      @include transition-off;
     }
 
     .mol-project-card:is(:hover, :focus-within) .mol-project-card__frame,
@@ -1992,7 +1992,7 @@
 
   @include reduced-motion {
     .mol-nav a::after {
-      @include transition(none);
+      @include transition-off;
     }
   }
 }

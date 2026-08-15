@@ -205,7 +205,7 @@
   @include reduced-motion {
     .org-capability-scan a,
     .org-capability-scan span {
-      @include transition(none);
+      @include transition-off;
     }
   }
 

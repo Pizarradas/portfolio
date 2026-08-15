@@ -12,10 +12,7 @@
     // needs a background token of its own.
     --component-header-height: 4.25rem;
 
-    --component-card-radius: var(--semantic-radius-surface);
     --component-card-visual-bg: var(--semantic-color-surface-alt);
-    --component-card-ratio: 4 / 3;
-    --component-card-ratio-featured: 16 / 8.2;
 
     // Self-directed registers. One ratio for all three previews, so the three
     // modules share a rhythm instead of each one cropping to a different shape.
@@ -30,10 +27,6 @@
     // were 645px and 580px, so the two headlines started 65px apart and the
     // row read as two unrelated cards rather than one comparison.
     --component-work-frame-ratio: 16 / 10;
-    // In the mosaic each case is a row of its own, so the frame no longer has a
-    // ratio: it fills the height of the row, and the row is as tall as this.
-    // Same job as --component-register-min-height, one register wider.
-    --component-work-row-min-height: clamp(30rem, 26vw, 44rem);
     // Wide, because the flagship frame is four stacked mastheads and the band
     // height decides how much of each screenshot survives the crop. At 16/9 the
     // bands were tall enough to show the advertising under every header; at
@@ -49,8 +42,10 @@
     // rather than four slices of newspaper homepage.
     --component-work-frame-ratio-featured-sm: 1 / 1;
 
-    // One hover state for the whole card: the veil, the chip and the accent
-    // rule are declared once here so the three cards cannot drift apart.
+    // One hover state for the whole card: the veil and the accent rule are
+    // declared once here so the three cards cannot drift apart. El chip que
+    // mencionaba este comentario ya no está: sus dos tokens estaban declarados
+    // y sin lector.
     --component-work-veil: color-mix(
       in srgb,
       var(--semantic-color-surface-night) 34%,
@@ -68,13 +63,6 @@
     );
     --component-work-field-step: 2.25rem;
 
-    --component-chip-radius: var(--semantic-radius-pill);
-    --component-chip-border: currentColor;
-
-    --component-metric-bg: var(--semantic-color-primary);
-    --component-metric-color: var(--semantic-color-on-primary);
-
-    --component-link-color: var(--semantic-color-text);
     --component-link-hover-color: var(--semantic-color-primary);
 
     // Text link — the standalone "go and read this" link.
@@ -100,12 +88,11 @@
     --component-selection-fg: var(--semantic-color-on-primary);
     --component-card-accent: var(--semantic-color-primary);
 
-    // Consumed on pages that do not load case-study.css
-    --component-case-dark-bg: var(--semantic-color-surface-night);
-    --component-case-dark-fg: var(--semantic-color-on-primary);
-    --component-case-accent-bg: var(--semantic-color-primary);
-    --component-case-accent-fg: var(--semantic-color-on-primary);
-
+    // Aquí había cuatro tokens `--component-case-*` bajo el rótulo «Consumed on
+    // pages that do not load case-study.css». Esa hoja ya no existe, y los
+    // cuatro estaban además pisados por sus gemelos literales de
+    // `_case-and-evidence.scss`, que se cargaba después. Ninguna de las dos
+    // copias la leía nadie.
     --component-contact-row-gap: var(--primitive-space-md);
   }
 }

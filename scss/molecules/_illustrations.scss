@@ -306,7 +306,7 @@
     .mol-ill-collage {
       opacity: 1;
       transform: none;
-      @include transition(none);
+      @include transition-off;
     }
 
   }

@@ -2,26 +2,20 @@
   // PRIMITIVE — shape and depth
 
   :root {
-    --primitive-radius-none: 0;
     --primitive-radius-xs: 0.25rem;
-    --primitive-radius-sm: 0.375rem;
     --primitive-radius-md: 0.75rem;
-    --primitive-radius-lg: 1.25rem;
-    --primitive-radius-xl: 2rem;
     --primitive-radius-pill: 999px;
 
     --primitive-border-hairline: 1px;
     --primitive-border-thick: 2px;
     --primitive-border-heavy: 3px;
 
-    --primitive-shadow-sm: 0 1px 2px rgb(8 15 26 / 0.06);
     --primitive-shadow-md: 0 4px 16px rgb(8 15 26 / 0.08);
     --primitive-shadow-lg: 0 18px 48px rgb(8 15 26 / 0.12);
 
     // Overlay surfaces already blurred what was behind them — the sticky header
     // hardcoded blur(16px). These make that a scale instead of a one-off, so
     // every floating surface reads as the same material.
-    --primitive-blur-sm: 6px;
     --primitive-blur-md: 16px;
     --primitive-blur-lg: 26px;
     // A little saturation stops the blurred backdrop going grey and flat.
@@ -31,7 +25,6 @@
     --primitive-z-raised: 1;
     --primitive-z-sticky: 20;
     --primitive-z-overlay: 60;
-    --primitive-z-modal: 80;
     --primitive-z-skip: 100;
   }
 }

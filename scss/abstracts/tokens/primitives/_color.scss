@@ -9,24 +9,25 @@
   // both writing to --semantic-color-accent. The blue won by load order, so the
   // acid ramp was dead code that still shaped how the source read. It is gone.
 
+  // La rampa tiene huecos —faltan 200, 300, 600 y 700— y no es un descuido: una
+  // auditoría los encontró declarados y sin un solo lector. Con ellos se fueron
+  // los tres complementarios (cyan, violeta, fucsia) y los tres de señal
+  // (positivo, precaución, crítico), que tampoco leía nadie.
+  //
+  // Es una decisión de paleta y se puede revertir desde git. Lo que no se puede
+  // es mantenerlos «por si acaso»: un token declarado y sin uso es un valor que
+  // nadie ha comprobado sobre ningún fondo, y este sistema ya pagó un eyebrow
+  // invisible por confiar en un color que nadie había medido.
+
   :root {
     // Brand — JLP blue
     --primitive-color-brand-50: #f4f6ff;
     --primitive-color-brand-100: #e9edff;
-    --primitive-color-brand-200: #ccd5ff;
-    --primitive-color-brand-300: #a3b2ff;
     --primitive-color-brand-400: #7187ff;
     --primitive-color-brand-500: #1e3aff;
-    --primitive-color-brand-600: #1932dc;
-    --primitive-color-brand-700: #1429b7;
     --primitive-color-brand-800: #10208e;
     --primitive-color-brand-900: #0c1869;
     --primitive-color-brand-950: #080f2f;
-
-    // Complementaries — accents only, never a dominant surface
-    --primitive-color-cyan-500: #00c8ff;
-    --primitive-color-violet-500: #7861ff;
-    --primitive-color-fuchsia-500: #ff3d94;
 
     // Neutrals
     --primitive-color-white: #ffffff;
@@ -34,17 +35,9 @@
     --primitive-color-gray-100: #eef1f6;
     --primitive-color-gray-200: #dce1ea;
     --primitive-color-gray-300: #cbd2dd;
-    --primitive-color-gray-400: #9aa3b2;
     --primitive-color-gray-500: #6b7280;
-    --primitive-color-gray-600: #4b5563;
     --primitive-color-ink-700: #374151;
-    --primitive-color-ink-900: #111827;
     --primitive-color-ink-1000: #080f1a;
-
-    // Signal — reserved for state, kept away from the brand hue on purpose
-    --primitive-color-positive-600: #1f6b3a;
-    --primitive-color-caution-600: #9a5c00;
-    --primitive-color-critical-600: #b8281c;
 
     // Alpha channels for inverse surfaces, so dark sections stop hand-rolling
     // rgba(255,255,255,.16) in every file that needs a hairline.
@@ -54,7 +47,5 @@
     --primitive-alpha-light-24: rgb(255 255 255 / 0.24);
     --primitive-alpha-light-60: rgb(255 255 255 / 0.6);
     --primitive-alpha-light-78: rgb(255 255 255 / 0.78);
-    --primitive-alpha-dark-08: rgb(8 15 26 / 0.08);
-    --primitive-alpha-dark-16: rgb(8 15 26 / 0.16);
   }
 }

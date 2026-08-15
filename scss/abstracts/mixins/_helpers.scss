@@ -16,6 +16,31 @@
   }
 }
 
+// Apagar la transición DENTRO de una guarda que ya existe.
+//
+// R03 prohíbe `transition:` en crudo porque una transición suelta se salta la
+// guarda de `prefers-reduced-motion`. Pero dentro de un bloque
+// `@include reduced-motion` no hay nada de lo que escapar: esa es la guarda.
+//
+// Al no haber forma de decirlo, se estaba usando `@include transition(none)`
+// ahí dentro, y el mixin volvía a envolver: salían quince reglas bajo
+// `@media (prefers-reduced-motion:reduce) and (prefers-reduced-motion:reduce)`.
+// Funcionaba —la condición repetida evalúa igual— pero era la regla obligando
+// a escribir lo contrario de lo que quería.
+//
+// Solo `transition`, deliberadamente. Poner aquí también `animation: none`
+// habría parado animaciones que algún bloque deja correr a propósito: esto es
+// un cambio de forma, no de comportamiento. Emite exactamente lo mismo que
+// `@include transition(none)` menos la media query redundante.
+//
+// @example
+//   @include reduced-motion {
+//     .foo { @include transition-off; opacity: 1; }
+//   }
+@mixin transition-off {
+  transition: none;
+}
+
 // Texto de una línea con elipsis.
 @mixin truncate($max-width: 100%) {
   max-width: $max-width;

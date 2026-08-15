@@ -77,7 +77,6 @@
     --semantic-space-section-compact: var(--primitive-space-4xl);
     --semantic-space-block: var(--primitive-space-3xl);
     --semantic-space-stack: var(--primitive-space-lg);
-    --semantic-space-inline: var(--primitive-space-sm);
 
     // Escala interna de componente.
     //
@@ -113,6 +112,5 @@
 
     // Alias used by the existing stylesheets
     --semantic-space-page-inline: var(--semantic-space-gutter);
-    --semantic-measure-copy: var(--semantic-measure-prose);
   }
 }

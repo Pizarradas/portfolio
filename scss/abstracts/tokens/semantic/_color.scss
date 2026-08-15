@@ -28,36 +28,22 @@
     --semantic-color-surface-brand: var(--primitive-color-brand-500);
     --semantic-color-surface-night: var(--primitive-color-brand-950);
 
-    // Complementarios — solo acentos, nunca una superficie dominante.
-    --semantic-color-accent-cyan: var(--primitive-color-cyan-500);
-    --semantic-color-accent-violet: var(--primitive-color-violet-500);
-    --semantic-color-accent-fuchsia: var(--primitive-color-fuchsia-500);
-
-    // Estado — reservado para señal, apartado del tono de marca a propósito.
-    //
-    // Los tres son colores oscuros para fondo claro y hoy no los lee nadie, así
-    // que no tienen mapa oscuro. El día que aparezca el primer consumidor hay
-    // que darles su primitiva clara y su entrada en `ink.base-dark-page`, o
-    // caerán a un verde/ámbar/rojo oscuro sobre fondo casi negro.
-    --semantic-color-positive: var(--primitive-color-positive-600);
-    --semantic-color-caution: var(--primitive-color-caution-600);
-    --semantic-color-critical: var(--primitive-color-critical-600);
-
-    // Derivados. Repetidos en `ink.derived` para los contextos, que son otro
-    // elemento; aquí basta declararlos una vez.
+    // Derivado. Se repite en `ink.derived` para los contextos, que son otro
+    // elemento; aquí basta declararlo una vez.
     --semantic-color-focus: var(--semantic-color-primary);
 
-    // Aliases kept because 27 stylesheets still read these names. They are not a
-    // second vocabulary: each one points at a canonical token above, so removing
-    // a consumer never leaves an orphan definition behind.
-    --semantic-color-surface-page: var(--semantic-color-surface);
-    --semantic-color-surface-soft: var(--semantic-color-surface-alt);
-    --semantic-color-content-primary: var(--semantic-color-text);
-    --semantic-color-content-secondary: var(--semantic-color-text-secondary);
-    --semantic-color-content-muted: var(--semantic-color-text-muted);
-    --semantic-color-content-inverse: var(--semantic-color-text-inverse);
-    --semantic-color-border-subtle: var(--semantic-color-border);
-    --semantic-color-accent: var(--semantic-color-primary);
-    --semantic-color-accent-hover: var(--semantic-color-primary-hover);
+    // Aquí vivían nueve alias —`surface-page`, `surface-soft`, `content-*`,
+    // `border-subtle`, `accent`, `accent-hover`— con un comentario que decía
+    // que «27 hojas siguen leyendo estos nombres».
+    //
+    // Era verdad antes de migrar a SCSS y dejó de serlo después. Comprobados
+    // uno a uno sobre el build, el JS, los scripts y los catorce HTML: cero
+    // consumidores, los nueve. Y como `ink.derived` los repetía en cada
+    // contexto, el navegador cargaba veintisiete declaraciones para tokens que
+    // no leía nadie.
+    //
+    // Con ellos cayeron `primary-hover` y `primary-active`, que solo existían
+    // para alimentar el alias `accent-hover`. Si algún día hace falta un estado
+    // hover de marca, se declara aquí y se mide; no se rescata a ciegas.
   }
 }

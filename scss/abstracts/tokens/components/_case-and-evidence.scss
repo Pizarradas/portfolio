@@ -8,7 +8,8 @@
 //   --mf-inline    → --semantic-space-shell-inline
 //   --mf-section   → --semantic-space-shell-block
 //   --mf-title     → --semantic-font-size-hero-compact
-//   --mf-h2        → --semantic-font-size-section-compact
+//   --mf-h2        → --semantic-font-size-section-compact, ya borrado: una
+//                    auditoría lo encontró sin lector
 //   --pe-inline    → --semantic-space-case-inline
 //   --pe-section   → --semantic-space-case-block
 //   --pe-content-max → --semantic-width-case-max
@@ -37,7 +38,6 @@
     --semantic-space-case-block: var(--semantic-space-shell-block);
     --semantic-width-case-max: none;
     --semantic-font-size-hero-compact: clamp(2.55rem, 12.5vw, 3.45rem);
-    --semantic-font-size-section-compact: clamp(2.1rem, 10vw, 3rem);
 
     // Portada de un caso interior.
     //
@@ -61,18 +61,16 @@
     --component-case-opener-lede-size: var(--semantic-font-size-lede);
     --component-case-opener-accent: var(--semantic-color-primary);
 
-    // Caso 42DS.
-    // El segundo de los tres topes inventados. La portada de un caso es un
-    // opener de sección, y los openers de la home corren a `survey`.
-    --component-case42-max-width: var(--semantic-width-survey);
-    --component-case42-reading-width: 48rem;
+    // Caso 42DS. Aquí estaba el segundo de los tres topes inventados que
+    // describe el comentario de arriba; se apuntó a `survey` y después resultó
+    // que no lo leía nadie, así que ya no está.
     --component-case42-rule: var(--semantic-color-border);
     --component-case42-motion-duration: 720ms;
     --component-case42-chart-height: 22rem;
 
-    // Dirección de arte de la sección de trayectoria. Los tres valores que no
-    // coincidían con ningún token existente; el resto eran alias y ya no están.
-    --component-art-ink: #06101f;
+    // Dirección de arte de la sección de trayectoria. Quedan dos: `--component-
+    // -art-ink` se fue al pasar `organisms/_sport.scss` a tokens semánticos,
+    // que era su único lector.
     --component-art-night: #07102f;
     --component-art-muted: #6c7484;
 
@@ -130,7 +128,6 @@
     --semantic-font-family-code: var(--primitive-font-family-mono);
     --component-hero-title-font-family: var(--semantic-font-family-display);
     --component-hero-title-font-weight: var(--primitive-font-weight-semibold);
-    --component-hero-title-line-height: .94;
     --component-hero-title-letter-spacing: -.052em;
     --component-section-title-font-family: var(--semantic-font-family-display);
     --component-section-title-font-weight: var(--primitive-font-weight-semibold);
@@ -144,11 +141,6 @@
     --component-body-line-height: 1.62;
     --component-ui-font-family: var(--semantic-font-family-ui);
     --component-code-font-family: var(--semantic-font-family-code);
-    --component-media-radius: .25rem;
-    --component-media-border: var(--semantic-color-border);
-    --component-media-label-bg: color-mix(in srgb,var(--semantic-color-surface) 94%,transparent);
-    --component-media-label-color: var(--semantic-color-text);
-    --component-rule-color: var(--semantic-color-border);
     // La pista de la etiqueta en `.mol-section-heading`. Fija y no `auto`:
     // con una pista automática «Work» y «Self-directed» arrancan en dos
     // verticales distintas y la página pierde su margen izquierdo.
@@ -159,29 +151,20 @@
     // su propia vertical. Ahora hay una sola.
     --component-heading-label-track: 10rem;
 
-    --component-case-max-width: 90rem;
-    --component-case-reading-width: 46rem;
-    --component-case-gap: clamp(2rem, 5vw, 6rem);
     --component-case-rule: var(--semantic-color-border, #c9c8c1);
-    --component-case-dark-bg: #11120f;
-    --component-case-dark-fg: #f3f1e8;
-    --component-case-accent-bg: #1E3AFF;
-    --component-case-accent-fg: var(--semantic-color-on-primary, #fff);
-    --component-story-max: 90rem;
-    --component-tool-icon-size: 1.55rem;
     --component-chart-height: 25rem;
     --component-chart-bg: var(--semantic-color-surface);
     --component-chart-border: var(--semantic-color-border);
-    --component-evidence-bg: var(--semantic-color-surface-alt);
     --demo-brand: #f53036;
     --grid-line: rgba(30,58,255,.16);
     --grid-fill: rgba(30,58,255,.08);
     // La base del armazón se declara una sola vez, arriba. Aquí estaba
     // repetida porque venía de mobile-first-v19.css; --mf-gap no lo usaba nadie.
-    --preview-bg: #080f1a;
-    --preview-chrome: #f5f7fa;
-    --preview-border: var(--semantic-color-border);
-    --preview-radius: .2rem;
+    //
+    // Y aquí estaban los cuatro `--preview-*` y los tres `--component-case-*`
+    // congelados en un literal (`#11120f`, `#f3f1e8`, `#1E3AFF`). Ninguno tenía
+    // lector, y de paso se llevan siete literales de color del sistema.
+    //
     // Aquí había cuatro tokens propios de la página de ilustraciones, y ninguno
     // decía nada que el sistema no dijera ya:
     //

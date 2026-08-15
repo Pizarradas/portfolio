@@ -417,7 +417,7 @@
   }
   @include reduced-motion {
     .mol-dot-universe__grid i {
-      @include transition(none);
+      @include transition-off;
     }
 
   }
