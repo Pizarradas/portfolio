@@ -74,11 +74,32 @@
 // Sirve anidado y sin anidar. Sin anidar apunta al propio `:root`; anidado
 // dentro de un selector, a ese selector bajo un `:root` oscuro.
 
+// El interruptor de despliegue, y el único sitio donde se toca.
+//
+// En `false`, `when-dark` emite solo el atributo: nadie recibe modo oscuro
+// automáticamente, ni con el sistema en oscuro. El tema existe, está completo
+// y se enciende a mano —desde DevTools o desde el interruptor— pero no le
+// aparece a ningún visitante.
+//
+//     document.documentElement.dataset.theme = 'dark'
+//
+// Eso permite construir e inspeccionar los pasos que faltan (invertir las
+// secciones, limpiar literales, sombras, canvas) sobre un sitio que se sigue
+// publicando en claro.
+//
+// Ponerlo en `true` es el último paso del modo oscuro, no el primero: a partir
+// de ese momento un sistema en oscuro cambia lo que ve la gente. Antes de
+// tocarlo tienen que estar cerrados los seis casos de la matriz de estados y
+// el comprobador de contraste en verde.
+$follow-system: false;
+
 @mixin when-dark {
   @if & {
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) & {
-        @content;
+    @if $follow-system {
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) & {
+          @content;
+        }
       }
     }
 
@@ -86,9 +107,11 @@
       @content;
     }
   } @else {
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) {
-        @content;
+    @if $follow-system {
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          @content;
+        }
       }
     }
 

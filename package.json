@@ -16,6 +16,7 @@
     "check:seo": "node scripts/build-seo.mjs --check && node scripts/build-og.mjs --check",
     "check:assets": "node scripts/build-fonts.mjs --check && node scripts/build-previews.mjs --check",
     "check:css": "node scripts/check-css.mjs",
+    "check:contrast": "node scripts/check-contrast.mjs",
     "extract:i18n": "node scripts/build-i18n.mjs --extract",
     "build:min": "sass scss/portfolio.scss css/portfolio.css --style=compressed --no-source-map",
     "watch": "sass --watch scss/portfolio.scss:css/portfolio.css --style=expanded --no-source-map",

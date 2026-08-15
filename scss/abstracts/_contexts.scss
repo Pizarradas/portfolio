@@ -27,10 +27,43 @@
 // `--component-link-color`, que es tinta casi negra, y `--component-metric-bg`,
 // que es azul de marca: los dos, sobre navy.
 //
-// Lo que este fichero todavía NO hace es aplicar `on-dark-page` a `:root`. El
-// tema de página entra en su propio paso, junto con la inversión de estas
-// secciones y el interruptor. Emitirlo antes dejaría a cualquiera con el
-// sistema en oscuro viendo secciones oscuras sobre una página oscura.
+// ---------------------------------------------------------------------------
+// El tema de página
+// ---------------------------------------------------------------------------
+//
+// Se emite solo bajo `[data-theme="dark"]`, porque `ink.$follow-system` está
+// en `false`. Nadie recibe modo oscuro automáticamente todavía: falta invertir
+// estas dos secciones, limpiar los literales y arreglar el canvas, y un
+// visitante con el sistema en oscuro vería secciones oscuras sobre una página
+// oscura. Se enciende a mano para poder construir lo que falta:
+//
+//     document.documentElement.dataset.theme = 'dark'
+
+@layer syx.base {
+  // `color-scheme` no es cosmético: es lo que hace que las barras de scroll,
+  // los controles de formulario y el lienzo por defecto del navegador sigan al
+  // tema. Sin él la página se pone oscura y el scroll se queda blanco.
+  //
+  // `light` a secas y no `light dark`, a propósito y mientras dure la fase: la
+  // forma de dos valores le dice al navegador que puede elegir según el
+  // sistema, que es exactamente lo que aún no queremos que pase.
+  :root {
+    color-scheme: light;
+  }
+
+  @include ink.when-dark {
+    color-scheme: dark;
+  }
+}
+
+@layer syx.tokens {
+  // Solo la base. Los alias y los tokens de componente están declarados sobre
+  // `:root`, que es este mismo elemento, así que se recalculan solos — la
+  // explicación entera, en el bloque 3 de `_ink.scss`.
+  @include ink.when-dark {
+    @include ink.base-dark-page;
+  }
+}
 
 @layer syx.utilities {
   .syx-on-night {
