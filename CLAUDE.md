@@ -39,6 +39,7 @@ ninguna para rehacer la escala tipográfica.
 | calcular un tamaño, un hueco, un ancho | `proportions` | bajo | «se ve apretado», «sube el titular» |
 | escribir o mover SCSS | `scss` | medio | «crea un componente», «esto va en otro sitio» |
 | texto que hay que traducir | `content` | bajo | cualquier cambio de copy en el HTML |
+| juzgar el sitio como quien contrata | `recruiter` | medio | «¿esto convence?», «audita el contenido», antes de una candidatura |
 | comprobar que un cambio no rompió nada | `verify` | **según el cambio** | siempre, al final |
 
 Casi toda petición real toca **varias**. El orden de ejecución es el de la tabla:
@@ -55,6 +56,7 @@ vive el código, content propaga al español, verify demuestra que sigue en pie.
 | «migra / reorganiza estilos» | `scss` → `verify` (comparación declaración a declaración) |
 | «aplica la escala nueva» | `proportions` → `scss` → `verify` (**por bandas, con renders**) |
 | «¿esto está bien?» | solo `verify`, y contar lo que se ha comprobado |
+| «¿esto convence a quien contrata?» | `recruiter` → `brand` → `content` → `verify` |
 
 **El coste de `verify` lo fija el cambio, no el gusto.** Cambiar una palabra son
 dos comandos. Mover mil reglas exige demostrar equivalencia declaración a
