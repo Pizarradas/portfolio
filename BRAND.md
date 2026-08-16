@@ -234,13 +234,63 @@ haber implementado AA en productos editoriales complejos.
 Estas huecos están abiertos y afectan a la credibilidad de la pieza. No
 rellenarlos inventando:
 
-- Cifras reales de impacto en 42DS (el CV afirma optimización de CSS y reducción
-  de deuda técnica; faltan los números).
+- Cifras reales de impacto en 42DS. La afirmación «rendimiento de CSS y
+  reducción de deuda técnica» aparece **tres veces en la home** sin un solo
+  número. **No se puede resolver desde el repositorio**: el CSS compilado no se
+  versiona hasta 2024, los bundles de layout nacen vacíos y la estructura del
+  SCSS cambió por el camino, así que no hay línea base contra la que medir. O
+  aparece una fuente de producción (Lighthouse, CrUX, un informe interno), o la
+  afirmación se reformula para decir solo lo que se puede probar.
 - Material de Brickee (Aliseda) para decidir si es tarjeta o caso corto.
-- El hueco laboral entre mayo 2011 y abril 2012.
-- Si su rama de Ciencias de la Información fue Periodismo — el hero lo afirma.
-- Nivel real de inglés (hoy dice «working proficiency» por defecto).
+- El hueco laboral entre mayo 2011 y abril 2012. Se ve en el tooltip de la
+  timeline, así que lo encuentra antes quien contrata que quien trabaja con él.
 - Una foto suya. El About la pide y no hay ninguna.
+- Vue figura en el stack y ningún caso lo enseña; él confirma que sí lo usa, así
+  que se queda, pero hace falta una pieza que lo demuestre. En 42DS aparece solo
+  como destino de hand-off.
+- SYX ya tiene puerta —`github.com/Pizarradas/syx` es público y completo, con
+  `AI_GUIDELINES.md`, `contracts/`, `_agents/` y el registro de componentes— y
+  desde el 16/08/2026 se enlaza en el cierre del caso de ATLAS. Queda decidir si
+  además merece caso propio: hoy es el artefacto que mejor prueba la tesis.
+- Hay **19 repositorios públicos** y el portfolio enseña seis casos. Entre los
+  que no aparecen hay piezas que sirven a registros que el sitio afirma y no
+  demuestra: `syx--emotional-spain-map`, `syx--music-identity-engine`,
+  `syx-main--languages`, `syx--monitora`, `syx-theming-demo-terra-and-velox`.
+  Decidir si alguno entra o si se enseña la lista como cuerpo de trabajo.
+- `blender-shortcuts` existe y es público, pero es una referencia de atajos en
+  HTML/CSS/JS: **no demuestra oficio 3D**, así que Blender sigue fuera del stack.
+Resueltos (16/08/2026): la rama de Ciencias de la Información **fue Periodismo**
+—el hero es literal y el About ya lo dice explícito—, y el nivel de inglés es
+**B2**, así que «working proficiency» se queda y el español deja de decir «nivel
+profesional», que prometía más que el inglés.
+
+### Lo que dice el repositorio de 42DS
+
+Verificado el 16/08/2026 contra el repositorio interno, en solo lectura. **Se
+publican cifras agregadas; nunca código, capturas internas, URLs de GitLab ni
+nombres de compañeros.**
+
+| Afirmación | Fuente | Estado |
+|---|---|---|
+| 134 familias · 31 + 71 + 32 | carpetas en `scss/fourties/{atoms,molecules,organism}` | exacta |
+| 13 modos de IA | `AI/mind-system/agents/mode-*.md` (13 de 15 ficheros) | exacta |
+| «Prensa Ibérica · 2023—2026» | primer commit suyo 11/07/2023, último 11/08/2026 | cuadra con la timeline |
+| Equipo | 11.622 commits desde 02/2023, cuatro personas principales; 6.637 suyos (57 %) | ya está en el caso |
+| Reutilización | 97 % del SCSS compartido frente a 3 % de configuración de marca (14 setups: 6 web + 8 AMP) | ya está en el caso |
+| Techo AMP | 75 KB de CSS inline por página; los ocho core en ~33 KB | ya está en el caso |
+
+El reparto 97/3 se mide sumando bytes de `.scss` en `abstracts`, `base`, `layout`
+y `fourties` frente a `brands`. Deja fuera `vendors` (terceros) y también
+`graphs` y `widgets`, que son compartidos: incluirlos subiría el 97 %, así que la
+cifra publicada es la conservadora.
+
+Sin usar, a propósito: su recuento de líneas (+4,5 M / −4,4 M) incluye CSS
+compilado y es métrica basura.
+
+Disponible y sin decidir: los ocho *core* AMP pesan hoy ~33 KB frente al techo de
+75 KB de CSS inline que impone AMP, y `amp-ep-core.css` bajó de 34.435 a 33.050
+bytes entre 07/2024 y 08/2026. Es la única cifra de rendimiento que el
+repositorio sostiene.
 
 ---
 

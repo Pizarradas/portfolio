@@ -8,5 +8,6 @@ and no missing `integrity` attribute.
 |---|---|---|
 | `gsap.min.js` | gsap 3.15.0 | GSAP standard "no charge" licence |
 | `ScrollTrigger.min.js` | gsap 3.15.0 | GSAP standard "no charge" licence |
+| `echarts.min.js` | echarts 6.1.0 | Apache-2.0 |
 
-Re-run `npm run vendor` after upgrading gsap.
+Re-run `npm run vendor` after upgrading gsap or echarts.
