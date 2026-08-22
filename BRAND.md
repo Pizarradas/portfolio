@@ -265,6 +265,26 @@ rellenarlos inventando:
   en los ficheros de `syx--atlas`; **eso no llega a producción hasta que él
   sincronice el repo de publicación**. Mientras tanto la evidencia en vivo del
   caso de ATLAS sigue enseñando dos posters donde el caso promete movimiento.
+- **El mapa: 82/16/13 contra 83/17/14.** El caso publicaba 82 ubicaciones, 16
+  cabeceras y 13 regiones; contando el dataset del demo que la propia página
+  enlaza salen **83, 17 y 14**, los tres desviados en uno y hacia arriba. Él dice
+  que las cifras salían de la hoja de Google que fue montando, y el demo es una
+  copia recortada, así que las dos fuentes pueden diferir con razón. **Mientras
+  no se reconcilien, el caso publica lo que se puede recontar en el iframe**, con
+  método y fecha, y ya no dice regiones.
+
+  El desfase tiene una causa visible en los datos: la lista de regiones contiene
+  **`Castilla-La Mancha` y `Toledo` a la vez**, y Toledo es una provincia de
+  Castilla-La Mancha. Fusionadas dan 13, que es el número que él publicaba. Su
+  única cabecera es `el-periodico-de-espana`, que además es nacional. Si se
+  arregla en el origen, el caso vuelve a poder decir 13 regiones.
+- **Cuánto costó el mapa en horas.** Aceptó pagar en tiempo lo que se ahorró en
+  licencia, pero no hay cifra: el caso lo dice sin número. Si aparece una
+  estimación —semanas, sprints—, entra.
+- **Cuántas actualizaciones lleva Producto** desde que asumió el mantenimiento
+  editorial del mapa, y **si el mapa tiene URL pública en producción**. Hoy la
+  única evidencia del caso es un demo local; una URL en vivo de Prensa Ibérica
+  sería la prueba más fuerte que le falta.
 - **Quedan cuatro `<source>` de Pexels a 403** dentro de bloques que sí funcionan
   (uno en ATELIER, tres en OBSIDIANA). No rompen nada porque el navegador salta
   a la siguiente fuente, pero son una petición fallida cada uno. Decidir si se
