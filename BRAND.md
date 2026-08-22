@@ -314,6 +314,15 @@ rellenarlos inventando:
   qué harías distinto. Y **no hay enlace externo**: la única prueba de que
   existieron son los SVG servidos desde tu propio sitio, que es la evidencia más
   débil posible. Si alguna superficie de SPORT es pública, se enlaza.
+- **El CV es siete días más viejo que el sitio y ya no dice lo mismo.** Sigue
+  afirmando «reducing technical debt» y «performance principles», que es
+  justamente lo que se retiró del sitio por no poder probarse. No es una mentira
+  —son fórmulas normales de CV— pero **el portfolio ya no corrobora al CV**, y
+  cruzar los dos es lo primero que hace quien contrata. Además el CV parece
+  listar **Blender 3D**, que §7 decidió dejar fuera del stack por no tener nada
+  que lo demuestre. **Verificar a mano**: la extracción del PDF fue parcial
+  (2 KB) y no permite afirmar qué *no* está. Instalar `poppler-utils` haría
+  comprobable este cruce en cada auditoría.
 - **Veintiún fondos blancos hardcodeados en el SCSS**, doce de ellos en
   `_code-visuals.scss`. `BRAND.md` §4 no permite valores en crudo, y además son
   una bomba de relojería: el 22/08/2026 tres de ellos dejaron el panel de
@@ -329,14 +338,11 @@ rellenarlos inventando:
   lo leen paneles, visuales de código e ilustraciones en todo el sitio, incluido
   el `mol-map-shift__panel` de la home. Es una decisión de diseño con alcance,
   no una limpieza: la toma él.
-- **La meta description ya no coincide con la entradilla en ATLAS ni en Mundial
-  2026.** Al reescribir los dos casos cambió el `lede` visible y el `<head>` se
-  dejó intacto a propósito, para no desincronizar la tarjeta OG —que lleva el
-  `h1` impreso en el PNG—. El texto de la descripción sigue siendo cierto, pero
-  es el de la versión vieja: la tarjeta que ve quien recibe el enlace promete
-  una cosa y la página abre con otra. Son cinco huecos por fichero (meta, og,
-  twitter y dos en el JSON-LD) y el texto nuevo es decisión de marca, no
-  mecánica, así que lo decide él.
+**Nota sobre las descripciones:** descripción y entradilla **no** tienen por qué
+coincidir, y en las seis páginas son distintas a propósito. La descripción es el
+gancho de quien recibe el enlace; la entradilla, la apertura de quien ya entró.
+Cada una vive en **cinco sitios del `<head>`** —meta, og, twitter y dos veces en
+el JSON-LD—, así que se cambian a la vez o se desincronizan.
 - **Cinco personas acreditadas, ocho apariciones, cero permisos confirmados.**
   Todos los nombres están escritos en el árbol de trabajo y §7.6 exige permiso
   expreso **antes del push**. Si alguien dice que no, se borra su fila; si

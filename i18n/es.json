@@ -1277,5 +1277,13 @@
   "Who was in it": "Quién estuvo",
   "I did the measuring. I did not do it in a vacuum.": "La medición la hice yo. No la hice en el vacío.",
   "The benchmark, the criteria and the measurement were mine — that part is in the fact sheet and I will stand behind it. What surrounded them was not. A study like this is only worth running if its output has somewhere to land, and these are the people it landed with.": "El benchmark, los criterios y la medición fueron míos: eso está en la ficha y lo sostengo. Lo que había alrededor, no. Un estudio así solo merece la pena si lo que sale tiene dónde aterrizar, y estas son las personas con las que aterrizó.",
-  "Design, and Figma support through the study": "Diseño, y apoyo con Figma durante el estudio"
+  "Design, and Figma support through the study": "Diseño, y apoyo con Figma durante el estudio",
+  "Prensa Ibérica had fourteen brand setups and a business that could not stop while they were unified. 42DS is the architecture underneath: 97% shared SCSS against 3% brand configuration, and later a system AI could read.": "Prensa Ibérica tenía catorce setups de marca y un negocio que no podía pararse mientras se unificaban. 42DS es la arquitectura de debajo: 97 % de SCSS compartido frente a 3 % de configuración de marca, y más tarde un sistema que la IA podía leer.",
+  "Case study 01 · Flagship · Prensa Ibérica · 2023—2026": "Caso de estudio 01 · Insignia · Prensa Ibérica · 2023—2026",
+  "A map that lived inside a JPEG. I replaced it with a Leaflet and IGN build maintained from a spreadsheet, so a location became a row to edit instead of a pixel to redraw.": "Un mapa que vivía dentro de un JPEG. Lo sustituí por una implementación de Leaflet e IGN mantenida desde una hoja de cálculo, para que una ubicación pasara a ser una fila que se edita en vez de un píxel que se redibuja.",
+  "I wrote the brief, the limits and the acceptance criteria before the first line of code, and published them alongside it. An interactive World Cup explorer built on SYX with GSAP, Three.js and Leaflet.": "Escribí el encargo, los límites y los criterios de aceptación antes de la primera línea de código, y los publiqué con él. Un explorador interactivo del Mundial construido sobre SYX con GSAP, Three.js y Leaflet.",
+  "← SPORT Cards": "← SPORT Cards",
+  "← Interactive Media Map": "← Mapa interactivo de medios",
+  "← World Cup 2026": "← Mundial 2026",
+  "← ATLAS × SYX": "← ATLAS × SYX"
 }
