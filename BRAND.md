@@ -292,11 +292,32 @@ rellenarlos inventando:
   Castilla-La Mancha. Fusionadas dan 13, que es el número que él publicaba. Su
   única cabecera es `el-periodico-de-espana`, que además es nacional. Si se
   arregla en el origen, el caso vuelve a poder decir 13 regiones.
-- **El permiso de Juan Francisco Molinera.** El caso del mapa ya lo acredita por
-  nombre, papel y enlace a su perfil (`linkedin.com/in/jfmolinera/`), escrito en
-  el árbol de trabajo pero **sin publicar**. §7.6 exige su permiso expreso antes
-  del push. Si dice que no, se borra la fila; si acepta el nombre pero no el
-  enlace, se quita solo el enlace y el resto se queda igual.
+- **Ilustraciones: dos detalles que no diste.** Cuál fue la **primera** del
+  conjunto —empezó como encargo puntual y creció, pero el caso no puede nombrar
+  cuál— y **cuáles se retiraron**. Hoy el caso dice lo defendible: que un
+  conjunto con Eurocopa 2024 y Halloween al lado de un proceso fallido lleva dos
+  vidas dentro, y que las de temporada se han ido. Con los nombres concretos
+  gana mucho.
+- **Ilustraciones no tiene hueco 8.** El cierre es tesis, no aprendizaje: falta
+  qué harías distinto. Y **no hay enlace externo**: la única prueba de que
+  existieron son los SVG servidos desde tu propio sitio, que es la evidencia más
+  débil posible. Si alguna superficie de SPORT es pública, se enlaza.
+- **La meta description ya no coincide con la entradilla en ATLAS ni en Mundial
+  2026.** Al reescribir los dos casos cambió el `lede` visible y el `<head>` se
+  dejó intacto a propósito, para no desincronizar la tarjeta OG —que lleva el
+  `h1` impreso en el PNG—. El texto de la descripción sigue siendo cierto, pero
+  es el de la versión vieja: la tarjeta que ve quien recibe el enlace promete
+  una cosa y la página abre con otra. Son cinco huecos por fichero (meta, og,
+  twitter y dos en el JSON-LD) y el texto nuevo es decisión de marca, no
+  mecánica, así que lo decide él.
+- **Dos permisos pendientes, y ninguno de los dos está publicado.** Los dos
+  nombres están escritos en el árbol de trabajo y §7.6 exige permiso expreso
+  antes del push. Si alguno dice que no, se borra su fila; si acepta el nombre
+  pero no el enlace, se quita solo el enlace y el resto se queda igual.
+  - **Juan Francisco Molinera** (`linkedin.com/in/jfmolinera/`) en el caso del
+    mapa: Product Design Lead, el encargo, las directrices y los contactos.
+  - **Deborah Garcelán Vargas** (`linkedin.com/in/deborahgarcelan/`) en
+    Ilustraciones: entonces en SPORT, revisaba cada pieza y pedía las nuevas.
 - **La segunda fila del equipo del mapa** —«Contactos de redacción y de
   negocio»— la deduje yo de que él mencionó «los contactos dentro de la empresa
   para recuperar los datos». Nadie va nombrado ahí, así que no hay problema de

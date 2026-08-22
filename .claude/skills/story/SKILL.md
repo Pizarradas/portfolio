@@ -27,25 +27,43 @@ Al escribir un caso nuevo, y al revisar uno existente que «no cuenta nada».
 Antes de `case` —primero se sabe qué secciones hacen falta, después dónde van— y
 antes de `recruiter`, que audita un texto ya escrito.
 
-## El diagnóstico de partida (22/08/2026)
+## Estado (22/08/2026)
 
-| Caso | Palabras | Lo que hay hoy | Qué es |
+El diagnóstico que abrió esto: cuatro de las seis páginas no eran casos, eran
+tarjetas con URL —entre 508 y 560 palabras—. Enseñaban el resultado y saltaban
+todo lo demás. **Esas cuatro están cerradas.**
+
+| Caso | Antes | Ahora | Auditado con esta skill |
 |---|---|---|---|
-| 42DS | ~1.655 | 5 capítulos · 13 secciones | caso completo. **El patrón** |
-| SPORT Cards | ~1.216 | 7 secciones, arco cerrado | caso completo. **El mejor arco** |
-| Mapa | ~560 | 1 sección + evidencia en vivo | ficha ampliada |
-| ATLAS | ~547 | 1 sección + 4 rótulos | ficha ampliada |
-| Ilustraciones | ~513 | 4 rótulos | ficha ampliada |
-| Mundial 2026 | ~508 | 1 sección + evidencia en vivo | ficha ampliada |
+| 42DS | 1.655 | 1.655 | **no** |
+| SPORT Cards | 1.216 | 1.216 | **no** |
+| ATLAS | 547 | **1.421** | sí |
+| Mapa | 560 | **1.138** | sí |
+| Mundial 2026 | 508 | **1.124** | sí |
+| Ilustraciones | 513 | **868** | sí |
 
-**Cuatro de seis no son casos: son tarjetas con página propia.** Enseñan el
-resultado y saltan todo lo demás. Ese es el hallazgo que hay que cerrar, y se
-cierra caso por caso, no de una pasada.
+**42DS y SPORT Cards nunca han pasado por la rejilla.** Pasaron el filtro inicial
+por longitud, que no es lo mismo: un caso de 1.655 palabras puede seguir sin
+declarar objetivo, renuncia ni impacto. Son los dos que quedan, y 42DS además
+tiene el bloque de equipo pendiente (`BRAND.md` §7.6).
 
-SPORT Cards es el modelo a imitar antes que 42DS: con 1.216 palabras recorre los
-nueve huecos —pregunta de producto, montaje, hallazgo, alternativa, compromiso,
-qué cambió, qué se lleva— y ninguna sección repite a otra. 42DS es más largo
-porque el sistema es más grande, no porque un caso deba ser largo.
+SPORT Cards sigue siendo el modelo a imitar antes que 42DS: con 1.216 palabras
+recorre el arco entero —pregunta de producto, montaje, hallazgo, alternativa,
+compromiso, qué cambió, qué se lleva— y ninguna sección repite a otra.
+
+### Lo que enseñaron las cuatro reescrituras
+
+- **El dato suele estar en el repositorio, no en su memoria.** En Mundial 2026,
+  `project-docs/` tenía el objetivo y las restricciones escritos y fechados
+  antes del build; en ATLAS, los tokens compartidos eran contables. Mira el
+  artefacto **antes** de gastar preguntas.
+- **Comprueba la evidencia que el caso enlaza.** En ATLAS, dos bloques de vídeo
+  servían 403; en el Mapa, el dataset del iframe no cuadraba con las cifras
+  publicadas. Las dos cosas las encuentra en dos minutos quien contrata.
+- **«No fijé criterio» y «no volví a abrir el checklist» son buenas respuestas.**
+  Un listón que se cumple al 100 % hace sospechar que se escribió al final.
+- **La longitud no es la meta.** Ilustraciones cerró en 868 palabras porque su
+  argumento es visual: ahí la prosa de más resta.
 
 ## La ficha y los ocho huecos
 
