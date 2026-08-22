@@ -36,15 +36,22 @@ todo lo demás. **Esas cuatro están cerradas.**
 | Caso | Antes | Ahora | Auditado con esta skill |
 |---|---|---|---|
 | 42DS | 1.655 | **1.900** | sí |
-| SPORT Cards | 1.216 | 1.216 | **no** |
+| SPORT Cards | 1.216 | **1.361** | sí |
 | ATLAS | 547 | **1.421** | sí |
 | Mapa | 560 | **1.138** | sí |
 | Mundial 2026 | 508 | **1.124** | sí |
 | Ilustraciones | 513 | **868** | sí |
 
-**SPORT Cards nunca ha pasado por la rejilla.** Pasó el filtro inicial por
-longitud, que no es lo mismo: un caso de 1.216 palabras puede seguir sin
-declarar objetivo, renuncia ni impacto. Es el que queda.
+**Las seis han pasado por la rejilla.** Lo que queda son datos suyos, no
+estructura: los permisos del equipo y un puñado de alcances y fechas, todo
+anotado en `BRAND.md` §7.
+
+**Lo que enseñó SPORT Cards: audita antes de acusar.** Di por vacío el hueco 3
+—«el caso no reconoce el límite de las muestras»— y estaba publicado, en un
+`atom-data-note` pegado al gráfico comparativo. Mi búsqueda miraba `figcaption`
+y `<small>` y esa clase no entraba. **Antes de declarar un hueco vacío, busca por
+contenido y no por las clases que esperas encontrar.** Un hallazgo falso en una
+auditoría cuesta más que el hueco que pretendía arreglar.
 
 **Lo que enseñó 42DS: la longitud engaña.** Era el más largo del sitio y aun así
 le faltaban el objetivo y el impacto, y tenía los dos problemas peor colocados

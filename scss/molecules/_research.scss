@@ -188,10 +188,21 @@
   //
   // El tope va en la molecula y no en la seccion: quien decide el ancho es la
   // naturaleza del contenido, no donde este colocado.
+  // El panel toma la superficie del contexto, no un blanco fijo.
+  //
+  // Con `background: #fff` el panel se plantaba en blanco dentro de la banda
+  // azul del caso mientras su texto heredaba el blanco del contexto: un
+  // rectángulo vacío. Es la trampa que la skill `case` ya tenía escrita —«un
+  // contexto oscuro no puede envolver paneles claros»— y la respuesta no es
+  // sacar el panel de la banda, es que **adopte el contexto en vez de pelearse
+  // con él**: dentro de azul se sirve en azul con texto blanco y bordes de
+  // alfa, y en página clara `--semantic-color-surface` es blanco, así que fuera
+  // de la banda no cambia nada. De paso desaparece un valor hardcodeado, que
+  // `BRAND.md` §4 no permite.
   .mol-research-model {
     max-width: var(--semantic-width-scan);
     border: 1px solid var(--semantic-color-border);
-    background: #fff;
+    background: var(--semantic-color-surface);
     min-width: 0;
   }
 
@@ -254,7 +265,7 @@
   .mol-research-model__criteria div {
     padding: .8rem;
     border: 1px solid var(--semantic-color-border);
-    background: #fff;
+    background: var(--semantic-color-surface);
   }
 
   .mol-research-model__criteria small {

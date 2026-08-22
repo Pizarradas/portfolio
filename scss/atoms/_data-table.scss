@@ -22,7 +22,9 @@
     width: 100%;
     margin-bottom: .65rem;
     border: 1px solid var(--semantic-color-border);
-    background: #fff;
+    // La superficie del contexto, no un blanco fijo: esta tabla vive dentro del
+    // panel de investigación y ese panel puede ir en una banda de color.
+    background: var(--semantic-color-surface);
     padding: .45rem .65rem;
   }
 

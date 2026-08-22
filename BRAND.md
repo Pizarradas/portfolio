@@ -248,11 +248,20 @@ haber implementado AA en productos editoriales complejos.
 Estas huecos están abiertos y afectan a la credibilidad de la pieza. No
 rellenarlos inventando:
 
-- **El equipo de 42DS está escrito con el cargo, no con el papel.** Molinera,
+- **SPORT Cards: dónde y desde cuándo se adoptó el 16:9.** El caso ya dice que
+  la alternativa se adoptó —es el cierre del arco y cambia el peso de la
+  página—, pero sin alcance ni fecha. En qué cabeceras y desde cuándo lo
+  convierte de afirmación en hecho comprobable.
+- **Cinco de los ocho créditos van con el cargo, no con el papel.** Molinera,
   Cabado y Herrero aparecen con su título —Product Design Lead, Design System
   Engineer, Chief Product Officer— porque es lo que él dio. La skill `story`
   pide el papel **en ese proyecto**: «revisó cada hand-off a Vue» sitúa mejor que
-  un cargo, y de paso delimita lo suyo. Con una línea por persona el bloque
+  un cargo, y de paso delimita lo suyo. Los dos que sí lo tienen —Garcelán,
+  «revisaba cada pieza y pedía las nuevas», y Domínguez, «diseño y apoyo con
+  Figma durante el estudio»— se leen mucho mejor y son la prueba de que merece la
+  pena. **Molinera sale en tres casos con la misma línea en los tres**, que es
+  exactamente lo que provoca acreditar por cargo. Con una línea por persona el
+  bloque
   mejora mucho.
 - **42DS se quedó en 1.900 palabras**, por encima incluso del tramo largo. El
   bulto está en el Acto 03, que dedica nueve secciones a describir la solución.
@@ -305,6 +314,12 @@ rellenarlos inventando:
   qué harías distinto. Y **no hay enlace externo**: la única prueba de que
   existieron son los SVG servidos desde tu propio sitio, que es la evidencia más
   débil posible. Si alguna superficie de SPORT es pública, se enlaza.
+- **Veintiún fondos blancos hardcodeados en el SCSS**, doce de ellos en
+  `_code-visuals.scss`. `BRAND.md` §4 no permite valores en crudo, y además son
+  una bomba de relojería: el 22/08/2026 tres de ellos dejaron el panel de
+  investigación de SPORT en blanco sobre blanco al poner esa sección en banda
+  azul. Esos tres están arreglados; los otros veintiuno no viven hoy dentro de
+  ninguna banda, pero reventarán igual el día que uno lo haga.
 - **Los últimos 0,06 de contraste sobre azul.** La deuda registrada en
   `check-contrast.mjs` bajó de cuatro entradas a dos: `.syx-on-brand` ya repunta
   el texto tenue a `alpha-light-78` y pasa de 3,31:1 a 4,65:1. Las dos que
@@ -322,20 +337,22 @@ rellenarlos inventando:
   una cosa y la página abre con otra. Son cinco huecos por fichero (meta, og,
   twitter y dos en el JSON-LD) y el texto nuevo es decisión de marca, no
   mecánica, así que lo decide él.
-- **Cuatro personas acreditadas, cinco apariciones, cero permisos confirmados.**
+- **Cinco personas acreditadas, ocho apariciones, cero permisos confirmados.**
   Todos los nombres están escritos en el árbol de trabajo y §7.6 exige permiso
   expreso **antes del push**. Si alguien dice que no, se borra su fila; si
   acepta el nombre pero no el enlace, se quita solo el enlace y el resto se
   queda igual.
 
-  | Persona | Dónde | Perfil |
+  | Persona | Dónde aparece | Perfil |
   |---|---|---|
-  | Juan Francisco Molinera | **Mapa** y **42DS** | `linkedin.com/in/jfmolinera/` |
-  | Deborah Garcelán Vargas | Ilustraciones | `linkedin.com/in/deborahgarcelan/` |
-  | Susana Cabado | 42DS | `linkedin.com/in/susana-cabado-97b13a12/` |
+  | Juan Francisco Molinera | **Mapa · 42DS · SPORT Cards** | `linkedin.com/in/jfmolinera/` |
+  | Susana Cabado | **42DS · SPORT Cards** | `linkedin.com/in/susana-cabado-97b13a12/` |
   | Jorge Herrero | 42DS | `linkedin.com/in/herrero/` |
+  | Tania Domínguez | SPORT Cards | `linkedin.com/in/tania-dominguez/` |
+  | Deborah Garcelán Vargas | Ilustraciones | `linkedin.com/in/deborahgarcelan/` |
 
-  Molinera sale en dos casos, así que al pedirle permiso hay que decirle los dos.
+  **Molinera sale en tres casos y Cabado en dos**: al escribirles hay que
+  decírselos todos, no solo uno. Un permiso dado para una página no cubre otra.
 - **La segunda fila del equipo del mapa** —«Contactos de redacción y de
   negocio»— la deduje yo de que él mencionó «los contactos dentro de la empresa
   para recuperar los datos». Nadie va nombrado ahí, así que no hay problema de

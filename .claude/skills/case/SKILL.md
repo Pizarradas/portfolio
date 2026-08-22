@@ -147,6 +147,24 @@ render o en ninguna parte.
   tokens lee 47 tokens semánticos de color: con `.syx-on-night` encima, sus
   paneles blancos se quedan con texto blanco. El sistema aún no tiene contexto
   claro anidable.
+
+  **La salida no es sacar el panel de la banda: es que adopte el contexto.** Un
+  `background: #fff` fijo pelea contra el contexto y pierde —fondo blanco, texto
+  blanco, rectángulo vacío—; un `background: var(--semantic-color-surface)` lo
+  acompaña, porque en página clara ese token **es** blanco y dentro de la banda
+  es el color de la banda. Pasó el 22/08/2026 con `.mol-research-model` al poner
+  en azul el primer acto de SPORT, y se arregló cambiando tres blancos
+  hardcodeados por el token —dos en `_research.scss` y uno en
+  `_data-table.scss`—, que además es lo que `BRAND.md` §4 exige.
+
+  Así que antes de poner en banda una sección con paneles: **busca colores en
+  crudo dentro de sus componentes**, no solo tokens.
+  ```bash
+  grep -rn "background:\s*#\|color:\s*#\|rgba(" scss/molecules scss/atoms
+  ```
+  Quedan **21 fondos blancos hardcodeados** en el sistema, la mitad en
+  `_code-visuals.scss`. Ninguno vive hoy dentro de una banda; el día que uno lo
+  haga, reventará igual.
 - **Nada de `opacity` para una etiqueta.** Compone contra lo que haya detrás, así
   que el contraste deja de poder calcularse. Color siempre.
 - **`color: inherit` en `a` gana a la regla del componente** (0,1,1 contra
