@@ -248,13 +248,16 @@ haber implementado AA en productos editoriales complejos.
 Estas huecos están abiertos y afectan a la credibilidad de la pieza. No
 rellenarlos inventando:
 
-- Cifras reales de impacto en 42DS. La afirmación «rendimiento de CSS y
-  reducción de deuda técnica» aparece **tres veces en la home** sin un solo
-  número. **No se puede resolver desde el repositorio**: el CSS compilado no se
-  versiona hasta 2024, los bundles de layout nacen vacíos y la estructura del
-  SCSS cambió por el camino, así que no hay línea base contra la que medir. O
-  aparece una fuente de producción (Lighthouse, CrUX, un informe interno), o la
-  afirmación se reformula para decir solo lo que se puede probar.
+- **El equipo de 42DS está escrito con el cargo, no con el papel.** Molinera,
+  Cabado y Herrero aparecen con su título —Product Design Lead, Design System
+  Engineer, Chief Product Officer— porque es lo que él dio. La skill `story`
+  pide el papel **en ese proyecto**: «revisó cada hand-off a Vue» sitúa mejor que
+  un cargo, y de paso delimita lo suyo. Con una línea por persona el bloque
+  mejora mucho.
+- **42DS se quedó en 1.900 palabras**, por encima incluso del tramo largo. El
+  bulto está en el Acto 03, que dedica nueve secciones a describir la solución.
+  Antes de recortar hay que decidir si alguna repite a otra; es la misma trampa
+  que ya costó una reconstrucción entera.
 - Material de Brickee (Aliseda) para decidir si es tarjeta o caso corto.
 - El hueco laboral entre mayo 2011 y abril 2012. Se ve en el tooltip de la
   timeline, así que lo encuentra antes quien contrata que quien trabaja con él.
@@ -319,14 +322,20 @@ rellenarlos inventando:
   una cosa y la página abre con otra. Son cinco huecos por fichero (meta, og,
   twitter y dos en el JSON-LD) y el texto nuevo es decisión de marca, no
   mecánica, así que lo decide él.
-- **Dos permisos pendientes, y ninguno de los dos está publicado.** Los dos
-  nombres están escritos en el árbol de trabajo y §7.6 exige permiso expreso
-  antes del push. Si alguno dice que no, se borra su fila; si acepta el nombre
-  pero no el enlace, se quita solo el enlace y el resto se queda igual.
-  - **Juan Francisco Molinera** (`linkedin.com/in/jfmolinera/`) en el caso del
-    mapa: Product Design Lead, el encargo, las directrices y los contactos.
-  - **Deborah Garcelán Vargas** (`linkedin.com/in/deborahgarcelan/`) en
-    Ilustraciones: entonces en SPORT, revisaba cada pieza y pedía las nuevas.
+- **Cuatro personas acreditadas, cinco apariciones, cero permisos confirmados.**
+  Todos los nombres están escritos en el árbol de trabajo y §7.6 exige permiso
+  expreso **antes del push**. Si alguien dice que no, se borra su fila; si
+  acepta el nombre pero no el enlace, se quita solo el enlace y el resto se
+  queda igual.
+
+  | Persona | Dónde | Perfil |
+  |---|---|---|
+  | Juan Francisco Molinera | **Mapa** y **42DS** | `linkedin.com/in/jfmolinera/` |
+  | Deborah Garcelán Vargas | Ilustraciones | `linkedin.com/in/deborahgarcelan/` |
+  | Susana Cabado | 42DS | `linkedin.com/in/susana-cabado-97b13a12/` |
+  | Jorge Herrero | 42DS | `linkedin.com/in/herrero/` |
+
+  Molinera sale en dos casos, así que al pedirle permiso hay que decirle los dos.
 - **La segunda fila del equipo del mapa** —«Contactos de redacción y de
   negocio»— la deduje yo de que él mencionó «los contactos dentro de la empresa
   para recuperar los datos». Nadie va nombrado ahí, así que no hay problema de
@@ -342,6 +351,18 @@ rellenarlos inventando:
   (uno en ATELIER, tres en OBSIDIANA). No rompen nada porque el navegador salta
   a la siguiente fuente, pero son una petición fallida cada uno. Decidir si se
   limpian.
+
+Resueltos (22/08/2026): **la afirmación de rendimiento de 42DS ya no se hace.**
+«CSS performance and technical-debt reduction» estaba en la ficha del caso y dos
+veces más en la home vía `build-timeline.mjs`, sin un solo número y sin línea
+base posible. Se reformuló para nombrar **el trabajo y la restricción**, que sí
+son comprobables, en vez del resultado: «front-end dentro del presupuesto de CSS
+inline que impone AMP» y «mantenimiento de un core compartido por todas las
+marcas». En la ficha, lo que él posee pasa a ser «la línea entre el core
+compartido y la configuración de marca», que además es la decisión que el propio
+caso cuenta como suya. Queda sin usar la única cifra que el repositorio sostiene
+—los ocho core AMP a ~33 KB contra el techo de 75 KB—; si algún día se publica,
+va con su fuente.
 
 Resueltos (22/08/2026): **los dominios de conocimiento de ATLAS son seis** —
 branding, front, motion, syx, ui, ux—, entre 3 y 18 ficheros cada uno. La séptima

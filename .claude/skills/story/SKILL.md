@@ -35,17 +35,24 @@ todo lo demás. **Esas cuatro están cerradas.**
 
 | Caso | Antes | Ahora | Auditado con esta skill |
 |---|---|---|---|
-| 42DS | 1.655 | 1.655 | **no** |
+| 42DS | 1.655 | **1.900** | sí |
 | SPORT Cards | 1.216 | 1.216 | **no** |
 | ATLAS | 547 | **1.421** | sí |
 | Mapa | 560 | **1.138** | sí |
 | Mundial 2026 | 508 | **1.124** | sí |
 | Ilustraciones | 513 | **868** | sí |
 
-**42DS y SPORT Cards nunca han pasado por la rejilla.** Pasaron el filtro inicial
-por longitud, que no es lo mismo: un caso de 1.655 palabras puede seguir sin
-declarar objetivo, renuncia ni impacto. Son los dos que quedan, y 42DS además
-tiene el bloque de equipo pendiente (`BRAND.md` §7.6).
+**SPORT Cards nunca ha pasado por la rejilla.** Pasó el filtro inicial por
+longitud, que no es lo mismo: un caso de 1.216 palabras puede seguir sin
+declarar objetivo, renuncia ni impacto. Es el que queda.
+
+**Lo que enseñó 42DS: la longitud engaña.** Era el más largo del sitio y aun así
+le faltaban el objetivo y el impacto, y tenía los dos problemas peor colocados
+del portfolio — **el encargo al 35 % y la atribución al 95 %**. Quien lee 1.600
+palabras dando por hecho que todo es de una persona y se entera en la penúltima
+frase de que hay equipo, se siente engañado aunque el dato estuviera. Ahora el
+reparto está en la ficha y el acto «Quién lo construyó» va al 2 %. **En un caso
+de sistema compartido, el hueco 0b va arriba, no al final.**
 
 SPORT Cards sigue siendo el modelo a imitar antes que 42DS: con 1.216 palabras
 recorre el arco entero —pregunta de producto, montaje, hallazgo, alternativa,

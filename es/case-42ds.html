@@ -82,7 +82,8 @@ gtag('config', 'G-B01K8E4SDY');
 <p class="org-case-opener__lede">Prensa Ibérica necesitaba un sistema capaz de soportar distintas marcas, tecnologías y necesidades editoriales sin congelar el negocio. 42DS se convirtió en la arquitectura compartida que conectó diseño, front-end, desarrollo y, más adelante, flujos asistidos por IA.</p>
 <dl class="mol-case-facts">
 <div><dt>Mi rol</dt><dd>Product Designer &amp; Front-End Engineer</dd></div>
-<div><dt>De qué me ocupo</dt><dd>Arquitectura de design tokens (Figma → JSON → Style Dictionary) · WCAG 2.1 AA · rendimiento CSS y reducción de deuda técnica</dd></div>
+<div><dt>De qué me ocupo</dt><dd>Arquitectura de design tokens (Figma → JSON → Style Dictionary) · WCAG 2.1 AA · la línea entre el core compartido y la configuración de marca</dd></div>
+<div><dt>Equipo</dt><dd>Cuatro personas principales · 6.637 de 11.622 commits son míos</dd></div>
 <div><dt>Sistema</dt><dd>Figma · SCSS · HTML · JS · Storybook · entrega a Vue</dd></div>
 </dl>
 </header>
@@ -100,8 +101,63 @@ gtag('config', 'G-B01K8E4SDY');
 <div><dt>Niveles de composición</dt><dd>3</dd></div>
 <div><dt>Modos de IA especializados</dt><dd>13</dd></div>
 </dl>
-</section><section class="org-case__chapter syx-span-survey">
+</section>
+<section aria-labelledby="who-built-it-title" class="org-case__act syx-span-survey js-reveal">
+<div class="mol-section-heading">
+<p class="atom-eyebrow">Quién lo construyó</p>
+<h2 id="who-built-it-title">Un equipo interno pequeño, y una parte que se puede contar.</h2>
+<p>42DS lo construye y lo mantiene un equipo interno pequeño. No es el sistema de una sola persona, y leer el resto de este caso como si lo fuera sería un error. Entré sobre todo como perfil de diseño y front-end dentro de una arquitectura que otros ya habían empezado, y mi parte creció con ella: a agosto de 2026, 6.637 de los 11.622 commits del repositorio desde febrero de 2023 son míos. Es la forma más honesta que tengo de decir cuánto de esto es trabajo mío y cuánto no. Debajo están las personas con las que más trabajé, y el recuento de commits mide código: no todo el que decidió sobre el sistema aparece en él.</p>
+</div>
+<ul class="mol-case-roster mol-case-roster--people">
+<li><b>Juan Francisco Molinera</b><span>Product Design Lead</span><a class="atom-text-link" href="https://www.linkedin.com/in/jfmolinera/" rel="noopener" target="_blank">LinkedIn ↗</a></li>
+<li><b>Susana Cabado</b><span>Design System Engineer</span><a class="atom-text-link" href="https://www.linkedin.com/in/susana-cabado-97b13a12/" rel="noopener" target="_blank">LinkedIn ↗</a></li>
+<li><b>Jorge Herrero</b><span>Chief Product Officer</span><a class="atom-text-link" href="https://www.linkedin.com/in/herrero/" rel="noopener" target="_blank">LinkedIn ↗</a></li>
+</ul>
+</section>
+<section class="org-case__chapter syx-span-survey">
 <p class="atom-index">Acto 01</p>
+<h2>Lo que había que decidir</h2>
+</section>
+<section aria-labelledby="business-problem-title" class="org-case__act syx-span-survey js-reveal">
+<div class="mol-section-heading">
+<p class="atom-eyebrow">El problema de negocio</p>
+<h2 id="business-problem-title">Unificar sin parar la compañía.</h2>
+<p>Prensa Ibérica había crecido hasta convertirse en un ecosistema multimarca con distintas tecnologías, identidades y decisiones heredadas. La unificación tenía que ocurrir mientras el trabajo del día a día —correcciones, patrocinios, cambios visuales y peticiones editoriales— seguía adelante.</p>
+</div>
+<p>Así que el primer trabajo no fue «diseñar el sistema nuevo». Fue entender el que ya existía: auditar el rendimiento y la complejidad del CSS, aprender el legacy e identificar qué podía pasar a ser compartido.</p>
+</section>
+<section aria-labelledby="what-counted-title" class="org-case__act syx-span-survey js-reveal">
+<div class="mol-section-heading">
+<p class="atom-eyebrow">Qué contaba como éxito</p>
+<h2 id="what-counted-title">Un arreglo, todas las marcas.</h2>
+<p>El listón era un comportamiento y no un número, y conviene decir sus dos mitades.</p>
+</div>
+<dl class="mol-case-ledger">
+<div><dt>Qué significaba que saliera bien</dt><dd>Que una corrección hecha una vez llegara a todas las cabeceras, y que una marca nueva entrara como configuración y no como código. Si el mismo arreglo seguía habiendo que repetirlo cabecera por cabecera, el sistema no había hecho su trabajo por bien que se viera.</dd></div>
+<div><dt>Lo que nadie midió</dt><dd>Nadie escribió ese listón ni lo siguió contra una línea base. Esto era el día a día del negocio con un sistema creciendo dentro, así que la evidencia es estructural —el reparto entre core y marca, y los catorce setups— y no un antes y un después.</dd></div>
+</dl>
+</section>
+<section aria-labelledby="foundations-title" class="org-case__band syx-span-survey syx-on-night js-reveal">
+<div class="mol-section-heading">
+<p class="atom-eyebrow">Fundamentos</p>
+<h2 id="foundations-title">Separar lo global de lo específico de cada marca.</h2>
+<p>Tracé la línea por lo que una marca puede redefinir, no por dónde vive el código. Cuatro de las cinco capas son compartidas. Solo cambia la configuración de marca. Medido hoy, el reparto es 97 % de SCSS compartido frente a 3 % de configuración de marca: catorce setups, seis de web y ocho de AMP.</p>
+</div>
+<figure class="mol-case-figure">
+<div class="mol-foundation-map js-reveal">
+<p class="mol-foundation-map__group">Compartido por todas las marcas</p>
+<div><b>ABSTRACTS</b><span>variables</span><span>mixins</span><span>mapas</span><span>funciones</span></div>
+<div><b>BASE</b><span>reset</span><span>helpers</span><span>oscuro</span></div>
+<div><b>LAYOUT</b><span>rejilla</span><span>breakpoints</span></div>
+<div><b>FOURTIES</b><span>átomos</span><span>moléculas</span><span>organismos</span><small>nombre interno del paquete</small></div>
+<p class="mol-foundation-map__group mol-foundation-map__group--brand">Por marca</p>
+<div class="mol-foundation-map__brand"><b>MARCAS</b><span>configuración</span><span>tipografía</span><span>color</span><span>comportamientos</span></div>
+</div>
+<figcaption>Primero los fundamentos compartidos. La configuración de marca y la composición de componentes van encima.</figcaption>
+</figure>
+</section>
+<section class="org-case__chapter syx-span-survey">
+<p class="atom-index">Acto 02</p>
 <h2>Cómo está construido el sistema</h2>
 </section>
 <section aria-labelledby="architecture-atlas-title" class="org-case__act syx-span-survey org-architecture-atlas js-reveal">
@@ -144,37 +200,6 @@ gtag('config', 'G-B01K8E4SDY');
 <svg class="mol-arch-map__svg mol-arch-map__svg--narrow" viewBox="0 0 285 676" role="img" aria-label="Modelo operativo con 42DS en el centro, conectado a Figma, front-end, Storybook, Vue y el AI Mind System." preserveAspectRatio="xMidYMin meet"><g class="mol-arch-map__edges"><path class="atom-arch-edge" style="--edge-length:34" d="M142.5 91 L142.5 125"/><path class="atom-arch-edge" style="--edge-length:34" d="M142.5 206 L142.5 240"/><path class="atom-arch-edge" style="--edge-length:34" d="M142.5 321 L142.5 355"/><path class="atom-arch-edge" style="--edge-length:34" d="M142.5 436 L142.5 470"/><path class="atom-arch-edge" style="--edge-length:34" d="M142.5 551 L142.5 585"/></g><g class="mol-arch-map__nodes"><g class="atom-arch-node atom-arch-node--primary"><rect class="atom-arch-node__box" x="10" y="10" width="265" height="81" rx="2"/><text class="atom-arch-node__index" font-size="10.2" x="29" y="39.2">Arquitectura compartida</text><text class="atom-arch-node__label" font-size="22.8" x="29" y="71.3">42DS</text></g><g class="atom-arch-node atom-arch-node--target"><rect class="atom-arch-node__box" x="10" y="125" width="265" height="81" rx="2"/><text class="atom-arch-node__index" font-size="10.2" x="29" y="154.2">Diseño</text><text class="atom-arch-node__label" font-size="22.8" x="29" y="186.3">Figma</text></g><g class="atom-arch-node atom-arch-node--target"><rect class="atom-arch-node__box" x="10" y="240" width="265" height="81" rx="2"/><text class="atom-arch-node__index" font-size="10.2" x="29" y="269.2">Capa canónica</text><text class="atom-arch-node__label" font-size="22.8" x="29" y="301.3">HTML / SCSS / JS</text></g><g class="atom-arch-node atom-arch-node--target"><rect class="atom-arch-node__box" x="10" y="355" width="265" height="81" rx="2"/><text class="atom-arch-node__index" font-size="10.2" x="29" y="384.2">Documentación</text><text class="atom-arch-node__label" font-size="22.8" x="29" y="416.3">Storybook</text></g><g class="atom-arch-node atom-arch-node--target"><rect class="atom-arch-node__box" x="10" y="470" width="265" height="81" rx="2"/><text class="atom-arch-node__index" font-size="10.2" x="29" y="499.2">Integración</text><text class="atom-arch-node__label" font-size="22.8" x="29" y="531.3">Vue</text></g><g class="atom-arch-node atom-arch-node--target"><rect class="atom-arch-node__box" x="10" y="585" width="265" height="81" rx="2"/><text class="atom-arch-node__index" font-size="10.2" x="29" y="614.2">Contexto + gobernanza</text><text class="atom-arch-node__label" font-size="22.8" x="29" y="646.3">AI Mind System</text></g></g></svg>
 </div>
 <!-- operating:end -->
-</section>
-<section class="org-case__chapter syx-span-survey">
-<p class="atom-index">Acto 02</p>
-<h2>Lo que había que decidir</h2>
-</section>
-<section aria-labelledby="business-problem-title" class="org-case__act syx-span-survey js-reveal">
-<div class="mol-section-heading">
-<p class="atom-eyebrow">El problema de negocio</p>
-<h2 id="business-problem-title">Unificar sin parar la compañía.</h2>
-<p>Prensa Ibérica había crecido hasta convertirse en un ecosistema multimarca con distintas tecnologías, identidades y decisiones heredadas. La unificación tenía que ocurrir mientras el trabajo del día a día —correcciones, patrocinios, cambios visuales y peticiones editoriales— seguía adelante.</p>
-</div>
-<p>Así que el primer trabajo no fue «diseñar el sistema nuevo». Fue entender el que ya existía: auditar el rendimiento y la complejidad del CSS, aprender el legacy e identificar qué podía pasar a ser compartido.</p>
-</section>
-<section aria-labelledby="foundations-title" class="org-case__band syx-span-survey syx-on-night js-reveal">
-<div class="mol-section-heading">
-<p class="atom-eyebrow">Fundamentos</p>
-<h2 id="foundations-title">Separar lo global de lo específico de cada marca.</h2>
-<p>Tracé la línea por lo que una marca puede redefinir, no por dónde vive el código. Cuatro de las cinco capas son compartidas. Solo cambia la configuración de marca. Medido hoy, el reparto es 97 % de SCSS compartido frente a 3 % de configuración de marca: catorce setups, seis de web y ocho de AMP.</p>
-</div>
-<figure class="mol-case-figure">
-<div class="mol-foundation-map js-reveal">
-<p class="mol-foundation-map__group">Compartido por todas las marcas</p>
-<div><b>ABSTRACTS</b><span>variables</span><span>mixins</span><span>mapas</span><span>funciones</span></div>
-<div><b>BASE</b><span>reset</span><span>helpers</span><span>oscuro</span></div>
-<div><b>LAYOUT</b><span>rejilla</span><span>breakpoints</span></div>
-<div><b>FOURTIES</b><span>átomos</span><span>moléculas</span><span>organismos</span><small>nombre interno del paquete</small></div>
-<p class="mol-foundation-map__group mol-foundation-map__group--brand">Por marca</p>
-<div class="mol-foundation-map__brand"><b>MARCAS</b><span>configuración</span><span>tipografía</span><span>color</span><span>comportamientos</span></div>
-</div>
-<figcaption>Primero los fundamentos compartidos. La configuración de marca y la composición de componentes van encima.</figcaption>
-</figure>
 </section>
 <section class="org-case__chapter syx-span-survey">
 <p class="atom-index">Acto 03</p>
@@ -479,7 +504,7 @@ gtag('config', 'G-B01K8E4SDY');
 <div class="mol-section-heading">
 <p class="atom-eyebrow">Qué cambió</p>
 <h2 id="what-changed-title">La arquitectura creció. Mi rol creció con ella.</h2>
-<p>42DS lo construye y lo mantiene un equipo interno pequeño. Entré sobre todo como perfil de diseño y front-end dentro de la arquitectura. A medida que el sistema creció, mi rol se movió hacia Product Design de principio a fin y ejecución asistida por IA. A agosto de 2026, 6.637 de los 11.622 commits del repositorio desde febrero de 2023 son míos.</p>
+<p>Mi papel se movió hacia el diseño de producto de principio a fin y la ejecución asistida por IA a medida que el sistema crecía. Lo que no anticipé es que el trabajo decisivo iba a ser documental y no visual: la línea entre lo que se comparte y lo que es de una marca aguanta porque está escrita y se hace cumplir, no porque se trazara bien una vez.</p>
 </div>
 <blockquote>La evolución más importante no fue añadir más componentes. Fue convertir el conocimiento implícito en un sistema explícito: primero para las personas y, con el tiempo, para la IA.</blockquote>
 </section>

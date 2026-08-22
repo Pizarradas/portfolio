@@ -179,8 +179,13 @@
     // entrada de persona además es más ancha que un identificador —nombre,
     // papel y enlace—, así que en equipos pequeños dos columnas es también la
     // medida correcta, no solo la que evita el hueco.
+    // Tres escalones, en orden de cantidad: el último que se cumple gana.
     .mol-case-roster--people {
       grid-template-columns: 1fr 1fr;
+    }
+
+    .mol-case-roster--people:has(> li:nth-child(3)) {
+      grid-template-columns: repeat(3, 1fr);
     }
 
     .mol-case-roster--people:has(> li:nth-child(4)) {

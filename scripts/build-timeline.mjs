@@ -81,15 +81,20 @@ const ROLES = [
   {
     org: 'Prensa Ibérica', from: '2023-07', to: '2026-08', scope: 4,
     role: 'Product Designer & Front-End Engineer', tag: 'Multi-brand',
-    note: '42DS: design tokens, WCAG 2.1 AA and CSS performance across the group.',
+    note: '42DS: design tokens, WCAG 2.1 AA and a core shared across the group.',
     said: 'The system became a product used by others.',
     where: 'Madrid, Spain',
     detail: [
       'Components in Figma inside the 42DS design system.',
       'Design-token architecture: Figma → JSON → Style Dictionary.',
       'WCAG 2.1 AA across complex editorial products.',
-      'CSS and front-end performance on high-traffic titles.',
-      'Maintainability and technical-debt reduction.',
+      // Decían «CSS and front-end performance» y «technical-debt reduction».
+      // Las dos afirmaban un resultado que no se puede probar: el CSS compilado
+      // no se versiona hasta 2024 y no hay línea base contra la que medir
+      // (`BRAND.md` §7). Ahora nombran el trabajo y la restricción, que sí son
+      // comprobables, y no el resultado.
+      'Front-end inside the inline-CSS budget AMP imposes, on high-traffic titles.',
+      'Maintaining a core shared by every brand in the group.',
     ],
   },
 ];
