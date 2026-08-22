@@ -31,6 +31,11 @@ que no se rompió).
 El paginador (`.org-case-next`) y el pie son de armazón: ya están resueltos para
 las seis páginas, no se tocan por página.
 
+Esas cinco son el **armazón**: dónde va cada cosa. El **contenido** que va dentro
+tiene dos piezas más —`.mol-case-ledger` para el objetivo y la renuncia,
+`.mol-case-roster` para un conjunto nombrado— y las decide la skill `story`, que
+es la fuente de qué hueco narrativo llena cada una. No las inventes desde aquí.
+
 ## Los siete criterios
 
 1. **Un registro para toda la página: `syx-span-survey`.** `showcase` una vez

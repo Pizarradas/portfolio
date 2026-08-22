@@ -259,6 +259,23 @@ rellenarlos inventando:
   Decidir si alguno entra o si se enseña la lista como cuerpo de trabajo.
 - `blender-shortcuts` existe y es público, pero es una referencia de atajos en
   HTML/CSS/JS: **no demuestra oficio 3D**, así que Blender sigue fuera del stack.
+- **Los reportajes se publican desde otro repositorio.** Las páginas en vivo
+  salen de `syx-atlas--reportajes`, no de `syx--atlas`, y ahí viven copias de
+  `reportaje-*-v4.html`. El 22/08/2026 se retiraron dos bloques de vídeo muertos
+  en los ficheros de `syx--atlas`; **eso no llega a producción hasta que él
+  sincronice el repo de publicación**. Mientras tanto la evidencia en vivo del
+  caso de ATLAS sigue enseñando dos posters donde el caso promete movimiento.
+- **Quedan cuatro `<source>` de Pexels a 403** dentro de bloques que sí funcionan
+  (uno en ATELIER, tres en OBSIDIANA). No rompen nada porque el navegador salta
+  a la siguiente fuente, pero son una petición fallida cada uno. Decidir si se
+  limpian.
+
+Resueltos (22/08/2026): **los dominios de conocimiento de ATLAS son seis** —
+branding, front, motion, syx, ui, ux—, entre 3 y 18 ficheros cada uno. La séptima
+carpeta, `vendors`, son 237 ficheros de `awesome-design` vendorizado: material de
+terceros, no conocimiento suyo, así que no cuenta y el caso dice seis. Los diez
+patrones de motion y los 340 ficheros del mind-system están verificados.
+
 Resueltos (16/08/2026): la rama de Ciencias de la Información **fue Periodismo**
 —el hero es literal y el About ya lo dice explícito—, y el nivel de inglés es
 **B2**, así que «working proficiency» se queda y el español deja de decir «nivel

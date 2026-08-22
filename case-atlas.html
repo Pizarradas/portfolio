@@ -60,8 +60,79 @@ gtag('config', 'G-B01K8E4SDY');
 <!-- i18n:switch:start -->
 <div aria-label="Language" class="atom-lang-switch" role="group"><a href="case-atlas.html" hreflang="en" lang="en" aria-current="true" title="Viewing in English">EN</a><span aria-hidden="true">/</span><a href="es/case-atlas.html" hreflang="es" lang="es" title="Ver esta página en español">ES</a></div>
 <!-- i18n:switch:end -->
-</nav></header><main id="main"><article class="org-case"><header class="org-case-opener"><p class="atom-eyebrow">Case study 05 · Self-directed · AI-native editorial system · 2026</p><h1>Giving AI a system to think and build with.</h1><p class="org-case-opener__lede">ATLAS layers editorial intent on top of SYX so AI-assisted long-form experiences can vary creatively without abandoning technical governance.</p><dl class="mol-case-facts"><div><dt>Role</dt><dd>System designer</dd></div><div><dt>Mental model</dt><dd>ATLAS</dd></div><div><dt>Execution</dt><dd>SYX</dd></div><div><dt>Focus</dt><dd>Editorial identity · motion · accessibility</dd></div></dl>
-<p class="org-case-opener__repo"><a class="atom-text-link" href="https://github.com/Pizarradas/syx--atlas" rel="noopener" target="_blank">Explore the mind-system ↗</a></p></header><section aria-labelledby="atlas-live-title" class="org-case__act syx-span-showcase js-reveal">
+</nav></header><main id="main"><article class="org-case"><header class="org-case-opener"><p class="atom-eyebrow">Case study 05 · Self-directed · AI-native editorial system · 2026</p><h1>Giving AI a system to think and build with.</h1><p class="org-case-opener__lede">SYX already governed how a page gets built. Nothing governed what it should say. ATLAS is a second system, generated separately, that carries the rules of one domain — digital media — and hands them to SYX to execute. This case is the test of whether two systems can be stacked without either one losing its grip.</p><dl class="mol-case-facts"><div><dt>Role</dt><dd>System designer</dd></div><div><dt>Mental model</dt><dd>ATLAS · editorial intent</dd></div><div><dt>Execution</dt><dd>SYX · governed build</dd></div><div><dt>System</dt><dd>SCSS · GSAP · ScrollTrigger · Lenis</dd></div></dl>
+<p class="org-case-opener__repo"><a class="atom-text-link" href="https://github.com/Pizarradas/syx--atlas" rel="noopener" target="_blank">Explore the mind-system ↗</a></p></header>
+
+<section class="org-case__chapter syx-span-survey">
+<p class="atom-index">Act 01</p>
+<h2>The test I set myself</h2>
+</section>
+
+<section aria-labelledby="starting-point-title" class="org-case__act syx-span-survey js-reveal"><div class="mol-section-heading"><p class="atom-eyebrow">The starting point</p><h2 id="starting-point-title">SYX governs how a page is built. Nothing governed what it should say.</h2><p>SYX is my design system: tokens, accessibility, architecture, a validator that fails the build. It answers how something is built. It holds no opinion about editorial hierarchy, about the distance between a portrait and a dossier, about when a page should feel slow. I wanted to know whether that second body of rules could be generated separately — as its own system, with its own vocabulary — and whether SYX would take orders from it. ATLAS is that second system. Digital media is the domain I used to test it.</p></div></section>
+
+<section aria-labelledby="success-criteria-title" class="org-case__act syx-span-survey js-reveal"><div class="mol-section-heading"><p class="atom-eyebrow">Success criteria</p><h2 id="success-criteria-title">Two opposite registers, one system.</h2><p>I wrote the bar down before starting, so that the result could not quietly move it.</p></div>
+<dl class="mol-case-ledger">
+<div><dt>What I set out to prove</dt><dd>Two long-form experiences sharing the semantic API and disagreeing on everything else — typography, palette, motion, tension — built without editing SYX and without lowering the accessibility floor.</dd></div>
+<div><dt>What would have counted as failure</dt><dd>One register, or two that differed only in colour. A system that produces one thing is not a system, it is a template.</dd></div>
+</dl>
+</section>
+
+<section aria-labelledby="what-i-accepted-title" class="org-case__act syx-span-survey js-reveal"><div class="mol-section-heading"><p class="atom-eyebrow">What I accepted</p><h2 id="what-i-accepted-title">Two registers, and a media budget I would not accept in production.</h2><p>Two deliberate constraints, and I would rather name the price than leave it out.</p></div>
+<dl class="mol-case-ledger">
+<div><dt>What the constraint bought</dt><dd>Two registers far enough apart to be worth comparing, and a motion language taken to its ceiling instead of to a safe midpoint. The test needed both extremes to mean anything.</dd></div>
+<div><dt>What it cost</dt><dd>Two registers prove variation, not that the semantic API scales — that would take a fourth and a fifth. And the pieces carry a media budget that is indefensible in a client product: 14.6 MB and 52.9 MB of video.</dd></div>
+</dl>
+<figure class="mol-case-figure">
+<dl class="mol-case-metrics">
+<div><dt>ATELIER · declared media</dt><dd>17 MB</dd></div>
+<div><dt>OBSIDIANA · declared media</dt><dd>57 MB</dd></div>
+<div><dt>Registers built</dt><dd>2</dd></div>
+</dl>
+<figcaption>Sum of the declared external assets of both published pages, measured on 22 August 2026. Not a simulated page load: video is served progressively, so a first visit transfers less.</figcaption>
+</figure>
+</section>
+
+<section class="org-case__chapter syx-span-survey">
+<p class="atom-index">Act 02</p>
+<h2>How the rules were built</h2>
+</section>
+
+<section aria-labelledby="knowledge-domains-title" class="org-case__act syx-span-survey js-reveal"><div class="mol-section-heading"><p class="atom-eyebrow">The decision the project hangs from</p><h2 id="knowledge-domains-title">Knowledge split into domains, loaded on demand.</h2><p>I broke the rules into six domains that load separately, inside a public mind-system of 340 files, so a task reads only the domain it needs instead of the whole body of rules. Everything else follows from that. Splitting the knowledge is what makes a second system cheap enough to consult on every single task, and a second system nobody consults is documentation, not governance.</p></div>
+<ul class="mol-case-roster">
+<li><b>branding</b><span>Perception of prestige: foundations, and the rules derived from them</span></li>
+<li><b>front</b><span>Accessibility, CSS architecture, semantics, progressive enhancement</span></li>
+<li><b>motion</b><span>Ten patterns, plus fundamentals, capabilities and a glossary</span></li>
+<li><b>syx</b><span>Tokens, themes, OKLCH colour and the SCSS pipeline</span></li>
+<li><b>ui</b><span>Typography systems, colour theory, practical interface craft</span></li>
+<li><b>ux</b><span>Heuristics, laws of UX, microinteractions, writing for interfaces</span></li>
+</ul>
+</section>
+
+<section aria-labelledby="separation-of-concerns-title" class="org-case__act syx-span-survey js-reveal"><div class="mol-section-heading"><p class="atom-eyebrow">Separation of concerns</p><h2 id="separation-of-concerns-title">ATLAS decides what the experience should feel like. SYX decides how it is built.</h2><p>ATLAS is the editorial mental model; SYX is the executor. The split keeps creative direction from leaking into implementation rules, and it is what makes the stack debuggable: when a piece comes out wrong, it is an intent problem or a build problem, and the two live in different repositories.</p></div></section>
+
+<section class="org-coded-hero org-coded-hero--atlas"><div class="mol-case-signature mol-case-signature--flow syx-on-night"><span>ATLAS</span><strong>Editorial intent</strong><i>↓</i><div><b>ATELIER</b><b>OBSIDIANA</b></div><i>↓</i><strong>SYX · governed execution</strong><small>tokens · accessibility · motion patterns · architecture</small></div></section>
+
+<section aria-labelledby="knowledge-not-prompts-title" class="org-case__act syx-span-survey js-reveal"><div class="mol-section-heading"><p class="atom-eyebrow">Knowledge, not prompts</p><h2 id="knowledge-not-prompts-title">Ten motion patterns became part of the system, not part of a prompt.</h2><p>The motion domain documents ten reusable patterns — narrative intent, parameters, GSAP controls, the prompt that invokes each one and the reduced-motion fallback it degrades to. A pattern written into the system is loaded by a mode; a pattern described in a prompt is rediscovered on every task. That is the whole distance between context and instruction.</p></div>
+<ul class="mol-case-roster">
+<li><b>character-cascade</b><span>Letters enter one after another</span></li>
+<li><b>cursor-follower</b><span>A mark that trails the pointer</span></li>
+<li><b>draw-svg-path</b><span>A line that draws itself</span></li>
+<li><b>horizontal-scroll</b><span>Vertical scroll moved sideways</span></li>
+<li><b>magnetic-button</b><span>A control that pulls toward the pointer</span></li>
+<li><b>mask-reveal</b><span>Content uncovered by a moving mask</span></li>
+<li><b>parallax</b><span>Layers travelling at different depths</span></li>
+<li><b>pinned-scrub</b><span>A pinned section scrubbed by scroll position</span></li>
+<li><b>scramble-text</b><span>Characters resolving into words</span></li>
+<li><b>typewriter</b><span>Text typed out on entry</span></li>
+</ul>
+</section>
+
+<section class="org-case__chapter syx-span-survey">
+<p class="atom-index">Act 03</p>
+<h2>What it proved</h2>
+</section>
+
+<section aria-labelledby="atlas-live-title" class="org-case__act syx-span-showcase js-reveal">
 <div class="mol-section-heading">
 <p class="atom-eyebrow">Live product evidence</p>
 <h2 id="atlas-live-title">Same system. Two radically different editorial registers.</h2>
@@ -79,5 +150,26 @@ gtag('config', 'G-B01K8E4SDY');
 <footer><span>Forensic dossiers</span><span>Data · investigation · controlled tension</span></footer>
 </article>
 </div>
-</section><section class="org-coded-hero org-coded-hero--atlas"><div class="mol-case-signature mol-case-signature--flow syx-on-night"><span>ATLAS</span><strong>Editorial intent</strong><i>↓</i><div><b>ATELIER</b><b>OBSIDIANA</b></div><i>↓</i><strong>SYX · governed execution</strong><small>tokens · accessibility · motion patterns · architecture</small></div></section><section aria-labelledby="problem-title" class="org-case__act syx-span-survey js-reveal"><div class="mol-section-heading"><p class="atom-eyebrow">Problem</p><h2 id="problem-title">AI can generate pages before it understands the system.</h2><p>Generic prompting can produce code, but it does not automatically understand editorial intent, identity rules, motion language or the architectural constraints of a design system.</p></div></section><section aria-labelledby="separation-of-concerns-title" class="org-case__act syx-span-survey js-reveal"><div class="mol-section-heading"><p class="atom-eyebrow">Separation of concerns</p><h2 id="separation-of-concerns-title">ATLAS decides what the experience should feel like. SYX decides how it is built.</h2><p>ATLAS acts as the editorial mental model. SYX acts as the technical executor. That split keeps creative direction distinct from implementation rules.</p></div></section><section aria-labelledby="two-registers-title" class="org-case__act syx-span-survey js-reveal"><div class="mol-section-heading"><p class="atom-eyebrow">Two registers</p><h2 id="two-registers-title">A system should create variation without losing governance.</h2><p>ATELIER is designed for cinematic human profiles; OBSIDIANA for forensic economic dossiers. They deliberately differ in typography, palette and motion while sharing the underlying system and accessibility expectations.</p></div></section><section aria-labelledby="knowledge-not-prompts-title" class="org-case__act syx-span-survey js-reveal"><div class="mol-section-heading"><p class="atom-eyebrow">Knowledge, not prompts</p><h2 id="knowledge-not-prompts-title">Reusable motion patterns become part of the system context.</h2><p>The project documents ten reusable motion patterns — narrative intent, parameters, GSAP controls, prompts and reduced-motion fallbacks — inside a public mind-system of six knowledge domains. That knowledge can be loaded by specialized SYX modes instead of rediscovered in every task.</p></div></section><section aria-labelledby="takeaway-title" class="org-case__act syx-span-survey js-reveal"><div class="mol-section-heading"><p class="atom-eyebrow">Takeaway</p><h2 id="takeaway-title">The differentiator is not generating more. It is governing generation better.</h2><p>This project shows how I am evolving from using AI as an assistant to designing the context, knowledge and rules that allow AI-assisted work to remain coherent.</p></div><p class="mol-case-exits"><a class="atom-text-link" href="https://pizarradas.github.io/syx-atlas--reportajes/reportaje-atelier.html" rel="noopener" target="_blank">Open ATELIER ↗</a><a class="atom-text-link" href="https://pizarradas.github.io/syx-atlas--reportajes/reportaje-obsidiana.html" rel="noopener" target="_blank">Open OBSIDIANA ↗</a><a class="atom-text-link" href="https://github.com/Pizarradas/syx-atlas--reportajes" rel="noopener" target="_blank">Explore repository ↗</a><a class="atom-text-link" href="https://github.com/Pizarradas/syx" rel="noopener" target="_blank">SYX on GitHub ↗</a></p></section>
+</section>
+
+<section aria-labelledby="measurement-title" class="org-case__act syx-span-survey js-reveal"><div class="mol-section-heading"><p class="atom-eyebrow">The measurement</p><h2 id="measurement-title">Thirty-two shared semantic tokens. Three shared primitives.</h2><p>Whether two pages look alike is an opinion, so I counted instead. ATELIER declares 35 semantic tokens and OBSIDIANA declares 37; 32 of those names are the same. Underneath them ATELIER declares 15 primitives and OBSIDIANA 14, and only 3 are shared. The two pieces speak an almost identical semantic API on top of almost entirely different identity values — which is the behaviour the stack was built to produce, stated as something a reader can go and recount.</p></div>
+<figure class="mol-case-figure">
+<dl class="mol-case-metrics">
+<div><dt>Shared semantic tokens</dt><dd>32</dd></div>
+<div><dt>Shared primitives</dt><dd>3</dd></div>
+<div><dt>Knowledge domains</dt><dd>6</dd></div>
+</dl>
+<figcaption>Custom properties declared in the two published pages, counted by name on 22 August 2026. Both files are served from the same repository.</figcaption>
+</figure>
+</section>
+
+<section class="org-case__chapter syx-span-survey">
+<p class="atom-index">Act 04</p>
+<h2>What it left behind</h2>
+</section>
+
+<section aria-labelledby="where-it-went-title" class="org-case__act syx-span-survey js-reveal"><div class="mol-section-heading"><p class="atom-eyebrow">Where the pattern went</p><h2 id="where-it-went-title">The method moved to a domain with nothing editorial about it.</h2><p>ATLAS was not absorbed into SYX — the traffic ran the other way, and SYX is untouched by it. What travelled was the shape: a domain system sitting on an execution system, with the knowledge split into loadable domains. SYX-mail applies that shape to HTML email, where the constraints are Outlook and Gmail instead of editorial hierarchy: a mental model, six knowledge domains, one mode. This portfolio runs on it too — eight domain skills over a router that decides which ones a task loads. Neither of them is about media, and that is the part that makes the test worth something.</p></div></section>
+
+<section aria-labelledby="takeaway-title" class="org-case__act syx-span-survey js-reveal"><div class="mol-section-heading"><p class="atom-eyebrow">Takeaway</p><h2 id="takeaway-title">Writing the pattern down costs more than writing the code.</h2><p>Documenting the ten motion patterns took longer than implementing them would have taken in the two pieces that use them. Written knowledge only pays back above a certain number of pieces, and I did not know that number when I started — I still don’t. So the honest reading of this project is narrower than the ambition behind it: it shows that two systems compose, not that writing the second one down was the cheaper route.</p></div><p class="mol-case-exits"><a class="atom-text-link" href="https://pizarradas.github.io/syx-atlas--reportajes/reportaje-atelier.html" rel="noopener" target="_blank">Open ATELIER ↗</a><a class="atom-text-link" href="https://pizarradas.github.io/syx-atlas--reportajes/reportaje-obsidiana.html" rel="noopener" target="_blank">Open OBSIDIANA ↗</a><a class="atom-text-link" href="https://github.com/Pizarradas/syx-atlas--reportajes" rel="noopener" target="_blank">Explore repository ↗</a><a class="atom-text-link" href="https://github.com/Pizarradas/syx" rel="noopener" target="_blank">SYX on GitHub ↗</a><a class="atom-text-link" href="https://github.com/Pizarradas/SYX-mail" rel="noopener" target="_blank">SYX-mail on GitHub ↗</a></p></section>
+
 <nav aria-label="Case study navigation" class="org-case-next syx-on-night"><a href="index.html#work"><span>Back</span><strong>Selected work</strong></a><a href="case-illustrations.html"><span>Next case</span><strong>SPORT Illustrations →</strong></a><a class="org-case-next__contact" href="mailto:profesional.pizarro@gmail.com"><span>Questions about this project?</span><strong>Get in touch →</strong></a></nav></article></main><footer class="org-footer syx-span-survey"><p>José Luis Pizarro Feo — Product Designer &amp; Front-End Engineer · Madrid, Spain</p><p class="org-footer__contact"><a href="mailto:profesional.pizarro@gmail.com">profesional.pizarro@gmail.com</a><a href="https://www.linkedin.com/in/joseluispizarrofeo" rel="noopener" target="_blank">LinkedIn ↗</a><a href="jose-luis-pizarro-cv-en.pdf">CV (PDF)</a></p></footer><script src="js/reveal.js"></script><script src="js/live-previews-v21.js"></script><script defer="" src="js/lang-switch.js"></script><script defer="" src="js/wordmark.js"></script></body></html>

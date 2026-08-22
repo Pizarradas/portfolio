@@ -1,0 +1,146 @@
+@use "../abstracts/breakpoints" as *;
+@use "../abstracts/mixins" as *;
+
+// Vocabulario de los huecos narrativos de un caso.
+//
+// La skill `story` dice que un caso responde nueve huecos —ficha · encargo ·
+// objetivo · restricciones · proceso · evidencia · solución · impacto ·
+// aprendizaje—. La plantilla de caso tenía forma para cinco de ellos: la ficha
+// (`.mol-case-facts`), la evidencia (`.mol-case-figure`), los números
+// (`.mol-case-metrics`), la solución (el acto y su registro) y las salidas
+// (`.mol-case-exits`). Los otros cuatro se servían como un párrafo más.
+//
+// Eso no es un problema de estilo: un objetivo indistinguible de una
+// descripción es un objetivo que nadie lee como objetivo, y una renuncia
+// escrita en prosa es la razón por la que `BRAND.md` §1 dice que «un caso sin
+// compromiso explícito parece un anuncio». Las dos piezas de aquí les dan
+// forma, y son de la plantilla, no de una página: las necesitan los seis casos.
+//
+//   .mol-case-ledger   la contraposición — huecos 2 y 3
+//   .mol-case-roster   el conjunto nombrado — huecos 4 y 6
+@layer syx.molecules {
+  // ------------------------------------------------------------ contraposición
+  //
+  // Dos lados enfrentados con su rótulo. Sirve al objetivo —lo que me propuse
+  // frente a lo que eso deja sin demostrar— y a la renuncia —lo que gané frente
+  // a lo que cedí—.
+  //
+  // Es un `dl` por la misma razón que `.mol-case-facts` y `.mol-case-metrics`:
+  // son parejas rótulo/valor, y el lector de pantalla las anuncia como tales.
+  // Un `div` por lado porque `dt` y `dd` no pueden agruparse de otra forma.
+  //
+  // La separación entre los dos lados no la pone el color. `BRAND.md` §4 gasta
+  // el acento una vez por región y en un acto ya está gastado en el eyebrow, así
+  // que el instrumento es la retícula: regla arriba en los dos lados, regla
+  // vertical entre ellos. Es el mismo criterio con el que el capítulo se
+  // distingue de la sección en la plantilla —estructura, no tinta— y además es
+  // el argumento del sitio: si va de sistemas, la estructura se enseña.
+  .mol-case-ledger {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--semantic-space-block);
+    margin: var(--semantic-space-block) 0 0;
+  }
+
+  .mol-case-ledger > div {
+    padding-top: var(--semantic-space-component-md);
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+  }
+
+  .mol-case-ledger dt {
+    margin-bottom: var(--semantic-space-component-sm);
+    color: var(--semantic-color-text-muted);
+    font-size: var(--semantic-font-size-caption);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    line-height: var(--semantic-line-height-ui);
+    text-transform: uppercase;
+  }
+
+  // La medida la fija la columna, no la prosa. Con `--semantic-measure-prose`
+  // los 66ch se cumplen dentro de un lado que ya mide la mitad del registro y
+  // el texto muere a media columna: dos medidas compitiendo por el mismo ancho.
+  .mol-case-ledger dd {
+    margin: 0;
+    max-width: none;
+    color: var(--semantic-color-text-secondary);
+    line-height: var(--semantic-line-height-body);
+  }
+
+  @include from($bp-md) {
+    .mol-case-ledger {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--semantic-space-block);
+    }
+
+    // La regla vertical solo existe cuando hay dos columnas. Apilados, un borde
+    // izquierdo colgando del segundo lado no separa nada: subraya un margen.
+    .mol-case-ledger > div + div {
+      padding-left: var(--semantic-space-block);
+      border-left: var(--semantic-border-width) solid
+        var(--semantic-color-border);
+    }
+  }
+
+  // ------------------------------------------------------- conjunto nombrado
+  //
+  // N cosas con nombre y una línea cada una: los dominios de conocimiento que
+  // un modo carga, los patrones de motion que el sistema documenta, las piezas
+  // de un inventario. El valor está en que se vean **todas**: un caso que dice
+  // «diez patrones reutilizables» y no los nombra pide un acto de fe, y uno que
+  // los nombra deja al lector comprobarlos en el repositorio.
+  //
+  // Es `ul` porque es un conjunto sin orden. `.mol-targets` en
+  // `_case-diagrams.scss` es la versión vieja de esta idea —cuatro `span` en
+  // una retícula— y arrastra valores en crudo y tres copias repartidas por tres
+  // capas. No se toca aquí: queda anotado para que se funda en esta cuando le
+  // toque a 42DS.
+  //
+  // Los cortes son los del sistema y nada más, así que no hay ningún ancho
+  // mínimo inventado: `auto-fit` con un `minmax` pedía una longitud en crudo
+  // que no está en `PROPORTIONS.md`.
+  .mol-case-roster {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--semantic-space-stack);
+    margin: var(--semantic-space-block) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .mol-case-roster > li {
+    display: flex;
+    flex-direction: column;
+    gap: var(--semantic-space-component-xs);
+    padding-top: var(--semantic-space-component-sm);
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+  }
+
+  // Monoespaciada porque son identificadores, no prosa: así se leen como lo que
+  // son —carpetas de un repositorio que se pueden ir a buscar— y le dan a la
+  // página una textura que no tenía ninguna otra pieza.
+  .mol-case-roster b {
+    font-family: var(--semantic-font-family-mono);
+    font-size: var(--semantic-font-size-ui);
+    font-weight: var(--semantic-font-weight-medium);
+    letter-spacing: var(--semantic-letter-spacing-tight);
+  }
+
+  .mol-case-roster span {
+    color: var(--semantic-color-text-muted);
+    font-size: var(--semantic-font-size-caption);
+    line-height: var(--semantic-line-height-body);
+  }
+
+  @include from($bp-sm) {
+    .mol-case-roster {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @include from($bp-md) {
+    .mol-case-roster {
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--semantic-space-block) var(--semantic-space-stack);
+    }
+  }
+}

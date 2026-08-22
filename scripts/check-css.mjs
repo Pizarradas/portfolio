@@ -75,7 +75,7 @@ for (const file of sheets) {
     harvestVars(readFileSync(join(ROOT, f), 'utf8'));
   for (const f of readdirSync(join(ROOT, 'js')).filter(f => f.endsWith('.js')))
     harvestVars(readFileSync(join(ROOT, 'js', f), 'utf8'));
-  for (const f of readdirSync(join(ROOT, 'scripts')))
+  for (const f of readdirSync(join(ROOT, 'scripts')).filter(f => /\.m?js$/.test(f)))
     harvestVars(readFileSync(join(ROOT, 'scripts', f), 'utf8'));
 
   const undef = [...used].filter(t => !declared.has(t) && !withFallback.has(t) && !inline.has(t)).sort();

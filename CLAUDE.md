@@ -36,6 +36,7 @@ ninguna para rehacer la escala tipográfica.
 | Si la petición es… | Skill | Coste | Ejemplos |
 |---|---|---|---|
 | tocar copy, titulares, un caso nuevo | `brand` | bajo | «reescribe el hero», «añade un caso» |
+| decidir qué falta por contar en un caso | `story` | medio | «este caso no cuenta nada», «pregúntame para completarlo» |
 | calcular un tamaño, un hueco, un ancho | `proportions` | bajo | «se ve apretado», «sube el titular» |
 | escribir o mover SCSS | `scss` | medio | «crea un componente», «esto va en otro sitio» |
 | texto que hay que traducir | `content` | bajo | cualquier cambio de copy en el HTML |
@@ -52,7 +53,8 @@ vive el código, content propaga al español, verify demuestra que sigue en pie.
 |---|---|
 | «cambia este texto» | `brand` → `content` → `verify` |
 | «esta sección se ve apretada» | `proportions` → `scss` → `verify` |
-| «añade un caso nuevo» | `brand` → `scss` → `content` → `verify` |
+| «añade un caso nuevo» | `story` → `brand` → `scss` → `content` → `verify` |
+| «a este caso le falta estructura» | `story` → `brand` → `case` → `content` → `verify` |
 | «migra / reorganiza estilos» | `scss` → `verify` (comparación declaración a declaración) |
 | «aplica la escala nueva» | `proportions` → `scss` → `verify` (**por bandas, con renders**) |
 | «¿esto está bien?» | solo `verify`, y contar lo que se ha comprobado |
