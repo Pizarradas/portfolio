@@ -84,11 +84,18 @@ gtag('config', 'G-B01K8E4SDY');
 </dl>
 </section>
 
-<section aria-labelledby="constraint-title" class="org-case__act syx-span-survey js-reveal"><div class="mol-section-heading"><p class="atom-eyebrow">La restricción</p><h2 id="constraint-title">Un mapa interactivo, sin meter una plataforma de mapas de pago.</h2><p>Google Maps y equivalentes estaban descartados, así que la implementación tenía que sostenerse sobre tecnología abierta: Leaflet, sobre recursos cartográficos del IGN.</p></div>
+<section aria-labelledby="constraint-title" class="org-case__act syx-span-survey js-reveal"><div class="mol-section-heading"><p class="atom-eyebrow">La restricción</p><h2 id="constraint-title">Un mapa interactivo, sin meter una plataforma de mapas de pago.</h2><p>Ese requisito lo puso mi design lead, no yo: el mapa no podía convertirse en un coste recurrente para la empresa. Google Maps y equivalentes estaban descartados, así que la implementación tenía que sostenerse sobre tecnología abierta: Leaflet, sobre recursos cartográficos del IGN.</p></div>
 <dl class="mol-case-ledger">
 <div><dt>Lo que compró la restricción</dt><dd>Sin licencia, sin proveedor y sin coste por visita. El mapa podía salir y seguir funcionando sin abrir una partida de presupuesto, que es lo que lo hacía aprobable.</dd></div>
 <div><dt>Lo que costó</dt><dd>El clustering, la geocodificación y el cálculo de rutas vienen dados en una plataforma de pago; en Leaflet los construyes o te quedas sin ellos. Y la factura pasó de una licencia a mis horas. El ahorro fue real. El trabajo no fue gratis.</dd></div>
 </dl>
+</section>
+
+<section aria-labelledby="team-title" class="org-case__act syx-span-survey js-reveal"><div class="mol-section-heading"><p class="atom-eyebrow">El equipo</p><h2 id="team-title">Las restricciones vinieron del design lead. La solución, no.</h2><p>Conviene decir el reparto, porque es lo que hace legible el resto del caso. Juan Francisco Molinera me puso al día del estado en que estaba el mapa anterior, fijó las directrices que tenía que respetar —entre ellas que no podía convertirse en un coste recurrente para la empresa— y me abrió las puertas internas que necesitaba para recuperar los datos. Todo lo que viene después de ahí es mío: proponer otra solución en vez de redibujar la vieja, el modelo de datos, la interacción y la integración con 42DS.</p></div>
+<ul class="mol-case-roster mol-case-roster--people">
+<li><b>Juan Francisco Molinera</b><span>Product Design Lead — el encargo, las directrices que el mapa tenía que respetar y los contactos internos para los datos</span><a class="atom-text-link" href="https://www.linkedin.com/in/jfmolinera/" rel="noopener" target="_blank">LinkedIn ↗</a></li>
+<li><b>Contactos de redacción y de negocio</b><span>Nombres de los medios, geolocalización y datos empresariales, repartidos entre distintas redacciones</span></li>
+</ul>
 </section>
 
 <section aria-labelledby="hidden-work-title" class="org-case__act syx-span-survey js-reveal"><div class="mol-section-heading"><p class="atom-eyebrow">El trabajo invisible</p><h2 id="hidden-work-title">Antes del mapa tenía que haber datos fiables.</h2><p>La información estaba repartida entre redacciones y en ningún sitio en una forma usable. La reuní yo en una hoja de cálculo —ubicaciones, tipos de medio, relaciones y los campos que la interfaz iba a necesitar— y llevé el mantenimiento a Google Sheets y CSV en vez de a la edición de imagen. Cada ubicación pasó a ser una fila de cuatro campos en vez de un píxel que alguien tenía que redibujar.</p></div>

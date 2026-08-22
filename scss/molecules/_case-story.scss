@@ -131,6 +131,30 @@
     line-height: var(--semantic-line-height-body);
   }
 
+  // ------------------------------------------------------------- el equipo
+  //
+  // El mismo conjunto, pero de personas. Es un modificador y no una molécula
+  // nueva porque lo único que cambia es la voz del primer elemento: un nombre
+  // propio no es un nombre de carpeta, así que sale de la monoespaciada. La
+  // retícula, la regla superior y la cadencia son las del roster, que es lo que
+  // hace que un caso enseñe a su equipo con el mismo gesto con el que enseña
+  // sus dominios o sus patrones.
+  //
+  // El enlace al perfil es opcional **a propósito**. `BRAND.md` §7.6: se
+  // publica el de quien lo haya autorizado, y quien no lo autorice aparece
+  // igual con su nombre y su papel. Si el enlace fuera obligatorio, la sección
+  // presionaría a la gente para aceptar, que es justo lo que no puede hacer.
+  .mol-case-roster--people b {
+    font-family: var(--semantic-font-family-body);
+    font-size: var(--semantic-font-size-body);
+    font-weight: var(--semantic-font-weight-strong);
+    letter-spacing: normal;
+  }
+
+  .mol-case-roster--people a {
+    font-size: var(--semantic-font-size-caption);
+  }
+
   @include from($bp-sm) {
     .mol-case-roster {
       grid-template-columns: 1fr 1fr;
@@ -141,6 +165,26 @@
     .mol-case-roster {
       grid-template-columns: repeat(4, 1fr);
       gap: var(--semantic-space-block) var(--semantic-space-stack);
+    }
+
+    // La retícula se ajusta al tamaño del equipo.
+    //
+    // Un conjunto de dominios o de patrones tiene siempre bastantes elementos
+    // para llenar cuatro columnas. Un equipo, no: con dos personas quedan dos
+    // celdas vacías con su regla superior dibujada, y eso no se lee como una
+    // composición, se lee como algo que no ha terminado de cargar.
+    //
+    // La consulta de cantidad lo resuelve sin inventar ninguna longitud: dos
+    // columnas por defecto, y las cuatro solo cuando hay cuarta persona. Una
+    // entrada de persona además es más ancha que un identificador —nombre,
+    // papel y enlace—, así que en equipos pequeños dos columnas es también la
+    // medida correcta, no solo la que evita el hueco.
+    .mol-case-roster--people {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .mol-case-roster--people:has(> li:nth-child(4)) {
+      grid-template-columns: repeat(4, 1fr);
     }
   }
 }

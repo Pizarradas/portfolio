@@ -228,6 +228,20 @@ haber implementado AA en productos editoriales complejos.
 4. **Los casos propios llevan la etiqueta `Self-directed` / `Proyecto propio`** en
    el mismo bloque que el título, no en letra pequeña abajo.
 5. **El orden de la home es el orden del argumento**, no el cronológico.
+6. **El equipo se acredita, y solo con permiso.** Un caso hecho con otras
+   personas puede nombrarlas —nombre, papel y, si lo autorizan, enlace a su
+   perfil—. Tres condiciones, y ninguna es negociable:
+   - **El permiso se pide a cada persona y antes de publicar**, no después.
+     Quien no conteste o no quiera, no aparece; la sección funciona igual.
+   - **El enlace al perfil es opcional aunque el nombre esté.** Si fuera
+     obligatorio, la sección presionaría a la gente para aceptar.
+   - **Los nombres los aporta él.** No se extraen del historial de commits ni
+     de ninguna herramienta interna: publicar la identidad de alguien sacada de
+     su actividad de trabajo, sin que lo sepa, es lo contrario de acreditarlo.
+
+   Acreditar al equipo no diluye su trabajo: lo hace creíble. El riesgo que
+   señala la skill `recruiter` —«¿esto es suyo o del equipo?»— se cierra
+   enseñando el reparto, no escondiéndolo.
 
 ### Pendiente de él
 
@@ -278,6 +292,15 @@ rellenarlos inventando:
   Castilla-La Mancha. Fusionadas dan 13, que es el número que él publicaba. Su
   única cabecera es `el-periodico-de-espana`, que además es nacional. Si se
   arregla en el origen, el caso vuelve a poder decir 13 regiones.
+- **El permiso de Juan Francisco Molinera.** El caso del mapa ya lo acredita por
+  nombre, papel y enlace a su perfil (`linkedin.com/in/jfmolinera/`), escrito en
+  el árbol de trabajo pero **sin publicar**. §7.6 exige su permiso expreso antes
+  del push. Si dice que no, se borra la fila; si acepta el nombre pero no el
+  enlace, se quita solo el enlace y el resto se queda igual.
+- **La segunda fila del equipo del mapa** —«Contactos de redacción y de
+  negocio»— la deduje yo de que él mencionó «los contactos dentro de la empresa
+  para recuperar los datos». Nadie va nombrado ahí, así que no hay problema de
+  permiso, pero **confirmar que la descripción es fiel** o cortarla.
 - **Cuánto costó el mapa en horas.** Aceptó pagar en tiempo lo que se ahorró en
   licencia, pero no hay cifra: el caso lo dice sin número. Si aparece una
   estimación —semanas, sprints—, entra.
@@ -304,8 +327,10 @@ profesional», que prometía más que el inglés.
 ### Lo que dice el repositorio de 42DS
 
 Verificado el 16/08/2026 contra el repositorio interno, en solo lectura. **Se
-publican cifras agregadas; nunca código, capturas internas, URLs de GitLab ni
-nombres de compañeros.**
+publican cifras agregadas; nunca código, capturas internas ni URLs de GitLab.**
+Los nombres de compañeros pueden aparecer en la sección de equipo, pero **solo
+con permiso expreso y aportados por él** (§7.6): nunca sacados del historial del
+repositorio.
 
 | Afirmación | Fuente | Estado |
 |---|---|---|

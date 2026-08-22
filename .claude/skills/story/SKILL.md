@@ -56,6 +56,7 @@ tarde, deja de importar.
 | # | Hueco | Pregunta del lector | `BRAND.md` §1 | Dónde vive |
 |---|---|---|---|---|
 | **0** | **Ficha** | ¿de quién es esto, cuándo y con qué? | — | `.mol-case-facts`, portada |
+| **0b** | **El equipo** | ¿y con quién? | — | acto propio, cerca del proceso |
 | **1** | **El encargo** | ¿qué estaba roto o en duda? | Q1 | primer acto |
 | **2** | **El objetivo** | ¿cómo se sabía si salía bien? | — | mismo acto que 1 |
 | **3** | **Las restricciones** | ¿con qué había que vivir? | Q4 | acto propio o banda |
@@ -80,6 +81,7 @@ página.
 | Hueco | Pieza | Marcado |
 |---|---|---|
 | 0 Ficha | `.mol-case-facts` | `dl`, **cuatro columnas exactas** |
+| **0b Equipo** | **`.mol-case-roster--people`** | `ul`: `b` nombre + `span` papel + `a` opcional |
 | 1 Encargo · 8 Aprendizaje | prosa del acto | narración; no fuerces un diagrama |
 | **2 Objetivo · 3 Restricciones** | **`.mol-case-ledger`** | `dl` con **dos** `div`: rótulo + lado |
 | **4 Proceso · 6 Solución** | **`.mol-case-roster`** | `ul` de `li` con `b` (identificador) + `span` |
@@ -97,6 +99,12 @@ Tres reglas al usarlas:
 3. **No todo acto lleva objeto visual.** La apertura y el cierre son narración.
    El síntoma de que faltan es el vacío en pantalla ancha: la plantilla apila
    banda y figura, y una banda sola deja dos tercios de alto en blanco a 3440px.
+4. **El equipo no se escribe sin permiso.** `BRAND.md` §7.6 manda: los nombres
+   los aporta él, se piden uno a uno antes de publicar, el enlace al perfil es
+   opcional aunque el nombre esté, y **jamás se sacan del historial de commits
+   ni de ninguna herramienta interna**. En los casos propios el hueco 0b se
+   contesta diciendo que no hubo equipo, que refuerza la etiqueta
+   `Self-directed` en vez de dejarla en letra pequeña.
 
 ### Qué se toma de la referencia y qué no
 

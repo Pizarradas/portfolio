@@ -264,7 +264,8 @@
     "parallax",
     "pinned-scrub",
     "scramble-text",
-    "typewriter"
+    "typewriter",
+    "Juan Francisco Molinera"
   ],
   "Product Designer &amp; Front-End Engineer in Madrid. Nineteen years across agency, telecom, real estate and media. Now on 42DS at Prensa Ibérica.": "Product Designer &amp; Front-End Engineer en Madrid. Diecinueve años en agencia, telecomunicaciones, inmobiliario y medios. Ahora en 42DS, en Prensa Ibérica.",
   "Skip to content": "Saltar al contenido",
@@ -1165,5 +1166,12 @@
   "Interaction work stopped being an exception.": "El trabajo de interacción dejó de ser una excepción.",
   "This is the project where building the interaction, and not just specifying it, became something I could take on; it is now a regular part of what I ship, in 42DS and in my own projects. What I would keep is the order — the data model before the interface. What I would change is that I replaced the solution without agreeing what success would mean. It worked out because maintainability turned out to be what everyone wanted, and that was not something I had established beforehand.": "Este es el proyecto en el que construir la interacción, y no solo especificarla, pasó a ser algo que podía asumir; hoy es una parte habitual de lo que saco, en 42DS y en mis proyectos propios. Lo que me quedo es el orden: el modelo de datos antes que la interfaz. Lo que cambiaría es haber sustituido la solución sin acordar qué significaba que saliera bien. Salió porque la mantenibilidad resultó ser lo que quería todo el mundo, y eso no lo había dejado establecido.",
   "Open Emotional Spain Map ↗": "Abrir Emotional Spain Map ↗",
-  "Counted in the dataset embedded above on 22 August 2026. Each row carries latitude, longitude, title and link.": "Contadas en el conjunto de datos incrustado más arriba el 22 de agosto de 2026. Cada fila lleva latitud, longitud, título y enlace."
+  "Counted in the dataset embedded above on 22 August 2026. Each row carries latitude, longitude, title and link.": "Contadas en el conjunto de datos incrustado más arriba el 22 de agosto de 2026. Cada fila lleva latitud, longitud, título y enlace.",
+  "That requirement came from my design lead, not from me: the map could not become a running cost for the company. Google Maps and its equivalents were off the table, so the implementation had to stand on open technology: Leaflet, over IGN mapping resources.": "Ese requisito lo puso mi design lead, no yo: el mapa no podía convertirse en un coste recurrente para la empresa. Google Maps y equivalentes estaban descartados, así que la implementación tenía que sostenerse sobre tecnología abierta: Leaflet, sobre recursos cartográficos del IGN.",
+  "The team": "El equipo",
+  "The constraints came from the design lead. The solution did not.": "Las restricciones vinieron del design lead. La solución, no.",
+  "The split is worth stating, because it is what makes the rest of this case readable. Juan Francisco Molinera briefed me on the state the previous map was in, set the guidelines it had to respect — including that it could not become a running cost for the company — and opened the internal doors I needed to recover the data. Everything downstream of that was mine: proposing a different solution instead of redrawing the old one, the data model, the interaction and the integration with 42DS.": "Conviene decir el reparto, porque es lo que hace legible el resto del caso. Juan Francisco Molinera me puso al día del estado en que estaba el mapa anterior, fijó las directrices que tenía que respetar —entre ellas que no podía convertirse en un coste recurrente para la empresa— y me abrió las puertas internas que necesitaba para recuperar los datos. Todo lo que viene después de ahí es mío: proponer otra solución en vez de redibujar la vieja, el modelo de datos, la interacción y la integración con 42DS.",
+  "Product Design Lead — the brief, the guidelines the map had to respect, and the internal contacts for the data": "Product Design Lead — el encargo, las directrices que el mapa tenía que respetar y los contactos internos para los datos",
+  "Editorial and business contacts": "Contactos de redacción y de negocio",
+  "Media names, geolocation and company data, held across different newsrooms": "Nombres de los medios, geolocalización y datos empresariales, repartidos entre distintas redacciones"
 }

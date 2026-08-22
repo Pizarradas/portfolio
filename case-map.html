@@ -84,11 +84,18 @@ gtag('config', 'G-B01K8E4SDY');
 </dl>
 </section>
 
-<section aria-labelledby="constraint-title" class="org-case__act syx-span-survey js-reveal"><div class="mol-section-heading"><p class="atom-eyebrow">The constraint</p><h2 id="constraint-title">An interactive map, without adding a paid mapping platform.</h2><p>Google Maps and its equivalents were off the table, so the implementation had to stand on open technology: Leaflet, over IGN mapping resources.</p></div>
+<section aria-labelledby="constraint-title" class="org-case__act syx-span-survey js-reveal"><div class="mol-section-heading"><p class="atom-eyebrow">The constraint</p><h2 id="constraint-title">An interactive map, without adding a paid mapping platform.</h2><p>That requirement came from my design lead, not from me: the map could not become a running cost for the company. Google Maps and its equivalents were off the table, so the implementation had to stand on open technology: Leaflet, over IGN mapping resources.</p></div>
 <dl class="mol-case-ledger">
 <div><dt>What the constraint bought</dt><dd>No licence, no vendor and no per-view cost. The map could ship and keep running without opening a budget line, which is what made it approvable at all.</dd></div>
 <div><dt>What it cost</dt><dd>Clustering, geocoding and routing arrive free with a paid platform; on Leaflet you build them or you go without. And the bill moved from a licence to my hours. The saving was real. The work was not free.</dd></div>
 </dl>
+</section>
+
+<section aria-labelledby="team-title" class="org-case__act syx-span-survey js-reveal"><div class="mol-section-heading"><p class="atom-eyebrow">The team</p><h2 id="team-title">The constraints came from the design lead. The solution did not.</h2><p>The split is worth stating, because it is what makes the rest of this case readable. Juan Francisco Molinera briefed me on the state the previous map was in, set the guidelines it had to respect — including that it could not become a running cost for the company — and opened the internal doors I needed to recover the data. Everything downstream of that was mine: proposing a different solution instead of redrawing the old one, the data model, the interaction and the integration with 42DS.</p></div>
+<ul class="mol-case-roster mol-case-roster--people">
+<li><b>Juan Francisco Molinera</b><span>Product Design Lead — the brief, the guidelines the map had to respect, and the internal contacts for the data</span><a class="atom-text-link" href="https://www.linkedin.com/in/jfmolinera/" rel="noopener" target="_blank">LinkedIn ↗</a></li>
+<li><b>Editorial and business contacts</b><span>Media names, geolocation and company data, held across different newsrooms</span></li>
+</ul>
 </section>
 
 <section aria-labelledby="hidden-work-title" class="org-case__act syx-span-survey js-reveal"><div class="mol-section-heading"><p class="atom-eyebrow">The hidden work</p><h2 id="hidden-work-title">Before the map, there had to be reliable data.</h2><p>The information was fragmented across editorial teams and nowhere in a usable shape. I assembled it myself in a spreadsheet — locations, media types, relationships and the fields the interface would need — and moved maintenance onto Google Sheets and CSV instead of image editing. Every location became a row of four fields instead of a pixel somebody had to redraw.</p></div>
