@@ -50,6 +50,30 @@ es la fuente de qué hueco narrativo llena cada una. No las inventes desde aquí
    deshacer, y el que más vacío produce en pantalla grande.
 5. **Un fondo de color es un contexto** (`.syx-on-night`, `.syx-on-brand`), no
    un hex. `BRAND.md` §4: dos bandas a sangre, no cinco.
+
+   **La banda azul está asignada: es el primer bloque tras la portada, en las
+   seis páginas.** Es el hueco 1 de la skill `story` —el encargo—, y ponerlo en
+   banda hace visible en el diseño lo que la estructura ya dice: un caso empieza
+   por el problema. Dos excepciones de forma, no de regla: ATLAS lleva
+   capítulos, así que el marcador «Act 01» va delante y la banda es el bloque
+   siguiente; y en 42DS el bloque de debajo no es un acto sino el
+   `org-case-glance`, que recibe el contexto igual.
+
+   **Una azul por página y ninguna más.** Si otra sección la quiere, hay que
+   quitársela al primer bloque y poder explicar por qué. En SPORT y en 42DS ya
+   había una más abajo y se movió arriba, no se añadió.
+
+   **Sobre azul solo caben dos niveles de texto.** `on-dark-section` reparte
+   tres y el tercero no llegaba a AA sobre `#1e3aff` —3,31:1—, así que
+   `.syx-on-brand` repunta `--semantic-color-text-muted` a `alpha-light-78`
+   (4,65:1). Con eso los ledgers, las cifras y los rosters **sí** entran en una
+   banda azul. Lo que sigue sin cerrar es texto tenue sobre `surface-alt`:
+   4,44:1, anotado en `check-contrast.mjs`.
+
+   La banda es una sección igual que un acto —solo cambia el fondo—, así que
+   `.org-case__band` comparte con `.org-case__act` la medida de la prosa, el
+   sangrado a la columna del titular y el ritmo vertical. Si añades una regla
+   para uno, mírala para el otro.
 6. **Todo diagrama es una figura y toda figura lleva pie.** El pie dice qué se
    mira y de dónde sale.
 7. **Si el proyecto tiene repositorio público, se enlaza —y se enlaza en la

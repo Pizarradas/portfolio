@@ -538,11 +538,28 @@ function translatePage(page) {
 const outDir = join(ROOT, 'es');
 if (mode === 'build') mkdirSync(outDir, { recursive: true });
 
+// En modo `--check` se compara lo que saldría con lo que hay en disco.
+//
+// Cubrir solo las cadenas sin traducir dejaba pasar un fallo silencioso: un
+// cambio **de marcado** en el inglés —una clase, un contexto de color, un
+// bloque movido de sitio— no toca ninguna cadena, así que `--check` daba verde
+// mientras `es/` seguía sirviendo la estructura vieja. Pasó el 22/08/2026 con
+// la banda azul: tres páginas en español se quedaron sin ella y el checker no
+// dijo nada.
+//
+// Se compara el HTML generado, no la fecha del fichero: además de detectar el
+// olvido de `build:i18n`, detecta que alguien haya editado `es/` a mano, que
+// es la otra forma de que la salida generada deje de serlo.
+const stale = [];
+
 for (const page of PAGES) {
   const html = translatePage(page);
   if (mode === 'build') {
     writeFileSync(join(outDir, page), html, 'utf8');
     console.log(`build-i18n: es/${page}`);
+  } else if (mode === 'check') {
+    const out = join(outDir, page);
+    if (!existsSync(out) || readFileSync(out, 'utf8') !== html) stale.push(page);
   }
 }
 
@@ -562,4 +579,12 @@ if (mode === 'extract') {
   process.exit(1);
 } else {
   console.log('build-i18n: every string translated.');
+}
+
+if (stale.length) {
+  console.error(`\nbuild-i18n: ${stale.length} generated page(s) out of date with the English source:`);
+  for (const page of stale) console.error(`  · es/${page}`);
+  console.error('\nRun `npm run build:i18n`. Markup changes do not touch any string,');
+  console.error('so translation coverage can be complete while es/ still serves the old structure.');
+  process.exit(1);
 }

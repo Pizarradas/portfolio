@@ -302,6 +302,15 @@ rellenarlos inventando:
   qué harías distinto. Y **no hay enlace externo**: la única prueba de que
   existieron son los SVG servidos desde tu propio sitio, que es la evidencia más
   débil posible. Si alguna superficie de SPORT es pública, se enlaza.
+- **Los últimos 0,06 de contraste sobre azul.** La deuda registrada en
+  `check-contrast.mjs` bajó de cuatro entradas a dos: `.syx-on-brand` ya repunta
+  el texto tenue a `alpha-light-78` y pasa de 3,31:1 a 4,65:1. Las dos que
+  quedan son texto tenue **sobre `surface-alt`**: **4,44:1 contra 4,5**, un
+  fallo del 1,3 %. Cerrarlas pide oscurecer `surface-alt` dentro del contexto
+  azul —no hay primitivo alpha oscuro, habría que ir a `color-mix`— y ese token
+  lo leen paneles, visuales de código e ilustraciones en todo el sitio, incluido
+  el `mol-map-shift__panel` de la home. Es una decisión de diseño con alcance,
+  no una limpieza: la toma él.
 - **La meta description ya no coincide con la entradilla en ATLAS ni en Mundial
   2026.** Al reescribir los dos casos cambió el `lede` visible y el `<head>` se
   dejó intacto a propósito, para no desincronizar la tarjeta OG —que lleva el

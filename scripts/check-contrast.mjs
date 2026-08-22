@@ -201,10 +201,25 @@ const PAIRS = [
 // Aparecen por duplicado porque `.syx-on-brand` se pinta igual sobre página
 // clara que oscura; las dos de «página oscura» se revisan al invertir las
 // secciones.
+// Deuda de contraste aceptada. Cuanto más corta, mejor.
+//
+// Eran cuatro, y las cuatro por lo mismo: `on-dark-section` reparte tres
+// niveles de texto y el tercero —`alpha-light-60`— no llega a AA sobre el azul
+// de marca, que es un fondo mucho más claro que el navy. Se quedaba en 3,31:1.
+//
+// Las dos de texto sobre el fondo liso están **resueltas** (22/08/2026):
+// `.syx-on-brand` repunta el tenue a `alpha-light-78` y sube a 4,65:1. Sobre
+// azul solo caben dos niveles de texto, y un nivel que no se puede usar no es
+// un nivel.
+//
+// Quedan las dos de «tenue sobre alt», y ya no fallan por 26 % sino por 1,3 %:
+// **4,44:1 contra 4,5**. El fondo `surface-alt` aclara el azul y ese punto se
+// come el margen. Cerrarlas pide oscurecer `surface-alt` dentro del contexto
+// —no hay primitivo alpha oscuro, habría que ir a `color-mix`— y ese token lo
+// leen paneles, visuales de código e ilustraciones en todo el sitio. Es una
+// decisión de diseño, no una limpieza, así que está anotada en `BRAND.md` §7.
 const BASELINE = new Set([
-  'sección brand · sobre página clara :: texto tenue',
   'sección brand · sobre página clara :: texto tenue sobre alt',
-  'sección brand · sobre página oscura :: texto tenue',
   'sección brand · sobre página oscura :: texto tenue sobre alt',
 ]);
 

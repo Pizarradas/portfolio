@@ -122,7 +122,15 @@
 
   // La prosa, a medida y en el elemento que fija el tamaño. Nunca en el
   // envoltorio: eso es lo que metió mapas de cinco columnas dentro de 66ch.
-  .org-case__act p {
+  //
+  // Cubre también la banda, por el mismo motivo que el tamaño del `h2` de más
+  // abajo: **una banda es una sección igual que un acto**, y lo único que
+  // cambia es que tiene fondo. Con el selector solo en `__act`, un párrafo
+  // suelto dentro de una banda perdía la medida y se estiraba hasta los 112rem
+  // del registro. Se vio al pasar a banda el primer acto de SPORT, que es el
+  // único que tiene prosa hermana de la presentación.
+  .org-case__act p,
+  .org-case__band p {
     max-width: var(--semantic-measure-prose);
   }
 
@@ -137,11 +145,13 @@
   // Ahora: `stack` entre la banda y su párrafo, `section-compact` entre ese
   // párrafo y lo que venga detrás. Razón φ entre los dos, que es lo que pide la
   // regla.
-  .org-case__act > .mol-section-heading:has(+ p) {
+  .org-case__act > .mol-section-heading:has(+ p),
+  .org-case__band > .mol-section-heading:has(+ p) {
     margin-bottom: var(--semantic-space-stack);
   }
 
-  .org-case__act > p + * {
+  .org-case__act > p + *,
+  .org-case__band > p + * {
     margin-block-start: var(--semantic-space-section-compact);
   }
 
@@ -277,7 +287,10 @@
     // donde el titular y acaba a 122px del borde, o sea prácticamente a ras.
     .org-case__act > p,
     .org-case__act > blockquote,
-    .org-case__act > .syx-inset {
+    .org-case__act > .syx-inset,
+    .org-case__band > p,
+    .org-case__band > blockquote,
+    .org-case__band > .syx-inset {
       margin-inline-start: calc(
         var(--component-heading-label-track) + var(--semantic-space-block)
       );

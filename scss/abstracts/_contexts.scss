@@ -77,9 +77,24 @@
   }
 
   // Brand-blue ground. Same idea, different surface.
+  //
+  // Con una excepción, y es de accesibilidad, no de gusto: **el azul de marca
+  // aguanta menos niveles de texto que el navy.** `on-dark-section` reparte
+  // tres —blanco, `alpha-78` y `alpha-60`—, que sobre `#080f2f` van sobrados.
+  // Sobre `#1e3aff` el tercero se queda en 3,31:1 y no llega a AA. La rampa no
+  // tiene escalón intermedio que valga: hacen falta ~0,755 de opacidad para
+  // alcanzar 4,5:1, y entre `60` y `78` no hay nada.
+  //
+  // Así que aquí el tenue **es** el secundario. Se pierde un nivel de jerarquía
+  // y se gana que todo el texto de una banda azul sea utilizable: hasta ahora
+  // `check-contrast` arrastraba cuatro excepciones registradas y las cuatro
+  // eran esta. `BRAND.md` §5 dice que un fallo de accesibilidad en este sitio
+  // es un fallo de credibilidad, y un nivel que no se puede usar no es un
+  // nivel.
   .syx-on-brand {
     @include ink.on-dark-section;
 
+    --semantic-color-text-muted: var(--primitive-alpha-light-78);
     --semantic-color-surface: var(--semantic-color-surface-brand);
     --semantic-color-border: var(--primitive-alpha-light-24);
     --semantic-color-on-primary: var(--primitive-color-brand-500);

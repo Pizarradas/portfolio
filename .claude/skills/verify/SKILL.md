@@ -69,6 +69,16 @@ vale. Ahí se aplica por bandas y se comparan renders.
 
 ## Trampas
 
+- **«No cambié texto, así que no hace falta regenerar `es/`».** Es falso y suena
+  razonable, que es lo que lo hace peligroso. Un cambio de **marcado** —una
+  clase, un contexto de color, un bloque movido de sitio— no toca ninguna
+  cadena, así que `check:i18n` daba verde mientras tres páginas en español
+  servían la estructura vieja. Pasó el 22/08/2026 con la banda azul.
+  **`npm run build:i18n` va después de tocar el HTML, cambie o no el texto.**
+  Desde entonces `check:i18n` compara el HTML generado con el del disco y falla
+  con código 1 si difieren, así que el olvido ya no es silencioso —pero la regla
+  sigue siendo ejecutar el build, no confiar en el checker.
+
 Ninguna de estas da error. Las tres pasaron desapercibidas durante meses:
 
 1. **Comentario CSS sin cerrar.** Un `/*` sin su `*/` comenta todo lo que sigue
