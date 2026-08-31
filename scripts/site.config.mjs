@@ -22,7 +22,6 @@ export const BASE = 'https://joseluispizarro.com';
 // §6 forbids the personal address anywhere on the site.
 export const SITE = {
   name: 'José Luis Pizarro',
-  legalName: 'José Luis Pizarro Feo',
   jobTitle: 'Product Designer & Front-End Engineer',
   email: 'profesional.pizarro@gmail.com',
   locality: 'Madrid',

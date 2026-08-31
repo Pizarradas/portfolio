@@ -275,7 +275,7 @@ function headBlock(html, page, lang) {
     // max-image-preview:large is what makes the social card eligible to show up
     // in Google's own result cards; the default crops it to a thumbnail.
     `<meta content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" name="robots"/>`,
-    `<meta content="${SITE.legalName}" name="author"/>`,
+    `<meta content="${SITE.name}" name="author"/>`,
     `<meta content="${SITE.locality}" name="geo.placename"/>`,
     // The site has no dark mode (no prefers-color-scheme rule in scss/), so it
     // declares one scheme instead of pretending to support both.
@@ -299,7 +299,7 @@ function headBlock(html, page, lang) {
   if (meta.ogType === 'profile') {
     lines.push(
       `<meta content="José Luis" property="profile:first_name"/>`,
-      `<meta content="Pizarro Feo" property="profile:last_name"/>`,
+      `<meta content="Pizarro" property="profile:last_name"/>`,
     );
   }
 
@@ -353,7 +353,6 @@ function jsonLd(page, lang, { url, title, description, headline, image }) {
       '@type': 'Person',
       '@id': person,
       name: SITE.name,
-      alternateName: SITE.legalName,
       url: home,
       jobTitle: SITE.jobTitle,
       email: `mailto:${SITE.email}`,
