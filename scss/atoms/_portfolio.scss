@@ -137,8 +137,10 @@
     @include transition(border-color var(--semantic-duration-hover) var(--semantic-ease));
   }
 
-  .atom-text-link:hover {
-    border-bottom-color: currentColor;
+  @include pointer {
+    .atom-text-link:hover {
+      border-bottom-color: currentColor;
+    }
   }
 
   // Variant — the accent link. For the one link in a region that has to be
@@ -187,8 +189,10 @@
     @include transition(color var(--semantic-duration-hover) var(--semantic-ease));
   }
 
-  .atom-lang-switch a:hover {
-    color: inherit;
+  @include pointer {
+    .atom-lang-switch a:hover {
+      color: inherit;
+    }
   }
 
   // The language being read is not a destination. It keeps full contrast so the

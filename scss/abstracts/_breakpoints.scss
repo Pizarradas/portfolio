@@ -28,3 +28,44 @@ $bp-2xl: 107.5rem !default; // 1720px — large desktop, content stops widening
     @content;
   }
 }
+
+// Hover, solo donde hay con qué hacer hover.
+//
+// En un móvil no existe el estado «el puntero está encima»: lo que hay es un
+// dedo que toca y se va. Los navegadores táctiles lo emulan aplicando `:hover`
+// al tocar y **dejándolo pegado** hasta que se toca otra cosa, así que un
+// efecto pensado como «esto responde cuando lo apuntas» se lee como «esto se
+// ha quedado seleccionado». Peor todavía con los que revelan contenido —los
+// pies del collage— porque en táctil no hay forma de llegar a ellos.
+//
+// Tres condiciones, y las tres hacen falta:
+//
+//   hover: hover     el dispositivo tiene un mecanismo de apuntado que puede
+//                    quedarse encima de algo sin activarlo
+//   pointer: fine    y es preciso — un ratón o un lápiz, no un dedo. Sin esto
+//                    un portátil táctil de 1400px pasaría el filtro de ancho
+//                    y volvería a tener hovers pegados
+//   min-width        el suelo que se pidió. `$bp-lg` y no 64rem: son 22px de
+//                    diferencia y este sistema tiene cinco breakpoints, no seis
+//                    — el hueco de 234px que rompía el grid de los titulares
+//                    salió justamente de tener 21
+//
+// Su límite, para no descubrirlo por sorpresa: un ratón en una ventana estrecha
+// —un portátil a media pantalla— cae por debajo del suelo y se queda sin
+// hovers. Es el precio del umbral por ancho; si algún día molesta, se borra la
+// línea del `min-width` y las otras dos condiciones siguen siendo correctas.
+//
+// Lo que NO se envuelve, y es deliberado: `:focus-visible` y `:focus-within`.
+// Esos son el teclado y el foco real, existen en cualquier dispositivo y son
+// la única forma de llegar a estos estados sin ratón. Envolverlos sería
+// arreglar el táctil rompiendo la accesibilidad, que es la prioridad 2.
+//
+// @example
+//   @include pointer {
+//     .atom-text-link:hover { border-bottom-color: currentColor; }
+//   }
+@mixin pointer {
+  @media (hover: hover) and (pointer: fine) and (min-width: $bp-lg) {
+    @content;
+  }
+}

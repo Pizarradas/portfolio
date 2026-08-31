@@ -152,13 +152,15 @@
     white-space: nowrap;
   }
 
-  .org-capability-scan a:hover {
-    background: var(--semantic-color-primary);
-    color: var(--semantic-color-on-primary);
-  }
+  @include pointer {
+    .org-capability-scan a:hover {
+      background: var(--semantic-color-primary);
+      color: var(--semantic-color-on-primary);
+    }
 
-  .org-capability-scan a:hover span {
-    color: var(--semantic-color-on-primary);
+    .org-capability-scan a:hover span {
+      color: var(--semantic-color-on-primary);
+    }
   }
 
   @include from($bp-md) {
@@ -426,8 +428,10 @@
     @include transition(border-color var(--semantic-duration-hover) var(--semantic-ease));
   }
 
-  .org-footer__contact a:hover {
-    border-bottom-color: currentColor;
+  @include pointer {
+    .org-footer__contact a:hover {
+      border-bottom-color: currentColor;
+    }
   }
 
   @include until($bp-md) {

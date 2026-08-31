@@ -48,8 +48,10 @@
     @include transition(right var(--semantic-duration-hover) var(--semantic-ease));
   }
 
-  .mol-nav a:hover::after {
-    right: 0;
+  @include pointer {
+    .mol-nav a:hover::after {
+      right: 0;
+    }
   }
 
   // La sección que se está leyendo.
@@ -166,6 +168,20 @@
   // The headline answers to the whole card, not just to itself. Hovering the
   // evidence is the same gesture as hovering the title, so it produces the
   // same feedback — otherwise the image and the words read as two components.
+  //
+  // Las nueve reglas de `.mol-project-card:is(:hover, :focus-within)` se quedan
+  // FUERA de `@include pointer`, y es una decisión, no un olvido.
+  //
+  // El filtro de puntero existe para que un estado de hover no se quede pegado
+  // en táctil. Aquí no puede pasar: la tarjeta contiene un enlace, tocarla le
+  // da el foco, y `:focus-within` enciende exactamente el mismo estado. Meter
+  // solo la mitad de hover detrás del filtro obligaría a duplicar los nueve
+  // bloques de declaraciones —uno para el foco y otro para el puntero— a
+  // cambio de cero diferencia visible en cualquier dispositivo.
+  //
+  // El criterio, para el que venga: se envuelve el hover que **no tiene**
+  // gemelo de foco, porque ese es el que en táctil o se queda pegado o no hay
+  // manera de alcanzarlo. El que ya lo tiene se queda como está.
   .mol-project-card:is(:hover, :focus-within) .mol-project-card__body h3 a {
     text-decoration: underline;
   }
@@ -362,9 +378,11 @@
     white-space: nowrap;
   }
 
-  .mol-mark:hover {
-    color: var(--semantic-color-primary);
-    border-color: var(--semantic-color-primary);
+  @include pointer {
+    .mol-mark:hover {
+      color: var(--semantic-color-primary);
+      border-color: var(--semantic-color-primary);
+    }
   }
 
   @include reduced-motion {
@@ -489,9 +507,17 @@
     @include transition(r var(--semantic-duration-hover) var(--semantic-ease));
   }
 
-  .mol-career-chart__node:hover,
+  // Hover y foco decían lo mismo en una sola lista, y por eso había que
+  // separarlos: el hover se va detrás del filtro de puntero y el foco se queda
+  // fuera, porque el teclado existe en cualquier dispositivo.
   .mol-career-chart__node:focus-visible {
     fill: currentColor;
+  }
+
+  @include pointer {
+    .mol-career-chart__node:hover {
+      fill: currentColor;
+    }
   }
 
   .mol-career-chart__node:focus-visible {
@@ -720,10 +746,12 @@
     padding-block: var(--semantic-space-component-lg);
   }
 
-  .mol-contact-list a:hover {
-    text-decoration: underline;
-    text-decoration-thickness: 0.07em;
-    text-underline-offset: 0.22em;
+  @include pointer {
+    .mol-contact-list a:hover {
+      text-decoration: underline;
+      text-decoration-thickness: 0.07em;
+      text-underline-offset: 0.22em;
+    }
   }
 
   @include until($bp-sm) {
@@ -1595,9 +1623,15 @@
     font-size: var(--semantic-font-size-caption);
   }
 
-  .mol-register__facade:hover .mol-register__cue,
+  // Misma separación que en el nodo del gráfico, y por la misma razón.
   .mol-register__facade:focus-visible .mol-register__cue {
     background: var(--semantic-color-primary);
+  }
+
+  @include pointer {
+    .mol-register__facade:hover .mol-register__cue {
+      background: var(--semantic-color-primary);
+    }
   }
 
   .mol-register__fallback {
@@ -1679,10 +1713,12 @@
     color: inherit;
   }
 
-  .mol-register__copy h3 a:hover {
-    text-decoration: underline;
-    text-decoration-thickness: 0.05em;
-    text-underline-offset: 0.12em;
+  @include pointer {
+    .mol-register__copy h3 a:hover {
+      text-decoration: underline;
+      text-decoration-thickness: 0.05em;
+      text-underline-offset: 0.12em;
+    }
   }
 
   .mol-register__lede {

@@ -1,3 +1,5 @@
+@use "../abstracts/breakpoints" as *;
+
 @layer syx.base {
   html {
     background: var(--semantic-color-surface);
@@ -95,7 +97,9 @@
   // También venía de brand-jlp.css. Se queda en la capa de átomos, que es
   // donde estaba, para no adelantarla por delante de los enlaces que sí
   // definen su propio hover.
-  a:hover {
-    color: var(--component-link-hover-color);
+  @include pointer {
+    a:hover {
+      color: var(--component-link-hover-color);
+    }
   }
 }

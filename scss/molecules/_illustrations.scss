@@ -100,12 +100,14 @@
     font-weight: var(--semantic-font-weight-emphasis);
   }
 
-  .mol-ill-card:hover {
-    background: var(--semantic-color-surface-alt);
-  }
+  @include pointer {
+    .mol-ill-card:hover {
+      background: var(--semantic-color-surface-alt);
+    }
 
-  .mol-ill-card:hover img {
-    transform: scale(1.04);
+    .mol-ill-card:hover img {
+      transform: scale(1.04);
+    }
   }
 
   // El colofón cierra la plancha y dice la muestra: cuántas piezas y en qué
@@ -303,9 +305,11 @@
     @include transition(opacity .25s ease,transform .25s ease);
   }
 
-  .mol-ill-collage:hover figcaption {
-    opacity: 1;
-    transform: none;
+  @include pointer {
+    .mol-ill-collage:hover figcaption {
+      opacity: 1;
+      transform: none;
+    }
   }
 
   .mol-ill-collage:focus-within figcaption {
