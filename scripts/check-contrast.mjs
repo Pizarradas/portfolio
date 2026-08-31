@@ -190,38 +190,28 @@ const PAIRS = [
   ['borde fuerte', '--semantic-color-border-strong', '--semantic-color-surface', 3, 'info'],
 ];
 
-// Fallos que ya existían el día que se escribió esta revisión. Igual que el
-// presupuesto de literales: no falla por los que hay, falla por los que se
-// añadan. Cada línea se borra cuando se arregla.
-// Las cuatro son la misma causa: `--semantic-color-text-muted` es blanco al
-// 60% y sobre el azul de marca se queda en 3,31:1. Está así en producción hoy,
-// en las cuatro secciones `.syx-on-brand`, y arreglarlo es subir la alfa —un
-// cambio visible en el sitio publicado, así que se decide aparte.
+// Deuda de contraste aceptada. Cuanto más corta, mejor — y ahora está vacía.
 //
-// Aparecen por duplicado porque `.syx-on-brand` se pinta igual sobre página
-// clara que oscura; las dos de «página oscura» se revisan al invertir las
-// secciones.
-// Deuda de contraste aceptada. Cuanto más corta, mejor.
+// Eran cuatro entradas, y las cuatro por lo mismo: `on-dark-section` reparte
+// tres niveles de texto y el tercero no llegaba a AA sobre el azul de marca,
+// que es un fondo mucho más claro que el navy.
 //
-// Eran cuatro, y las cuatro por lo mismo: `on-dark-section` reparte tres
-// niveles de texto y el tercero —`alpha-light-60`— no llega a AA sobre el azul
-// de marca, que es un fondo mucho más claro que el navy. Se quedaba en 3,31:1.
+// Se cerraron en dos pasos, los dos subiendo la tinta y no oscureciendo el
+// fondo, porque `surface-alt` lo leen paneles, visuales de código e
+// ilustraciones en todo el sitio y el texto no lo lee nadie más:
 //
-// Las dos de texto sobre el fondo liso están **resueltas** (22/08/2026):
-// `.syx-on-brand` repunta el tenue a `alpha-light-78` y sube a 4,65:1. Sobre
-// azul solo caben dos niveles de texto, y un nivel que no se puede usar no es
-// un nivel.
+//   22/08/2026  texto sobre el fondo liso — `alpha-light-60` daba 3,31:1.
+//               `.syx-on-brand` repunta el tenue a `78` y sube a 4,65:1. Sobre
+//               azul solo caben dos niveles de texto, y un nivel que no se
+//               puede usar no es un nivel.
+//   31/08/2026  texto tenue sobre `surface-alt` — `78` daba 4,44:1, que falla
+//               por 1,3 %. Sube a `86` y da 5,08:1. Ver la nota larga en
+//               `abstracts/_contexts.scss`.
 //
-// Quedan las dos de «tenue sobre alt», y ya no fallan por 26 % sino por 1,3 %:
-// **4,44:1 contra 4,5**. El fondo `surface-alt` aclara el azul y ese punto se
-// come el margen. Cerrarlas pide oscurecer `surface-alt` dentro del contexto
-// —no hay primitivo alpha oscuro, habría que ir a `color-mix`— y ese token lo
-// leen paneles, visuales de código e ilustraciones en todo el sitio. Es una
-// decisión de diseño, no una limpieza, así que está anotada en `BRAND.md` §7.
-const BASELINE = new Set([
-  'sección brand · sobre página clara :: texto tenue sobre alt',
-  'sección brand · sobre página oscura :: texto tenue sobre alt',
-]);
+// El día que vuelva a hacer falta añadir una entrada aquí, que lleve la fecha,
+// el número y por qué no se arregla hoy. Igual que el presupuesto de literales:
+// esto no falla por lo que ya hay, falla por lo que se añada.
+const BASELINE = new Set([]);
 
 // Una sección invertida tiene que despegarse del fondo sobre el que se apoya.
 // No lo pide ninguna norma —son dos bloques grandes contiguos, no texto— pero

@@ -47,5 +47,9 @@
     --primitive-alpha-light-24: rgb(255 255 255 / 0.24);
     --primitive-alpha-light-60: rgb(255 255 255 / 0.6);
     --primitive-alpha-light-78: rgb(255 255 255 / 0.78);
+    // El escalón que existe solo para el azul de marca. `78` da 4,44:1 sobre
+    // `surface-alt` dentro de `.syx-on-brand` —falla AA por 1,3 %— y `86` lo
+    // sube a 5,10:1. Ver la nota de `.syx-on-brand` en `abstracts/_contexts.scss`.
+    --primitive-alpha-light-86: rgb(255 255 255 / 0.86);
   }
 }

@@ -4,6 +4,24 @@
     // Tiñe checkboxes, radios y barras de progreso nativas con el azul de
     // marca. Venía de css/brand-jlp.css, que ya no existe.
     accent-color: var(--semantic-color-primary);
+
+    // El header es `position: sticky` y mide 68px, así que cualquier salto a
+    // un ancla —«Work», «About», «Contact», el skip link, un enlace a un
+    // capítulo de un caso— dejaba el destino DEBAJO del header: el eyebrow de
+    // la sección tapado y el lector caído a mitad del titular. Los cuatro
+    // anclas de la home computaban `scroll-margin-top: 0px`.
+    //
+    // Va como `scroll-padding` en el contenedor de scroll y no como
+    // `scroll-margin` en cada destino: es una propiedad del contenedor —el
+    // header le come esos 68px a la ventana— y así lo hereda cualquier ancla
+    // que se añada después, en cualquiera de las siete páginas, sin tener que
+    // acordarse de nada.
+    //
+    // Los 2rem de más no son decoración: sin ellos el destino aterriza pegado
+    // al filo inferior del header y no se lee como el principio de una sección.
+    scroll-padding-top: calc(
+      var(--component-header-height) + var(--semantic-space-component-xl)
+    );
   }
 
   body {

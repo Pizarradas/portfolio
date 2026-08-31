@@ -411,9 +411,47 @@
     // Esta capa es la dueña del gap de la nav por debajo de 480px: gana a
     // syx.molecules, que es donde mobile-first-v19.css pone su .mol-nav.
     // Apretado un paso al añadir el selector de idioma como quinto elemento.
+    //
+    // El cuerpo sube un escalón, de `caption` a `eyebrow`. Medido el
+    // 31/08/2026 a 374px de viewport, la fila entera corría a 11px: cinco
+    // destinos más el par de idioma, con anchos de 24 a 41px y 30px de alto.
+    // Once píxeles no es un tamaño de interfaz, es una nota al pie.
+    //
+    // Se queda en `eyebrow` —12px a 374px— y no en `ui` —13px— por una razón
+    // que se puede comprobar: la fila mide hoy unos 270px de los 333px de
+    // contenido que hay a 374px, y «sin scroll horizontal a 374px» es de lo
+    // poco que el sitio ya tenía bien. Un escalón cabe con holgura; dos habría
+    // que medirlos en un navegador antes de servirlos.
     .mol-nav {
-      gap: var(--primitive-space-xs);
-      font-size: var(--semantic-font-size-caption);
+      gap: var(--semantic-space-component-xs);
+      font-size: var(--semantic-font-size-eyebrow);
+    }
+
+    // El alto sí puede llegar al objetivo cómodo, porque en vertical sobra
+    // sitio: el header ya mide 68px de mínimo, así que 44px de destino caben
+    // dentro sin cambiar la altura de la barra ni mover nada de su alrededor.
+    //
+    // Crece por `padding-block` y no solo por `min-block-size` para que el
+    // subrayado siga a la misma distancia óptica del texto: la molécula lo
+    // coloca en `calc(padding - 0.3rem)` desde el fondo de la caja de padding,
+    // así que si cambia el padding hay que rehacer la resta o el filete se
+    // descuelga 12px. Es la misma compensación que ya explica la molécula, con
+    // el escalón nuevo.
+    //
+    // El ancho no llega, y conviene decirlo en vez de fingir: «CV», «EN» y
+    // «ES» se quedan en los 24px de `--semantic-size-target-min`, que es lo
+    // que exige WCAG 2.2 SC 2.5.8. Con 8px de hueco los centros quedan a 32px,
+    // por encima de los 24 que pide la excepción por separación, así que la
+    // fila cumple; llegar a 44px de ancho en los seis destinos pediría unos
+    // 60px más de los que hay a 374px.
+    .mol-nav a {
+      align-items: center;
+      padding-block: var(--semantic-space-component-sm);
+      min-block-size: var(--semantic-size-target-comfortable);
+    }
+
+    .mol-nav a::after {
+      bottom: calc(var(--semantic-space-component-sm) - 0.3rem);
     }
   }
 
@@ -500,10 +538,41 @@
   // crudo y dos clamps de titular. De ahí salían los 92,8px de tope. El tamaño
   // ya no se declara aquí: lo pone la molécula, desde la escala, y estas reglas
   // se ocupan solo de la retícula, que es lo único que depende del ancho.
-  @include from($bp-md) {
+  //
+  // Y aquí estaba el peor fallo del sitio, medido el 31/08/2026 sobre los
+  // estilos computados: **el titular se quedaba a 0px de ancho entre 768 y
+  // ~1000px de viewport**, en la home y en las seis páginas de caso.
+  //
+  // El mecanismo, que no se ve leyendo la regla. La tercera pista era
+  // `minmax(16rem, 28rem)`: no es flexible, así que la retícula la sube hasta
+  // su límite de crecimiento —448px— ANTES de repartir nada entre las pistas
+  // `fr`. La del medio era `minmax(0, 1fr)`, con mínimo cero, o sea la única
+  // que podía absorber el déficit; y lo absorbía entero. A 768px de viewport
+  // el contenedor mide ~692px: 160 de etiqueta más dos huecos de 49 dejan 434,
+  // la tercera pista se los queda y el titular computa `0px`. «Selected work»
+  // salía en once líneas de una letra, y `case-42ds.html` pasaba de 18.431 a
+  // 37.726px de alto con sus 18 H2 en vertical. Es el mismo fallo que ya
+  // documenta `organisms/_case-42ds.scss` cuando la banda entraba en media
+  // sección: allí la causa era el contenedor, aquí es la retícula.
+  //
+  // Dos cambios, y hacen falta los dos:
+  //
+  //   1. Las dos pistas de contenido pasan a ser flexibles y el mínimo cambia
+  //      de bando. Con `1.4fr` y `1fr` reparten en proporción en vez de
+  //      competir, y quien puede ceder es la entradilla, no el titular.
+  //   2. El corte sube de `md` a `lg`. Los mínimos —10rem + 16rem + dos huecos
+  //      de bloque— no caben en un contenedor de 692px, así que entre 768 y
+  //      1002px se sirve la columna única del caso base, que ya funciona bien.
+  //      Ese hueco de 234px entre «entran tres columnas» y «caben tres
+  //      columnas» no lo eligió nadie: era el resultado de tener 21
+  //      breakpoints distintos.
+  //
+  // A `lg` el contenedor mide ~926px y el reparto es 389 / 278: el titular
+  // nunca vuelve a bajar de su mínimo de 16rem.
+  @include from($bp-lg) {
     .mol-section-heading {
       grid-template-columns: var(--component-heading-label-track)
-        minmax(0, 1fr) minmax(16rem, 28rem);
+        minmax(16rem, 1.4fr) minmax(0, 1fr);
       column-gap: var(--semantic-space-block);
       row-gap: var(--semantic-space-component-lg);
     }

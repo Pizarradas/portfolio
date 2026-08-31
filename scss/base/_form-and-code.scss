@@ -126,18 +126,30 @@
     height: auto;
   }
 
-  h1 {
-    overflow-wrap: break-word;
-  }
-
-  h2 {
-    overflow-wrap: break-word;
-  }
-
-  h3 {
-    overflow-wrap: break-word;
-  }
-
+  // `break-word` es la red de seguridad correcta para una URL, una dirección de
+  // correo o un texto que escribe otra persona. Para la escala tipográfica de
+  // display no lo es, y aquí estaba aplicado a los tres niveles de titular.
+  //
+  // Medido el 31/08/2026 a 1023px de viewport: seis titulares partidos a mitad
+  // de palabra y sin guion —«measuri / ng», «assumption» de 276px en una caja
+  // de 259, «maintainable» 304 en 291, «execution.» 247 en 212, «recognisable.»
+  // 319 en 284, «problems.» 238 en 212—. Y era además la mitad del fallo del
+  // grid de `.mol-section-heading`: una pista que puede encogerse a cero solo
+  // produce once líneas de una letra si el titular acepta romperse.
+  //
+  // Los titulares vuelven a `normal`, que es el valor inicial: si una palabra
+  // no cabe, desborda de forma visible en vez de deshacerse, y eso es una señal
+  // de que la caja está mal, no algo que tapar. `text-wrap: balance` sigue en
+  // `base/_elements.scss`.
+  //
+  // La palabra más larga del sitio a 360px —«journalism.» en el hero, 48px de
+  // cuerpo— mide ~264px contra 320px de contenido, así que no hay ningún
+  // titular que dependiera de esta regla para no desbordar. Donde sí hace
+  // falta romper a cualquier carácter —la dirección de correo del footer y de
+  // la lista de contacto— está declarado aparte, con `anywhere`, en
+  // `molecules/_portfolio.scss`.
+  //
+  // El resto de elementos conserva `break-word`: son prosa, y ahí sí.
   p {
     overflow-wrap: break-word;
   }

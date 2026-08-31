@@ -52,6 +52,21 @@
     right: 0;
   }
 
+  // La sección que se está leyendo.
+  //
+  // `js/header-context.js` pone `aria-current="location"` en el enlace mientras
+  // su sección ocupa la franja de lectura. Hasta ahora `aria-current` solo lo
+  // usaba el conmutador de idioma, así que durante todo el scroll la
+  // navegación no decía dónde estabas.
+  //
+  // La marca es el mismo filete que ya dibuja el hover, entero. Ni color ni
+  // peso nuevos: `BRAND.md` §4 gasta el acento una vez por región y aquí ya
+  // está gastado en el eyebrow de la sección, y un enlace que engorda al
+  // pasar por él mueve la fila.
+  .mol-nav > a[aria-current]::after {
+    right: 0;
+  }
+
   // The language switch lives inside the nav, so it inherits the sliding
   // underline — which is the right hover affordance for the language you can
   // move to, and the wrong one for the language you are already reading, since

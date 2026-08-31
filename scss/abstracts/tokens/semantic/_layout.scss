@@ -104,6 +104,18 @@
     // prioridad 2 y las proporciones la 5, así que aquí manda la norma.
     --semantic-size-target-min: 1.5rem;
 
+    // El objetivo cómodo, que es otra cosa que el objetivo legal. 2.75rem son
+    // los 44 CSS px de WCAG 2.5.5 (Target Size, Enhanced, AAA) y también el
+    // mínimo que recomiendan las guías de iOS y Android. Tampoco es un escalón
+    // de la escala de espaciado, por la misma razón que el de arriba: lo fija
+    // una norma, no φ.
+    //
+    // Se usa donde la altura es gratis —una barra de navegación tiene sitio de
+    // sobra en vertical— aunque el ancho no pueda llegar: subir el alto de 30
+    // a 44px no mueve ni un píxel de la composición y hace utilizable con el
+    // pulgar una fila que antes pedía puntería.
+    --semantic-size-target-comfortable: 2.75rem;
+
     // Measures. Apply to the element that sets the font-size, never to a wrapper.
     --semantic-measure-display: var(--primitive-measure-display);
     --semantic-measure-title: var(--primitive-measure-title);

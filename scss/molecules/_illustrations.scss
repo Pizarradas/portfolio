@@ -278,7 +278,24 @@
     background: color-mix(in srgb, var(--semantic-color-surface) 88%, transparent);
     color: var(--semantic-color-text);
     backdrop-filter: blur(8px);
-    font: 600 .52rem/1 var(--semantic-font-family-ui);
+    // .52rem son 8,3px. Medidos el 31/08/2026 en los siete pies del collage:
+    // por debajo de cualquier tamaño de interfaz utilizable, y aun así
+    // presentes en el árbol de accesibilidad —un lector de pantalla los
+    // anuncia y un test automático los marca— porque `opacity: 0` no saca un
+    // elemento del árbol, solo lo vuelve invisible.
+    //
+    // Se decide que nombran las piezas y aportan, así que se leen: suben al
+    // escalón `caption` de la escala, que es 11px a 360px y 12px a 1600px. No
+    // cambia nada en reposo, porque en reposo el pie no se ve; cambia lo que
+    // se lee al pasar por encima, que era el único momento en que existía.
+    //
+    // El contraste ya estaba bien y sigue igual: tinta de página sobre la
+    // superficie al 88 %, 19:1 en claro. El 1,17:1 que salía al medirlo era el
+    // del estado apagado, no el del pie.
+    font-family: var(--semantic-font-family-ui);
+    font-weight: 600;
+    font-size: var(--semantic-font-size-caption);
+    line-height: 1;
     letter-spacing: .07em;
     text-transform: uppercase;
     opacity: 0;

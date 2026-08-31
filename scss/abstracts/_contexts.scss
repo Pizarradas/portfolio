@@ -1,4 +1,5 @@
 @use "ink";
+@use "surfaces" as *;
 
 // CONTEXTS
 //
@@ -91,15 +92,70 @@
   // eran esta. `BRAND.md` §5 dice que un fallo de accesibilidad en este sitio
   // es un fallo de credibilidad, y un nivel que no se puede usar no es un
   // nivel.
+  // 31/08/2026 — el último escalón, y cierra la deuda entera.
+  //
+  // Con el tenue ya en `78`, quedaban dos parejas por debajo de AA y las dos
+  // eran la misma: **texto tenue sobre `surface-alt`, 4,44:1 contra 4,5**.
+  // `surface-alt` es blanco al 4 % encima del azul, o sea `#2742ff`, un fondo
+  // un punto más claro que el liso, y ese punto se comía el margen. Estaban
+  // registradas en el BASELINE de `check-contrast.mjs` con la nota de que
+  // cerrarlas pedía oscurecer `surface-alt`.
+  //
+  // No hacía falta: se cierra por el otro lado. Subir la tinta de `78` a `86`
+  // toca solo texto —`surface-alt` lo leen paneles, visuales de código e
+  // ilustraciones en todo el sitio y sigue intacto— y da 5,10:1 sobre el alt y
+  // 5,64:1 sobre el liso. Los dos niveles suben juntos porque en esta sección
+  // son el mismo nivel, por lo que ya explica el párrafo de arriba.
+  //
+  // Por qué importaba más que otro decimal: la página de al lado afirma «WCAG
+  // 2.1 AA implementado en productos editoriales complejos, no dejado como
+  // objetivo». Era el único sitio del sitio donde el sitio se contradecía.
   .syx-on-brand {
     @include ink.on-dark-section;
 
-    --semantic-color-text-muted: var(--primitive-alpha-light-78);
+    --semantic-color-text-secondary: var(--primitive-alpha-light-86);
+    --semantic-color-text-muted: var(--primitive-alpha-light-86);
     --semantic-color-surface: var(--semantic-color-surface-brand);
     --semantic-color-border: var(--primitive-alpha-light-24);
     --semantic-color-on-primary: var(--primitive-color-brand-500);
 
     background: var(--semantic-color-surface);
     color: var(--semantic-color-text);
+  }
+
+  // El header sticky, cuando lo que pasa por debajo es una sección oscura.
+  //
+  // El header es cristal: una superficie a 68 % de `--semantic-color-surface`
+  // más un desenfoque. Sobre el fondo claro de la página eso es una lámina
+  // blanca y funciona. Sobre las dos secciones invertidas de la home —el navy
+  // de la evolución de rol y el azul de marca del mapa— la misma lámina blanca
+  // se convierte en una banda de niebla: se ve el contenido de la sección
+  // pasando emborronado por debajo del logo, y la tinta del nav sigue siendo
+  // casi negra sobre un fondo que ha dejado de ser claro. Es el único elemento
+  // presente en el 100 % del scroll, así que es el que más veces se ve mal.
+  //
+  // No se arregla con un fondo opaco: se arregla invirtiéndolo, que es lo que
+  // el sistema ya sabe hacer. `data-over="dark"` lo pone `js/header-context.js`
+  // cuando una sección `.syx-on-night` o `.syx-on-brand` toca el borde inferior
+  // del header, y a partir de ahí el header ES una sección oscura: mismo mapa
+  // de tinta, mismo cristal, misma familia de tokens. Sin variantes de color
+  // propias y sin un solo literal.
+  //
+  // Vive aquí y no en `organisms/_portfolio.scss` por dos razones: es una
+  // reasignación de contexto, que es exactamente lo que este fichero decide, y
+  // `syx.utilities` gana a `syx.organisms`, que es donde el header declara su
+  // cristal claro.
+  .org-site-header[data-over="dark"] {
+    @include ink.on-dark-section;
+
+    --semantic-color-surface: var(--semantic-color-surface-night);
+    --semantic-color-on-primary: var(--primitive-color-brand-950);
+
+    @include glass(var(--semantic-blur-panel));
+
+    color: var(--semantic-color-text);
+    border-width: 0 0 var(--semantic-border-width);
+    border-radius: 0;
+    box-shadow: none;
   }
 }
