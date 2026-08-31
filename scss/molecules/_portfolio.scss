@@ -2,6 +2,61 @@
 @use "../abstracts/mixins" as *;
 @use "../abstracts/surfaces" as *;
 
+// El estado «encendida» de una tarjeta de proyecto, escrito una vez.
+//
+// Eran nueve reglas con el mismo prefijo, `:is(:hover, :focus-within)`, y las
+// dos mitades fallaban en táctil por caminos distintos:
+//
+//   :focus-within   se enciende al TOCAR el enlace de la tarjeta y se queda
+//                   así hasta que se toca otra cosa. Es de donde salía el
+//                   subrayado que aparecía «al pasar el dedo».
+//   :hover          los navegadores táctiles lo emulan al tocar y también lo
+//                   dejan pegado, así que arrastrar el dedo por encima de la
+//                   tarjeta la deja encendida.
+//
+// Se separan, porque cada mitad tiene su propia condición correcta:
+//
+//   :has(:focus-visible)   solo teclado. `:focus-visible` no casa cuando un
+//                          enlace recibe el foco por puntero o por toque, así
+//                          que esto enciende la tarjeta al tabular y en ningún
+//                          otro caso. Es lo que `:focus-within` quería decir.
+//   :hover + @include pointer   solo donde hay un puntero de verdad.
+//
+// El cuerpo se escribe una sola vez: `@content` se emite dos veces, con los
+// dos prefijos. Sin eso habría nueve pares de bloques que mantener a la par, y
+// ese es exactamente el tipo de duplicación que en este proyecto ya se ha
+// desincronizado sin que nadie se entere.
+//
+// `:has()` va fuera de `:is()` a propósito. Dentro sería tolerante y en un
+// navegador sin soporte se caería en silencio; fuera, la regla entera se cae y
+// queda la de hover, que es la degradación honesta. El proyecto ya usa `:has()`
+// en `organisms/_case-template.scss`.
+//
+// @example
+//   @include card-lit(".mol-project-card__body h3 a") {
+//     text-decoration: underline;
+//   }
+@mixin card-lit($blocks...) {
+  $focus: "";
+  $hover: "";
+
+  @each $block in $blocks {
+    $sep: if($focus == "", "", ", ");
+    $focus: $focus + $sep + ".mol-project-card:has(:focus-visible) " + $block;
+    $hover: $hover + $sep + ".mol-project-card:hover " + $block;
+  }
+
+  #{$focus} {
+    @content;
+  }
+
+  @include pointer {
+    #{$hover} {
+      @content;
+    }
+  }
+}
+
 @layer syx.molecules {
   .mol-nav {
     display: flex;
@@ -168,21 +223,7 @@
   // The headline answers to the whole card, not just to itself. Hovering the
   // evidence is the same gesture as hovering the title, so it produces the
   // same feedback — otherwise the image and the words read as two components.
-  //
-  // Las nueve reglas de `.mol-project-card:is(:hover, :focus-within)` se quedan
-  // FUERA de `@include pointer`, y es una decisión, no un olvido.
-  //
-  // El filtro de puntero existe para que un estado de hover no se quede pegado
-  // en táctil. Aquí no puede pasar: la tarjeta contiene un enlace, tocarla le
-  // da el foco, y `:focus-within` enciende exactamente el mismo estado. Meter
-  // solo la mitad de hover detrás del filtro obligaría a duplicar los nueve
-  // bloques de declaraciones —uno para el foco y otro para el puntero— a
-  // cambio de cero diferencia visible en cualquier dispositivo.
-  //
-  // El criterio, para el que venga: se envuelve el hover que **no tiene**
-  // gemelo de foco, porque ese es el que en táctil o se queda pegado o no hay
-  // manera de alcanzarlo. El que ya lo tiene se queda como está.
-  .mol-project-card:is(:hover, :focus-within) .mol-project-card__body h3 a {
+  @include card-lit(".mol-project-card__body h3 a") {
     text-decoration: underline;
   }
 
@@ -234,7 +275,7 @@
     @include transition(transform var(--semantic-duration-transition) var(--semantic-ease-emphasis));
   }
 
-  .mol-project-card:is(:hover, :focus-within) .mol-project-card__meta::before {
+  @include card-lit(".mol-project-card__meta::before") {
     transform: scaleX(1);
   }
 
@@ -796,7 +837,7 @@
     @include transition(border-color var(--semantic-duration-hover) var(--semantic-ease), box-shadow var(--semantic-duration-transition) var(--semantic-ease), transform var(--semantic-duration-transition) var(--semantic-ease));
   }
 
-  .mol-project-card:is(:hover, :focus-within) .mol-project-card__frame {
+  @include card-lit(".mol-project-card__frame") {
     transform: translateY(var(--component-work-lift));
     border-color: var(--semantic-color-border-strong);
     box-shadow: var(--semantic-shadow-overlay);
@@ -815,9 +856,7 @@
     @include transition(transform var(--semantic-duration-reveal) var(--semantic-ease-emphasis));
   }
 
-  .mol-project-card:is(:hover, :focus-within)
-    .mol-project-card__frame
-    > *:not(.mol-project-card__enter) {
+  @include card-lit(".mol-project-card__frame > *:not(.mol-project-card__enter)") {
     transform: scale(1.015);
   }
 
@@ -836,7 +875,7 @@
     @include transition(opacity var(--semantic-duration-transition) var(--semantic-ease));
   }
 
-  .mol-project-card:is(:hover, :focus-within) .mol-project-card__frame::after {
+  @include card-lit(".mol-project-card__frame::after") {
     opacity: 1;
   }
 
@@ -870,7 +909,7 @@
     @include transition(opacity var(--semantic-duration-transition) var(--semantic-ease), transform var(--semantic-duration-transition) var(--semantic-ease-emphasis));
   }
 
-  .mol-project-card:is(:hover, :focus-within) .mol-project-card__enter {
+  @include card-lit(".mol-project-card__enter") {
     opacity: 1;
     transform: translate(-50%, -50%);
   }
@@ -880,7 +919,7 @@
     @include transition(transform var(--semantic-duration-hover) var(--semantic-ease));
   }
 
-  .mol-project-card:is(:hover, :focus-within) .mol-project-card__enter i {
+  @include card-lit(".mol-project-card__enter i") {
     transform: translateX(0.2rem);
   }
 
@@ -1346,7 +1385,7 @@
 
   // The card's own label steps aside for the affordance instead of the two
   // stacking up in the same corner.
-  .mol-project-card:is(:hover, :focus-within) .mol-evidence-live__overlay {
+  @include card-lit(".mol-evidence-live__overlay") {
     opacity: 0;
   }
 
@@ -1488,11 +1527,11 @@
       @include transition-off;
     }
 
-    .mol-project-card:is(:hover, :focus-within) .mol-project-card__frame,
-    .mol-project-card:is(:hover, :focus-within)
-      .mol-project-card__frame
-      > *:not(.mol-project-card__enter),
-    .mol-project-card:is(:hover, :focus-within) .mol-project-card__enter i {
+    @include card-lit(
+      ".mol-project-card__frame",
+      ".mol-project-card__frame > *:not(.mol-project-card__enter)",
+      ".mol-project-card__enter i"
+    ) {
       transform: none;
     }
 

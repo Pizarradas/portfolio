@@ -55,10 +55,17 @@ $bp-2xl: 107.5rem !default; // 1720px — large desktop, content stops widening
 // hovers. Es el precio del umbral por ancho; si algún día molesta, se borra la
 // línea del `min-width` y las otras dos condiciones siguen siendo correctas.
 //
-// Lo que NO se envuelve, y es deliberado: `:focus-visible` y `:focus-within`.
-// Esos son el teclado y el foco real, existen en cualquier dispositivo y son
-// la única forma de llegar a estos estados sin ratón. Envolverlos sería
-// arreglar el táctil rompiendo la accesibilidad, que es la prioridad 2.
+// Lo que NO se envuelve, y es deliberado: `:focus-visible`. Es el teclado,
+// existe en cualquier dispositivo y es la única forma de llegar a estos
+// estados sin ratón. Envolverlo sería arreglar el táctil rompiendo la
+// accesibilidad, que es la prioridad 2.
+//
+// `:focus-within` es otra cosa y conviene no confundirlas: se enciende con
+// CUALQUIER foco, incluido el que da un toque en un enlace, así que en táctil
+// se queda pegado igual que un hover. Cuando `:focus-within` está haciendo de
+// «este contenedor tiene la atención», lo que quiere decir es
+// `:has(:focus-visible)`. Así está resuelto en `.mol-project-card` — ver el
+// mixin `card-lit` en `molecules/_portfolio.scss`.
 //
 // @example
 //   @include pointer {
