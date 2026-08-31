@@ -26,7 +26,7 @@ export const SITE = {
   email: 'profesional.pizarro@gmail.com',
   locality: 'Madrid',
   country: 'ES',
-  sameAs: ['https://www.linkedin.com/in/joseluispizarrofeo'],
+  sameAs: ['https://www.linkedin.com/in/joseluispizarrodesign'],
   // Claims the site actually backs with a case, not a keyword list.
   knowsAbout: [
     'Design Systems',

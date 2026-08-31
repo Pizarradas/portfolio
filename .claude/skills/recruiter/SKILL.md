@@ -95,7 +95,7 @@ Quien contrata cruza fuentes, y las cruza en este orden:
 | Fichas de caso | `.mol-case-facts` en cada `case-*.html` | rol y propiedad |
 | CV PDF | `jose-luis-pizarro-cv-{en,es}.pdf` | todo lo anterior |
 | Versión española | `es/` | que no diga menos que el inglés |
-| LinkedIn | `linkedin.com/in/joseluispizarrofeo` | **no se puede verificar desde el repo**: se avisa de qué habría que cotejar |
+| LinkedIn | `linkedin.com/in/joseluispizarrodesign` | **no se puede verificar desde el repo**: se avisa de qué habría que cotejar |
 
 Qué buscar:
 

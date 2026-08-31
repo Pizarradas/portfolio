@@ -212,7 +212,7 @@ haber implementado AA en productos editoriales complejos.
 | | |
 |---|---|
 | Email | `profesional.pizarro@gmail.com` — **nunca** el personal |
-| LinkedIn | `linkedin.com/in/joseluispizarrofeo` |
+| LinkedIn | `linkedin.com/in/joseluispizarrodesign` |
 | CV | PDF en la raíz, enlazado desde nav y footer |
 | Teléfono | **No** va en la web |
 | Ubicación | Madrid, España |
