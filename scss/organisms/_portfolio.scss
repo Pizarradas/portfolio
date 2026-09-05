@@ -606,8 +606,10 @@
     gap: 1.5rem;
   }
 
+  // El alto lo dice el token, que por debajo de tablet vale 3.75rem: así el
+  // índice de caso y el `scroll-padding` miden lo mismo que el header.
   .org-site-header {
-    min-height: 3.75rem;
+    min-height: var(--component-header-height);
     padding-inline: var(--semantic-space-shell-inline);
   }
 

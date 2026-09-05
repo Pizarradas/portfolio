@@ -51,6 +51,10 @@
     padding: 0 var(--component-case-opener-pad-inline);
     list-style: none;
     overflow-x: auto;
+    // Un arrastre horizontal que llega al final de la fila no debe salir de
+    // ella: sin esto, en iOS el gesto sigue hasta la navegación atrás del
+    // navegador.
+    overscroll-behavior-x: contain;
     scrollbar-width: none;
   }
 

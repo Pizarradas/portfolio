@@ -1,4 +1,5 @@
 @use "../../fluid" as *;
+@use "../../breakpoints" as *;
 
 @layer syx.tokens {
   // COMPONENT — portfolio shell
@@ -10,6 +11,11 @@
   :root {
     // The header takes its surface from the glass mixin now, so it no longer
     // needs a background token of its own.
+    // 4.25rem from tablet up, 3.75rem below: the value the header actually
+    // measures at each width. It was 4.25rem at every width while the mobile
+    // header ran at a hardcoded 3.75rem, so everything that reads this token
+    // to sit under the header —the case index, `scroll-padding`— landed 8px
+    // low on a phone (audited 05/09/2026).
     --component-header-height: 4.25rem;
 
     --component-card-visual-bg: var(--semantic-color-surface-alt);
@@ -99,5 +105,11 @@
     // first step of the spacing scale that holds «LinkedIn» at caption size
     // with its tracking (≈ 78px) without touching the value.
     --component-contact-label-track: 5.388rem;
+  }
+
+  @include until($bp-md) {
+    :root {
+      --component-header-height: 3.75rem;
+    }
   }
 }

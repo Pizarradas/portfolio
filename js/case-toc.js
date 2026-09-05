@@ -113,19 +113,25 @@
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+  // La fila puede ser más ancha que la ventana: el enlace activo se trae a la
+  // vista desplazando SOLO la lista, en horizontal. Antes se hacía con
+  // `scrollIntoView`, y en un teléfono eso fue un error: aunque se pida
+  // `block: 'nearest'`, el navegador también puede mover el documento para
+  // acercar la barra pegada, y lo hacía en mitad del scroll del dedo —la
+  // página daba tirones y los toques sobre la barra no se registraban—.
+  // `scrollTo` sobre el `ol` no puede tocar el documento.
+  const reveal = (link) => {
+    const left = link.offsetLeft - (list.clientWidth - link.offsetWidth) / 2;
+    list.scrollTo({ left: Math.max(0, left), behavior: reduced.matches ? 'auto' : 'smooth' });
+  };
+
   const markCurrent = (current) => {
     entries.forEach((entry, i) => {
       const link = links[i];
       if (entry === current) {
         if (link.hasAttribute('aria-current')) return;
         link.setAttribute('aria-current', 'location');
-        // La fila puede ser más ancha que la ventana: el enlace activo se trae
-        // a la vista sin mover la página, y sin animar si así se ha pedido.
-        link.scrollIntoView({
-          block: 'nearest',
-          inline: 'nearest',
-          behavior: reduced.matches ? 'auto' : 'smooth',
-        });
+        reveal(link);
       } else {
         link.removeAttribute('aria-current');
       }
