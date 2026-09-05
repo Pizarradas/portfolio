@@ -4,12 +4,21 @@
 <link href="../css/portfolio.css" rel="stylesheet"/>
 <script>document.documentElement.classList.add("js")</script>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-B01K8E4SDY"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-B01K8E4SDY');
+// gtag.js se pide después de `load`, no como `async` en el <head>: en móvil
+// competía con la hoja y las fuentes por el ancho de banda del primer pintado
+// (auditado el 05/09/2026). Los eventos ya están en dataLayer y se envían en
+// cuanto llega, así que la vista de página no se pierde.
+addEventListener('load', function () {
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-B01K8E4SDY';
+  document.head.appendChild(s);
+});
 </script>
 <meta content="Un mapa que vivía dentro de un JPEG. Lo sustituí por una implementación de Leaflet e IGN mantenida desde una hoja de cálculo, para que una ubicación pasara a ser una fila que se edita en vez de un píxel que se redibuja." name="description"/><title>Mapa interactivo de medios — José Luis Pizarro</title>
 <!-- i18n:head:start -->

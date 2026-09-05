@@ -232,10 +232,25 @@ function rewriteUrl(url) {
 }
 
 function rewriteTagUrls(tag) {
-  return tag.replace(/\s(href|src)\s*=\s*"([^"]*)"/gi, (whole, attr, url) => {
-    const next = rewriteUrl(url);
-    return next === url ? whole : ` ${attr}="${next}"`;
-  });
+  return tag
+    .replace(/\s(href|src)\s*=\s*"([^"]*)"/gi, (whole, attr, url) => {
+      const next = rewriteUrl(url);
+      return next === url ? whole : ` ${attr}="${next}"`;
+    })
+    // `srcset` lleva varias URLs, cada una con su descriptor de ancho: se
+    // reescribe cada candidato por separado y se conserva el descriptor.
+    .replace(/\ssrcset\s*=\s*"([^"]*)"/gi, (whole, list) => {
+      const next = list
+        .split(',')
+        .map(c => c.trim())
+        .filter(Boolean)
+        .map(c => {
+          const [url, ...desc] = c.split(/\s+/);
+          return [rewriteUrl(url), ...desc].join(' ');
+        })
+        .join(', ');
+      return ` srcset="${next}"`;
+    });
 }
 
 /* ------------------------------------------------------------ marker blocks */
