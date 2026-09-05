@@ -138,6 +138,38 @@
     });
   };
 
+  /* --------------------------------------------- un toque sobre el índice */
+
+  // El documento hace scroll suave hasta el ancla (`scroll-behavior: smooth`
+  // en la base). Durante ese recorrido el observador veía pasar cada sección
+  // intermedia, marcaba cada una como actual y desplazaba la fila tras ella:
+  // la barra perseguía al scroll y, en un teléfono, el conjunto se encasquillaba
+  // y se comía el siguiente toque. Ahora un toque marca su entrada al momento
+  // y bloquea al observador hasta que el documento se detiene (`scrollend`,
+  // con un tope de tiempo para los navegadores que no lo emiten). Un gesto
+  // del lector —dedo o rueda— levanta el bloqueo antes: manda quien toca.
+  let locked = false;
+  let unlockTimer = 0;
+  const unlock = () => {
+    locked = false;
+    clearTimeout(unlockTimer);
+  };
+  const lockUntilSettled = () => {
+    locked = true;
+    clearTimeout(unlockTimer);
+    unlockTimer = setTimeout(unlock, 1500);
+  };
+  addEventListener('scrollend', unlock, { passive: true });
+  addEventListener('touchstart', unlock, { passive: true });
+  addEventListener('wheel', unlock, { passive: true });
+
+  links.forEach((link, i) => {
+    link.addEventListener('click', () => {
+      lockUntilSettled();
+      markCurrent(entries[i]);
+    });
+  });
+
   if (!('IntersectionObserver' in window)) return;
 
   // Misma franja de lectura que `header-context.js`: desde el borde inferior
@@ -161,6 +193,7 @@
           if (entry.isIntersecting) visible.add(entry.target);
           else visible.delete(entry.target);
         });
+        if (locked) return;
         const current = entries.filter((e) => e.members.some((m) => visible.has(m))).pop();
         markCurrent(current || null);
       },
