@@ -338,8 +338,32 @@
     // Crece el panel y el titular se ancla a su base: el aire queda por encima
     // del rótulo, donde un panel lo admite, y el titular sigue pegado a lo que
     // introduce. La columna llena el 100 % de la altura y no hay banda gris.
+    // The claim is the headline of the visual, not a caption floating in the
+    // middle of it. In the register layout the frame is as tall as the body
+    // (≈ 33rem), the four mastheads are pinned to 110px each so the crop never
+    // shows advertising, and whatever is left goes to the meta: centred at
+    // `title-sm` that read as a half-empty box (audited 05/09/2026). Set at
+    // `title`, aligned to the top with the mark, it composes the space instead
+    // of sitting in it.
     .org-work .mol-evidence-system__meta {
-      align-content: end;
+      flex: none;
+      align-content: start;
+    }
+
+    .org-work .mol-evidence-system__meta strong {
+      font-size: var(--semantic-font-size-title);
+      max-width: var(--semantic-measure-title);
+    }
+
+    // The height goes to the stack, not to the claim: the four bands keep
+    // their 110px crop and spread evenly down the column, so the frame reads
+    // as four mastheads with air between them rather than as one claim over
+    // a blank field. `space-evenly`, so the first and last band keep the same
+    // distance from the meta and the foundation strip as from each other.
+    .org-work .mol-evidence-system__stack {
+      flex: 1;
+      align-content: space-evenly;
+      padding-block: var(--semantic-space-component-md);
     }
 
     // One title size for the three cases. The flagship earns its weight from
@@ -361,16 +385,10 @@
     // The track sizes flip with it: reordering alone moved the evidence into
     // the narrow column and handed the wide one to four lines of copy, which is
     // the wrong way round in a section whose argument is the evidence.
-    .org-work .org-project-grid .mol-project-card:nth-of-type(odd) {
-      grid-template-columns: minmax(24rem, 1fr) minmax(0, 1.4fr);
-    }
-
-    .org-work
-      .org-project-grid
-      .mol-project-card:nth-of-type(odd)
-      .mol-project-card__frame {
-      order: 2;
-    }
+    // Las tres tarjetas leen igual: evidencia a la izquierda, argumento a la
+    // derecha. La alternancia (`:nth-of-type(odd)` giraba la segunda) hacía
+    // zigzag con tres filas y obligaba a buscar el titular en un lado distinto
+    // cada vez. Retirada el 05/09/2026.
   }
 
   // Where the showcase register goes, and where it does not.
@@ -394,11 +412,6 @@
     .org-work .mol-project-card {
       grid-template-columns: minmax(0, 1fr)
         minmax(24rem, var(--semantic-width-compact));
-    }
-
-    .org-work .org-project-grid .mol-project-card:nth-of-type(odd) {
-      grid-template-columns: minmax(24rem, var(--semantic-width-compact))
-        minmax(0, 1fr);
     }
   }
 
@@ -500,11 +513,13 @@
   }
 
   @media (min-width:1200px) {
+    // `border-top` y `padding-top: 1.5rem` venían de aquí: en la retícula de
+    // registro (`.org-work .mol-project-card`, fondo del color del borde) ese
+    // relleno se veía como una franja gris de 24px sobre la tarjeta destacada
+    // y sobre ninguna otra. Retirados el 05/09/2026.
     .mol-project-card--featured {
       display: grid;
       grid-template-columns: minmax(0,1fr);
-      border-top: 1px solid var(--semantic-color-border);
-      padding-top: 1.5rem;
       gap: clamp(1.5rem,2.5vw,2.5rem);
     }
 
