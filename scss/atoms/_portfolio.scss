@@ -143,15 +143,8 @@
     }
   }
 
-  // Variant — the accent link. For the one link in a region that has to be
-  // found before anything else is read; everywhere else the base link belongs
-  // to its paragraph, not above it.
-  // The rule is the link's own colour held back, so the hover behaviour is the
-  // same gesture as the base link rather than a second idea.
-  .atom-text-link--accent {
-    color: var(--semantic-color-primary);
-    border-bottom-color: color-mix(in srgb, currentColor 35%, transparent);
-  }
+  // `.atom-text-link--accent` vivía aquí: la variante en azul que usaba el hero.
+  // Desde el 05/09/2026 esa acción es `.atom-cta` y ningún marcado la pide.
 
   // Variant — the compact link, for chrome bars and captions where the rest of
   // the furniture is set in the eyebrow size.
@@ -159,6 +152,65 @@
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
+  }
+
+  // Arrow — one icon, three directions.
+  //
+  // The site pointed with text glyphs (→ ↗ ↓ ↑) set in whatever face and
+  // weight the surrounding text had, so three arrows side by side came out
+  // at three visual weights. This is the same stroked arrow drawn inline as
+  // SVG and rotated by variant: it takes the size of the text it sits in
+  // (`1em`) and its colour (`currentColor`), and only the direction changes.
+  // Decorative always — the link text already says where it goes — so the
+  // markup carries `aria-hidden="true"`.
+  .atom-arrow {
+    flex: none;
+    width: 1em;
+    height: 1em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .atom-arrow--external {
+    transform: rotate(-45deg);
+  }
+
+  .atom-arrow--down {
+    transform: rotate(90deg);
+  }
+
+  // Call to action — the one solid link on the site.
+  //
+  // The hero's only action was a 14px text link in the bottom-right corner;
+  // audited 05/09/2026 it was the element most readers never saw. This is the
+  // accent of its region, spent once (`BRAND.md` §4): a solid brand surface at
+  // `ui` size, sized to the comfortable target so it works as a thumb target
+  // as well as a pointer target. It is a link that looks like a button because
+  // it does what a button promises — it takes you to the work — and nothing
+  // else on the page gets this treatment.
+  .atom-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--semantic-space-component-xs);
+    min-height: var(--semantic-size-target-comfortable);
+    padding: var(--semantic-space-component-xs) var(--semantic-space-component-lg);
+    border-radius: var(--semantic-radius-control);
+    background: var(--semantic-color-primary);
+    color: var(--semantic-color-on-primary);
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-ui);
+    font-weight: var(--semantic-font-weight-strong);
+    text-decoration: none;
+    @include transition(background var(--semantic-duration-hover) var(--semantic-ease));
+  }
+
+  @include pointer {
+    .atom-cta:hover {
+      background: var(--semantic-color-text);
+    }
   }
 
   // Language switch — the EN / ES pair in the header.
@@ -241,11 +293,15 @@
     letter-spacing: -.04em;
   }
 
+  // El `font-size: .64rem` que traían las dos reglas —10,24px— se ha quitado el
+  // 05/09/2026: pisaba el token `--semantic-font-size-eyebrow` de la definición
+  // base (12→13px, el escalón −2→−1 de `PROPORTIONS.md` §1.2) y dejaba la línea
+  // de posicionamiento del hero como el texto más pequeño de la pantalla. La
+  // familia, el peso, el tracking y el interlineado se conservan tal cual.
   .atom-eyebrow {
     font-family: var(--component-ui-font-family);
     font-weight: 600;
     letter-spacing: .11em;
-    font-size: .64rem;
     line-height: 1.35;
   }
 
@@ -253,7 +309,6 @@
     font-family: var(--component-ui-font-family);
     font-weight: 600;
     letter-spacing: .11em;
-    font-size: .64rem;
     line-height: 1.35;
   }
 

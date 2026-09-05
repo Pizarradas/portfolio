@@ -32,55 +32,8 @@
 
   }
 }
-@layer syx.organisms {
-  .org-sport-evidence-v22 {
-    display: grid;
-    gap: 3rem;
-    padding: var(--semantic-space-section) var(--semantic-space-page-inline);
-    // Era `#fff` con `--component-art-ink`, y los dos están congelados en un
-    // literal: en oscuro esta sección se quedaba blanca de ancho completo con
-    // tinta casi negra. Los valores en claro no se mueven —`#06101f` y
-    // `#080f1a` son el mismo negro a efectos prácticos, 19,4:1 contra 19,2:1
-    // sobre blanco— y a cambio la sección sigue al tema.
-    background: var(--semantic-color-surface);
-    color: var(--semantic-color-text);
-  }
-
-  .org-sport-evidence-v22__story h2 {
-    font: 600 clamp(3rem,10vw,6rem)/.9 var(--semantic-font-family-display);
-    letter-spacing: -.065em;
-    margin: .75rem 0 1.2rem;
-  }
-
-  .org-sport-evidence-v22__story>p:last-of-type {
-    max-width: 38rem;
-    font: .95rem/1.55 var(--semantic-font-family-ui);
-    // `--component-art-muted` (#6c7484) es la trampa de esta sección: sobre
-    // blanco da 4,70:1 y pasa, pero sobre el fondo oscuro se queda en 4,09:1 y
-    // falla AA. Al voltear el fondo había que voltear también la tinta, o el
-    // arreglo del fondo habría creado un fallo de contraste nuevo. El token
-    // semántico da 4,83:1 en claro y 7,23:1 en oscuro.
-    color: var(--semantic-color-text-muted);
-  }
-
-}
-@layer syx.utilities {
-  @include from($bp-md) {
-    .org-sport-evidence-v22 {
-      grid-template-columns: minmax(0,1.05fr) minmax(32rem,.95fr);
-      gap: 5rem;
-    }
-
-    .org-sport-evidence-v22__story {
-      @include sticky($top: 6rem);
-      align-self: start;
-    }
-
-  }
-  @media(min-width:1200px) {
-    .org-sport-evidence-v22__story h2 {
-      font-size: clamp(4.5rem,5vw,6.5rem);
-    }
-
-  }
-}
+// `.org-sport-evidence-v22` vivía aquí: la sección de la home «Product thought
+// the cards were too tall» con la matriz de puntos. El 05/09/2026 la matriz
+// (`.mol-dot-universe`, en `molecules/_research.scss`) pasó al acto «Finding»
+// del caso de SPORT, que es donde el 86 % se explica; en la home el estudio ya
+// estaba en su tarjeta. El organismo se queda sin marcado y se borra.

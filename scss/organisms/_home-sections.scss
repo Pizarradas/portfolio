@@ -16,6 +16,25 @@
 // las demás en `molecules/_live-preview.scss`.
 
 @layer syx.organisms {
+  // La tesis, en banda azul.
+  //
+  // «I started using AI to help me write code…» cerraba la sección navy del
+  // recorrido como un `div` más. El 05/09/2026 la home perdió su banda azul —el
+  // before/after del mapa se fue a su caso— y `BRAND.md` §4 pide dos cortes de
+  // ritmo, navy y azul. Este es el azul: la única frase de la home que expresa
+  // la tesis sin repetir un proyecto, y la que merece el corte. Navy y azul
+  // quedan pegadas a propósito: recorrido y conclusión.
+  //
+  // La medida y el tamaño los pone `.mol-role-thesis`; aquí solo el ritmo de
+  // sección y el carril de la etiqueta, como en el resto de la home.
+  .org-thesis {
+    padding: var(--semantic-space-section) var(--semantic-space-page-inline);
+  }
+
+  .org-thesis .mol-role-thesis {
+    margin-top: var(--semantic-space-block);
+  }
+
   .org-role-evolution-v22 {
     background: var(--component-art-night);
     color: #fff;
@@ -39,29 +58,8 @@
     opacity: .62;
   }
 
-  .org-role-evolution-v22__conclusion {
-    margin-top: 2rem;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: .8rem;
-    align-items: center;
-  }
-
-  .org-role-evolution-v22__conclusion>p {
-    font: .55rem/1 var(--semantic-font-family-ui);
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    opacity: .6;
-  }
-
-  .org-role-evolution-v22__conclusion blockquote {
-    grid-column: 1/-1;
-    margin: 3rem 0 0;
-    font: 600 clamp(2.2rem,8vw,4.8rem)/.92 var(--semantic-font-family-display);
-    letter-spacing: -.055em;
-    max-width: 17ch;
-    margin-left: auto;
-  }
+  // `.org-role-evolution-v22__conclusion` vivía aquí: el cierre de la sección
+  // navy. Desde el 05/09/2026 la tesis es su propia banda (`.org-thesis`).
 
 }
 @layer syx.utilities {
@@ -77,12 +75,6 @@
 
     .org-role-evolution-v22__intro p {
       justify-self: end;
-    }
-
-  }
-  @media(min-width:1200px) {
-    .org-role-evolution-v22__conclusion blockquote {
-      font-size: clamp(4rem,4.6vw,6rem);
     }
 
   }

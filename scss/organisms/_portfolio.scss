@@ -69,21 +69,20 @@
     pointer-events: none;
   }
 
-  // Everything the reader is actually here for sits above the texture. The
-  // accent bar is a pseudo-element, so it needs saying too: without a z-index
-  // it paints before the canvas and disappears under it.
-  .org-hero > *:not(.org-hero__field),
-  .org-hero::before {
+  // Everything the reader is actually here for sits above the texture.
+  //
+  // The accent bar that used to sit top-right (`.org-hero::before`) is gone:
+  // it was a third blue thing in a region that already spent the accent on
+  // the eyebrow and the link, and it pointed at nothing. `BRAND.md` §4: the
+  // accent is spent once. In the hero it is now spent on the way into the
+  // work — see `.atom-cta` — and the eyebrow steps down to secondary ink.
+  .org-hero > *:not(.org-hero__field) {
     @include relative();
     z-index: var(--semantic-z-raised);
   }
 
-  .org-hero::before {
-    @include absolute($top: var(--semantic-space-section-compact), $right: var(--semantic-pad-content));
-    content: "";
-    width: clamp(3.5rem, 8vw, 8rem);
-    height: 0.55rem;
-    background: var(--semantic-color-primary);
+  .org-hero > .atom-eyebrow {
+    color: var(--semantic-color-text-secondary);
   }
 
   .org-hero__footer {
@@ -93,14 +92,20 @@
     align-items: end;
   }
 
-  // The link goes to the right edge of the register, not to the left edge of
-  // its track. It reads as the closing corner of the hero — the accent bar sits
-  // at the top right, the way into the work sits at the bottom right, and the
-  // headline runs the diagonal between them. It only looked anchored before
-  // because the rule was stretching the whole width of the track, which is the
-  // bug that was showing.
-  .org-hero__footer .atom-text-link {
+  // The actions sit at the right edge of the register, as the closing corner
+  // of the hero: the headline runs the diagonal from the eyebrow to the way
+  // into the work. Two links, one weight each — the solid one is the action
+  // the hero asks for, the text one is the detour for whoever wants the
+  // person before the work. Audited 05/09/2026: the single 14px text link in
+  // the corner was the only action above the fold and went unseen.
+  .org-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     justify-self: end;
+    gap: var(--semantic-space-component-lg);
+    margin: 0;
+    max-width: none;
   }
 
   // The capability map: the first thing after the hero and, until now, five
@@ -138,8 +143,10 @@
     line-height: var(--semantic-line-height-display);
   }
 
+  // `eyebrow`, not `caption`: at `caption` the six labels ran at 11.9px, which
+  // is below the 12px floor the audit set for any text that has a job.
   .org-capability-scan span {
-    font-size: var(--semantic-font-size-caption);
+    font-size: var(--semantic-font-size-eyebrow);
     font-weight: var(--semantic-font-weight-strong);
     text-transform: uppercase;
     letter-spacing: var(--semantic-letter-spacing-wide);
@@ -150,6 +157,15 @@
 
   .org-capability-scan b {
     white-space: nowrap;
+  }
+
+  // The affordance the cell was missing at rest. Hover filled it blue and the
+  // click went to the case, but nothing said so before the pointer arrived: no
+  // arrow, no rule, no cursor cue until you were already on it. The arrow rides
+  // the label so it inherits the hover colour with it.
+  .org-capability-scan span::after {
+    content: "→";
+    margin-inline-start: var(--semantic-space-component-xs);
   }
 
   @include pointer {
@@ -173,8 +189,12 @@
     // It said `--semantic-pad-content`, a legacy alias that resolves to the
     // same value. Named for its register instead, so the width is readable
     // here rather than through an alias kept for the old stylesheets.
+    // Six cells, not five: `BRAND.md` §1 lists five registers and the strip
+    // was serving four of them — visual craft (the SPORT illustrations) had no
+    // cell, so the one register that shows drawing was missing from the first
+    // scroll. Audited 05/09/2026.
     .org-capability-scan {
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(6, 1fr);
       padding-inline: var(--semantic-pad-survey);
     }
 
@@ -341,8 +361,9 @@
   //
   // Not a full-bleed band, tempting as it is for a closing section: the home
   // already spends both of the bleed cuts BRAND.md §4 allows — `syx-on-night`
-  // on Role Evolution and `syx-on-brand` on Map Process. A third would make
-  // them a pattern instead of a rhythm.
+  // on Role Evolution and `syx-on-brand` on the thesis band that follows it
+  // (it was Map Process until 05/09/2026). A third would make them a pattern
+  // instead of a rhythm.
   //
   // The φ split runs the other way here than in About: the actions take the
   // wide column because the email address is a single unbreakable string set at
@@ -486,37 +507,14 @@
   // The brand-blue ground comes from `.syx-on-brand` on the section rather than
   // from a background declared here, which is why nothing inside needs a dark
   // variant of its own.
-  .org-map-process {
-    padding: var(--semantic-space-section) var(--semantic-space-page-inline);
-  }
-
-  .org-map-process__intro h2 {
-    max-width: 20ch;
-    margin: var(--semantic-space-component-sm) 0 var(--semantic-space-component-md);
-    font-size: var(--semantic-font-size-hero);
-    line-height: var(--semantic-line-height-display);
-    letter-spacing: var(--semantic-letter-spacing-hero);
-    text-wrap: balance;
-  }
-
-  .org-map-process__intro > p:last-child {
-    max-width: 46ch;
-    font-size: var(--semantic-font-size-lede);
-    line-height: var(--semantic-line-height-body);
-    color: var(--semantic-color-text-secondary);
-  }
-
-  .org-map-process__transformation {
-    margin-top: var(--semantic-space-block);
-  }
+  // `.org-map-process` vivía aquí: la banda azul de la home con el before/after
+  // del mapa. El 05/09/2026 la figura (`.mol-map-shift`) pasó al caso del mapa,
+  // que es donde el argumento se cuenta una sola vez; en la home el mapa
+  // aparecía tres veces. El organismo se queda sin marcado y se borra.
 
   @include until($bp-sm) {
     .org-hero {
       min-height: 84svh;
-    }
-
-    .org-hero::before {
-      display: none;
     }
 
     .mol-project-card__meta {
@@ -545,60 +543,14 @@
   }
 
   // portfolio-v12.css
-  .org-case-index {
-    padding: var(--semantic-space-section) var(--semantic-space-page-inline);
-    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
-  }
-
-  .org-case-index__grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    margin-top: 3rem;
-    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
-    border-left: var(--semantic-border-width) solid var(--semantic-color-border);
-  }
-
-  .org-case-index__grid a {
-    min-height: 10rem;
-    padding: 1.15rem;
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-    color: inherit;
-    border-right: var(--semantic-border-width) solid var(--semantic-color-border);
-    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
-  }
-
-  .org-case-index__grid span {
-    font: 600 0.62rem/1 var(--semantic-font-family-ui);
-    color: var(--semantic-color-primary);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .org-case-index__grid strong {
-    margin: auto 0 0.4rem;
-    font-family: var(--semantic-font-family-display);
-    font-size: clamp(1.5rem, 2.4vw, 2.6rem);
-    letter-spacing: -0.04em;
-  }
-
-  .org-case-index__grid small {
-    color: var(--semantic-color-text-muted);
-  }
+  // `.org-case-index` vivía aquí: el índice «Six projects» al final de la home.
+  // Era la tercera lista de los mismos seis proyectos —barra de capacidades,
+  // tarjetas, índice—. La barra de capacidades es ahora el índice, con las
+  // seis entradas. Borrado el 05/09/2026.
 
   .org-coded-hero {
     padding: clamp(1rem, 4vw, 4rem);
     background: var(--semantic-color-surface-alt);
-  }
-
-  // timeline-v29.css
-  .org-role-evolution-v22__conclusion--timeline {
-    margin-top: 2.5rem;
-  }
-
-  .org-role-evolution-v22__conclusion--timeline blockquote {
-    display: none;
   }
 
   // `.org-map-live-case-v30` vivía aquí: la octava copia de la banda de
@@ -632,11 +584,6 @@
     font-weight: var(--component-section-title-font-weight);
     line-height: var(--component-section-title-line-height);
     letter-spacing: var(--component-section-title-letter-spacing);
-  }
-
-  .org-hero::before {
-    width: clamp(2.75rem,5vw,5rem);
-    height: .22rem;
   }
 
   .org-hero {
@@ -676,14 +623,6 @@
 
   .org-new-work {
     padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
-  }
-
-  .org-case-index {
-    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
-  }
-
-  .org-case-index__grid {
-    grid-template-columns: 1fr;
   }
 
   .org-coded-hero {

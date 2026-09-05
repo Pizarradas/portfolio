@@ -1,0 +1,103 @@
+@use "../abstracts/breakpoints" as *;
+@use "../abstracts/mixins" as *;
+@use "../abstracts/surfaces" as *;
+
+// Índice de un caso: la barra que se queda pegada bajo la cabecera.
+//
+// Un caso son entre siete y veintidós pantallas de actos apilados, y hasta el
+// 05/09/2026 la única forma de saber cuántos quedaban era hacer scroll. La
+// barra lista los actos —o los capítulos, en las páginas que los tienen— y
+// marca el que se está leyendo con `aria-current="location"`, que es la misma
+// marca que la navegación principal usa para la sección de la home.
+//
+// El marcado lo rellena `js/case-toc.js` a partir de los propios encabezados
+// de la página, así que la barra habla el idioma de la página sin pasar por
+// el diccionario. Sin script la lista está vacía y la barra no existe: `:has`
+// la retira entera, con su filete. La mejora nunca es la condición para leer.
+//
+// Es el mismo cristal que la cabecera, y cuando pasa sobre una banda oscura
+// `js/header-context.js` le pone el mismo `data-over="dark"`: la regla de
+// inversión vive con la de la cabecera, en `abstracts/_contexts.scss`.
+//
+// `overflow-x: auto` sin barra visible: en un teléfono los nueve actos de
+// SPORT no caben, y el gesto natural es arrastrar la fila. El índice activo se
+// trae a la vista con `scrollIntoView` desde el script.
+@layer syx.molecules {
+  .mol-case-toc {
+    @include sticky($top: var(--component-header-height));
+    @include glass(var(--semantic-blur-panel));
+
+    z-index: var(--semantic-z-sticky);
+    padding-inline: var(--semantic-pad-survey);
+    border-width: 0 0 var(--semantic-border-width);
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .mol-case-toc:has(ol:empty) {
+    display: none;
+  }
+
+  .mol-case-toc ol {
+    display: flex;
+    gap: var(--semantic-space-component-lg);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .mol-case-toc ol::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mol-case-toc li {
+    flex: none;
+  }
+
+  // Mismo tamaño y misma versalita que la etiqueta de un acto, para que el
+  // índice y los actos que señala se lean como la misma cosa. El filete de
+  // abajo es la marca de sección activa: `border-bottom` y no `::after`, para
+  // que la altura del enlace sea la del objetivo cómodo y el filete quede
+  // pegado al borde de la barra.
+  .mol-case-toc a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--semantic-space-component-xs);
+    min-height: var(--semantic-size-target-comfortable);
+    border-bottom: var(--semantic-border-width-strong) solid transparent;
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-eyebrow);
+    font-weight: var(--semantic-font-weight-strong);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-decoration: none;
+    color: var(--semantic-color-text-muted);
+    @include transition(color var(--semantic-duration-hover) var(--semantic-ease), border-color var(--semantic-duration-hover) var(--semantic-ease));
+  }
+
+  .mol-case-toc a b {
+    font-weight: inherit;
+    font-variant-numeric: tabular-nums;
+    color: var(--semantic-color-text);
+  }
+
+  @include pointer {
+    .mol-case-toc a:hover {
+      color: var(--semantic-color-text);
+    }
+  }
+
+  .mol-case-toc a[aria-current] {
+    color: var(--semantic-color-text);
+    border-bottom-color: currentColor;
+  }
+
+  @include reduced-motion {
+    .mol-case-toc a {
+      @include transition-off;
+    }
+  }
+}

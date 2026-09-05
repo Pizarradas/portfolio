@@ -37,6 +37,10 @@
 
   const darkSections = [...document.querySelectorAll('.syx-on-night, .syx-on-brand')];
   const covering = new Set();
+  // El índice de caso va pegado bajo el header y es el mismo cristal: recibe
+  // el mismo atributo, con la misma medida. Si no hay índice, la lista es solo
+  // el header y nada cambia.
+  const bars = [header, ...document.querySelectorAll('.mol-case-toc')];
 
   const watchDark = (h) => {
     if (!darkSections.length) return null;
@@ -48,8 +52,10 @@
           if (entry.isIntersecting) covering.add(entry.target);
           else covering.delete(entry.target);
         });
-        if (covering.size) header.dataset.over = 'dark';
-        else delete header.dataset.over;
+        bars.forEach((bar) => {
+          if (covering.size) bar.dataset.over = 'dark';
+          else delete bar.dataset.over;
+        });
       },
       { rootMargin: `-${h}px 0px -${Math.max(0, window.innerHeight - h - 1)}px 0px` }
     );

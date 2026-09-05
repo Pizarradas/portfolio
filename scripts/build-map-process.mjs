@@ -1,4 +1,8 @@
-/* Build the "static image → structured data" figure on the home page.
+/* Build the "static image → structured data" figure for the map case study.
+ *
+ * It lived on the home page until 05/09/2026, where the map was told three
+ * times over (capability strip, project card, this band). It now lives in the
+ * case, under "The hidden work", which is the section that makes its argument.
  *
  * Same approach as build-timeline.mjs: d3 runs here, at build time, and the
  * page receives plain SVG. No mapping library ships to the browser.
@@ -205,7 +209,7 @@ ${stage(
 
 /* ---------------------------------------------------------------- inject */
 
-const target = join(root, 'index.html');
+const target = join(root, 'case-map.html');
 const page = readFileSync(target, 'utf8');
 const open = '<!-- map-process:start -->';
 const close = '<!-- map-process:end -->';
@@ -213,7 +217,7 @@ const from = page.indexOf(open);
 const to = page.indexOf(close);
 
 if (from === -1 || to === -1) {
-  console.error(`build-map-process: markers ${open} … ${close} not found in index.html`);
+  console.error(`build-map-process: markers ${open} … ${close} not found in case-map.html`);
   process.exit(1);
 }
 

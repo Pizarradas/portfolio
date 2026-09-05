@@ -109,9 +109,20 @@
     return message;
   };
 
+  // Una pasada por carga, no un bucle.
+  //
+  // Auditado el 05/09/2026: en bucle, el wordmark seguía cambiando mientras se
+  // leía, y quien entraba en mitad de un borrado veía «_.» o «J_.» en la
+  // esquina, que sin contexto parece un fallo de render. Con un mensaje por
+  // carga el gesto se ve —cada página trae el suyo— y luego la cabecera se
+  // queda quieta, que es lo que una cabecera fija tiene que hacer.
+  const CYCLES = 1;
+
   const loop = async token => {
     await wait(jitter(...PACE.first));
-    while (token === run) {
+    let cycles = 0;
+    while (token === run && cycles < CYCLES) {
+      cycles++;
       if (!(await erase(BRAND, token))) return;
       await wait(jitter(220, 160)); // el titubeo antes de empezar a escribir
 
@@ -123,8 +134,12 @@
       await wait(jitter(240, 180));
 
       if (!(await type(BRAND, token))) return;
+      if (cycles >= CYCLES) break;
       await wait(jitter(...PACE.rest));
     }
+    // De vuelta a ser wordmark: el cursor se retira con el efecto, no se queda
+    // parpadeando junto a una firma que ya no escribe.
+    if (token === run) el.classList.remove('is-typing');
   };
 
   const stop = () => {

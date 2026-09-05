@@ -86,6 +86,15 @@ gtag('config', 'G-B01K8E4SDY');
 <p class="atom-eyebrow">Caso de estudio 02 · SPORT · Prensa Ibérica · 2023—2026</p>
 <h1>Producto creía que las tarjetas eran demasiado altas. Yo empecé por medirlas.</h1>
 <p class="org-case-opener__lede">La pregunta parecía visual: ¿podían las tarjetas móviles mostrar más contenido en el primer scroll? La respuesta útil necesitaba evidencia, y una visión clara de lo que podíamos perder al comprimirlas.</p>
+<div class="mol-case-brief">
+<p class="atom-eyebrow">En 30 segundos</p>
+<dl>
+<div><dt>La tensión</dt><dd>Producto creía que las tarjetas de noticias en móvil eran demasiado altas, y no había una forma compartida de comprobarlo.</dd></div>
+<div><dt>Mi decisión</dt><dd>Medir antes de rediseñar: 279 tarjetas de producción contra tres criterios, y después 51 tarjetas en una alternativa 16:9.</dd></div>
+<div><dt>La evidencia</dt><dd>El 86 % de las tarjetas Type A superaba el umbral de altura de texto; el 81.88 % conservaba un encuadre significativo, y el 100 % lo conservó en la prueba 16:9.</dd></div>
+<div><dt>Qué cambió</dt><dd>La tarjeta 16:9 se adoptó, y los criterios de altura, densidad de texto y encuadre alimentaron la tarjeta de noticias de 42DS.</dd></div>
+</dl>
+</div>
 <dl class="mol-case-facts">
 <div><dt>Rol</dt><dd>Product Designer — benchmark, criterios y medición</dd></div>
 <div><dt>Pregunta</dt><dd>¿Pueden las tarjetas móviles ser más densas sin perder valor editorial?</dd></div>
@@ -93,6 +102,8 @@ gtag('config', 'G-B01K8E4SDY');
 <div><dt>Evidencia</dt><dd>279 tarjetas de producción + 51 tarjetas en una alternativa 16:9</dd></div>
 </dl>
 </header>
+<nav aria-label="En esta página" class="mol-case-toc"><ol></ol></nav>
+
 <section aria-labelledby="product-question-title" class="org-case__band syx-span-survey syx-on-brand js-reveal">
 <div class="mol-section-heading">
 <p class="atom-eyebrow">La pregunta de producto</p>
@@ -174,6 +185,15 @@ gtag('config', 'G-B01K8E4SDY');
 <h2 id="finding-title">La preocupación era real, pero «más pequeño» no era automáticamente «mejor».</h2>
 <p>El informe documentó que el 86% de las tarjetas analizadas superaba el umbral de altura de texto definido. En el 40.86% de la muestra total, el texto se extendía más allá de la altura de la imagen. Al mismo tiempo, se consideró que el 81.88% de las imágenes conservaba un encuadre aceptable o significativo.</p>
 </div>
+<figure class="mol-case-figure">
+<div aria-label="el 86 por ciento de las 279 tarjetas analizadas superó el umbral de altura definido en el Tipo A" class="mol-dot-universe">
+<div class="mol-dot-universe__head"><strong>86%</strong><span>de las tarjetas superó el umbral de altura definido<br/>en el Tipo A</span></div>
+<div class="mol-dot-universe__grid" data-dots="279" data-exceeded="240"></div>
+<p class="mol-dot-universe__sample">279 tarjetas analizadas · un punto por tarjeta</p>
+<div class="mol-evidence-legend"><span><i></i>Dentro del umbral</span><span><i></i>Supera el umbral</span></div>
+</div>
+<figcaption>Un punto por tarjeta de producción, 279 en total, de las tres portadas de SPORT muestreadas. 240 superaban el umbral de altura de texto: el 86 % que documentó el informe.</figcaption>
+</figure>
 <div class="mol-chart-card">
 <div class="mol-chart-card__head">
 <div><span>Tipo A · Producción</span><strong>Lo que reveló la muestra</strong></div>
@@ -262,9 +282,16 @@ gtag('config', 'G-B01K8E4SDY');
       animationEasing: "cubicOut",
       aria: { enabled: true },
       textStyle: { fontFamily: "Inter, sans-serif", color: ink },
-      grid: { left: 0, right: 20, top: 24, bottom: 10, containLabel: true },
+      // 56px on the right, not 20: at 100 the value label "100%" sits past the
+      // end of the bar and was clipped to "10(" by the chart's own edge.
+      grid: { left: 0, right: 56, top: 24, bottom: 10, containLabel: true },
       xAxis: { type: "value", max: 100, axisLabel: { formatter: "{value}%", color: "#6B7280" }, splitLine: { lineStyle: { color: "#EEF1F6" } }, axisLine: { show: false }, axisTick: { show: false } },
-      yAxis: { type: "category", axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: ink, fontWeight: 500 } },
+      // `width` + `overflow: "break"`: the category labels are measured when the
+      // chart is built, and measured in the fallback face before Inter loads
+      // they came up short — "Text exceeds image height" was clipped on the left
+      // once the real face arrived. A fixed label width makes the measurement
+      // independent of the face; anything longer wraps instead of being cut.
+      yAxis: { type: "category", axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: ink, fontWeight: 500, width: 150, overflow: "break", lineHeight: 16 } },
       tooltip: { trigger: "axis", axisPointer: { type: "shadow" }, valueFormatter: v => v + "%" }
     };
     const a = echarts.init(document.getElementById("chart-type-a"));
@@ -287,8 +314,11 @@ gtag('config', 'G-B01K8E4SDY');
       ], label: { show: true, position: "right", formatter: "{c}%", color: ink, fontWeight: 600 } }]
     });
     window.addEventListener("resize", () => { a.resize(); f.resize(); });
+    // Once the real face is in, lay out again so the bars take the width the
+    // labels actually need.
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { a.resize(); f.resize(); });
   });
   </script>
 
-<script src="../js/reveal.js"></script><script defer="" src="../js/lang-switch.js"></script><script defer="" src="../js/wordmark.js"></script><script defer="" src="../js/header-context.js"></script></body>
+<script src="../js/reveal.js"></script><script defer="" src="../js/art-direction-v22.js"></script><script defer="" src="../js/lang-switch.js"></script><script defer="" src="../js/wordmark.js"></script><script defer="" src="../js/header-context.js"></script><script defer="" src="../js/case-toc.js"></script></body>
 </html>

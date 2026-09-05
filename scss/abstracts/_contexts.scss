@@ -145,7 +145,10 @@
   // reasignación de contexto, que es exactamente lo que este fichero decide, y
   // `syx.utilities` gana a `syx.organisms`, que es donde el header declara su
   // cristal claro.
-  .org-site-header[data-over="dark"] {
+  // El índice de caso (`.mol-case-toc`) es el mismo cristal pegado justo
+  // debajo, y `header-context.js` le pone el mismo atributo: una regla.
+  .org-site-header[data-over="dark"],
+  .mol-case-toc[data-over="dark"] {
     @include ink.on-dark-section;
 
     --semantic-color-surface: var(--semantic-color-surface-night);

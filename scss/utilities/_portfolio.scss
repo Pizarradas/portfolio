@@ -470,19 +470,6 @@
     }
   }
 
-  // portfolio-v12.css
-  @media (max-width: 850px) {
-    .org-case-index__grid {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-
-  @media (max-width: 520px) {
-    .org-case-index__grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
   // timeline-v29.css
   @include from($bp-md) {
     .mol-role-thesis {
@@ -659,17 +646,20 @@
       line-height: 1.45;
     }
 
-    .org-hero::before {
-      display: block;
-      right: var(--semantic-pad-survey);
-    }
-
   }
   @media (min-width:1200px) {
+    // 88svh, como el tramo anterior, y no 94: con 94 el hero terminaba 17px
+    // por debajo de una ventana de 854px de alto y las acciones —la única
+    // salida del hero— quedaban cortadas por el pliegue (auditado 05/09/2026).
+    //
+    // El ritmo vertical pasa a tokens de sección: con `clamp(7rem,9vw,10rem)`
+    // arriba y `clamp(4rem,7vw,7rem)` de hueco, a 1400×854 la fila de acciones
+    // terminaba en ~870px. Con `section` arriba y `section-compact` de hueco y
+    // abajo —escalones 6→8 y 5→7 de `PROPORTIONS.md` §4.2— cabe en el pliegue.
     .org-hero {
-      min-height: calc(94svh - var(--component-header-height));
-      padding-block: clamp(7rem,9vw,10rem) clamp(4rem,7vw,7rem);
-      gap: clamp(4rem,7vw,7rem);
+      min-height: calc(88svh - var(--component-header-height));
+      padding-block: var(--semantic-space-section) var(--semantic-space-section-compact);
+      gap: var(--semantic-space-section-compact);
     }
 
     .org-hero h1 {
@@ -682,6 +672,17 @@
       letter-spacing: -.062em;
     }
 
+    // En español el titular es un 30 % más largo («Construyo los sistemas
+    // sobre los que construyen otros») y a este tamaño pasa a cuatro líneas,
+    // que empujan la entradilla y las acciones fuera del pliegue. Un escalón
+    // tipográfico menos (÷∛φ, `PROPORTIONS.md` §1) y una medida un poco más
+    // ancha lo devuelven a tres líneas. Solo el `h1`: el resto del hero es
+    // igual en los dos idiomas.
+    .org-hero h1:lang(es) {
+      max-width: 18ch;
+      font-size: clamp(4.98rem,6.47vw,7.67rem);
+    }
+
     .org-hero__footer {
       grid-template-columns: minmax(0,38rem) auto;
       gap: 4rem;
@@ -691,12 +692,6 @@
     .org-hero .atom-lede {
       font-size: clamp(1.35rem,1.45vw,1.8rem);
       line-height: 1.45;
-    }
-
-    .org-hero::before {
-      display: block;
-      right: var(--semantic-pad-survey);
-      top: calc(var(--component-header-height) + 3rem);
     }
 
   }
@@ -738,26 +733,6 @@
 
   }
 
-  @media (min-width:768px) and (max-width:1199px) {
-    .org-case-index {
-      padding-block: var(--semantic-space-case-block);
-    }
-
-    .org-case-index__grid {
-      grid-template-columns: repeat(2,1fr);
-    }
-
-  }
-  @media (min-width:1200px) {
-    .org-case-index {
-      padding-block: var(--semantic-space-case-block);
-    }
-
-    .org-case-index__grid {
-      grid-template-columns: repeat(3,1fr);
-    }
-
-  }
 
   @media (min-width:1200px) {
     .org-coded-hero {

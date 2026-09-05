@@ -729,6 +729,18 @@
   }
 
   // Contact — the page's only real call to action
+  //
+  // Three rows, one criterion (revised 05/09/2026). Before, the lead row ran
+  // two steps of the scale above the other two and each row ended in a
+  // different text glyph — →, ↗, ↓ — set in the body face at three visual
+  // weights. Read together, the column looked like three components. Now
+  // every row has the same anatomy: a small label that says what the row is
+  // (Email · LinkedIn · CV), the value at one size, and an arrow drawn as the
+  // same stroked icon in three orientations (`.atom-arrow`), so the three
+  // meanings — go, leave the site, download — keep their glyph without
+  // changing weight or size. The hierarchy comes from order and from the
+  // label, not from type size: the email is first and it is the only row
+  // whose label is a plain noun for the action the section asks for.
   .mol-contact-list {
     list-style: none;
     margin: var(--semantic-space-component-3xs) 0 0;
@@ -742,15 +754,25 @@
   }
 
   .mol-contact-list a {
-    display: flex;
+    display: grid;
+    grid-template-columns: var(--component-contact-label-track) minmax(0, 1fr) auto;
     align-items: center;
-    justify-content: space-between;
     gap: var(--component-contact-row-gap);
-    padding: var(--semantic-space-component-md) 0;
+    padding: var(--semantic-space-component-lg) 0;
     font-size: var(--semantic-font-size-lede);
     font-weight: var(--semantic-font-weight-display);
     letter-spacing: var(--semantic-letter-spacing-display);
     text-decoration: none;
+  }
+
+  // The label is furniture, not the link: same voice as the facts sheet.
+  .mol-contact-list__label {
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-caption);
+    font-weight: var(--semantic-font-weight-strong);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    color: var(--semantic-color-text-muted);
   }
 
   // An email address and a bare URL contain no break opportunities, so at this
@@ -759,49 +781,33 @@
   // needs to break at any character — applied globally, `anywhere` also made
   // every grid column able to shrink to one letter, which is what collapsed
   // the project cards and split their headings mid-word.
-  .mol-contact-list a,
+  .mol-contact-list__value,
   .org-footer__contact a {
     overflow-wrap: anywhere;
   }
 
-  // The one action the section is actually asking for.
-  //
-  // The other two rows are ways of reading the same person somewhere else, and
-  // the footer repeats all three anyway — so the hierarchy has to come from
-  // this list or it does not exist. The arrow says "do this" rather than "go
-  // there", and the row is two steps of the type scale above its neighbours.
-  //
-  // The hierarchy is built by demoting the other two, not by promoting this
-  // one, and the reason is a measurement: the actions column is 635px at
-  // 1440px, and the address set at `title` needs about 690px once the gap and
-  // the arrow are paid for. It broke as "…gmail.co / m" — `overflow-wrap:
-  // anywhere` below is what lets it, and that rule has to stay for 360px. So
-  // the list sits at `lede` and its lead row at `title-sm`, which is where the
-  // whole list used to be: same distance, and the address never breaks.
-  //
-  // Size and weight only: no brand blue. The accent in this region is already
-  // spent on the CONTACT label, and BRAND.md §4 allows one per region — two
-  // blue things here would mean neither is the important one.
-  .mol-contact-list__lead a {
-    font-size: var(--semantic-font-size-title-sm);
-    padding-block: var(--semantic-space-component-lg);
-  }
-
   @include pointer {
-    .mol-contact-list a:hover {
+    .mol-contact-list a:hover .mol-contact-list__value {
       text-decoration: underline;
       text-decoration-thickness: 0.07em;
       text-underline-offset: 0.22em;
     }
   }
 
-  @include until($bp-sm) {
-    // The facts list stacks at every width now, so the rule that used to undo
-    // its label track here has nothing left to undo.
+  // Hasta tablet, no solo hasta 480: entre 480 y 767 la pista de la etiqueta
+  // se comía 6rem de una fila de ~440px y el email volvía a partirse en dos.
+  // Con la etiqueta encima, el valor tiene el ancho entero y a partir de 480
+  // el email cabe en una línea; por debajo parte limpio por la `<wbr>` de la
+  // arroba, que es el único corte que se lee como una dirección.
+  @include until($bp-md) {
+    // Label above the value; the arrow keeps its column on the right.
     .mol-contact-list a {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--semantic-space-component-3xs);
+      grid-template-columns: minmax(0, 1fr) auto;
+      row-gap: var(--semantic-space-component-3xs);
+    }
+
+    .mol-contact-list__label {
+      grid-column: 1 / -1;
     }
   }
 
@@ -1120,8 +1126,11 @@
     background: var(--semantic-color-surface);
   }
 
+  // `flex-wrap`: a 392px la cuarta celda («HTML → SCSS → JS · Implementation»)
+  // no cabía en una línea y la etiqueta se cortaba por el borde. Envuelve.
   .mol-evidence-system__foundation span {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: var(--semantic-space-component-2xs);
     padding: var(--semantic-space-component-sm) var(--semantic-space-component-md);
@@ -1511,6 +1520,17 @@
     .mol-evidence-study th:nth-child(2),
     .mol-evidence-study td:nth-child(2) {
       display: none;
+    }
+  }
+
+  // Por debajo de 480px el marco 16/10 mide unos 225px de alto y la hoja de
+  // medición —cabecera más cuatro filas— no cabe: la cuarta fila, la del
+  // hallazgo, salía cortada por la mitad (auditado el 05/09/2026 a 392px). El
+  // marco de esa tarjeta suelta la proporción y toma el alto de la hoja; las
+  // otras dos tarjetas conservan el 16/10 porque su contenido sí cabe.
+  @include until($bp-sm) {
+    .mol-project-card__frame:has(> .mol-evidence-study) {
+      aspect-ratio: auto;
     }
   }
 
@@ -2015,70 +2035,9 @@
     }
   }
 
-  // Interactive media map — the five steps, in order
-  .mol-map-pipeline {
-    list-style: none;
-    margin: var(--semantic-space-stack) 0 0;
-    padding: 0;
-    display: grid;
-    border-top: var(--semantic-border-width) solid
-      var(--semantic-color-border-strong);
-  }
-
-  .mol-map-pipeline li {
-    display: grid;
-    grid-template-columns: 2rem minmax(0, 1fr) auto;
-    gap: var(--semantic-space-component-xs);
-    align-items: baseline;
-    padding: var(--semantic-space-component-md) 0;
-    border-bottom: var(--semantic-border-width) solid
-      var(--semantic-color-border);
-  }
-
-  .mol-map-pipeline span {
-    font-family: var(--semantic-font-family-ui);
-    font-size: var(--semantic-font-size-eyebrow);
-    letter-spacing: var(--semantic-letter-spacing-eyebrow);
-    color: var(--semantic-color-text-muted);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .mol-map-pipeline b {
-    font-family: var(--semantic-font-family-display);
-    font-size: var(--semantic-font-size-title-sm);
-    font-weight: var(--semantic-font-weight-display);
-    letter-spacing: var(--semantic-letter-spacing-display);
-  }
-
-  .mol-map-pipeline small {
-    font-family: var(--semantic-font-family-ui);
-    font-size: var(--semantic-font-size-caption);
-    color: var(--semantic-color-text-muted);
-  }
-
-  @include from($bp-md) {
-    .mol-map-pipeline {
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-    }
-
-    .mol-map-pipeline li {
-      display: flex;
-      flex-direction: column;
-      gap: var(--semantic-space-component-3xs);
-      min-height: 8rem;
-      padding: var(--semantic-space-component-md);
-      border-right: var(--semantic-border-width) solid
-        var(--semantic-color-border);
-    }
-
-    .mol-map-pipeline li:last-child {
-      border-right: 0;
-    }
-
-    .mol-map-pipeline b {
-      margin-top: auto;
-    }
-  }
+  // `.mol-map-pipeline` vivía aquí: los cinco pasos del mapa bajo el
+  // before/after de la home. La figura pasó al caso del mapa el 05/09/2026 y
+  // los pasos ya los cuentan sus actos; la lista se queda sin marcado.
 
   @include reduced-motion {
     .mol-nav a::after {
@@ -2228,18 +2187,24 @@
     margin: 3.5rem 0 0 auto;
   }
 
-  .mol-role-thesis strong {
+  // Es un `h2` desde el 05/09/2026: la frase da nombre a su propia sección
+  // (`.org-thesis`), así que es el encabezado, no un énfasis dentro de un div.
+  .mol-role-thesis h2 {
     display: block;
+    margin: 0;
     max-width: var(--semantic-measure-display);
     font: var(--semantic-font-weight-display) var(--semantic-font-size-section) / var(--semantic-line-height-display) var(--semantic-font-family-display);
     letter-spacing: var(--semantic-letter-spacing-hero);
   }
 
+  // Color, no `opacity`: sobre la banda azul una opacidad compone contra el
+  // fondo y el contraste deja de poder calcularse (skill `case`). `text-muted`
+  // dentro de `.syx-on-brand` es `alpha-light-78`, 4,65:1.
   .mol-role-thesis p {
     margin: 1.2rem 0 0;
     max-width: 42rem;
     font: 0.8rem/1.5 var(--semantic-font-family-ui);
-    opacity: 0.58;
+    color: var(--semantic-color-text-muted);
   }
 
   // map-live-v30.css

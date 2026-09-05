@@ -86,6 +86,15 @@ gtag('config', 'G-B01K8E4SDY');
 <p class="atom-eyebrow">Case study 02 · SPORT · Prensa Ibérica · 2023—2026</p>
 <h1>Product thought the cards were too tall. I started by measuring them.</h1>
 <p class="org-case-opener__lede">The question looked visual: could mobile cards show more content in the first scroll? The useful answer needed evidence — and a clear view of what we might lose by compressing them.</p>
+<div class="mol-case-brief">
+<p class="atom-eyebrow">In 30 seconds</p>
+<dl>
+<div><dt>The tension</dt><dd>Product believed the mobile news cards were too tall, and there was no shared way to test it.</dd></div>
+<div><dt>My call</dt><dd>Measure before redesigning: 279 production cards against three criteria, then 51 cards in a 16:9 alternative.</dd></div>
+<div><dt>The evidence</dt><dd>86% of the Type A cards crossed the text-height threshold; 81.88% kept meaningful framing, and 100% did in the 16:9 test.</dd></div>
+<div><dt>What changed</dt><dd>The 16:9 card was adopted, and the height, text-density and framing criteria fed the news card in 42DS.</dd></div>
+</dl>
+</div>
 <dl class="mol-case-facts">
 <div><dt>Role</dt><dd>Product Designer — benchmark, criteria and measurement</dd></div>
 <div><dt>Question</dt><dd>Can mobile cards become denser without losing editorial value?</dd></div>
@@ -93,6 +102,8 @@ gtag('config', 'G-B01K8E4SDY');
 <div><dt>Evidence</dt><dd>279 production cards + 51 cards in a 16:9 alternative</dd></div>
 </dl>
 </header>
+<nav aria-label="On this page" class="mol-case-toc"><ol></ol></nav>
+
 <section aria-labelledby="product-question-title" class="org-case__band syx-span-survey syx-on-brand js-reveal">
 <div class="mol-section-heading">
 <p class="atom-eyebrow">The product question</p>
@@ -174,6 +185,15 @@ gtag('config', 'G-B01K8E4SDY');
 <h2 id="finding-title">The concern was real — but “smaller” was not automatically “better”.</h2>
 <p>The report documented that 86% of the analysed cards crossed the defined text-height threshold. In 40.86% of the total sample, text extended beyond the image height. At the same time, 81.88% of images were considered to retain an acceptable or meaningful framing.</p>
 </div>
+<figure class="mol-case-figure">
+<div aria-label="86 percent of 279 cards analysed exceeded the defined height threshold in Type A" class="mol-dot-universe">
+<div class="mol-dot-universe__head"><strong>86%</strong><span>of the cards exceeded the defined height threshold<br/>in Type A</span></div>
+<div class="mol-dot-universe__grid" data-dots="279" data-exceeded="240"></div>
+<p class="mol-dot-universe__sample">279 cards analysed · one dot per card</p>
+<div class="mol-evidence-legend"><span><i></i>Within threshold</span><span><i></i>Exceeded threshold</span></div>
+</div>
+<figcaption>One dot per production card, 279 in all, from the three SPORT front pages sampled. 240 of them crossed the text-height threshold: the 86% the report documented.</figcaption>
+</figure>
 <div class="mol-chart-card">
 <div class="mol-chart-card__head">
 <div><span>Type A · Production</span><strong>What the sample revealed</strong></div>
@@ -262,9 +282,16 @@ gtag('config', 'G-B01K8E4SDY');
       animationEasing: "cubicOut",
       aria: { enabled: true },
       textStyle: { fontFamily: "Inter, sans-serif", color: ink },
-      grid: { left: 0, right: 20, top: 24, bottom: 10, containLabel: true },
+      // 56px on the right, not 20: at 100 the value label "100%" sits past the
+      // end of the bar and was clipped to "10(" by the chart's own edge.
+      grid: { left: 0, right: 56, top: 24, bottom: 10, containLabel: true },
       xAxis: { type: "value", max: 100, axisLabel: { formatter: "{value}%", color: "#6B7280" }, splitLine: { lineStyle: { color: "#EEF1F6" } }, axisLine: { show: false }, axisTick: { show: false } },
-      yAxis: { type: "category", axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: ink, fontWeight: 500 } },
+      // `width` + `overflow: "break"`: the category labels are measured when the
+      // chart is built, and measured in the fallback face before Inter loads
+      // they came up short — "Text exceeds image height" was clipped on the left
+      // once the real face arrived. A fixed label width makes the measurement
+      // independent of the face; anything longer wraps instead of being cut.
+      yAxis: { type: "category", axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: ink, fontWeight: 500, width: 150, overflow: "break", lineHeight: 16 } },
       tooltip: { trigger: "axis", axisPointer: { type: "shadow" }, valueFormatter: v => v + "%" }
     };
     const a = echarts.init(document.getElementById("chart-type-a"));
@@ -287,8 +314,11 @@ gtag('config', 'G-B01K8E4SDY');
       ], label: { show: true, position: "right", formatter: "{c}%", color: ink, fontWeight: 600 } }]
     });
     window.addEventListener("resize", () => { a.resize(); f.resize(); });
+    // Once the real face is in, lay out again so the bars take the width the
+    // labels actually need.
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { a.resize(); f.resize(); });
   });
   </script>
 
-<script src="js/reveal.js"></script><script defer="" src="js/lang-switch.js"></script><script defer="" src="js/wordmark.js"></script><script defer="" src="js/header-context.js"></script></body>
+<script src="js/reveal.js"></script><script defer="" src="js/art-direction-v22.js"></script><script defer="" src="js/lang-switch.js"></script><script defer="" src="js/wordmark.js"></script><script defer="" src="js/header-context.js"></script><script defer="" src="js/case-toc.js"></script></body>
 </html>

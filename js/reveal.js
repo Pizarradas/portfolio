@@ -38,7 +38,13 @@
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: .18 });
+    // Dispara antes de que el bloque entre del todo: con `threshold: .18` y sin
+    // margen, a velocidad de lectura normal el titular llegaba al centro de la
+    // ventana todavia al 15-20 % de opacidad y parecia una pantalla vacia
+    // (auditado el 05/09/2026). Un pixel visible basta, y el margen inferior
+    // negativo de -12 % evita que se dispare por lo que asoma bajo el borde
+    // sin que nadie lo mire.
+    }, { threshold: 0, rootMargin: '0px 0px -12% 0px' });
     revealEls.forEach(el => io.observe(el));
   } else {
     revealEls.forEach(show);

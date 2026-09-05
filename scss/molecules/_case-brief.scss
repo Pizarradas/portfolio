@@ -1,0 +1,76 @@
+@use "../abstracts/breakpoints" as *;
+@use "../abstracts/mixins" as *;
+
+// El caso en treinta segundos.
+//
+// Cuatro respuestas cortas bajo la entradilla de cada portada: la tensión, la
+// decisión, la evidencia y lo que cambió. Son las preguntas 1, 2, 3 y 5 de
+// `BRAND.md` §1 —«cómo se cuenta un caso»— contestadas en una línea cada una,
+// para el lector de `BRAND.md` §2: el que ve cien portfolios a la semana y
+// tiene treinta segundos. Auditado el 05/09/2026: 42DS eran 22 pantallas sin
+// un solo punto de apoyo antes del scroll; la mayoría de lectores veía la
+// portada y la primera banda azul.
+//
+// No sustituye a la ficha (`.mol-case-facts`, que dice rol, equipo y sistema)
+// ni a la entradilla (que es el argumento): es el resumen del recorrido, y por
+// eso va entre las dos —después del argumento, antes de los datos—.
+//
+// 42DS no lo lleva: su `org-case-glance` ya hace este trabajo en banda azul.
+//
+// Registro: el mismo par etiqueta/valor que `.mol-case-facts` y
+// `.mol-case-ledger`, con el mismo `dt` en versalita apagada, para que las
+// tres se lean como una familia. Lo único propio es el filete fuerte de
+// arriba, que separa el resumen del argumento que acaba de terminar.
+@layer syx.molecules {
+  .mol-case-brief {
+    margin: 0 0 var(--semantic-space-block);
+    padding-top: var(--semantic-space-component-md);
+    border-top: var(--semantic-border-width-strong) solid var(--semantic-color-text);
+  }
+
+  // Etiqueta apagada, no azul: el acento de la portada ya está gastado en el
+  // eyebrow del caso (`BRAND.md` §4).
+  .mol-case-brief > .atom-eyebrow {
+    margin: 0 0 var(--semantic-space-component-md);
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-case-brief dl {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--semantic-space-stack);
+    margin: 0;
+  }
+
+  .mol-case-brief dt {
+    margin-bottom: var(--semantic-space-component-2xs);
+    font-size: var(--semantic-font-size-caption);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    line-height: var(--semantic-line-height-ui);
+    text-transform: uppercase;
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-case-brief dd {
+    margin: 0;
+    max-width: none;
+    font-size: var(--semantic-font-size-ui);
+    line-height: var(--semantic-line-height-body);
+    color: var(--semantic-color-text-secondary);
+  }
+
+  @include from($bp-sm) {
+    .mol-case-brief dl {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--semantic-space-stack) var(--semantic-space-block);
+    }
+  }
+
+  // Cuatro columnas a partir de tablet, como la ficha: las dos rejillas se
+  // alinean y la portada se lee como una sola pieza de datos.
+  @include from($bp-md) {
+    .mol-case-brief dl {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+}

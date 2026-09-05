@@ -66,10 +66,16 @@
   //
   // Es el mismo criterio que el plegado de lectura: si el JS no llega, el
   // contenido se ve. La animación es la mejora, nunca la condición para leer.
+  // 450ms (`--semantic-duration-reveal`) y no los 720ms de la constante de
+  // 42DS: auditado el 05/09/2026, a velocidad de lectura normal los bloques se
+  // veían al 15–20 % de opacidad durante casi un segundo y parecían pantallas
+  // vacías. El desplazamiento baja a un escalón de componente por lo mismo.
+  // El disparo se adelanta en `js/reveal.js` (rootMargin), que es la otra
+  // mitad del arreglo.
   .js .js-reveal {
     opacity: 0;
-    transform: translateY(1.4rem);
-    @include transition(opacity var(--component-case42-motion-duration) ease,transform var(--component-case42-motion-duration) cubic-bezier(.2,.75,.25,1));
+    transform: translateY(var(--semantic-space-component-md));
+    @include transition(opacity var(--semantic-duration-reveal) ease,transform var(--semantic-duration-reveal) cubic-bezier(.2,.75,.25,1));
   }
 
   .js .js-reveal.is-visible {
