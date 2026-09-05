@@ -94,9 +94,10 @@
     // `_case-and-evidence.scss`, que se cargaba después. Ninguna de las dos
     // copias la leía nadie.
     --component-contact-row-gap: var(--primitive-space-md);
-    // The label column of a contact row. Wide enough for «LinkedIn» at
-    // caption size with room to spare; a fixed track so the three values
-    // start on the same vertical.
-    --component-contact-label-track: 6rem;
+    // The label column of a contact row: a fixed track so the three values
+    // start on the same vertical. √φ⁷ = 5.388rem (`PROPORTIONS.md` §4), the
+    // first step of the spacing scale that holds «LinkedIn» at caption size
+    // with its tracking (≈ 78px) without touching the value.
+    --component-contact-label-track: 5.388rem;
   }
 }
