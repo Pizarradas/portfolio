@@ -30,7 +30,7 @@
   // `.mol-case-toc`, que mide el objetivo cómodo— y se descuenta igual, por la
   // misma razón y desde el mismo sitio. Sin script la barra no existe y el
   // `:has` no aplica, así que el descuento vuelve al del header solo.
-  html:has(.mol-case-toc:not(:has(ol:empty))) {
+  html:has(.mol-case-toc li) {
     scroll-padding-top: calc(
       var(--component-header-height) + var(--semantic-size-target-comfortable) +
         var(--semantic-space-component-xl)

@@ -23,13 +23,18 @@
 // SPORT no caben, y el gesto natural es arrastrar la fila. El índice activo se
 // trae a la vista con `scrollIntoView` desde el script.
 @layer syx.molecules {
+  // La barra es a sangre —es cristal y se pega bajo la cabecera—, pero la fila
+  // de enlaces se alinea con el contenido de la portada, no con los actos: la
+  // barra cierra la portada, y por eso lleva su mismo ancho y su mismo
+  // sangrado (`--component-case-opener-*`). Revisado el 05/09/2026: alineada
+  // al registro `survey` quedaba 8–64px desplazada respecto a la ficha que
+  // tiene encima y se leía como un elemento suelto.
   .mol-case-toc {
     @include sticky($top: var(--component-header-height));
     @include glass(var(--semantic-blur-panel));
 
     z-index: var(--semantic-z-sticky);
-    padding-inline: var(--semantic-pad-survey);
-    border-width: 0 0 var(--semantic-border-width);
+    border-width: var(--semantic-border-width) 0;
     border-radius: 0;
     box-shadow: none;
   }
@@ -41,8 +46,9 @@
   .mol-case-toc ol {
     display: flex;
     gap: var(--semantic-space-component-lg);
-    margin: 0;
-    padding: 0;
+    max-width: var(--component-case-opener-max-width);
+    margin: 0 auto;
+    padding: 0 var(--component-case-opener-pad-inline);
     list-style: none;
     overflow-x: auto;
     scrollbar-width: none;

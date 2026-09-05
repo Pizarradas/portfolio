@@ -80,6 +80,15 @@
     margin: var(--semantic-space-component-lg) 0 0;
   }
 
+  // Cuando la sigue el índice (`.mol-case-toc`), la portada cierra en él: el
+  // hueco de sección que separaba la ficha del primer acto se lo queda la
+  // barra, y entre la ficha y la barra va un hueco de bloque, no de sección.
+  // Sin el índice —sin script la lista no tiene `li`— la portada conserva su
+  // cierre de siempre.
+  .org-case-opener:has(+ .mol-case-toc li) {
+    padding-bottom: var(--semantic-space-block);
+  }
+
   // Caso destacado. La diferencia con una portada normal no es que sea más
   // grande: es que se anuncia. Y para anunciarse le basta el eyebrow en el
   // color de marca, sin mover un número de la escala.
