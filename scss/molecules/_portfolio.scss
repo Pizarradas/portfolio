@@ -1464,12 +1464,101 @@
   }
 
   @include until($bp-md) {
-    // Portrait frame: four full-width mastheads need height, and a phone has
-    // no width to trade for it.
+    // El marco toma el alto de su contenido, no una proporción. Era cuadrado
+    // (`--component-work-frame-ratio-featured-sm`) para dar altura a las cuatro
+    // cabeceras, pero el alto fijo se repartía entre el panel, la retícula de
+    // fundamentos y cuatro filas cuya captura seguía midiendo lo que su
+    // proporción 1920/110 le permitía en la columna que quedaba junto a la
+    // pista de nombre: unos 11px a 390px. El cuadrado no compraba altura para
+    // la evidencia; compraba aire vacío alrededor de cuatro rayas.
     .mol-project-card--featured .mol-project-card__frame {
-      aspect-ratio: var(--component-work-frame-ratio-featured-sm);
+      aspect-ratio: auto;
     }
 
+    // Cada cabecera, a la anchura entera del marco. La pista de nombre al lado
+    // tiene sentido con 700px de marco; con 340 se come el 40 % de la fila y
+    // deja la captura en 190px. El nombre pasa encima, en una columna, y la
+    // captura casi dobla su tamaño. El recorte sigue siendo el 1920/110 de la
+    // cabecera y su navegación: se probó la tira completa de la fuente (1920×300)
+    // y a esta anchura lo que entraba de más era el anuncio de coches bajo la
+    // cabecera —justo lo que ese recorte existe para dejar fuera.
+    .mol-project-card--featured .mol-evidence-system__stack {
+      flex: none;
+      grid-template-rows: none;
+      padding-inline: var(--semantic-space-component-md);
+    }
+
+    .mol-project-card--featured .mol-evidence-system__stack figure {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--semantic-space-component-3xs);
+    }
+
+    .mol-project-card--featured .mol-evidence-system__stack figcaption {
+      padding-inline: 0;
+    }
+
+    // A una columna, la fila de metadatos abre la tarjeta en vez de cerrarla.
+    //
+    // En escritorio la retícula de dos columnas ya dice dónde empieza cada
+    // tarjeta. En móvil (auditado el 05/09/2026 a 390px) la secuencia era:
+    // conclusión de la tarjeta N —con su filete—, hueco, marco de la tarjeta
+    // N+1 y, solo debajo del marco, el filete con el índice 02. Sin nada que
+    // señale el marco como el arranque de otra tarjeta, la imagen se leía
+    // como el remate de la anterior y las tres tarjetas como una sola sección
+    // continua. El único elemento que dice «aquí empieza otra» —el filete y el
+    // índice 01 · 02 · 03— estaba en el sitio equivocado.
+    //
+    // El cuerpo se disuelve (`display: contents`) para que sus hijos pasen a
+    // ser hijos directos de la retícula de la tarjeta, y la fila de metadatos
+    // se ordena la primera. Solo cambia el orden visual: el DOM, el orden de
+    // tabulación y la lectura por lector de pantalla se quedan como están, y
+    // la tarjeta sigue encendiéndose entera con `card-lit`, que no depende de
+    // dónde esté cada hijo. El `div` del cuerpo no aporta semántica, así que
+    // disolverlo no quita nada al árbol de accesibilidad.
+    //
+    // El hueco de la tarjeta baja a `component-sm`, el que ya tenía el cuerpo,
+    // para que el ritmo interno no cambie al aplanar los dos niveles: marco →
+    // titular sigue en 0.75 + 0.5 = 1.25rem y el titular conserva su φ : 1.
+    // La franja del flagship pierde su margen inferior por lo mismo: ese
+    // margen se sumaba al `gap` del cuerpo, y ahora ya hay un `gap` propio.
+    .mol-project-card {
+      gap: var(--semantic-space-component-sm);
+    }
+
+    .mol-project-card__body {
+      display: contents;
+    }
+
+    .mol-project-card__meta {
+      order: -1;
+    }
+
+    .mol-project-card__proof {
+      margin-bottom: 0;
+    }
+
+    // La destacada baja un registro. A esta anchura, antes del h3 se leían
+    // tres versalitas seguidas —metadatos, «Real project evidence», «Flagship
+    // case»—, dos frases a escala de titular —la del panel y la de la franja—
+    // y una retícula 2×2 de fundamentos; mientras, las cuatro cabeceras, que
+    // son la prueba, quedaban en cuatro tiras de ~10px bajo la píldora de
+    // entrada. Las palabras ocupaban el marco y la evidencia no se veía.
+    //
+    // Un solo titular por tarjeta: la afirmación del panel pasa a tamaño de
+    // interfaz, el mismo de la franja, y deja el display para el h3. La
+    // retícula de fundamentos se va —es decorativa (`aria-hidden`) y la franja
+    // ya enuncia lo mismo con «Foundations → …»— y su alto vuelve a las
+    // cabeceras. Y la etiqueta «Flagship case» sobra: el índice 01 que ahora
+    // abre la tarjeta ya dice cuál es la primera.
+    .mol-project-card--featured .mol-evidence-system__meta strong {
+      font-size: var(--semantic-font-size-ui);
+      line-height: var(--semantic-line-height-title);
+    }
+
+    .mol-project-card--featured .mol-evidence-system__foundation,
+    .mol-project-card--featured .mol-project-card__proof span {
+      display: none;
+    }
   }
 
   // Narrow frame: the panel keeps the finding and drops the repetition.
