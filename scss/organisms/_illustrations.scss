@@ -12,19 +12,26 @@
 // Las sustituyen las secciones de la plantilla; el mosaico lo sustituye
 // `.mol-ill-sheet`, en `molecules/_illustrations.scss`.
 @layer syx.organisms {
+  // Sin `border-bottom`: el encabezado de New work, justo debajo, ya abre con
+  // su línea. Las dos quedaban paralelas a 144px con nada entre ellas.
+  //
+  // Y con filete de apertura propio: sigue a Work sobre el mismo blanco, y era
+  // la única sección así que no abría con ninguno —el corte lo hacía el marco
+  // de la última tarjeta de Work, que es un filete de componente—.
   .org-illustration-showcase {
     display: grid;
     gap: 2rem;
     padding: var(--semantic-space-section) var(--semantic-space-page-inline);
+
     background: var(--semantic-color-surface);
-    border-bottom: var(--semantic-border-width) solid
-      var(--semantic-color-border);
+
+    @include section-rule(var(--semantic-space-section));
   }
 
   .org-illustration-showcase__intro h2 {
     font: var(--semantic-font-weight-display) var(--semantic-font-size-title-lg)/var(--semantic-line-height-display) var(--semantic-font-family-display);
     letter-spacing: var(--semantic-letter-spacing-hero);
-    margin: .6rem 0 1.2rem;
+    margin: var(--semantic-space-component-xs) 0 var(--semantic-space-component-md);
   }
 
   .org-illustration-showcase__intro>p:last-of-type {

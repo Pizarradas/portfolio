@@ -52,10 +52,18 @@
     // 40→96px): un escalón por debajo del `hero` de la home, que es exactamente
     // la relación que hay entre las dos páginas. Ninguna variante la sube; lo
     // que cambia entre casos es la composición, no el cuerpo de letra.
-    --component-case-opener-max-width: var(--semantic-width-survey);
+    //
+    // El eje: portada, índice y franja de resumen corren en el registro
+    // `survey`, igual que los actos. Antes llevaban `max-width: survey` con
+    // `shell-inline` dentro, así que su contenido acababa 8–64px desplazado del
+    // de los actos (58px frente a 65 a 1440; 448 frente a 384 a 2560) y los
+    // filetes de la ficha y de los encabezados no caían en la misma vertical.
+    // `pad-survey` se resuelve contra el ancho del propio elemento, que en los
+    // tres casos es el de la ventana: el tope lo pone el padding, no el ancho.
+    --component-case-opener-max-width: none;
     --component-case-opener-pad-block-start: var(--semantic-space-section);
     --component-case-opener-pad-block-end: var(--semantic-space-section-compact);
-    --component-case-opener-pad-inline: var(--semantic-space-shell-inline);
+    --component-case-opener-pad-inline: var(--semantic-pad-survey);
     --component-case-opener-title-size: var(--semantic-font-size-section);
     --component-case-opener-title-measure: var(--semantic-measure-title);
     --component-case-opener-lede-size: var(--semantic-font-size-lede);

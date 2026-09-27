@@ -8,7 +8,7 @@
     height: 1rem;
     border-radius: 50%;
     background: var(--c);
-    border: 1px solid rgba(0,0,0,.08);
+    border: var(--semantic-border-width) solid rgba(0,0,0,.08);
     flex: 0 0 auto;
   }
 
@@ -40,7 +40,7 @@
     align-items: center;
     gap: .5rem;
     padding: .55rem .65rem;
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
     font-size: .65rem;
   }
 
@@ -94,7 +94,7 @@
 @layer syx.molecules {
   .mol-code-visual {
     background: #fff;
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
     padding: clamp(1rem,2.5vw,2rem);
     min-height: 23rem;
     display: flex;
@@ -107,7 +107,7 @@
     gap: 1rem;
     padding-bottom: 1rem;
     margin-bottom: 1.2rem;
-    border-bottom: 1px solid var(--semantic-color-border);
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   .mol-code-visual__head span {
@@ -162,7 +162,7 @@
 
   .mol-button-system button {
     appearance: none;
-    border: 1px solid var(--semantic-color-primary);
+    border: var(--semantic-border-width) solid var(--semantic-color-primary);
     background: var(--semantic-color-primary);
     color: #fff;
     padding: .75rem 1rem;
@@ -197,7 +197,7 @@
   .mol-component-anatomy span {
     padding: .4rem .5rem;
     background: var(--semantic-color-surface-alt);
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
     font-size: .6rem;
     text-transform: uppercase;
     letter-spacing: .07em;
@@ -219,7 +219,7 @@
   .mol-form-system input[type="search"] {
     width: 100%;
     padding: .75rem .8rem;
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
     border-radius: .2rem;
     background: #fff;
     font: 400 .8rem/1.2 var(--semantic-font-family-ui);
@@ -228,7 +228,7 @@
   .mol-form-system select {
     width: 100%;
     padding: .75rem .8rem;
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
     border-radius: .2rem;
     background: #fff;
     font: 400 .8rem/1.2 var(--semantic-font-family-ui);
@@ -243,7 +243,7 @@
 
   .mol-form-system button {
     appearance: none;
-    border: 1px solid var(--semantic-color-primary);
+    border: var(--semantic-border-width) solid var(--semantic-color-primary);
     background: var(--semantic-color-primary);
     color: #fff;
     padding: .75rem 1rem;
@@ -272,7 +272,7 @@
     align-items: center;
     gap: 1.2rem;
     padding: .8rem 1rem;
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   .mol-nav-system__brand {
@@ -298,7 +298,7 @@
     align-items: center;
     gap: .35rem;
     padding: .8rem 1rem;
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   .mol-nav-system__mobile span {
@@ -337,7 +337,7 @@
     display: grid;
     grid-template-columns: 36% 1fr;
     min-height: 22rem;
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
     background: #fff;
   }
 
@@ -345,7 +345,7 @@
     display: grid;
     place-items: center;
     background: var(--semantic-color-primary-soft);
-    border-right: 1px solid var(--semantic-color-border);
+    border-right: var(--semantic-border-width) solid var(--semantic-color-border);
     color: var(--semantic-color-primary);
     font: 700 .65rem/1 var(--semantic-font-family-ui);
     text-transform: uppercase;
@@ -392,7 +392,7 @@
     .mol-anatomy-card__visual {
       min-height: 10rem;
       border-right: 0;
-      border-bottom: 1px solid var(--semantic-color-border);
+      border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
     }
 
   }
@@ -469,7 +469,7 @@
 @layer syx.atoms {
   .mol-token-lab__switcher button {
     appearance: none;
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
     background: #fff;
     color: var(--semantic-color-text-secondary);
     padding: .55rem .7rem;
@@ -504,7 +504,7 @@
 }
 @layer syx.molecules {
   .mol-token-lab {
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
     background: #fff;
   }
 
@@ -514,7 +514,7 @@
     gap: 2rem;
     align-items: end;
     padding: 1.25rem;
-    border-bottom: 1px solid var(--semantic-color-border);
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   .mol-token-lab__header>div:first-child>span {
@@ -619,7 +619,7 @@
 @layer syx.atoms {
   .mol-grid-lab__switcher button {
     appearance: none;
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
     background: #fff;
     color: var(--semantic-color-text-secondary);
     padding: .55rem .7rem;
@@ -643,7 +643,7 @@
 }
 @layer syx.molecules {
   .mol-grid-lab {
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
     background: #fff;
   }
 
@@ -653,7 +653,7 @@
     gap: 2rem;
     align-items: end;
     padding: 1.25rem;
-    border-bottom: 1px solid var(--semantic-color-border);
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   .mol-grid-lab__header>div:first-child>span {
@@ -682,8 +682,8 @@
   .mol-grid-lab__metrics {
     display: grid;
     grid-template-columns: repeat(4,1fr);
-    border-top: 1px solid var(--semantic-color-border);
-    border-left: 1px solid var(--semantic-color-border);
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+    border-left: var(--semantic-border-width) solid var(--semantic-color-border);
     margin-top: 1rem;
     background: #fff;
   }
@@ -691,8 +691,8 @@
   .mol-grid-lab__metrics span {
     min-height: 5.5rem;
     padding: .75rem;
-    border-right: 1px solid var(--semantic-color-border);
-    border-bottom: 1px solid var(--semantic-color-border);
+    border-right: var(--semantic-border-width) solid var(--semantic-color-border);
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -908,7 +908,7 @@
   }
 
   .mol-token-groups section {
-    border-top: 2px solid var(--active-brand);
+    border-top: var(--semantic-border-width-strong) solid var(--active-brand);
     @include transition(border-color .35s ease);
   }
 
@@ -962,7 +962,7 @@
     justify-content: space-between;
     gap: .7rem;
     padding: .62rem 0;
-    border-top: 1px solid var(--semantic-color-border);
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
     font-size: .65rem;
   }
 
@@ -979,7 +979,7 @@
   .mol-token-application {
     grid-column: 1/-1;
     padding: 1.2rem;
-    border-top: 1px solid var(--semantic-color-border);
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
     background: #fff;
   }
 
@@ -993,7 +993,7 @@
   .mol-token-demo-card {
     max-width: 40rem;
     margin: 1rem 0 0;
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
     border-top: 5px solid var(--active-brand);
     padding: 1rem 1.2rem;
     @include transition(border-color .35s ease);
@@ -1059,20 +1059,20 @@
     gap: 0;
     min-height: 29rem;
     background: #fff;
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
     overflow: hidden;
     padding: 1.1rem 0;
   }
 
   .mol-grid-columns>i {
     grid-row: 1/10;
-    border-left: 1px solid var(--grid-line);
+    border-left: var(--semantic-border-width) solid var(--grid-line);
     background: var(--grid-fill);
     margin: 0 .35rem;
   }
 
   .mol-grid-columns>i:last-of-type {
-    border-right: 1px solid var(--grid-line);
+    border-right: var(--semantic-border-width) solid var(--grid-line);
   }
 
 }

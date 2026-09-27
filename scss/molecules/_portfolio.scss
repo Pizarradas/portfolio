@@ -184,10 +184,7 @@
   // cuya entradilla ocupa cuatro líneas, el eyebrow se descuelga hasta el pie
   // de la entradilla y esa vertical se pierde.
 
-  // La galería de código pone el hueco con el `gap` de su propia retícula.
-  .org-code-gallery .mol-section-heading {
-    margin-bottom: 0;
-  }
+  // La galería de código fija su hueco en `organisms/_case-42ds.scss`.
 
   .mol-project-card {
     display: grid;

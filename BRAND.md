@@ -185,6 +185,36 @@ interlineados y tracking no se eligen: se calculan. Ver
 - El ancho de una sección lo decide su registro (`read` / `scan` / `survey`), no
   el capricho del bloque.
 
+### Separadores
+
+La retícula se enseña con filetes, así que cada filete tiene que decir algo.
+Cuatro niveles, y cada uno tiene dueño:
+
+| Nivel | Qué separa | Grosor · color | Ancho | Quién lo dibuja |
+|---|---|---|---|---|
+| **Cromo** | la página de su marco | 1px · borde del vidrio | ventana | cabecera, índice del caso (sticky), pie |
+| **Capítulo** | actos de un caso largo; los dos bloques de proyectos de la home | 3px (`border-width-heavy`) · tinta | ventana | `.org-case__chapter`; `.mol-section-heading.syx-bleed` (≥1720px) |
+| **Apertura** | una sección de la anterior | 1px · `--semantic-color-border` | registro | `.mol-section-heading`, o `section-rule()` si no la lleva |
+| **Componente** | partes de un bloque | 1px · `--semantic-color-border` | el bloque | el propio componente |
+
+Cinco reglas:
+
+1. **La sección se abre, no se cierra.** El filete va en la cabeza del
+   contenido de la sección que empieza. Ninguna sección lleva `border-bottom`.
+2. **Un cambio de fondo ya es el corte.** Contra una banda navy o azul no se
+   dibuja filete: ni al entrar ni al salir.
+3. **Nunca dos filetes paralelos con solo aire entre ellos.** Si coinciden, se
+   queda el del nivel más alto (cromo > capítulo > apertura > componente). Un
+   marco cerrado —una tarjeta, un visor, un diagrama— no es un filete suelto:
+   su borde inferior puede convivir con la apertura de la sección siguiente.
+   Lo que no puede es un pie de figura con filete bajo un visual que ya cierra.
+4. **El ancho lo dice el nivel.** Solo el cromo y el capítulo cruzan la
+   ventana; el resto se queda en su registro, y todos en el mismo eje: la
+   portada de un caso, su índice y los actos arrancan en la misma vertical.
+5. **El color lo pone el contexto.** Dentro de `.syx-on-night` o
+   `.syx-on-brand` el mismo token ya es blanco translúcido. Un filete sobre un
+   fondo oscuro pintado a mano necesita su contexto en el marcado.
+
 ---
 
 ## 5. Accesibilidad: es marca, no cumplimiento

@@ -9,15 +9,15 @@
     display: grid;
     grid-template-columns: repeat(4,1fr);
     margin-top: 2.5rem;
-    border-top: 1px solid var(--semantic-color-border);
-    border-left: 1px solid var(--semantic-color-border);
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+    border-left: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   .mol-stat-strip div {
     min-height: 8rem;
     padding: 1rem;
-    border-right: 1px solid var(--semantic-color-border);
-    border-bottom: 1px solid var(--semantic-color-border);
+    border-right: var(--semantic-border-width) solid var(--semantic-color-border);
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -62,7 +62,7 @@
 @layer syx.molecules {
   .mol-chart-card {
     margin: 2.5rem 0;
-    border: 1px solid var(--component-chart-border);
+    border: var(--semantic-border-width) solid var(--component-chart-border);
     background: var(--component-chart-bg);
     padding: clamp(1rem,2vw,2rem);
   }
@@ -73,7 +73,7 @@
     gap: 1rem;
     padding-bottom: 1.25rem;
     margin-bottom: .5rem;
-    border-bottom: 1px solid var(--semantic-color-border);
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   .mol-chart-card__head div {
@@ -124,7 +124,7 @@
     grid-template-columns: minmax(7rem,34%) 1fr;
     grid-template-rows: 1fr auto;
     min-height: 15rem;
-    border: 1px solid rgba(255,255,255,.28);
+    border: var(--semantic-border-width) solid rgba(255,255,255,.28);
   }
 
   .mol-card-anatomy__image {
@@ -167,7 +167,7 @@
   .mol-card-anatomy>strong {
     grid-column: 1/-1;
     padding: .75rem 1rem;
-    border-top: 1px solid rgba(255,255,255,.28);
+    border-top: var(--semantic-border-width) solid rgba(255,255,255,.28);
     font-size: .7rem;
     letter-spacing: .12em;
   }
@@ -201,7 +201,7 @@
   // `BRAND.md` §4 no permite.
   .mol-research-model {
     max-width: var(--semantic-width-scan);
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
     background: var(--semantic-color-surface);
     min-width: 0;
   }
@@ -210,7 +210,7 @@
     display: grid;
     gap: .45rem;
     padding: 1rem;
-    border-bottom: 1px solid var(--semantic-color-border);
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   .mol-research-model__head span {
@@ -232,8 +232,8 @@
   .mol-research-model__metrics span {
     min-height: 6rem;
     padding: .8rem;
-    border-right: 1px solid var(--semantic-color-border);
-    border-bottom: 1px solid var(--semantic-color-border);
+    border-right: var(--semantic-border-width) solid var(--semantic-color-border);
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -264,7 +264,7 @@
 
   .mol-research-model__criteria div {
     padding: .8rem;
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
     background: var(--semantic-color-surface);
   }
 
@@ -305,7 +305,7 @@
     }
 
     .mol-research-model__metrics span {
-      border-right: 1px solid var(--semantic-color-border);
+      border-right: var(--semantic-border-width) solid var(--semantic-color-border);
     }
 
     .mol-research-model__metrics span:last-child {
@@ -350,7 +350,7 @@
   .mol-evidence-legend i {
     width: .55rem;
     height: .55rem;
-    border: 1px solid var(--semantic-color-primary);
+    border: var(--semantic-border-width) solid var(--semantic-color-primary);
   }
 
   .mol-evidence-legend span:nth-child(2) i {
@@ -359,7 +359,7 @@
 
   .mol-dot-universe {
     padding: 1.25rem;
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   .mol-dot-universe__head {
@@ -401,7 +401,7 @@
   .mol-dot-universe__grid i {
     aspect-ratio: 1;
     border-radius: 50%;
-    border: 1px solid var(--component-art-dot-idle);
+    border: var(--semantic-border-width) solid var(--component-art-dot-idle);
     transform: scale(.55);
     opacity: .2;
     @include transition(transform .45s ease,opacity .45s ease,background .45s ease);

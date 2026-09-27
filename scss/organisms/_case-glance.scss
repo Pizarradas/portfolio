@@ -13,13 +13,15 @@
 // de cada una, que es lo que §5.2 pide para que se lean como dos bloques y no
 // como seis columnas sueltas.
 @layer syx.organisms {
+  // Sin `border-block`: la franja cambia de fondo, y el cambio de fondo ya es
+  // el corte. El filete de arriba además caía pegado al inferior del índice
+  // del caso —dos líneas en el mismo píxel— y el de abajo, blanco al 24 %
+  // sobre el borde del azul, no separaba nada.
   .org-case-glance {
     max-width: none;
     padding: var(--semantic-space-section-compact)
-      var(--semantic-space-shell-inline);
+      var(--component-case-opener-pad-inline);
     background: var(--semantic-color-surface-alt);
-    border-block: var(--semantic-border-width) solid
-      var(--semantic-color-border);
   }
 
   .org-case-glance > * {
@@ -32,13 +34,6 @@
   }
 }
 
-@layer syx.utilities {
-  // A partir de 1200px el resto de la página de caso se centra sobre
-  // `--semantic-space-case-inline`. La franja lo sigue, o es el único bloque que
-  // arranca en otra vertical.
-  @media (min-width: 1200px) {
-    .org-case-glance {
-      padding-inline: var(--semantic-space-case-inline);
-    }
-  }
-}
+// El ajuste a `case-inline` a partir de 1200px vivía aquí. Con la franja en
+// el registro de la portada (`--component-case-opener-pad-inline`, que es
+// `pad-survey`) ya arranca en la misma vertical que los actos a cualquier ancho.

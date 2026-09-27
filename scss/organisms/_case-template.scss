@@ -214,6 +214,17 @@
     line-height: var(--semantic-line-height-body);
   }
 
+  // Salvo cuando lo que hay encima ya cierra con su propio borde. El universo
+  // de puntos lleva marco y la plancha de ilustraciones y el mapa de
+  // fundamentos son retículas de celdas que acaban en filete: con el del pie
+  // quedaban dos líneas paralelas a 16px con nada entre ellas. BRAND.md §4,
+  // regla 3 de los separadores.
+  .mol-case-figure
+    > :is(.mol-dot-universe, .mol-ill-sheet, .mol-foundation-map)
+    + figcaption {
+    border-top: 0;
+  }
+
   // --------------------------------------------------------------------banda
   //
   // Los cortes de ritmo. `BRAND.md` §4: dos, no cinco. El fondo sangra hasta el

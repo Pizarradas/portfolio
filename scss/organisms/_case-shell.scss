@@ -49,14 +49,16 @@
   .mol-case-facts {
     display: grid;
     grid-template-columns: 1fr;
-    border-top: 1px solid var(--component-case-rule);
-    border-bottom: 1px solid var(--component-case-rule);
+    // Sin `border-bottom`: justo debajo va el índice del caso, que es cromo de
+    // página y trae su propio filete superior. Los dos quedaban paralelos a
+    // 40–60px con nada entre ellos, en las seis páginas.
+    border-top: var(--semantic-border-width) solid var(--component-case-rule);
     margin: 0;
   }
 
   .mol-case-facts div {
     padding: .85rem 0;
-    border-bottom: 1px solid var(--component-case-rule);
+    border-bottom: var(--semantic-border-width) solid var(--component-case-rule);
   }
 
   .mol-case-facts div:last-child {
@@ -158,9 +160,13 @@
       grid-template-columns: 1fr;
     }
 
-    .org-case-next a {
+    .org-case-next a:not(:last-child) {
       border-right: 0;
-      border-bottom: 1px solid var(--semantic-color-border);
+      border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
+    }
+
+    .org-case-next a:last-child {
+      border-right: 0;
     }
 
   }
@@ -192,11 +198,14 @@
     text-decoration: none;
     color: inherit;
     border-right: 0;
-    border-bottom: 1px solid var(--semantic-color-border);
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
+  // La última celda no cierra con filete: debajo acaba el navy, y el pie de
+  // página trae el suyo. A una columna se pegaban los dos.
   .org-case-next a:last-child {
     border-right: 0;
+    border-bottom: 0;
     text-align: left;
   }
 
@@ -207,10 +216,12 @@
       grid-template-columns: 1fr 1fr;
     }
 
+    // Una sola fila: ninguna celda cierra por abajo.
     .org-case-next a {
       min-height: 13rem;
       padding: 2rem clamp(1.25rem,4vw,4rem);
-      border-right: 1px solid var(--semantic-color-border);
+      border-right: var(--semantic-border-width) solid var(--semantic-color-border);
+      border-bottom: 0;
     }
 
     // El paginador cruza la ventana; su texto se queda en el registro.

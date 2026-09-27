@@ -297,21 +297,27 @@
   }
 }
 @layer syx.organisms {
+  // La galería separaba sus paneles con el truco del `gap: 1px` sobre fondo
+  // gris, pero el fondo era el de la sección entera: el acto se pintaba de
+  // `--semantic-color-border` de borde a borde, el encabezado flotaba en una
+  // caja blanca con 144px de padding y sin su filete de apertura, y cada panel
+  // —que ya trae su marco de 1px— sumaba el suyo al hueco: costuras de 3px.
+  //
+  // Ahora es un acto blanco como los demás. Los paneles se separan con aire,
+  // como las dos fichas de la banda de fundamentos, y cada uno cierra con su
+  // propio marco. El encabezado recupera su filete y su margen inferior de
+  // siempre; como es un elemento de la retícula, al margen se le suma el `gap`
+  // de los paneles (`component-lg`). No se compensa: el margen del encabezado
+  // cambia por tramos en la capa de utilidades y restarle aquí un valor fijo
+  // solo acertaría en uno de ellos.
   .org-code-gallery {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1px;
-    background: var(--semantic-color-border);
+    gap: var(--semantic-space-component-lg);
   }
 
-  // La galería es una retícula de paneles separados por una línea de 1px de
-  // fondo, así que su banda de presentación necesita su propio fondo y su
-  // propio padding para no quedarse dentro de una celda. El resto —la retícula
-  // de tres columnas, el titular, la medida del párrafo— lo pone la molécula.
   .org-code-gallery .mol-section-heading {
     grid-column: 1/-1;
-    background: #fff;
-    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
   }
 
 }

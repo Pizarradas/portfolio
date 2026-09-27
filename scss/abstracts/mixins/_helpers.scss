@@ -1,3 +1,5 @@
+@use "positioning" as *;
+
 // MIXINS — ayudas de comportamiento
 //
 // `transition()` existe por la regla R03 de SYX: una transición escrita en
@@ -47,4 +49,41 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+// Filete de apertura para una sección que no lleva `.mol-section-heading`.
+//
+// El sistema de separadores (BRAND.md §4, «Separadores») dice que una sección
+// sobre el mismo fondo que la anterior se abre con un filete de 1px, a lo ancho
+// de su registro y en la cabeza del contenido: exactamente lo que dibuja el
+// `border-top` de `.mol-section-heading`. Las secciones que abren sin esa
+// molécula —About, Contact, la vitrina de ilustración— lo dibujaban en el borde
+// de la sección y a sangre, o no lo dibujaban. Esto les da la misma geometría:
+//
+//   - el filete cae a `$at` del borde —el padding superior de la sección—,
+//   - cubre el ancho del registro, no el de la ventana, y
+//   - el contenido arranca `component-md` debajo, como tras un encabezado.
+//
+// El ancho sale de `--syx-register-width`, que publica cada clase de registro.
+// El `100%` de `inset-inline` resuelve contra la caja de la sección, no contra
+// la caja ya acolchada, así que aquí el cálculo sí da el eje correcto.
+//
+// @example
+//   .org-about { padding-block: var(--semantic-space-section); @include section-rule(var(--semantic-space-section)); }
+@mixin section-rule($at) {
+  @include relative();
+
+  padding-block-start: calc(#{$at} + var(--semantic-space-component-md));
+
+  &::before {
+    @include absolute($top: $at);
+
+    content: "";
+    inset-inline: max(
+      var(--semantic-space-gutter),
+      calc((100% - var(--syx-register-width, 100%)) / 2)
+    );
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+    pointer-events: none;
+  }
 }

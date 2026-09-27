@@ -276,14 +276,19 @@
   //
   // So the headline now spans the content column as an opening band, and the
   // body splits below it. Two rows, not three columns.
+  // El filete ya no es el `border-top` de la sección —que cruzaba la ventana
+  // mientras el de todos los encabezados se queda en el registro—: es el
+  // filete de apertura del sistema, en la cabeza del contenido.
   .org-about {
     padding-block: var(--semantic-space-section);
+
     display: grid;
     grid-template-columns: var(--component-heading-label-track) minmax(0, 1fr);
     column-gap: var(--semantic-space-block);
     row-gap: var(--semantic-space-block);
     align-items: start;
-    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+
+    @include section-rule(var(--semantic-space-section));
   }
 
   .org-about__head,
@@ -371,12 +376,14 @@
   .org-contact {
     padding-block: var(--semantic-space-section-compact)
       var(--semantic-space-section);
+
     display: grid;
     grid-template-columns: var(--component-heading-label-track) minmax(0, 1fr)
       minmax(0, 1.618fr);
     gap: var(--semantic-space-block);
     align-items: start;
-    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+
+    @include section-rule(var(--semantic-space-section-compact));
   }
 
   .org-contact__body {
@@ -537,9 +544,10 @@
 
 @layer syx.organisms {
   // portfolio-v10.css
+  // Sin `border-bottom`: debajo empieza la banda nocturna y el cambio de fondo
+  // ya es el corte. Una línea clara de 1px contra navy no separaba nada.
   .org-new-work {
     padding: var(--semantic-space-section) var(--semantic-space-page-inline);
-    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   // portfolio-v12.css
@@ -617,14 +625,22 @@
     font-size: 1rem;
   }
 
+  // Separadores y ritmo — una sola regla para la home:
+  //
+  // 1. La línea la dibuja quien ABRE la sección (`.mol-section-heading`, o el
+  //    `border-top` de About y Contact). Ninguna sección cierra con
+  //    `border-bottom`: Tools lo hacía y, pegado al `border-top` de About,
+  //    pintaba una línea doble de 2px.
+  // 2. El padding vertical es `--semantic-space-section` en todas. Tools, New
+  //    work y Work corrían en `shell-block` / `case-block` —clamps en crudo que
+  //    topaban en 9rem— mientras el resto topaba en 8rem: tres secciones con
+  //    144px y seis con 128px, sin criterio.
   .org-tools {
-    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
-    border-bottom: var(--semantic-border-width) solid
-      var(--semantic-color-border);
+    padding: var(--semantic-space-section) var(--semantic-space-shell-inline);
   }
 
   .org-new-work {
-    padding: var(--semantic-space-shell-block) var(--semantic-space-shell-inline);
+    padding: var(--semantic-space-section) var(--semantic-space-shell-inline);
   }
 
   .org-coded-hero {

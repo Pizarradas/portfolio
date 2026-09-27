@@ -3,7 +3,7 @@
 
 @layer syx.molecules {
   .mol-browser-preview {
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
     background: #fff;
     overflow: hidden;
   }
@@ -18,7 +18,7 @@
     letter-spacing: .08em;
     text-transform: uppercase;
     background: #fff;
-    border-bottom: 1px solid var(--semantic-color-border);
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   .mol-browser-preview>header a {
@@ -35,7 +35,7 @@
     font: 600 .58rem/1 var(--semantic-font-family-ui);
     letter-spacing: .08em;
     text-transform: uppercase;
-    border-top: 1px solid var(--semantic-color-border);
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
     color: var(--semantic-color-text-muted);
   }
 

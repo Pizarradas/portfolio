@@ -218,14 +218,14 @@
   .mol-brand-tree__branches {
     display: grid;
     grid-template-columns: repeat(5,1fr);
-    border-inline: 1px solid var(--semantic-color-border);
+    border-inline: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   .mol-brand-tree__branches span {
     min-height: 7rem;
     padding: 1rem;
-    border-right: 1px solid var(--semantic-color-border);
-    border-bottom: 1px solid var(--semantic-color-border);
+    border-right: var(--semantic-border-width) solid var(--semantic-color-border);
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -304,15 +304,15 @@
     display: grid;
     grid-template-columns: repeat(4,1fr);
     margin: 2rem 0;
-    border-top: 1px solid var(--semantic-color-border);
-    border-left: 1px solid var(--semantic-color-border);
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+    border-left: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   .mol-targets span {
     min-height: 9rem;
     padding: 1rem;
-    border-right: 1px solid var(--semantic-color-border);
-    border-bottom: 1px solid var(--semantic-color-border);
+    border-right: var(--semantic-border-width) solid var(--semantic-color-border);
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -368,7 +368,7 @@
   .mol-pipeline span {
     min-height: 8rem;
     padding: 1rem;
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -449,7 +449,7 @@
 
   .mol-inventory-visual {
     margin: 2.2rem 0;
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
     background: var(--semantic-color-surface);
   }
 
@@ -459,7 +459,7 @@
     gap: 1.5rem;
     align-items: end;
     padding: 1.2rem;
-    border-bottom: 1px solid var(--semantic-color-border);
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   .mol-inventory-visual__summary span {

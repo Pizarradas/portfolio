@@ -21,7 +21,7 @@
     display: block;
     width: 100%;
     margin-bottom: .65rem;
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
     // La superficie del contexto, no un blanco fijo: esta tabla vive dentro del
     // panel de investigación y ese panel puede ir en una banda de color.
     background: var(--semantic-color-surface);
@@ -34,7 +34,7 @@
     grid-template-columns: 6.4rem 1fr;
     gap: .6rem;
     padding: .35rem 0;
-    border-bottom: 1px solid var(--semantic-color-border);
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   .atom-data-table td:last-child {
@@ -76,7 +76,7 @@
       display: table-cell;
       width: auto;
       padding: .7rem .6rem;
-      border-bottom: 1px solid var(--semantic-color-border);
+      border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
     }
 
     .atom-data-table td::before {

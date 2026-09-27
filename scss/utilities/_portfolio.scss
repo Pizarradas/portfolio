@@ -234,6 +234,15 @@
         minmax(0, 1fr) auto;
       column-gap: var(--semantic-space-block);
       padding-block: var(--primitive-space-2xl) var(--primitive-space-3xl);
+      // Filete de capítulo, no de apertura. Un encabezado que cruza la ventana
+      // ya es el nivel alto del sistema de separadores (BRAND.md §4), y aquí
+      // hace el mismo trabajo que `.org-case__chapter` en los casos: parte la
+      // home en sus dos capítulos, el trabajo profesional y el propio. Mismo
+      // grosor y misma tinta, así que la home y los casos hablan con un solo
+      // recurso. Gana también en Work, donde la tira de capacidades ya cierra
+      // sus celdas: un marco cerrado puede convivir con la apertura siguiente.
+      border-block-start: var(--semantic-border-width-heavy) solid
+        var(--semantic-color-text);
     }
 
     // At 4rem the index column was narrow enough to break "Self-directed" over
@@ -252,14 +261,10 @@
       font-size: clamp(5.8rem, 2.9vw + 2.4rem, 8.5rem);
     }
 
-    // A rule of its own over the standfirst: the right end of the band gets a
-    // top edge to sit on, so it reads as the second element of a composition
-    // instead of a paragraph that drifted to the far side of the page.
-    .mol-section-heading.syx-bleed p:last-child {
-      padding-top: var(--primitive-space-sm);
-      border-top: var(--semantic-border-width-strong) solid
-        var(--semantic-color-text);
-    }
+    // El filete de 2px sobre la entradilla vivía aquí: le daba al extremo
+    // derecho de la banda un borde en el que apoyarse cuando el de la banda era
+    // un gris de 1px. Con el filete de capítulo ese borde ya existe, y los dos
+    // quedaban paralelos a 32px con solo aire entre ellos.
 
   }
 
@@ -604,18 +609,9 @@
 
   }
 
-  @media (min-width:768px) and (max-width:1199px) {
-    .org-work {
-      padding-block: var(--semantic-space-case-block);
-    }
-
-  }
-  @media (min-width:1200px) {
-    .org-work {
-      padding-block: var(--semantic-space-case-block);
-    }
-
-  }
+  // Los dos `.org-work { padding-block: case-block }` que vivían aquí (768–1199
+  // y ≥1200) se retiran: le daban a Work 144px cuando el resto de la home
+  // corre en `--semantic-space-section`, que es lo que ya declara el organismo.
 
   // El titular tenía cuatro reglas cuyos rangos no se tocaban: `≤700`, la base,
   // `768–1199` y `≥1200`. Entre 701 y 767px no aplicaba ninguna de las tres
@@ -722,31 +718,9 @@
 
   }
 
-  @media (min-width:768px) and (max-width:1199px) {
-    .org-tools {
-      padding-block: var(--semantic-space-case-block);
-    }
-
-  }
-  @media (min-width:1200px) {
-    .org-tools {
-      padding-block: var(--semantic-space-case-block);
-    }
-
-  }
-
-  @media (min-width:768px) and (max-width:1199px) {
-    .org-new-work {
-      padding-block: var(--semantic-space-case-block);
-    }
-
-  }
-  @media (min-width:1200px) {
-    .org-new-work {
-      padding-block: var(--semantic-space-case-block);
-    }
-
-  }
+  // Los `padding-block: case-block` de Tools y New work (768–1199 y ≥1200)
+  // se retiran por la misma razón que los de Work: la home corre entera en
+  // `--semantic-space-section`, que es lo que declaran los organismos.
 
 
   @media (min-width:1200px) {

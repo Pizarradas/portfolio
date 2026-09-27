@@ -5,7 +5,7 @@
   .mol-header-architecture {
     @include relative();
     padding: clamp(1rem,2.5vw,2rem);
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
     background: var(--semantic-color-surface-alt);
   }
 
@@ -13,7 +13,7 @@
     max-width: 42rem;
     margin: 0 auto 2.5rem;
     padding: 1.2rem;
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
     background: #fff;
     text-align: center;
   }
@@ -42,7 +42,7 @@
 
   .mol-header-architecture__core span {
     padding: .42rem .55rem;
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
     font-size: .62rem;
     color: var(--semantic-color-text-secondary);
   }
@@ -161,7 +161,7 @@
 }
 @layer syx.molecules {
   .mol-brand-header {
-    border: 1px solid var(--semantic-color-border);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
     background: #fff;
     overflow: hidden;
   }
@@ -212,7 +212,7 @@
     align-items: center;
     padding: .6rem 1rem;
     background: var(--semantic-color-surface-alt);
-    border-top: 1px solid var(--semantic-color-border);
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   .mol-brand-header__meta span {
@@ -304,15 +304,15 @@
     display: grid;
     grid-template-columns: repeat(4,1fr);
     margin-top: 1rem;
-    border-top: 1px solid var(--semantic-color-border);
-    border-left: 1px solid var(--semantic-color-border);
+    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
+    border-left: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   .mol-header-rule-strip span {
     min-height: 7rem;
     padding: 1rem;
-    border-right: 1px solid var(--semantic-color-border);
-    border-bottom: 1px solid var(--semantic-color-border);
+    border-right: var(--semantic-border-width) solid var(--semantic-color-border);
+    border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
     display: flex;
     flex-direction: column;
     justify-content: space-between;

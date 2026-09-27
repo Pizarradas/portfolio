@@ -43,8 +43,15 @@
     display: none;
   }
 
+  // Reparto: los extremos de la fila caen en los del registro, como la ficha
+  // que tiene encima. Con cinco capítulos la fila se quedaba en el 60 % del
+  // ancho y el resto de la barra era cristal vacío, así que el índice pesaba
+  // todo a la izquierda. `space-between` no estorba cuando la fila no cabe
+  // —SPORT en un teléfono—: sin espacio libre se comporta como `flex-start` y
+  // el arrastre horizontal sigue funcionando igual.
   .mol-case-toc ol {
     display: flex;
+    justify-content: space-between;
     gap: var(--semantic-space-component-lg);
     max-width: var(--component-case-opener-max-width);
     margin: 0 auto;
@@ -71,12 +78,15 @@
   // abajo es la marca de sección activa: `border-bottom` y no `::after`, para
   // que la altura del enlace sea la del objetivo cómodo y el filete quede
   // pegado al borde de la barra.
+  //
+  // El filete va en los dos bordes, transparente arriba: con uno solo abajo la
+  // versalita quedaba un píxel por encima del centro óptico de la barra.
   .mol-case-toc a {
     display: inline-flex;
     align-items: center;
     gap: var(--semantic-space-component-xs);
     min-height: var(--semantic-size-target-comfortable);
-    border-bottom: var(--semantic-border-width-strong) solid transparent;
+    border-block: var(--semantic-border-width-strong) solid transparent;
     font-family: var(--semantic-font-family-ui);
     font-size: var(--semantic-font-size-eyebrow);
     font-weight: var(--semantic-font-weight-strong);
@@ -84,14 +94,22 @@
     text-transform: uppercase;
     white-space: nowrap;
     text-decoration: none;
-    color: var(--semantic-color-text-muted);
+    color: var(--semantic-color-text-secondary);
     @include transition(color var(--semantic-duration-hover) var(--semantic-ease), border-color var(--semantic-duration-hover) var(--semantic-ease));
   }
 
+  // La jerarquía va del título al número, no al revés. El número en tinta y el
+  // título en gris hacían de los dígitos lo más fuerte de la barra: se leía
+  // «01 · 02 · 03» antes que lo que cuenta cada capítulo. Ahora el título va en
+  // tinta secundaria y el número se queda en la tenue, como un folio.
   .mol-case-toc a b {
     font-weight: inherit;
     font-variant-numeric: tabular-nums;
-    color: var(--semantic-color-text);
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-case-toc a[aria-current] b {
+    color: inherit;
   }
 
   @include pointer {
@@ -102,7 +120,7 @@
 
   .mol-case-toc a[aria-current] {
     color: var(--semantic-color-text);
-    border-bottom-color: currentColor;
+    border-block-end-color: currentColor;
   }
 
   @include reduced-motion {
