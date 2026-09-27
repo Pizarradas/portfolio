@@ -284,10 +284,13 @@
   }
 
   // About — factual key/value rows
+  //
+  // Sin `border-top`: la lista arranca en su primera etiqueta. Cada fila ya
+  // cierra con su filete, y el de arriba repetía el que abre la sección y el
+  // que parte la cabecera de About —tres horizontales antes del primer dato—.
   .mol-about-facts {
     display: grid;
     margin-top: var(--semantic-space-component-lg);
-    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
   // Stacked, not label-beside-value.
@@ -742,9 +745,11 @@
     list-style: none;
     margin: var(--semantic-space-component-3xs) 0 0;
     padding: 0;
-    border-top: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
+  // Sin filete sobre la primera fila: el filete de apertura de Contact cae
+  // 20px por encima y los dos se leían como una línea doble. Las filas se
+  // separan con el suyo de abajo y la última cierra la lista.
   .mol-contact-list li {
     border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
