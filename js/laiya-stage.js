@@ -462,7 +462,16 @@
         capAt = { x: colX, y: orbAt.y + ov / 2 + G * 0.5 };
         capAt.y = Math.min(capAt.y, dockTop - captionBox.h - G);
       } else {
-        orbAt = { x: Math.min(W - ov / 2 - G * 0.5, R.x + R.w - ov / 3), y: Math.max(top + ov / 2, R.y), s: near };
+        // Sin columna (móvil): el orbe busca aire fuera del hueco —entre el
+        // hueco y el subtítulo acoplado, o encima— y solo si no lo hay se
+        // posa en su esquina.
+        const capTop = dockTop - captionBox.h - G;
+        const below = capTop - (R.y + R.h);
+        const above = R.y - top;
+        const x = Math.min(W - ov / 2 - G * 0.5, Math.max(ov / 2 + G * 0.5, R.x + R.w - ov / 2));
+        if (below >= ov * 0.9) orbAt = { x, y: R.y + R.h + below / 2, s: near };
+        else if (above >= ov * 0.9) orbAt = { x, y: R.y - above / 2, s: near };
+        else orbAt = { x: Math.min(W - ov / 2 - G * 0.5, R.x + R.w - ov / 3), y: Math.max(top + ov / 2, R.y), s: near };
         capAt = null; // acoplado sobre la barra
       }
       if (isReduced()) orbAt = restPoint();
@@ -567,7 +576,9 @@
       }
     }
 
+    let textSince = 0;
     async function speak(text, id) {
+      textSince = performance.now();
       announce(text);
       onState('speaking');
       if (isReduced()) {
@@ -796,7 +807,9 @@
           if (orb && scene.mood && i === 0) orb.setMood(scene.mood);
           const more = i < steps.length - 1;
           const extra = steps[i].blocks && steps[i].blocks.length ? 2500 : 0;
-          if (more) await wait(holdFor(steps[i].text, extra), id, { pausable: true });
+          // El tiempo de lectura cuenta desde que el texto empieza a aparecer:
+          // mientras se escribe ya se está leyendo.
+          if (more) await wait(Math.max(600, holdFor(steps[i].text, extra) - (performance.now() - textSince)), id, { pausable: true });
         }
         el.foot.hidden = true;
       } catch (e) {

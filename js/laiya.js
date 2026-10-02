@@ -495,7 +495,11 @@
         case 'projects':
         case 'selfDirected': {
           const list = [];
-          const files = (items.length ? items : Object.values(byFile)).map(p => p.file);
+          // «Su trabajo» recorre los casos profesionales; los propios tienen su
+          // pregunta («¿Qué proyectos son propios?»), que va en las
+          // sugerencias. Seis tarjetas seguidas eran 35 s de recorrido.
+          const pool = (items.length ? items : Object.values(byFile)).filter(p => a.intent === 'selfDirected' || !(byFile[p.file] || p).selfDirected);
+          const files = pool.map(p => p.file);
           const seen = new Set();
           for (const f of files) {
             const node = cardFor(f);

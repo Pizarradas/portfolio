@@ -394,7 +394,9 @@ varying float vBright;
 varying float vFront;
 void main(){
   float d = length(gl_PointCoord - .5);
-  float a = smoothstep(.5, .0, d) * mix(.22, 1., vFront);
+  // Un núcleo nítido y un halo tenue: con solo el degradado, cada punto era
+  // una mancha y las formas se leían borrosas.
+  float a = max(smoothstep(.42, .26, d), smoothstep(.5, .0, d) * .3) * mix(.22, 1., vFront);
   // Cada partícula tiene su escalón en la rampa; el tinte sube todas hacia
   // la luz y el destello las lleva a blanco un instante.
   float k = clamp(.3 + vSeed * .6 + uTint * .4 + vBright * .5, 0., 1.);
@@ -622,9 +624,31 @@ export function createOrb(canvas, { tokensFrom = canvas, reducedMotion = false, 
     return false;
   }
 
+  const isFlat = name => FLAT.has(name) || name.startsWith('text:');
+
   function goTo(name, dur = 1.1) {
     if (!resolve(name) || name === shapeName) return;
     from.set(pos); // desde donde esté, aunque sea a mitad de otro cambio
+    // Una forma plana tiene que llegar de cara. Si el cuerpo venía girando,
+    // el giro se hornea en el punto de partida y la rotación vuelve a cero
+    // de golpe: lo que se ve no salta (las partículas están donde estaban)
+    // y la forma nueva se dibuja ya de frente, sin pasar de canto ni del
+    // revés —un texto a 180° se lee en espejo—.
+    if (isFlat(name) && points) {
+      const ry = points.rotation.y, rx = points.rotation.x;
+      const cy = Math.cos(ry), sy = Math.sin(ry), cx = Math.cos(rx), sx = Math.sin(rx);
+      for (let i = 0; i < N * 3; i += 3) {
+        const x = from[i], y = from[i + 1], z = from[i + 2];
+        // Ry y después Rx: el orden XYZ de Three aplicado a un vector.
+        const x1 = x * cy + z * sy, z1 = -x * sy + z * cy;
+        from[i] = x1;
+        from[i + 1] = y * cx - z1 * sx;
+        from[i + 2] = y * sx + z1 * cx;
+      }
+      pos.set(from);
+      points.rotation.set(0, 0, 0);
+      lines.rotation.set(0, 0, 0);
+    }
     to = SHAPES[name];
     shapeName = name;
     morph = 0;
@@ -668,7 +692,10 @@ export function createOrb(canvas, { tokensFrom = canvas, reducedMotion = false, 
 
     // Partículas: cada una con su propio retardo dentro del cambio, más un
     // temblor de ruido barato y, al hablar, una onda que recorre el cuerpo.
-    const amp = cur.amp + level * 0.05;
+    // En las formas que se leen el temblor es mínimo: un borde que vibra
+    // emborrona la letra o el contorno.
+    const flat = isFlat(shapeName);
+    const amp = (cur.amp + level * 0.05) * (flat ? 0.3 : 1);
     for (let i = 0; i < N; i++) {
       const j = i * 3;
       const d = delay[i];
@@ -685,7 +712,7 @@ export function createOrb(canvas, { tokensFrom = canvas, reducedMotion = false, 
       y += Math.cos(time * 1.7 + s * 1.3) * wob;
       z += Math.sin(time * 1.3 + s * 0.7) * wob;
       if (level > 0.01) {
-        const w = 1 + level * 0.1 * Math.sin(time * 10 + y * 5);
+        const w = 1 + level * (flat ? 0.03 : 0.1) * Math.sin(time * 10 + y * 5);
         x *= w;
         y *= w;
         z *= w;
@@ -720,7 +747,6 @@ export function createOrb(canvas, { tokensFrom = canvas, reducedMotion = false, 
     const speed = Math.hypot(motion.x, motion.y);
     // Las formas que se leen —texto, España, el sobre…— apenas se deforman
     // ni se inclinan: un «86 %» torcido ya no dice nada.
-    const flat = FLAT.has(shapeName) || shapeName.startsWith('text:');
     const stretch = reducedMotion ? 0 : Math.min(speed / 2400, flat ? 0.08 : 0.28);
     const sc = (1 + Math.sin(bounce * Math.PI) * 0.12 + level * 0.05) * (1 - dim * 0.12) * (state === 'listening' ? 1.08 : 1);
     group.scale.set(sc * (1 + stretch), sc * (1 - stretch * 0.5), sc);
