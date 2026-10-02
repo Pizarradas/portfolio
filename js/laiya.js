@@ -173,6 +173,22 @@
   }
 
   ['pointerenter', 'focusin', 'touchstart'].forEach(ev => dock.addEventListener(ev, () => load().catch(() => {}), { once: true, passive: true }));
+  // El enjambre (Three.js, ~130 KB comprimido) se pide en cuanto el puntero
+  // se acerca al lanzador, no al pulsarlo: cuando se abre ya está en caché.
+  dock.addEventListener(
+    'pointerenter',
+    () => {
+      if (!hasWebGL() || document.querySelector('link[data-laiya-preload]')) return;
+      for (const href of ['js/laiya-avatar.js', 'js/vendor/three.laiya.min.js']) {
+        const l = document.createElement('link');
+        l.rel = 'modulepreload';
+        l.href = asset(href);
+        l.dataset.laiyaPreload = '';
+        document.head.appendChild(l);
+      }
+    },
+    { once: true, passive: true },
+  );
 
   function setupStage() {
     const U = K.ui;
@@ -207,8 +223,25 @@
     });
   }
 
+  // ¿Hay WebGL? Se pregunta antes de descargar Three.js (el módulo más
+  // pesado de la capa): sin WebGL no se baja nada y se queda el orbe de CSS,
+  // sin los errores que Three escribe en consola al no poder crear contexto.
+  const hasWebGL = () => {
+    try {
+      const c = document.createElement('canvas');
+      return !!(window.WebGLRenderingContext && (c.getContext('webgl2') || c.getContext('webgl')));
+    } catch {
+      return false;
+    }
+  };
+
   function loadOrb() {
     if (orb || dock.dataset.orb) return;
+    if (!hasWebGL()) {
+      dock.dataset.orb = 'css';
+      if (stage) stage.body.dataset.orb = 'css';
+      return;
+    }
     dock.dataset.orb = 'loading';
     import(asset('js/laiya-avatar.js'))
       .then(m => {
@@ -422,6 +455,28 @@
     return (a.kind === 'intent' && !['greet', 'help', 'here'].includes(a.intent)) || (a.kind === 'project' && a.focus && a.focus.file !== e.case && a.focus.file !== FILE);
   }
 
+  // El elemento donde vive una frase citada: el bloque más pequeño de la
+  // página (párrafo, fila, pie de figura…) cuyo texto la contiene. Sirve
+  // para llevar la cámara a la cifra y no solo al titular de la sección.
+  function nodeForQuote(anchorId, sentence) {
+    const root = anchorId && document.querySelector(`[data-laiya="${CSS.escape(anchorId)}"]`);
+    if (!root || !sentence) return null;
+    const n = s => window.LaiyaEngine.norm(s).replace(/\s+/g, ' ');
+    const probe = n(sentence).slice(0, 48);
+    if (probe.length < 12) return null;
+    let best = null;
+    for (const el of root.querySelectorAll('p, li, dd, dt, td, th, figcaption, blockquote, h2, h3, h4, strong, b, span')) {
+      if (n(el.textContent).includes(probe) && (!best || best.contains(el))) best = el;
+    }
+    if (!best) return null;
+    // Un bloque que se pueda encuadrar: la figura o el párrafo que lo envuelve.
+    return best.closest('figure, li, p, dd, tr, blockquote, .mol-section-heading') || best;
+  }
+  const offscreen = node => {
+    const r = node.getBoundingClientRect();
+    return r.top < 0 || r.bottom > innerHeight * 0.82 || r.height < 1;
+  };
+
   // Una frase de LAIYA en el centro, sin señalar nada.
   const sayAlone = (text, shape = 'sphere') => stage.play({ steps: [{ node: null, text, blocks: [], shape, fx: [] }] });
 
@@ -439,6 +494,10 @@
         if (!g || strongElsewhere(question, null)) return false;
         const step = stepFromAnchor(g.anchor, { text: g.text, blocks: [{ type: 'quote', text: g.quote.join(' '), cite: g.cite || '' }] });
         if (!step || !step.node) return false;
+        // Directo a la frase si no está en lo que se encuadra (en una sección
+        // alta, el encuadre es su titular y la cifra queda más abajo).
+        const where = nodeForQuote(g.anchor, g.quote[0]);
+        if (where && !step.node.contains(where)) step.node = where;
         el.input.value = '';
         history.push({ role: 'user', text: question }, { role: 'ai', text: [g.text, ...g.quote].join(' ') });
         stage.play({ steps: [step] });
@@ -496,7 +555,12 @@
     const chips = (g.ask || []).map(guide.label);
     if (here.index < here.total - 1) chips.push(guide.label('next'));
     renderSuggestions(chips);
-    stage.aside({ text: g.text, blocks });
+    // La cita vive fuera de lo que se ve (otra sección, o más abajo): allí.
+    const where = g.quote && nodeForQuote(g.anchor || here.anchor, g.quote[0]);
+    // Si ya está dentro de lo iluminado, la cámara no se mueve.
+    const inside = where && here.step.node && here.step.node.contains(where) && !offscreen(where);
+    const node = where && !inside ? where : null;
+    stage.aside({ text: g.text, blocks, node: node || (g.anchor && g.anchor !== here.anchor ? (stepFromAnchor(g.anchor) || {}).node : null) });
     return true;
   }
 

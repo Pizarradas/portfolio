@@ -537,7 +537,15 @@
         const colX = side === 'right' ? Math.min(R.x + R.w + G, W - capW - G) : Math.max(G, R.x - G - capW);
         orbAt = { x: side === 'right' ? colX + ov / 2 : colX + capW - ov / 2, y: Math.max(top + ov / 2, R.y + ov / 2), s: near };
         capAt = { x: colX, y: orbAt.y + ov / 2 + G * 0.5 };
-        capAt.y = Math.min(capAt.y, dockTop - captionBox.h - G);
+        capAt.y = Math.max(top, Math.min(capAt.y, dockTop - captionBox.h - G));
+        // Un subtítulo largo sube para no meterse tras la barra; el orbe sube
+        // con él y, si arriba no cabe entero, se encoge: nunca tapa el texto.
+        const room = capAt.y - G * 0.5 - top;
+        if (room < ov) {
+          const k = Math.max(0.45, room / ov);
+          orbAt.s = near * k;
+          orbAt.y = top + (ov * k) / 2;
+        } else orbAt.y = Math.min(orbAt.y, capAt.y - G * 0.5 - ov / 2);
       } else {
         // Sin columna (móvil): el orbe busca aire fuera del hueco —entre el
         // hueco y el subtítulo acoplado, o encima— y solo si no lo hay se
@@ -627,6 +635,8 @@
       el.blocks.innerHTML = step.blocks && step.blocks.length ? renderBlocks(step.blocks) : '';
       el.count.textContent = total > 1 ? `${index + 1} / ${total}` : '';
       el.foot.hidden = total <= 1;
+      // En el último paso no hay siguiente.
+      el.next.hidden = index >= total - 1;
       caption.dataset.docked = wide() && !isReduced() && step.node ? 'false' : 'true';
     }
 
@@ -761,8 +771,12 @@
         setVeil(true);
         undoFx();
         if (step.shape && orb) orb.shape(step.shape);
+        // Si sube desde la barra, el texto espera a que haya pasado: si no,
+        // el enjambre cruza por encima de la frase mientras se escribe.
+        const fromBelow = orbSpring.pos.y > vh() * 0.62 && !isReduced();
         fly(centerPoint(), M.hop);
         placeCaption(null);
+        if (fromBelow) await wait(M.slower * 650, id);
         await showCaption(id);
         if (step.fx && step.fx.includes('tremble') && !isReduced()) fxUndo.push(fx.tremble(el.text));
         orb && orb.tint(0.25);
@@ -928,13 +942,28 @@
     // recorrido se queda en pausa (Siguiente lo reanuda) y el subtítulo
     // cambia de contenido en su sitio; si crece, sube lo justo para no
     // meterse detrás de la barra.
-    async function aside({ text, blocks = [] }) {
+    async function aside({ text, blocks = [], node = null }) {
       const id = runId;
       paused = true;
       syncPause();
       await beating;
       await speaking;
       if (id !== runId) return;
+      // Si lo que se cita está en otro sitio —más abajo en una sección alta,
+      // u otra sección del caso—, la cámara va allí sin salir del recorrido:
+      // el paso sigue siendo el mismo y «Siguiente» continúa desde él.
+      if (node && scene0) {
+        const total = scene0.steps.length;
+        const prev = scene0.steps[at] || {};
+        const b = beat({ node, text, blocks, shape: prev.shape, fx: ['marks'], anchor: prev.anchor }, Math.max(0, at), total, id);
+        beating = b.catch(() => {});
+        try {
+          await b;
+        } catch (e) {
+          if (e !== CANCEL) throw e;
+        }
+        return;
+      }
       el.blocks.innerHTML = blocks.length ? renderBlocks(blocks) : '';
       el.text.textContent = '';
       caption.hidden = false;

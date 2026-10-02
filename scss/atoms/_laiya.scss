@@ -102,7 +102,8 @@
     @include transition(background var(--semantic-duration-hover) var(--semantic-ease), color var(--semantic-duration-hover) var(--semantic-ease));
   }
 
-  .atom-laiya-tool[hidden] {
+  .atom-laiya-tool[hidden],
+  .atom-laiya-chip[hidden] {
     display: none;
   }
 

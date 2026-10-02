@@ -154,6 +154,12 @@
           lead = copy.lead.elsewhere.replace('{case}', tour.pages[e.case].name || e.title);
         }
       }
+      // Ni el paso ni su caso lo dicen: quizá otra parte de esta misma página
+      // sí (una sección sin cifras en un caso lleno de ellas). LAIYA va allí.
+      if (!picked.length && kind && kind !== 'more') {
+        const other = answerPage(question);
+        if (other && other.anchor !== id) return { ...other, ask: next(e, kind) };
+      }
       if (!picked.length) return kind ? { text: copy.none, kind, ask: next(e, kind) } : null;
       return {
         text: lead,

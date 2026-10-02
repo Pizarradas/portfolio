@@ -341,7 +341,8 @@ function tourOf(lang, k) {
       else if (id === 'tools.stack') say = k.tools.map(g => `${g.group}: ${g.items.join(', ')}`).join('. ') + '.';
       else if (id === 'about.facts') say = k.person.facts.map(f => `${f.label}: ${f.value}`).join('. ') + '.';
       else if (kind === 'item') say = `${title}: ${text.replace(title, '').replace(/^[\s·:]+/, '')}`.replace(/\s*\.?$/, '.');
-      else if (id === 'contact.links') say = k.person.contact.email;
+      // Las tres vías tal como están en la página, no solo el email.
+      else if (id === 'contact.links') say = text;
       else if (kind === 'section' && file !== 'index.html') say = clip(firstSentence(rest) || title, 220);
       else say = title;
       entry.say = say;
