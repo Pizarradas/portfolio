@@ -634,7 +634,11 @@ export function createOrb(canvas, { tokensFrom = canvas, reducedMotion = false, 
   function frame(now) {
     raf = 0;
     if (destroyed) return;
-    const dt = Math.min((now - last) / 1000, 0.05);
+    // El sello de rAF es el inicio del fotograma y puede ser ANTERIOR al
+    // `performance.now()` con el que `kick` arrancó el bucle: un dt negativo
+    // hace que k salga negativo y los lerp se disparen —amplitud, giro, hilos—
+    // hasta sacar las partículas del lienzo durante un par de segundos.
+    const dt = Math.max(0, Math.min((now - last) / 1000, 0.05));
     last = now;
     const k = 1 - Math.pow(0.002, dt);
 

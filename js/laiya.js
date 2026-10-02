@@ -160,7 +160,10 @@
   function setupStage() {
     const U = K.ui;
     el.input.setAttribute('aria-label', U.inputLabel);
-    el.input.placeholder = U.placeholder;
+    const narrow = matchMedia('(max-width: 30em)');
+    const setPlaceholder = () => (el.input.placeholder = (narrow.matches && U.placeholderShort) || U.placeholder);
+    setPlaceholder();
+    narrow.addEventListener?.('change', setPlaceholder);
     el.mic.setAttribute('aria-label', U.mic);
     el.mic.title = U.mic;
     el.close.setAttribute('aria-label', U.close);
@@ -253,6 +256,46 @@
       stage.settle();
       el.launch.focus({ preventScroll: true });
     });
+  }
+
+  /* ------------------------------------------------- no tapar navegación */
+
+  // Cerrada, la barra no se sienta encima de navegación: en la portada, el
+  // mapa de capacidades queda al pie del primer pantallazo, justo donde vive
+  // el lanzador. Mientras se solapan, la barra sube lo justo para quedar
+  // encima (`--laiya-lift`, con su transición en el SCSS); cuando ese bloque
+  // ya ha pasado por detrás, vuelve a su sitio.
+  const AVOID = '.org-capability-scan';
+  const avoid = [...document.querySelectorAll(AVOID)];
+  dock.style.setProperty('--laiya-lift', '0px');
+  if (avoid.length) {
+    let liftTick = 0;
+    const lift = () => {
+      liftTick = 0;
+      let px = 0;
+      if (!open) {
+        const now = parseFloat(dock.style.getPropertyValue('--laiya-lift')) || 0;
+        const d = dock.getBoundingClientRect();
+        // La posición de la barra sin el desplazamiento actual.
+        const top = d.top + now, bottom = d.bottom + now;
+        const pad = parseFloat(getComputedStyle(dock).gap) || 8;
+        for (const n of avoid) {
+          const r = n.getBoundingClientRect();
+          if (r.top < bottom && r.bottom > top) px = Math.max(px, bottom - r.top + pad);
+        }
+        // Solo un saltito: si para librar el bloque hubiera que subir más de
+        // dos alturas de barra (en un móvil el mapa son seis filas apiladas),
+        // subir taparía otra cosa —el botón del hero—; se queda donde está.
+        if (px > (bottom - top) * 2) px = 0;
+      }
+      dock.style.setProperty('--laiya-lift', `${Math.round(px)}px`);
+    };
+    const queue = () => liftTick || (liftTick = requestAnimationFrame(lift));
+    addEventListener('scroll', queue, { passive: true });
+    addEventListener('resize', queue, { passive: true });
+    dock.addEventListener('transitionend', e => e.propertyName === 'translate' && stage && stage.settle && stage.settle());
+    queue();
+    new MutationObserver(queue).observe(dock, { attributes: true, attributeFilter: ['data-open'] });
   }
 
   dock.addEventListener('click', e => {
@@ -543,6 +586,19 @@
       add(frame(a.focus.id), a.text, { shape: figure ? 'text:' + figure[0] : SHAPE_BY_FILE[FILE] || 'octa', fx: ['kinetic', 'marks'] });
       const more = (a.blocks || []).slice(1);
       if (more.length) steps.push({ node: null, text: '', blocks: more, shape: SHAPE_BY_FILE[FILE] || 'octa' });
+    }
+
+    // Lo que se pregunta vive en un caso, pero su tarjeta está en esta
+    // página (la portada): se señala la tarjeta, el extracto va en el
+    // subtítulo, con su enlace al caso.
+    if (!steps.length && (a.kind === 'section' || a.kind === 'search') && a.focus && a.focus.file !== FILE && onHome) {
+      const card = cardFor(a.focus.file);
+      if (card) {
+        const figure = (((a.blocks || [])[0] || {}).text || '').match(/\d+(?:[.,]\d+)?\s?%/);
+        // El extracto ya lleva su «Llévame» al caso.
+        const blocks = (a.blocks || []).slice(0, 1);
+        add(card, a.text, { blocks, shape: figure ? 'text:' + figure[0] : SHAPE_BY_FILE[a.focus.file] || base, fx: ['scatter', 'tilt'] });
+      }
     }
 
     if (!steps.length) {

@@ -258,18 +258,109 @@
         .filter((n, _, all) => !all.some(o => o !== n && o.contains(n)))
         .slice(0, 48);
       if (!pieces.length) return () => {};
-      const back = remember(pieces, ['transform', 'transition', 'will-change']);
-      const floor = innerHeight - 8;
+      const back = remember(pieces, ['transform', 'transition', 'will-change', 'touch-action', 'cursor']);
+      // Mientras la página está en el suelo, arrastrar no selecciona texto.
+      const backMain = remember([main], ['user-select', '-webkit-user-select']);
+      main.style.setProperty('user-select', 'none');
+      main.style.setProperty('-webkit-user-select', 'none');
+      // El suelo es la barra, no el borde de la pantalla: lo que cae detrás
+      // de la barra y del subtítulo no se ve ni se puede coger.
+      const shelf = [...document.querySelectorAll('.org-laiya-dock, .mol-laiya-caption')]
+        .filter(n => !n.hidden && n.getBoundingClientRect().height > 0)
+        .map(n => n.getBoundingClientRect().top);
+      const floor = Math.min(innerHeight - 8, ...shelf.map(t => t - 8));
       const tl = gsap.timeline();
       pieces.forEach((n, i) => {
         const r = n.getBoundingClientRect();
         const drop = floor - r.bottom - rnd(0, Math.min(140, r.height * 2));
         n.style.willChange = 'transform';
+        n.style.touchAction = 'none';
+        n.style.cursor = 'grab';
         tl.to(n, { y: drop, rotate: rnd(-24, 24), x: rnd(-40, 40), duration: rnd(0.7, 1.1), ease: 'bounce.out' }, rnd(0, 0.35) + (r.top / innerHeight) * 0.25);
       });
-      return () =>
+
+      // Los escombros se pueden coger y lanzar, como en destroy.spritefusion:
+      // se arrastran con el puntero y, al soltarlos, salen con la velocidad
+      // del gesto y vuelven a caer al suelo. Cada toque alarga la fiesta
+      // (`rebuild.touched`); un arrastre no cuenta como clic en un enlace.
+      let held = null;
+      let dragged = false;
+      const down = e => {
+        if (e.button > 0 || (e.target.closest && e.target.closest('.org-laiya-dock, .mol-laiya-caption'))) return;
+        // Un trozo girado deja huecos dentro de su caja: se coge por lo que
+        // hay bajo el puntero o, si no, por la caja que lo contiene.
+        const n =
+          pieces.find(p => p.contains(e.target)) ||
+          pieces.find(p => {
+            const r = p.getBoundingClientRect();
+            return e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+          });
+        if (!n) return;
+        e.preventDefault();
+        gsap.killTweensOf(n);
+        tl.remove(gsap.getTweensOf(n));
+        held = { n, x0: e.clientX, y0: e.clientY, gx: gsap.getProperty(n, 'x'), gy: gsap.getProperty(n, 'y'), t: performance.now(), vx: 0, vy: 0, lx: e.clientX, ly: e.clientY };
+        dragged = false;
+        n.style.cursor = 'grabbing';
+        n.setPointerCapture?.(e.pointerId);
+        rebuild.touched = performance.now();
+      };
+      const move = e => {
+        if (!held) return;
+        const now = performance.now();
+        const dt = Math.max(1, now - held.t);
+        held.vx = ((e.clientX - held.lx) / dt) * 1000;
+        held.vy = ((e.clientY - held.ly) / dt) * 1000;
+        held.lx = e.clientX;
+        held.ly = e.clientY;
+        held.t = now;
+        if (Math.abs(e.clientX - held.x0) + Math.abs(e.clientY - held.y0) > 4) dragged = true;
+        gsap.set(held.n, { x: held.gx + e.clientX - held.x0, y: held.gy + e.clientY - held.y0, rotate: Math.max(-30, Math.min(30, held.vx / 60)) });
+      };
+      const up = () => {
+        if (!held) return;
+        const { n, vx, vy } = held;
+        held = null;
+        n.style.cursor = 'grab';
+        const r = n.getBoundingClientRect();
+        const gx = gsap.getProperty(n, 'x');
+        // Se lanza con la velocidad del gesto, pero no fuera de la pantalla:
+        // lo que se pierde por un lado ya no se puede volver a coger.
+        const fling = Math.max(-400, Math.min(400, vx * 0.18));
+        const x = gx + Math.max(-r.left, Math.min(innerWidth - r.right, fling));
+        const lift = Math.min(0, vy * 0.12);
+        const y = gsap.getProperty(n, 'y');
+        const drop = y + (floor - r.bottom) - rnd(0, 40);
+        gsap.timeline()
+          .to(n, { y: y + lift, x: (gx + x) / 2, duration: lift ? 0.25 : 0, ease: 'power2.out' })
+          .to(n, { y: drop, x, rotate: rnd(-24, 24), duration: rnd(0.7, 1), ease: 'bounce.out' });
+        rebuild.touched = performance.now();
+      };
+      const click = e => {
+        if (dragged && pieces.some(p => p.contains(e.target))) {
+          e.preventDefault();
+          e.stopPropagation();
+          dragged = false;
+        }
+      };
+      addEventListener('pointerdown', down, true);
+      addEventListener('pointermove', move, { passive: true });
+      addEventListener('pointerup', up);
+      addEventListener('pointercancel', up);
+      addEventListener('click', click, true);
+
+      const rebuild = () =>
         new Promise(resolve => {
+          removeEventListener('pointerdown', down, true);
+          removeEventListener('pointermove', move);
+          removeEventListener('pointerup', up);
+          removeEventListener('pointercancel', up);
+          // El clic de soltar el último escombro llega después: se deja un
+          // instante antes de volver a dejar pasar clics.
+          setTimeout(() => removeEventListener('click', click, true), 400);
+          held = null;
           tl.kill();
+          gsap.killTweensOf(pieces);
           gsap.to([...pieces].reverse(), {
             x: 0,
             y: 0,
@@ -279,10 +370,13 @@
             stagger: 0.025,
             onComplete: () => {
               back();
+              backMain();
               resolve();
             },
           });
         });
+      rebuild.touched = 0;
+      return rebuild;
     }
 
     return { kinetic, marks, scatter, blueprint, tilt, ripple, tremble, gravity };

@@ -35,7 +35,10 @@ export const UI = {
     launcherHint: 'A conversational layer over this portfolio',
     title: 'LAIYA',
     subtitle: 'A layer over this portfolio',
-    placeholder: 'Ask about his work, his process, how to reach him…',
+    // La barra mide lo que mide: el texto completo cabe en escritorio; en
+    // un móvil, con cuatro botones al lado, solo cabe la invitación.
+    placeholder: 'Ask about his work, his process…',
+    placeholderShort: 'Ask me…',
     inputLabel: 'Your question for LAIYA',
     send: 'Send',
     mic: 'Speak your question',
@@ -69,7 +72,8 @@ export const UI = {
     launcherHint: 'Una capa conversacional sobre este portfolio',
     title: 'LAIYA',
     subtitle: 'Una capa sobre este portfolio',
-    placeholder: 'Pregunta por su trabajo, su proceso, cómo contactarle…',
+    placeholder: 'Pregunta por su trabajo, su proceso…',
+    placeholderShort: 'Pregúntame…',
     inputLabel: 'Tu pregunta para LAIYA',
     send: 'Enviar',
     mic: 'Dicta tu pregunta',
@@ -108,6 +112,8 @@ export const VOICE = {
       'Hello. I only know what this portfolio publishes, and I can take you to any part of it.',
     ],
     greetAgain: ['Still here. What else do you want to see?', 'Go ahead.'],
+    // Cuando el visitante saluda él: un «hola» merece un hola, no un «sigo aquí».
+    helloBack: ['Hi. Where shall I start: his work, his career or how to reach him?', 'Hello. Ask me about any project, or let me show you around.'],
     identity: [
       'LAIYA comes from “layer”. I’m not a separate site: I sit on top of this one and answer only with what’s already published here. If it isn’t on the page, I’ll say so.',
     ],
@@ -129,7 +135,7 @@ export const VOICE = {
     thanks: ['You’re welcome.', 'Any time. I’ll be in the corner.'],
     bye: ['I’ll stay docked in the corner if you need me.'],
     help: 'Things I can show you:',
-    destroy: 'You asked for it. Gravity on.',
+    destroy: 'You asked for it. Gravity on. Grab the pieces and throw them.',
     restore: 'Better leave it as he built it. Everything back in its place.',
     found: 'This is the closest part of the portfolio:',
     foundIn: 'In the {case} case:',
@@ -142,6 +148,7 @@ export const VOICE = {
       'Hola. Solo sé lo que publica este portfolio, y puedo llevarte a cualquier parte de él.',
     ],
     greetAgain: ['Sigo aquí. ¿Qué más quieres ver?', 'Adelante.'],
+    helloBack: ['Hola. ¿Por dónde empiezo: su trabajo, su trayectoria o cómo contactarle?', 'Hola. Pregúntame por cualquier proyecto, o deja que te enseñe la web.'],
     identity: [
       'LAIYA viene de «layer», capa. No soy otra web: me pongo encima de esta y solo respondo con lo que ya está publicado aquí. Si no está en la página, te lo digo.',
     ],
@@ -163,7 +170,7 @@ export const VOICE = {
     thanks: ['De nada.', 'Cuando quieras. Me quedo en la esquina.'],
     bye: ['Me quedo acoplada en la esquina por si me necesitas.'],
     help: 'Esto es lo que puedo enseñarte:',
-    destroy: 'Tú lo has pedido. Gravedad activada.',
+    destroy: 'Tú lo has pedido. Gravedad activada. Coge los trozos y lánzalos.',
     restore: 'Mejor la dejo como él la construyó. Todo en su sitio.',
     found: 'Esta es la parte del portfolio que más se acerca:',
     foundIn: 'En el caso {case}:',

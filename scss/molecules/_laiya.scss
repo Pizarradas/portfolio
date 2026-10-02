@@ -451,6 +451,25 @@
     display: none;
   }
 
+  // En un móvil las sugerencias en tres filas se comían media pantalla junto
+  // al subtítulo: una sola fila que se arrastra, como el índice de los casos.
+  @include until($bp-sm) {
+    .mol-laiya-suggest {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+    }
+
+    .mol-laiya-suggest::-webkit-scrollbar {
+      display: none;
+    }
+
+    .mol-laiya-suggest > * {
+      flex: none;
+    }
+  }
+
   .mol-laiya-composer {
     display: flex;
     align-items: center;

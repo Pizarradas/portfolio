@@ -451,7 +451,10 @@
       // protagonista es lo que señala, no él. Pero no tanto que su forma
       // —el año, la @, el pin— deje de leerse: 1/φ en escritorio.
       const near = wide() ? 0.618 : 0.46;
-      const ov = orbVisible() * near;
+      // Las formas temáticas (texto, pin, escalera) se salen del disco de
+      // 1/φ que mide `orbVisible`: se reserva un cuarto más para que no
+      // pisen el hueco.
+      const ov = orbVisible() * near * 1.25;
       let orbAt, capAt;
       if (columnar) {
         const colX = side === 'right' ? Math.min(R.x + R.w + G, W - capW - G) : Math.max(G, R.x - G - capW);
@@ -760,7 +763,15 @@
       orb && orb.burst();
       const rebuild = fx.gravity();
       await speak(step.text, id);
-      await wait(1800, id);
+      // Tiempo para jugar con los escombros: 5 s como mínimo y, mientras el
+      // visitante los coja y los lance, 3 s más desde el último toque, hasta
+      // un máximo de 20 s.
+      const t0 = performance.now();
+      while (performance.now() - t0 < 20000) {
+        const until = Math.max(t0 + 5000, (rebuild.touched || 0) + 3000);
+        if (performance.now() >= until) break;
+        await wait(250, id);
+      }
       onState('thinking');
       await rebuild();
       orb && orb.setMood('happy');

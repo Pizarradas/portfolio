@@ -44,6 +44,15 @@
     inline-size: min(calc(100vw - var(--semantic-space-page-inline) * 2), var(--semantic-measure-prose));
   }
 
+  // Cerrada, se aparta hacia arriba cuando lo que tiene debajo es
+  // navegación (el mapa de capacidades al pie del hero de la portada):
+  // `js/laiya.js` mide el solape y lo deja en `--laiya-lift`. Abierta no se
+  // aparta: entonces la escena es suya.
+  .org-laiya-dock[data-open="false"] {
+    translate: 0 calc(var(--laiya-lift) * -1);
+    @include transition(translate var(--component-laiya-dur-moderate) var(--component-laiya-ease-standard));
+  }
+
   .org-laiya-dock__bar {
     display: flex;
     align-items: center;

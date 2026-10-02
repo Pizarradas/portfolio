@@ -281,7 +281,7 @@
       page.sections.filter(x => x.kicker && x.id !== exceptId && !/^(case study|caso)/i.test(x.kicker)).slice(0, 3).map(x => x.kicker);
 
     const H = {
-      greet: ctx => R({ text: ctx.greeted ? pick('greetAgain', V.greetAgain) : pick('greet', V.greet), suggestions: S.start, mood: 'happy' }),
+      greet: ctx => R({ text: ctx.said && V.helloBack ? pick('helloBack', V.helloBack) : ctx.greeted ? pick('greetAgain', V.greetAgain) : pick('greet', V.greet), suggestions: S.start, mood: 'happy' }),
       identity: () => R({ text: pick('identity', V.identity), suggestions: S.start, mood: 'happy' }),
       person: () =>
         R({
@@ -408,6 +408,8 @@
     function answer(question, ctx = {}) {
       const n = norm(question);
       if (!n) return Object.assign(H.greet(ctx), { kind: 'intent', intent: 'greet' });
+      // Lo que viene a partir de aquí lo ha escrito el visitante.
+      ctx = { ...ctx, said: true };
 
       // Las sugerencias que propone el motor dentro de un caso son los
       // kickers de sus secciones, así que pulsar una lleva a esa sección.
