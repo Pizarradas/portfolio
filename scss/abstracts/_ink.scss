@@ -279,6 +279,11 @@ $follow-system: false;
   --component-case-rule: var(--semantic-color-border, #c9c8c1);
   --component-chart-bg: var(--semantic-color-surface);
   --component-chart-border: var(--semantic-color-border);
+  --component-laiya-orb-core: var(--semantic-color-surface-brand);
+  --component-laiya-orb-deep: var(--semantic-color-surface-night);
+  --component-laiya-orb-light: var(--semantic-color-brand-glow);
+  --component-laiya-orb-glow: var(--semantic-color-text);
+  --component-laiya-focus-ring: var(--semantic-color-primary);
 }
 
 // ---------------------------------------------------------------------------

@@ -1,0 +1,9 @@
+name = "laiya"
+main = "worker.js"
+compatibility_date = "2026-09-01"
+
+[vars]
+# Comprueba el identificador vigente en docs.claude.com antes de desplegar.
+MODEL = "claude-haiku-4-5"
+
+# El secreto no va aquí: npx wrangler secret put ANTHROPIC_API_KEY

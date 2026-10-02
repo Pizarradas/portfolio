@@ -1,0 +1,532 @@
+@use "../abstracts/breakpoints" as *;
+@use "../abstracts/mixins" as *;
+
+// LAI-YA — moléculas.
+//
+// Lo que aparece dentro de la conversación. Cada respuesta es una frase de
+// LAI-YA más uno o varios bloques que enseñan contenido del sitio: una cita,
+// una tarjeta de caso, un fragmento de sección, la trayectoria, el stack o el
+// contacto. Todo vive dentro del panel `.syx-on-night`, así que los colores
+// salen ya repuntados al contexto navy.
+//
+// Dos voces distintas, y se tienen que distinguir a simple vista: la de
+// LAI-YA (texto en display, sin marco) y la de José (siempre citada, con su
+// filete y su atribución). BRAND.md §3: hecho y lectura nunca en la misma
+// frase; aquí, nunca con el mismo aspecto.
+
+@layer syx.molecules {
+  /* ------------------------------------------------------------ mensajes */
+
+  .mol-laiya-msg {
+    display: grid;
+    gap: var(--semantic-space-component-md);
+    max-inline-size: 100%;
+  }
+
+  .mol-laiya-msg[data-enter] > :not(.mol-laiya-msg__text) {
+    animation: laiya-in var(--semantic-duration-reveal) var(--semantic-ease-emphasis) both;
+  }
+
+  .mol-laiya-msg[data-enter] > :nth-child(3) {
+    animation-delay: var(--semantic-duration-hover);
+  }
+
+  .mol-laiya-msg[data-enter] > :nth-child(4) {
+    animation-delay: var(--semantic-duration-transition);
+  }
+
+  @include reduced-motion {
+    .mol-laiya-msg[data-enter] > * {
+      animation: none;
+    }
+  }
+
+  .mol-laiya-msg__text {
+    margin: 0;
+    max-inline-size: var(--semantic-measure-lede);
+  }
+
+  .mol-laiya-msg--ai .mol-laiya-msg__text {
+    font-family: var(--semantic-font-family-display);
+    font-size: var(--semantic-font-size-body-lg);
+    font-weight: var(--semantic-font-weight-medium);
+    line-height: var(--semantic-line-height-title);
+    letter-spacing: var(--semantic-letter-spacing-tight);
+    color: var(--semantic-color-text);
+  }
+
+  .mol-laiya-msg--ai .mol-laiya-msg__text:empty {
+    display: none;
+  }
+
+  .mol-laiya-msg--user {
+    justify-self: end;
+    gap: var(--semantic-space-component-3xs);
+    padding: var(--semantic-space-component-xs) var(--semantic-space-component-md);
+    border-radius: var(--semantic-radius-surface);
+    background: var(--semantic-color-surface-muted);
+    text-align: end;
+  }
+
+  .mol-laiya-msg__who {
+    margin: 0;
+    font-size: var(--semantic-font-size-caption);
+    font-weight: var(--semantic-font-weight-strong);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-laiya-msg--user .mol-laiya-msg__text {
+    font-size: var(--semantic-font-size-ui);
+    color: var(--semantic-color-text);
+  }
+
+  .mol-laiya-msg__note {
+    margin: 0;
+    font-size: var(--semantic-font-size-caption);
+    color: var(--semantic-color-text-muted);
+  }
+
+  /* --------------------------------------------------------------- citas */
+
+  // La voz de José. Filete a la izquierda y atribución: lo que dice la página
+  // en primera persona nunca se lee como si lo dijera LAI-YA.
+  .mol-laiya-quote {
+    margin: 0;
+    padding-inline-start: var(--semantic-space-component-md);
+    border-inline-start: var(--semantic-border-width-strong) solid var(--semantic-color-border-strong);
+  }
+
+  .mol-laiya-quote p {
+    margin: 0;
+    max-inline-size: var(--semantic-measure-prose);
+    font-size: var(--semantic-font-size-ui);
+    line-height: var(--semantic-line-height-body);
+    color: var(--semantic-color-text-secondary);
+  }
+
+  .mol-laiya-quote footer {
+    margin-block-start: var(--semantic-space-component-2xs);
+    font-size: var(--semantic-font-size-caption);
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-laiya-quote footer::before {
+    content: "— ";
+  }
+
+  .mol-laiya-quote--plain {
+    padding-inline-start: var(--semantic-space-component-sm);
+    border-inline-start-width: var(--semantic-border-width);
+  }
+
+  /* --------------------------------------------------------------- datos */
+
+  .mol-laiya-facts {
+    display: grid;
+    gap: var(--semantic-space-component-xs) var(--semantic-space-component-lg);
+    margin: 0;
+    padding: var(--semantic-space-component-md);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
+    border-radius: var(--semantic-radius-surface);
+    background: var(--semantic-color-surface-alt);
+
+    @include from($bp-sm) {
+      grid-template-columns: max-content 1fr;
+    }
+  }
+
+  .mol-laiya-facts > div {
+    display: contents;
+  }
+
+  .mol-laiya-facts dt {
+    font-size: var(--semantic-font-size-caption);
+    font-weight: var(--semantic-font-weight-strong);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-laiya-facts dd {
+    margin: 0 0 var(--semantic-space-component-xs);
+    font-size: var(--semantic-font-size-ui);
+    color: var(--semantic-color-text);
+
+    @include from($bp-sm) {
+      margin: 0;
+    }
+  }
+
+  /* ------------------------------------------------------------ proyectos */
+
+  .mol-laiya-projects {
+    display: grid;
+    gap: var(--semantic-space-component-sm);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @include from($bp-sm) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .mol-laiya-project {
+    display: grid;
+    block-size: 100%;
+    overflow: hidden;
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
+    border-radius: var(--semantic-radius-surface);
+    background: var(--semantic-color-surface-alt);
+    color: var(--semantic-color-text);
+    text-decoration: none;
+    @include transition(border-color var(--semantic-duration-hover) var(--semantic-ease), background var(--semantic-duration-hover) var(--semantic-ease));
+  }
+
+  .mol-laiya-project img,
+  .mol-laiya-case__visual img {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: var(--component-laiya-thumb-ratio);
+    object-fit: cover;
+    filter: var(--semantic-media-filter);
+  }
+
+  .mol-laiya-project__body {
+    display: grid;
+    gap: var(--semantic-space-component-3xs);
+    padding: var(--semantic-space-component-sm) var(--semantic-space-component-md) var(--semantic-space-component-md);
+  }
+
+  .mol-laiya-project__register {
+    font-size: var(--semantic-font-size-caption);
+    font-weight: var(--semantic-font-weight-strong);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-laiya-project b {
+    font-family: var(--semantic-font-family-display);
+    font-size: var(--semantic-font-size-body);
+  }
+
+  .mol-laiya-project__line {
+    font-size: var(--semantic-font-size-caption);
+    line-height: var(--semantic-line-height-ui);
+    color: var(--semantic-color-text-secondary);
+  }
+
+  @include pointer {
+    .mol-laiya-project:hover {
+      border-color: var(--semantic-color-text-secondary);
+      background: var(--semantic-color-surface-muted);
+    }
+  }
+
+  /* ------------------------------------------------------------------ caso */
+
+  .mol-laiya-case {
+    display: grid;
+    gap: var(--semantic-space-component-sm);
+    padding: var(--semantic-space-component-md);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
+    border-radius: var(--semantic-radius-surface);
+    background: var(--semantic-color-surface-alt);
+  }
+
+  .mol-laiya-case__visual {
+    display: block;
+    overflow: hidden;
+    margin: calc(var(--semantic-space-component-md) * -1) calc(var(--semantic-space-component-md) * -1) 0;
+    border-radius: var(--semantic-radius-surface) var(--semantic-radius-surface) 0 0;
+  }
+
+  .mol-laiya-case__kicker,
+  .mol-laiya-case__label,
+  .mol-laiya-excerpt__source {
+    margin: 0;
+    font-size: var(--semantic-font-size-caption);
+    font-weight: var(--semantic-font-weight-strong);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-laiya-excerpt__title {
+    margin: 0;
+    max-inline-size: var(--semantic-measure-title);
+    font-family: var(--semantic-font-family-display);
+    font-size: var(--semantic-font-size-lede);
+    font-weight: var(--semantic-font-weight-display);
+    line-height: var(--semantic-line-height-title);
+    letter-spacing: var(--semantic-letter-spacing-display);
+    color: var(--semantic-color-text);
+  }
+
+  .mol-laiya-case__cta {
+    justify-self: start;
+  }
+
+  .mol-laiya-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--semantic-space-component-2xs);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* ------------------------------------------------------------- fragmento */
+
+  .mol-laiya-excerpt {
+    display: grid;
+    gap: var(--semantic-space-component-sm);
+    padding: var(--semantic-space-component-md);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
+    border-radius: var(--semantic-radius-surface);
+    background: var(--semantic-color-surface-alt);
+  }
+
+  .mol-laiya-excerpt__image {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    max-block-size: var(--component-laiya-orb-size);
+    object-fit: cover;
+    border-radius: var(--semantic-radius-control);
+    filter: var(--semantic-media-filter);
+  }
+
+  .mol-laiya-excerpt__go {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--semantic-space-component-2xs);
+  }
+
+  /* ---------------------------------------------------------- trayectoria */
+
+  // Cinco etapas sobre un raíl. Entran una detrás de otra: la escala que
+  // cambia es justo lo que cuenta esta sección en la home.
+  .mol-laiya-timeline {
+    display: grid;
+    gap: var(--semantic-space-component-md);
+    margin: 0;
+    padding: 0 0 0 var(--semantic-space-component-lg);
+    list-style: none;
+    border-inline-start: var(--semantic-border-width) solid var(--semantic-color-border-strong);
+  }
+
+  .mol-laiya-timeline li {
+    @include relative();
+    display: grid;
+    gap: var(--semantic-space-component-3xs);
+    animation: laiya-in var(--semantic-duration-reveal) var(--semantic-ease-emphasis) both;
+    animation-delay: calc(var(--laiya-step, 0) * var(--semantic-duration-hover));
+  }
+
+  .mol-laiya-timeline li::before {
+    content: "";
+    @include absolute($top: var(--semantic-space-component-3xs), $left: calc(var(--semantic-space-component-lg) * -1));
+    inline-size: var(--semantic-space-component-xs);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--semantic-color-text);
+    transform: translateX(-50%);
+  }
+
+  .mol-laiya-timeline li:last-child::before {
+    background: var(--component-laiya-orb-light);
+    box-shadow: 0 0 0 var(--semantic-space-component-3xs) color-mix(in srgb, var(--component-laiya-orb-light) 30%, transparent);
+  }
+
+  @include reduced-motion {
+    .mol-laiya-timeline li {
+      animation: none;
+    }
+  }
+
+  .mol-laiya-timeline p {
+    margin: 0;
+  }
+
+  .mol-laiya-timeline__when {
+    font-size: var(--semantic-font-size-caption);
+    font-weight: var(--semantic-font-weight-strong);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-laiya-timeline__org b {
+    font-family: var(--semantic-font-family-display);
+    font-size: var(--semantic-font-size-body);
+    color: var(--semantic-color-text);
+  }
+
+  .mol-laiya-timeline__org span,
+  .mol-laiya-timeline__role {
+    font-size: var(--semantic-font-size-caption);
+    color: var(--semantic-color-text-secondary);
+  }
+
+  /* ---------------------------------------------------------------- stack */
+
+  .mol-laiya-tools {
+    display: grid;
+    gap: var(--semantic-space-component-md);
+  }
+
+  .mol-laiya-tools__practice {
+    display: grid;
+    gap: var(--semantic-space-component-xs);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @include from($bp-sm) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .mol-laiya-tools__practice li {
+    display: grid;
+    gap: var(--semantic-space-component-3xs);
+    padding: var(--semantic-space-component-sm);
+    border: var(--semantic-border-width) solid var(--semantic-color-border);
+    border-radius: var(--semantic-radius-control);
+    background: var(--semantic-color-surface-alt);
+  }
+
+  .mol-laiya-tools__practice b {
+    font-size: var(--semantic-font-size-ui);
+    color: var(--semantic-color-text);
+  }
+
+  .mol-laiya-tools__practice span {
+    font-size: var(--semantic-font-size-caption);
+    line-height: var(--semantic-line-height-ui);
+    color: var(--semantic-color-text-secondary);
+  }
+
+  .mol-laiya-tools__group {
+    display: grid;
+    gap: var(--semantic-space-component-2xs);
+  }
+
+  .mol-laiya-tools__group > p {
+    margin: 0;
+    font-size: var(--semantic-font-size-caption);
+    font-weight: var(--semantic-font-weight-strong);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    color: var(--semantic-color-text-muted);
+  }
+
+  /* ------------------------------------------------------------- contacto */
+
+  // Las tres filas comparten columnas con `subgrid`, así las etiquetas miden
+  // lo que mide la más larga sin fijar un ancho a mano.
+  .mol-laiya-contact {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr) auto;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-block-start: var(--semantic-border-width) solid var(--semantic-color-border);
+  }
+
+  .mol-laiya-contact li {
+    display: contents;
+  }
+
+  .mol-laiya-contact a {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+    align-items: center;
+    gap: var(--semantic-space-component-sm);
+    min-block-size: var(--semantic-size-target-comfortable);
+    border-block-end: var(--semantic-border-width) solid var(--semantic-color-border);
+    color: var(--semantic-color-text);
+    text-decoration: none;
+  }
+
+  .mol-laiya-contact__label {
+    font-size: var(--semantic-font-size-caption);
+    font-weight: var(--semantic-font-weight-strong);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    color: var(--semantic-color-text-muted);
+  }
+
+  .mol-laiya-contact__value {
+    overflow-wrap: anywhere;
+    font-size: var(--semantic-font-size-ui);
+  }
+
+  @include pointer {
+    .mol-laiya-contact a:hover .mol-laiya-contact__value {
+      text-decoration: underline;
+    }
+  }
+
+  /* ----------------------------------------------- sugerencias y entrada */
+
+  .mol-laiya-suggest {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--semantic-space-component-2xs);
+  }
+
+  .mol-laiya-suggest:empty {
+    display: none;
+  }
+
+  .mol-laiya-composer {
+    display: flex;
+    align-items: center;
+    gap: var(--semantic-space-component-2xs);
+    padding: var(--semantic-space-component-2xs);
+    border: var(--semantic-border-width) solid var(--semantic-color-border-strong);
+    border-radius: var(--semantic-radius-pill);
+    background: var(--semantic-color-surface-alt);
+    @include transition(border-color var(--semantic-duration-hover) var(--semantic-ease));
+  }
+
+  .mol-laiya-composer:focus-within {
+    border-color: var(--semantic-color-text-secondary);
+  }
+
+  .mol-laiya-composer__input {
+    flex: 1;
+    min-inline-size: 0;
+    min-block-size: var(--semantic-size-target-comfortable);
+    padding: 0 var(--semantic-space-component-sm);
+    border: 0;
+    background: transparent;
+    color: var(--semantic-color-text);
+    font: inherit;
+    font-size: var(--semantic-font-size-body);
+  }
+
+  .mol-laiya-composer__input::placeholder {
+    color: var(--semantic-color-text-muted);
+    opacity: 1;
+  }
+
+  // El contorno lo dibuja el formulario entero con `:focus-within`; el foco
+  // sigue siendo visible, solo cambia quién lo pinta.
+  .mol-laiya-composer__input:focus-visible {
+    outline: none;
+  }
+
+  .mol-laiya-composer:has(.mol-laiya-composer__input:focus-visible) {
+    outline: var(--semantic-focus-width) solid var(--semantic-color-focus);
+    outline-offset: var(--semantic-focus-offset);
+  }
+}

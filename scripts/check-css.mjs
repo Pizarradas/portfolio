@@ -207,6 +207,7 @@ const LITERAL_BUDGET = {
   const TOKEN_FILES = [
     'abstracts/tokens/components/_portfolio.scss',
     'abstracts/tokens/components/_case-and-evidence.scss',
+    'abstracts/tokens/components/_laiya.scss',
   ];
   // `[\w-]` y no `[a-z-]`: los nombres con dígitos (--component-case42-rule)
   // son justo los que se pierde una regex ingenua. Ya costó catorce tokens.

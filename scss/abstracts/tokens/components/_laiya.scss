@@ -1,0 +1,46 @@
+@use "../../fluid" as *;
+
+@layer syx.tokens {
+  // COMPONENT — LAI-YA, la capa conversacional
+  //
+  // Los tamaños salen de `scss/PROPORTIONS.md` §4, la escala de espaciado
+  // E(n) = √φⁿ. Ninguno se ha elegido a ojo:
+  //
+  //   orbe de portada   E(9) → E(10)   8.719 → 11.090rem, ganancia 1, fluido
+  //   orbe en charla    E(6)           4.236rem = φ³
+  //   orbe acoplado     E(4)           2.618rem = φ²
+  //   orbe del botón    E(2)           1.618rem = φ
+  //
+  // Los colores del orbe los lee Three.js con getComputedStyle sobre el panel,
+  // que es `.syx-on-night`: por eso los cuatro están repetidos en
+  // `ink.repoint-component-colors`, para resolverse dentro del contexto.
+
+  :root {
+    --component-laiya-orb-size: #{fluid(8.719, 11.09)};
+    --component-laiya-orb-size-compact: 4.236rem;
+    --component-laiya-orb-size-dock: 2.618rem;
+    --component-laiya-orb-size-launcher: 1.618rem;
+
+    // El panel abierto mide lo que mide la columna compacta del sitio, W(1),
+    // y su alto se queda en W(2): en un portátil cabe entero sin pegarse a
+    // los bordes, y en un monitor grande no se convierte en una pared.
+    --component-laiya-panel-width: var(--semantic-width-compact);
+    --component-laiya-panel-height: var(--semantic-width-read);
+
+    // La miniatura de un caso es su tarjeta social: 1200 × 630.
+    --component-laiya-thumb-ratio: 1200 / 630;
+
+    // El orbe es luz de marca: núcleo azul, fondo navy, bandas en el azul
+    // claro de la rampa y un borde que brilla en el color del texto del
+    // contexto (blanco sobre navy).
+    --component-laiya-orb-core: var(--semantic-color-surface-brand);
+    --component-laiya-orb-deep: var(--semantic-color-surface-night);
+    --component-laiya-orb-light: var(--semantic-color-brand-glow);
+    --component-laiya-orb-glow: var(--semantic-color-text);
+
+    // El anillo con el que la capa señala una sección de la página. Azul de
+    // marca sobre el fondo claro; dentro de una banda navy o azul, el mismo
+    // token se repunta a blanco.
+    --component-laiya-focus-ring: var(--semantic-color-primary);
+  }
+}

@@ -32,6 +32,7 @@
 
 @use "abstracts/tokens/components/portfolio" as component-portfolio;
 @use "abstracts/tokens/components/case-and-evidence" as component-case;
+@use "abstracts/tokens/components/laiya" as component-laiya;
 
 // Self-hosted faces. Outside every layer on purpose: @font-face declares a
 // resource, it does not participate in the cascade, so giving it a layer would
@@ -48,6 +49,7 @@
 @use "atoms/portfolio" as atoms-portfolio;
 @use "atoms/case-visuals" as atoms-case-visuals;
 @use "atoms/data-table" as atoms-data-table;
+@use "atoms/laiya" as atoms-laiya;
 
 @use "molecules/portfolio" as molecules-portfolio;
 @use "molecules/research" as molecules-research;
@@ -60,6 +62,7 @@
 @use "molecules/header-system" as molecules-header-system;
 @use "molecules/illustrations" as molecules-illustrations;
 @use "molecules/live-preview" as molecules-live-preview;
+@use "molecules/laiya" as molecules-laiya;
 
 @use "organisms/portfolio" as organisms-portfolio;
 @use "organisms/case-opener" as organisms-case-opener;
@@ -73,6 +76,9 @@
 @use "organisms/sport" as organisms-sport;
 @use "organisms/illustrations" as organisms-illustrations;
 @use "organisms/home-sections" as organisms-home-sections;
+// LAI-YA, la capa conversacional. Al final de los organismos: es lo único
+// que se pinta por encima de todo lo demás.
+@use "organisms/laiya" as organisms-laiya;
 
 @use "utilities/portfolio" as utilities-portfolio;
 @use "utilities/keyframes" as utilities-keyframes;

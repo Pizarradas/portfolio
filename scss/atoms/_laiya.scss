@@ -1,0 +1,186 @@
+@use "../abstracts/breakpoints" as *;
+@use "../abstracts/mixins" as *;
+
+// LAI-YA — átomos.
+//
+// Las piezas mínimas de la capa: el orbe de CSS (el que se ve antes de que
+// cargue Three.js, y el único si no hay WebGL), el botón flotante que la abre,
+// el botón de herramienta, la ficha y la etiqueta de proyecto propio.
+//
+// Todo lo que aquí tiene color lo lee de la capa semántica: el botón y el
+// panel llevan `.syx-on-night` en el marcado, así que en su interior
+// `--semantic-color-text` ya es blanco y `--semantic-color-border` ya es
+// blanco translúcido, sin variantes oscuras propias.
+
+@layer syx.atoms {
+  // El orbe de CSS. Mismo material que el de Three.js, aproximado con tres
+  // gradientes: núcleo azul, luz arriba a la izquierda, sombra navy abajo.
+  .atom-laiya-orb {
+    display: block;
+    flex: none;
+    inline-size: var(--component-laiya-orb-size-launcher);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 34% 28%, var(--component-laiya-orb-glow) 0, transparent 22%),
+      radial-gradient(circle at 40% 35%, var(--component-laiya-orb-light) 0, transparent 58%),
+      radial-gradient(circle at 50% 70%, var(--component-laiya-orb-deep) 0, var(--component-laiya-orb-core) 72%);
+    box-shadow:
+      0 0 0 var(--semantic-border-width) color-mix(in srgb, var(--component-laiya-orb-glow) 24%, transparent),
+      0 0 var(--semantic-space-component-lg) color-mix(in srgb, var(--component-laiya-orb-light) 55%, transparent);
+    // Un ciclo de respiración en reposo, unos cuatro segundos: ni tan lento que
+    // parezca parado ni tan rápido que pida atención mientras se lee.
+    animation: laiya-breathe 4.236s var(--semantic-ease) infinite alternate;
+  }
+
+  @include reduced-motion {
+    .atom-laiya-orb {
+      animation: none;
+    }
+  }
+
+  // El botón flotante. Una píldora navy con el orbe dentro: la capa se
+  // presenta como lo que es, una entidad, no como un icono de chat.
+  //
+  // Centrado abajo y no en la esquina: en la esquina tapaba la segunda acción
+  // del hero a 1440 × 900, y abajo al centro es exactamente donde se acopla
+  // la capa — el botón y la barra ocupan el mismo sitio.
+  .atom-laiya-launcher {
+    @include fixed($left: 50%, $bottom: var(--semantic-space-component-md));
+    transform: translateX(-50%);
+    z-index: var(--semantic-z-overlay);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--semantic-space-component-xs);
+    min-block-size: var(--semantic-size-target-comfortable);
+    padding: var(--semantic-space-component-2xs) var(--semantic-space-component-md) var(--semantic-space-component-2xs) var(--semantic-space-component-2xs);
+    border: var(--semantic-border-width) solid var(--semantic-color-border-strong);
+    border-radius: var(--semantic-radius-pill);
+    box-shadow: var(--semantic-shadow-floating);
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-ui);
+    font-weight: var(--semantic-font-weight-strong);
+    line-height: var(--semantic-line-height-flat);
+    cursor: pointer;
+    @include transition(transform var(--semantic-duration-hover) var(--semantic-ease), box-shadow var(--semantic-duration-hover) var(--semantic-ease));
+  }
+
+  .atom-laiya-launcher[hidden] {
+    display: none;
+  }
+
+  @include pointer {
+    .atom-laiya-launcher:hover {
+      transform: translate(-50%, calc(var(--semantic-space-component-3xs) * -1));
+      box-shadow: var(--semantic-shadow-overlay);
+    }
+  }
+
+  // El botón de herramienta: un objetivo táctil cómodo con un icono de trazo.
+  .atom-laiya-tool {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    inline-size: var(--semantic-size-target-comfortable);
+    block-size: var(--semantic-size-target-comfortable);
+    padding: 0;
+    border: 0;
+    border-radius: var(--semantic-radius-pill);
+    background: transparent;
+    color: var(--semantic-color-text-secondary);
+    cursor: pointer;
+    @include transition(background var(--semantic-duration-hover) var(--semantic-ease), color var(--semantic-duration-hover) var(--semantic-ease));
+  }
+
+  .atom-laiya-tool[hidden] {
+    display: none;
+  }
+
+  // El mismo trazo que `.atom-arrow`, un escalón tipográfico más grande:
+  // S(1) = ∛φ = 1.174 (PROPORTIONS.md §1), para que el icono se lea a la
+  // altura del texto de interfaz sin pesar más que él.
+  .atom-laiya-tool svg {
+    inline-size: 1.174em;
+    block-size: 1.174em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .atom-laiya-tool[aria-pressed="true"] {
+    background: var(--semantic-color-surface-muted);
+    color: var(--semantic-color-text);
+  }
+
+  // Enviar es la única acción primaria de la capa, así que es la única que
+  // gasta el color de acento (BRAND.md §4, el acento se gasta una vez).
+  .atom-laiya-tool--send {
+    background: var(--semantic-color-primary);
+    color: var(--semantic-color-on-primary);
+  }
+
+  @include pointer {
+    .atom-laiya-tool:hover {
+      background: var(--semantic-color-surface-muted);
+      color: var(--semantic-color-text);
+    }
+
+    .atom-laiya-tool--send:hover {
+      background: var(--semantic-color-text-secondary);
+      color: var(--semantic-color-on-primary);
+    }
+  }
+
+  // La ficha: preguntas sugeridas, secciones de un caso, herramientas.
+  .atom-laiya-chip {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--semantic-size-target-min);
+    padding: var(--semantic-space-component-2xs) var(--semantic-space-component-sm);
+    border: var(--semantic-border-width) solid var(--semantic-color-border-strong);
+    border-radius: var(--semantic-radius-pill);
+    background: transparent;
+    color: var(--semantic-color-text);
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-ui);
+    line-height: var(--semantic-line-height-ui);
+    text-align: start;
+    text-decoration: none;
+    cursor: pointer;
+    @include transition(background var(--semantic-duration-hover) var(--semantic-ease), border-color var(--semantic-duration-hover) var(--semantic-ease));
+  }
+
+  .atom-laiya-chip--static {
+    cursor: default;
+    color: var(--semantic-color-text-secondary);
+    border-color: var(--semantic-color-border);
+  }
+
+  @include pointer {
+    .atom-laiya-chip:not(.atom-laiya-chip--static):hover {
+      background: var(--semantic-color-surface-muted);
+      border-color: var(--semantic-color-text-secondary);
+    }
+  }
+
+  // «Self-directed» / «Proyecto propio». Va en el mismo bloque que el nombre
+  // del caso, nunca en letra pequeña aparte (BRAND.md §7.4).
+  .atom-laiya-tag {
+    display: inline-block;
+    margin-inline-start: var(--semantic-space-component-xs);
+    padding: 0 var(--semantic-space-component-2xs);
+    border: var(--semantic-border-width) solid currentColor;
+    border-radius: var(--semantic-radius-control);
+    font-size: var(--semantic-font-size-caption);
+    font-weight: var(--semantic-font-weight-strong);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    text-transform: uppercase;
+    vertical-align: middle;
+  }
+
+  .atom-laiya-tag--own {
+    color: var(--semantic-color-text);
+  }
+}

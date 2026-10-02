@@ -28,6 +28,12 @@
     --semantic-color-surface-brand: var(--primitive-color-brand-500);
     --semantic-color-surface-night: var(--primitive-color-brand-950);
 
+    // Luz de marca: el azul claro de la rampa como color emisivo, no como
+    // texto. Lo usa el orbe de LAI-YA para las bandas y el halo —materia que
+    // brilla sobre navy—, y por eso no depende del tema: la luz es la misma
+    // de día y de noche. No es un sustituto de `primary` para texto.
+    --semantic-color-brand-glow: var(--primitive-color-brand-400);
+
     // Derivado. Se repite en `ink.derived` para los contextos, que son otro
     // elemento; aquí basta declararlo una vez.
     --semantic-color-focus: var(--semantic-color-primary);
