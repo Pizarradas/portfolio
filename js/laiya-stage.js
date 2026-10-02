@@ -152,7 +152,7 @@
   /* ------------------------------------------------------------ escenario */
 
   function create(opt) {
-    const { gsap, reduced, file, ui, renderBlocks, onGoto, onState, announce, onStep } = opt;
+    const { gsap, reduced, file, ui, renderBlocks, onGoto, onState, announce, onStep, onInterrupt } = opt;
     const root = document.documentElement;
     const main = document.querySelector('main') || document.body;
     const dock = opt.dock;
@@ -1010,16 +1010,36 @@
       if (!caption.hidden) placeCaption(null);
       setVeil(false);
       requestAnimationFrame(() => fly(floatPoint(), M.flight));
+      // El recorrido no se olvida: la escena y el paso se quedan para que
+      // «sigue» lo retome donde estaba.
+      if (scene0 && scene0.steps.length > 1) onInterrupt && onInterrupt(at, scene0.steps.length);
     }
     const NAV_KEYS = new Set(['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' ']);
     window.addEventListener('wheel', interrupt, { passive: true });
-    window.addEventListener('touchmove', e => !dock.contains(e.target) && !caption.contains(e.target) && interrupt(), { passive: true });
+    // En un móvil, un roce no es un scroll: solo corta un arrastre de verdad
+    // (un dedo que se mueve más de 24 px), y nunca sobre la barra o el texto.
+    let touchY = null;
+    window.addEventListener('touchstart', e => (touchY = e.touches[0] ? e.touches[0].clientY : null), { passive: true });
+    window.addEventListener(
+      'touchmove',
+      e => {
+        if (dock.contains(e.target) || caption.contains(e.target)) return;
+        const y = e.touches[0] ? e.touches[0].clientY : null;
+        if (touchY == null || y == null || Math.abs(y - touchY) > 24) interrupt();
+      },
+      { passive: true },
+    );
     window.addEventListener('keydown', e => {
       if (NAV_KEYS.has(e.key) && !(e.target.closest && e.target.closest('input, textarea'))) interrupt();
     });
+    // Redimensionar no corta el recorrido: cuando la ventana se queda
+    // quieta, el paso actual se vuelve a encuadrar con las medidas nuevas.
+    let resizeTimer = 0;
     window.addEventListener('resize', () => {
-      if (root.classList.contains('syx-laiya-staging')) interrupt();
-      else if (!root.classList.contains('syx-laiya-active')) fly(restPoint());
+      if (root.classList.contains('syx-laiya-staging') && scene0) {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => root.classList.contains('syx-laiya-staging') && jump(at), 260);
+      } else if (!root.classList.contains('syx-laiya-active')) fly(restPoint());
       else fly(centerPoint());
     });
 
@@ -1127,8 +1147,12 @@
       // Saltar a un paso de la escena en curso (la guía, cuando la pregunta
       // nombra otro paso del recorrido).
       jumpTo: i => scene0 && i >= 0 && i < scene0.steps.length && jump(i),
-      back: () => here() && jump(Math.max(0, at - 1)),
-      again: () => here() && jump(at),
+      back: () => scene0 && jump(Math.max(0, at - 1)),
+      again: () => scene0 && jump(at),
+      // Lo que se recuerda del último recorrido aunque una interrupción lo
+      // haya cortado: para retomarlo con «sigue».
+      last: () => (scene0 && scene0.steps.length > 1 && at >= 0 ? { index: at, total: scene0.steps.length, anchor: (scene0.steps[at] || {}).anchor || null } : null),
+      resume: () => scene0 && jump(at),
       pause() {
         paused = true;
         syncPause();

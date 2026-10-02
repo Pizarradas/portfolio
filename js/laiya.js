@@ -90,12 +90,12 @@
   // El botón y el campo son el mismo objeto: la píldora se abre y dentro
   // aparece la pregunta. El orbe descansa en su ranura de la izquierda.
   const tpl = document.createElement('template');
-  tpl.innerHTML = `<div class="org-laiya-dock syx-on-night" data-open="false">
+  tpl.innerHTML = `<div class="org-laiya-dock syx-on-night" data-open="false" role="region" aria-label="LAIYA">
 <div class="mol-laiya-suggest" hidden></div>
 <div class="org-laiya-dock__bar">
   <span class="org-laiya-dock__slot" aria-hidden="true"><span class="atom-laiya-orb"></span></span>
-  <button type="button" class="org-laiya-dock__launch" aria-expanded="false">${esc(script.dataset.label || 'Ask LAIYA')}</button>
-  <form class="mol-laiya-composer" autocomplete="off" hidden>
+  <button type="button" class="org-laiya-dock__launch" aria-expanded="false" aria-controls="laiya-composer" aria-keyshortcuts="/">${esc(script.dataset.label || 'Ask LAIYA')}</button>
+  <form class="mol-laiya-composer" id="laiya-composer" autocomplete="off" hidden>
     <input class="mol-laiya-composer__input" type="text" name="q" maxlength="300" enterkeyhint="send">
     <button type="button" class="atom-laiya-tool" data-laiya="mic" hidden>${ICON.mic}</button>
     <button type="submit" class="atom-laiya-tool atom-laiya-tool--send">${ICON.send}</button>
@@ -106,7 +106,12 @@
 <p class="syx-laiya-sr" role="status" aria-live="polite"></p>
 </div>`;
   const dock = tpl.content.firstElementChild;
-  document.body.appendChild(dock);
+  // En el orden de tabulación va justo después del «Saltar al contenido»:
+  // al final del documento quedaba a cincuenta tabulaciones. Se ve fija
+  // abajo igual; el sitio en el DOM solo decide cuándo llega el foco.
+  const skipLink = document.querySelector('body > .atom-skip-link');
+  if (skipLink) skipLink.after(dock);
+  else document.body.prepend(dock);
 
   const el = {
     suggest: dock.querySelector('.mol-laiya-suggest'),
@@ -178,6 +183,9 @@
     narrow.addEventListener?.('change', setPlaceholder);
     el.mic.setAttribute('aria-label', U.mic);
     el.mic.title = U.mic;
+    const send = dock.querySelector('.atom-laiya-tool--send');
+    send.setAttribute('aria-label', U.send);
+    send.title = U.send;
     el.close.setAttribute('aria-label', U.close);
     el.close.title = U.close;
     syncVoice();
@@ -194,6 +202,8 @@
       onState: setState,
       announce,
       onStep: stepChips,
+      // Cortado por un scroll o un gesto: se ofrece retomarlo.
+      onInterrupt: () => guide && renderSuggestions([guide.label('resume'), ...K.suggestions.start.slice(0, 2)]),
     });
   }
 
@@ -327,6 +337,17 @@
     if (q) ask(q);
   });
 
+  // «/» abre LAIYA (o vuelve al campo), como el buscador de muchos sitios.
+  // No cuando se está escribiendo en otro campo.
+  document.addEventListener('keydown', e => {
+    if (e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey) return;
+    const t = e.target;
+    if (t && (t.closest('input, textarea, select') || t.isContentEditable)) return;
+    e.preventDefault();
+    if (open) el.input.focus({ preventScroll: true });
+    else openDock();
+  });
+
   document.addEventListener('keydown', e => {
     if (e.key !== 'Escape' || !open) return;
     if (recognition) return recognition.abort();
@@ -392,9 +413,49 @@
   // órdenes (sigue, atrás, repite, para) mueven el recorrido; el resto se
   // contesta con frases de la página, sin mover la cámara. Devuelve false si
   // la pregunta no es sobre esto y debe ir al motor general.
+  // ¿Reconoce el motor en la pregunta algo propio —una intención («¿con qué
+  // herramientas trabaja?», «¿cómo usa la IA?»), lo que no se publica, o un
+  // caso que no es el que se ve—? Entonces manda el motor.
+  function strongElsewhere(question, anchor) {
+    const a = engine.answer(question, { currentFile: FILE, topic, greeted: true });
+    const e = (anchor && guide.entry(anchor)) || {};
+    return (a.kind === 'intent' && !['greet', 'help', 'here'].includes(a.intent)) || (a.kind === 'project' && a.focus && a.focus.file !== e.case && a.focus.file !== FILE);
+  }
+
+  // Una frase de LAIYA en el centro, sin señalar nada.
+  const sayAlone = (text, shape = 'sphere') => stage.play({ steps: [{ node: null, text, blocks: [], shape, fx: [] }] });
+
   function askHere(question) {
-    const here = stage && stage.current();
-    if (!guide || !here || !here.anchor) return false;
+    if (!guide || !stage) return false;
+    const here = stage.current();
+    if (!here || !here.anchor) {
+      // Sin recorrido a la vista: las órdenes retoman el último (si una
+      // interrupción lo cortó) o lo dicen claro, en vez de caer al buscador.
+      const cmd = guide.command(question);
+      if (!cmd) {
+        // Una pregunta concreta sobre esta página: LAIYA va a donde está la
+        // respuesta. Solo si el motor no reconoce algo más específico.
+        const g = guide.answerPage(question);
+        if (!g || strongElsewhere(question, null)) return false;
+        const step = stepFromAnchor(g.anchor, { text: g.text, blocks: [{ type: 'quote', text: g.quote.join(' '), cite: g.cite || '' }] });
+        if (!step || !step.node) return false;
+        el.input.value = '';
+        history.push({ role: 'user', text: question }, { role: 'ai', text: [g.text, ...g.quote].join(' ') });
+        stage.play({ steps: [step] });
+        said = [...g.quote];
+        // `play` acaba de poner las sugerencias del paso; las de la respuesta mandan.
+        renderSuggestions((g.ask || []).map(guide.label));
+        return true;
+      }
+      el.input.value = '';
+      const last = stage.last();
+      if (!last) {
+        renderSuggestions(K.suggestions.start);
+        sayAlone(guide.copy.noTour);
+      } else if (cmd === 'back') stage.back();
+      else if (cmd !== 'stop') stage.resume();
+      return true;
+    }
     const peers = here.steps.map(st => st.anchor).filter(Boolean);
     const g = guide.answer(question, here.anchor, { said, peers });
     if (!g) return false;
@@ -404,12 +465,7 @@
     // usa la IA?») o un caso que no es el que se ve, manda el motor: eso
     // abre su propio recorrido.
     const chip = Object.values(K.tourAsk || {}).includes(question.trim());
-    if (!g.command && !g.jump && !chip) {
-      const a = engine.answer(question, { currentFile: FILE, topic, greeted: true });
-      const e = guide.entry(here.anchor) || {};
-      const strong = (a.kind === 'intent' && !['greet', 'help', 'here'].includes(a.intent)) || (a.kind === 'project' && a.focus && a.focus.file !== e.case && a.focus.file !== FILE);
-      if (strong) return false;
-    }
+    if (!g.command && !g.jump && !chip && strongElsewhere(question, here.anchor)) return false;
     history.push({ role: 'user', text: question });
     el.input.value = '';
     // La pregunta era sobre otro paso del recorrido: allí se va primero.
@@ -445,7 +501,9 @@
   }
 
   async function ask(question) {
-    if (busy) return;
+    // Vacío o solo espacios: no hay pregunta.
+    question = String(question || '').trim();
+    if (!question || busy) return;
     if (askHere(question)) return;
     busy = true;
     el.input.value = '';
@@ -571,6 +629,28 @@
   // qué se dice, qué forma toma el enjambre y qué efectos se le aplican a la
   // página. Si lo que se pregunta no está aquí, el paso no lleva nodo:
   // LAIYA lo cuenta desde el centro con tarjetas y ofrece llevarte (portal).
+  // Un paso a partir de un ancla `data-laiya`: el nodo que se encuadra, lo
+  // que dice (su ficha del recorrido, o el texto que se le pase) y la forma
+  // y los efectos que declara el propio HTML.
+  function stepFromAnchor(id, over = {}, base = 'octa') {
+    const node = document.querySelector(`[data-laiya="${CSS.escape(id)}"]`);
+    if (!node) return null;
+    const e = guide && guide.entry(id);
+    const d = node.dataset;
+    // Una sección se encuadra por su titular: entera si cabe; si no, el
+    // mayor bloque que quepa alrededor de él.
+    const labelled = node.getAttribute('aria-labelledby');
+    const target = d.laiyaKind === 'section' && labelled ? stage.frameFor(labelled) : node;
+    return {
+      node: target,
+      anchor: id,
+      text: over.text != null ? over.text : (e && e.say) || '',
+      blocks: over.blocks || [],
+      shape: over.shape || d.laiyaShape || (e && e.case && SHAPE_BY_FILE[e.case]) || SHAPE_BY_FILE[FILE] || base,
+      fx: over.fx || (d.laiyaFx ? d.laiyaFx.split(/\s+/) : []),
+    };
+  }
+
   // Qué recorrido cuenta cada intención. Los recorridos los declara el HTML
   // (`data-laiya-tour`, ver scripts/laiya.anchors.mjs) y su texto viene de
   // assets/laiya/tour-*.json: aquí solo se elige cuál.
@@ -586,27 +666,7 @@
     const add = step => step && step.node && steps.push(step);
     const slug = f => (f || '').replace(/^case-|\.html$/g, '');
 
-    // Un paso a partir de un ancla `data-laiya`: el nodo que se encuadra, lo
-    // que dice (su ficha del recorrido, o el texto que se le pase) y la forma
-    // y los efectos que declara el propio HTML.
-    const fromAnchor = (id, over = {}) => {
-      const node = document.querySelector(`[data-laiya="${CSS.escape(id)}"]`);
-      if (!node) return null;
-      const e = guide && guide.entry(id);
-      const d = node.dataset;
-      // Una sección se encuadra por su titular: entera si cabe; si no, el
-      // mayor bloque que quepa alrededor de él.
-      const labelled = node.getAttribute('aria-labelledby');
-      const target = d.laiyaKind === 'section' && labelled ? frame(labelled) : node;
-      return {
-        node: target,
-        anchor: id,
-        text: over.text != null ? over.text : (e && e.say) || '',
-        blocks: over.blocks || [],
-        shape: over.shape || d.laiyaShape || (e && e.case && SHAPE_BY_FILE[e.case]) || base,
-        fx: over.fx || (d.laiyaFx ? d.laiyaFx.split(/\s+/) : []),
-      };
-    };
+    const fromAnchor = (id, over = {}) => stepFromAnchor(id, over, base);
     const tourSteps = (name, first = {}) => (guide ? guide.ids(name) : []).map((id, i) => fromAnchor(id, i === 0 ? first : {})).filter(Boolean);
 
     if (a.intent === 'destroy') {
@@ -676,6 +736,9 @@
   function goTo(file, id) {
     track('laiya_goto', { from: FILE, to: file, section: id || '' });
     if (file === FILE) {
+      // Con ancla, el paso es de la guía: se puede preguntar sobre él.
+      const step = stepFromAnchor(id ? `section.${id.replace(/-title$/, '')}` : 'case');
+      if (step && step.node) return stage.play({ steps: [step] });
       const node = id ? stage.frameFor(id) : document.querySelector('h1');
       const text = (node && (node.querySelector('h1, h2, h3') || node).textContent.trim()) || '';
       stage.play({ steps: [{ node, text, blocks: [] }] });
@@ -844,6 +907,18 @@
     }
   }
 
+  // Llegar a un caso desde la capa: LAIYA dice dónde estás, señala la
+  // apertura y ofrece recorrerlo; desde aquí ya se le puede preguntar.
+  function arrive() {
+    const name = guide && (guide.copy && (K.pages.find(p => p.file === FILE) || {}).name);
+    const step = guide && stepFromAnchor('case');
+    if (!step || !step.node || !name) return stage.wake();
+    const e = guide.entry('case') || {};
+    step.text = `${guide.copy.arrive.replace('{case}', name)} ${e.say || ''}`.trim();
+    stage.play({ steps: [step] });
+    renderSuggestions([guide.copy.walk, ...guide.next(e, null).map(guide.label)].slice(0, 4));
+  }
+
   /* ------------------------------------------------------------- retorno */
 
   // Si se llegó aquí desde la propia capa: el portal se cierra sobre el orbe
@@ -861,7 +936,7 @@
         document.documentElement.classList.remove('syx-laiya-arriving');
         await opening;
         if (resume.focus) goTo(FILE, resume.focus);
-        else stage.wake();
+        else arrive();
       })
       .catch(() => document.documentElement.classList.remove('syx-laiya-arriving'));
   }

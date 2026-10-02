@@ -104,7 +104,12 @@
     systems: ['design system', 'design systems', 'sistema de diseno', 'sistemas de diseno', 'design tokens', 'tokens'],
     contact: ['contacto', 'contact', 'contactar', 'email', 'correo', 'mail', 'linkedin', 'escribirle', 'write to him', 'reach him', 'hablar con el', 'talk to him', 'le contacto', 'contact him'],
     cv: ['cv', 'curriculum', 'resume', 'descargar el cv', 'download the cv', 'pdf'],
-    hire: ['contratar', 'contratarle', 'hire', 'hiring', 'disponible', 'available', 'availability', 'disponibilidad', 'freelance', 'open to work', 'busca trabajo', 'looking for a job', 'salario', 'salary'],
+    hire: ['contratar', 'contratarle', 'hire', 'hiring', 'disponible', 'available', 'availability', 'disponibilidad', 'freelance', 'open to work', 'busca trabajo', 'looking for a job'],
+    // Lo que el portfolio no publica: sueldo, edad, teléfono, vida privada,
+    // opiniones sobre él. LAIYA no lo deduce de nada; lo dice y ofrece el
+    // email. Frases largas a propósito: «cuántos años tiene» es la edad;
+    // «cuántos años de experiencia» sigue siendo la trayectoria.
+    private: ['cuanto cobra', 'cobra', 'cuanto gana', 'sueldo', 'salario', 'salary', 'tarifa', 'how much does he charge', 'how much does he earn', 'his rate', 'edad', 'que edad', 'cuantos anos tiene', 'how old', 'his age', 'telefono', 'su telefono', 'phone number', 'his phone', 'whatsapp', 'direccion', 'home address', 'casado', 'pareja', 'married', 'girlfriend', 'novia', 'hijos', 'kids', 'children', 'religion', 'politica', 'politics', 'vida personal', 'personal life', 'buena persona', 'good person', 'es simpatico', 'is he nice'],
     location: ['donde vive', 'where is he', 'where does he live', 'based', 'ubicacion', 'ciudad', 'madrid', 'de donde es', 'where is he from', 'location'],
     languages: ['idiomas', 'languages', 'ingles', 'english', 'que idiomas', 'habla ingles', 'speak english'],
     education: ['estudios', 'estudio', 'estudio periodismo', 'education', 'studied', 'study', 'universidad', 'university', 'periodismo', 'journalism', 'formacion', 'donde estudio', 'where did he study', 'carrera universitaria', 'degree'],
@@ -115,6 +120,47 @@
     destroy: ['rompe', 'rompela', 'rompe la web', 'rompe la pagina', 'destruye', 'destruyela', 'destroy', 'break', 'break it', 'break the page', 'break the site', 'gravedad', 'gravity', 'tira la web', 'smash'],
     help: ['ayuda', 'help', 'que puedo preguntar', 'what can i ask', 'que sabes', 'what do you know', 'que puedes hacer', 'what can you do', 'opciones', 'options'],
   };
+
+  // Erratas: «trayectorai», «heramientas», «contacot». Una palabra que no
+  // está en el vocabulario de intenciones y casos se corrige a la más
+  // cercana si está a una edición (dos en palabras largas). Solo palabras de
+  // cinco letras o más: en las cortas, una edición ya es otra palabra.
+  function distance(a, b, max) {
+    if (Math.abs(a.length - b.length) > max) return max + 1;
+    const d = Array.from({ length: a.length + 1 }, (_, i) => [i]);
+    for (let j = 1; j <= b.length; j++) d[0][j] = j;
+    for (let i = 1; i <= a.length; i++) {
+      let row = Infinity;
+      for (let j = 1; j <= b.length; j++) {
+        const c = a[i - 1] === b[j - 1] ? 0 : 1;
+        d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + c);
+        if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
+        row = Math.min(row, d[i][j]);
+      }
+      if (row > max) return max + 1;
+    }
+    return d[a.length][b.length];
+  }
+  function corrector(extra) {
+    const vocab = new Set();
+    for (const list of Object.values(INTENTS)) for (const p of list) for (const w of p.split(' ')) if (w.length >= 4) vocab.add(w);
+    for (const w of extra) if (w.length >= 4) vocab.add(w);
+    const words = [...vocab];
+    return n =>
+      n
+        .split(' ')
+        .map(w => {
+          if (w.length < 5 || vocab.has(w) || /\d/.test(w)) return w;
+          const max = w.length >= 8 ? 2 : 1;
+          let best = w, top = max + 1;
+          for (const v of words) {
+            const dd = distance(w, v, max);
+            if (dd < top) (top = dd), (best = v);
+          }
+          return best;
+        })
+        .join(' ');
+  }
 
   function scoreIntents(n) {
     const scores = {};
@@ -200,6 +246,7 @@
     const index = buildIndex(K.pages);
     const pageByFile = new Map(K.pages.map(p => [p.file, p]));
     const cases = K.pages.filter(p => p.file !== 'index.html');
+    const fix = corrector(cases.flatMap(p => p.aliases.flatMap(a => norm(a).split(' '))));
     const V = K.voice;
     const S = K.suggestions;
     const turn = {};
@@ -374,6 +421,7 @@
       bye: () => R({ text: pick('bye', V.bye), mood: 'happy', dock: true }),
       // El guiño: la página se cae y LAIYA la vuelve a montar.
       destroy: () => R({ text: V.destroy, after: V.restore, mood: 'happy' }),
+      private: () => R({ text: V.private, blocks: [{ type: 'contact', ...K.person.contact, only: 'email' }], suggestions: S.fallback, mood: 'neutral' }),
       help: () => R({ text: V.help, suggestions: [...S.start, ...S.afterProjects.slice(0, 2)], mood: 'curious' }),
     };
 
@@ -419,8 +467,17 @@
         if (s) return sectionAnswer(topicPage, { doc: index.docs.find(d => d.file === topicPage.file && d.id === s.id) });
       }
 
-      const intents = scoreIntents(n);
+      let intents = scoreIntents(n);
       let project = detectProject(n);
+      // Nada reconocido: se prueba con las erratas corregidas. El texto
+      // original sigue siendo el que se busca en las secciones.
+      if (!intents.length && !project) {
+        const fixed = fix(n);
+        if (fixed !== n) {
+          intents = scoreIntents(fixed);
+          project = detectProject(fixed);
+        }
+      }
       let top = intents[0] ? intents[0][0] : null;
       // «Hola, ¿quién es José?» es una pregunta, no un saludo.
       if (top === 'greet' && intents[1]) {

@@ -129,7 +129,7 @@
       let lead = '';
       let elsewhere = false;
       if (kind === 'go') {
-        if (!e.case) return null;
+        if (!e.case) return { text: copy.noCase, kind, ask: next(e, kind) };
         return { text: copy.ask.go, go: e.case, kind };
       }
       if (kind === 'more') {
@@ -165,14 +165,39 @@
       };
     }
 
+    // Sin recorrido a la vista, una pregunta concreta («¿qué cifras hay?»,
+    // «¿quién participó?») se contesta con la página entera: la mejor frase
+    // y el ancla donde vive, para que LAIYA vaya allí a enseñarla.
+    function answerPage(question) {
+      const kind = kindOf(question);
+      if (!kind || kind === 'go' || kind === 'more') return null;
+      let best = null, top = -Infinity;
+      for (const [id, a] of Object.entries(page().anchors)) {
+        if (a.kind === 'item') continue;
+        for (const x of tagged(a, kind).filter(readable)) {
+          const sc = overlap(question, x[0]) + bonus(kind, x) + (a.kind === 'section' ? 0.05 : 0);
+          if (sc > top) (top = sc), (best = { id, x });
+        }
+      }
+      if (!best) return null;
+      const e = entry(best.id);
+      // Sin repetir: un titular y su párrafo a veces dicen lo mismo.
+      const key = t => norm(t).slice(0, 28);
+      const more = rank(tagged(e, kind).filter(x => x !== best.x && key(x[0]) !== key(e.title) && key(x[0]) !== key(best.x[0]) && !best.x[0].includes(x[0]) && !x[0].includes(best.x[0])), question, kind).slice(0, 1);
+      return { text: copy.lead[kind], quote: [best.x[0], ...more.map(x => x[0])], cite: e.title, anchor: best.id, kind, ask: next(e, kind) };
+    }
+
     // Lo que se puede seguir preguntando de este nodo (sin repetir lo hecho).
     function next(e, done) {
-      return (e.ask || []).filter(k => k !== done && copy.ask[k]).slice(0, 3);
+      // «Llévame» va primero: es lo único que no se puede preguntar escribiendo
+      // sin saber que existe.
+      const list = (e.ask || []).filter(k => k !== done && copy.ask[k]);
+      return (list.includes('go') ? ['go', ...list.filter(k => k !== 'go')] : list).slice(0, 3);
     }
 
     const label = k => copy.ask[k];
 
-    return { ids, entry, node, answer, command, kindOf, label, next };
+    return { ids, entry, node, answer, answerPage, command, kindOf, label, next, copy };
   }
 
   window.LaiyaGuide = { create };
