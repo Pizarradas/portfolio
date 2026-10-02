@@ -24,13 +24,25 @@
  * que las unen aparecen cuando la forma es estructura y se rompen cuando se
  * divide.
  *
- * El color se queda dentro de la única paleta de la marca (BRAND.md §4): la
- * rampa de azules, el navy y la luz blanca. La emoción la da el valor —más
- * luz al alegrarse, más profundidad al pensar, gris al no saber—, no el tono:
- * los complementarios se retiraron del sistema y no vuelven por aquí.
+ * En reposo el color es el de la marca: la rampa de azules, el navy y la luz
+ * blanca. Cuando siente algo vira hacia su tono de ánimo —cian atenta,
+ * violeta pensando, ámbar contenta, oro orgullosa, fucsia traviesa…—, la
+ * única excepción a la paleta única (BRAND.md §4), acotada a este enjambre.
  *
- * Con `prefers-reduced-motion` no hay bucle: se pinta la forma y se para.
- * En reposo el bucle se detiene a los 5 s (WCAG 2.2.2).
+ * La forma dice qué hace; el ánimo, cómo está (MOODS). Cada ánimo es un
+ * puñado de parámetros que el cuerpo persigue poco a poco: dónde cae en la
+ * rampa de azules, cuánto gris, cuánto caos entre partículas, cómo respira,
+ * cuánto centellea, cuánto brilla, si tiembla, si gira deprisa, si se le
+ * caen los hombros. Tranquila respira despacio; pensando se agita y gira;
+ * contenta centellea y da saltitos; orgullosa de una cifra se queda quieta y
+ * nítida; sin saber se apaga a gris y se hunde; con «rompe la web» se vuelve
+ * traviesa; si se le hace cosquillas, se ríe; si nadie le hace caso, se
+ * duerme —y se despierta con un respingo—.
+ *
+ * Con `prefers-reduced-motion` no hay bucle: se pinta la forma y se para; el
+ * ánimo solo cambia el color. En reposo el bucle se detiene a los 5 s (WCAG
+ * 2.2.2): antes de pararse se queda dormida, así lo último que se ve es una
+ * pose y no un movimiento cortado.
  */
 import {
   WebGLRenderer,
@@ -365,18 +377,24 @@ attribute float aSeed;
 attribute float aBright;
 uniform float uSize;
 uniform float uPixel;
+uniform float uTime;
+uniform float uSparkle;
+uniform float uShine;
 varying float vSeed;
 varying float vBright;
 varying float vFront;
+varying float vTwinkle;
 void main(){
   vSeed = aSeed;
   vBright = aBright;
+  // Centelleo: cada partícula tiene su ritmo y solo destella un instante.
+  vTwinkle = pow(max(0., sin(uTime * (2. + aSeed * 6.) + aSeed * 60.)), 24.) * uSparkle;
   vec4 mv = modelViewMatrix * vec4(position, 1.);
   // Profundidad: lo que está delante es más grande y más luminoso; lo de
   // detrás se apaga. Es lo que hace que una nube de puntos se lea como
   // volumen y no como un disco.
   vFront = clamp((7.4 + mv.z) / 2.4, 0., 1.);
-  gl_PointSize = uSize * uPixel * (0.5 + aSeed * 0.8) * mix(0.55, 1.35, vFront) / -mv.z;
+  gl_PointSize = uSize * uPixel * (0.5 + aSeed * 0.8) * mix(0.55, 1.35, vFront) * (1. + vTwinkle * .6) * (.9 + uShine * .2) / -mv.z;
   gl_Position = projectionMatrix * mv;
 }`;
 
@@ -389,22 +407,35 @@ uniform float uTint;
 uniform float uFlare;
 uniform float uDim;
 uniform float uAlpha;
+uniform float uRamp;
+uniform float uGrey;
+uniform float uShine;
+uniform vec3 uMood;
+uniform float uHue;
 varying float vSeed;
 varying float vBright;
 varying float vFront;
+varying float vTwinkle;
 void main(){
   float d = length(gl_PointCoord - .5);
   // Un núcleo nítido y un halo tenue: con solo el degradado, cada punto era
   // una mancha y las formas se leían borrosas.
-  float a = max(smoothstep(.42, .26, d), smoothstep(.5, .0, d) * .3) * mix(.22, 1., vFront);
+  float a = max(smoothstep(.42, .26, d), smoothstep(.5, .0, d) * .3 * (.5 + uShine)) * mix(.22, 1., vFront);
   // Cada partícula tiene su escalón en la rampa; el tinte sube todas hacia
   // la luz y el destello las lleva a blanco un instante.
-  float k = clamp(.3 + vSeed * .6 + uTint * .4 + vBright * .5, 0., 1.);
+  // El ánimo desplaza toda la rampa (uRamp); el centelleo sube a la luz.
+  float k = clamp(.3 + vSeed * .6 + uTint * .4 + vBright * .5 + (uRamp - .5) * .7 + vTwinkle * .6, 0., 1.);
   vec3 col = k < .5 ? mix(uCore, uLight, k * 2.) : mix(uLight, uGlow, (k - .5) * 2.);
+  // El tono del ánimo, con su propia rampa: hondo, el tono, y luz blanca.
+  // Su escalón no lo mueve uRamp: si no, los ánimos claros (contenta,
+  // orgullosa) se irían al blanco y perderían su tono.
+  float km = clamp(.22 + vSeed * .5 + vBright * .4 + vTwinkle * .7, 0., 1.);
+  vec3 mc = km < .5 ? mix(uMood * .35, uMood, km * 2.) : mix(uMood, uGlow, (km - .5) * 2.);
+  col = mix(col, mc, uHue);
   col = mix(col, uGlow, uFlare * .7);
   // Al no saber: hacia el gris de la rampa neutra, menos luz.
   vec3 grey = vec3(dot(col, vec3(.299, .587, .114)));
-  col = mix(col, grey * .75, uDim * .7);
+  col = mix(col, grey * .75, max(uDim * .7, uGrey));
   gl_FragColor = vec4(col * a, a * uAlpha);
 }`;
 
@@ -417,12 +448,12 @@ void main(){
 }`;
 
 const LINE_F = /* glsl */ `
-uniform vec3 uLight;
+uniform vec3 uLineCol;
 uniform float uLines;
 varying float vAlpha;
 void main(){
   float a = vAlpha * uLines;
-  gl_FragColor = vec4(uLight * a, a);
+  gl_FragColor = vec4(uLineCol * a, a);
 }`;
 
 /* ---------------------------------------------------------------- estado */
@@ -443,6 +474,34 @@ const LINE_WEIGHT = {
 const FLAT = new Set(['spain', 'envelope', 'page', 'access', 'grid', 'line', 'neural', 'stairs', 'bars', 'pencil']);
 // Formas de texto (`text:42`): los renglones del muestreo hacen de hilos.
 const TEXT_LINES = 0.45;
+
+// Ánimos. hue: cuánto vira hacia el color propio del ánimo (la paleta de
+// ánimos, `--component-laiya-mood-*`; en reposo, 0: azul de marca).
+// ramp: posición en la rampa de la marca (0 navy profundo, 1 casi
+// blanco). grey: hacia el gris neutro. chaos: turbulencia entre partículas.
+// breathe/hz: amplitud y ritmo de la respiración. sparkle: centelleo.
+// glow: halo y tamaño. shiver: vibración del cuerpo. spin: multiplicador del
+// giro. droop: se hunde. tilt: ladea la cabeza. hold: si es un ánimo de un
+// momento, cuánto dura antes de volver al de fondo.
+const MOODS = {
+  calm: { hue: 0, ramp: 0.45, grey: 0, chaos: 0.04, breathe: 0.035, hz: 0.22, sparkle: 0.12, glow: 0.5, shiver: 0, spin: 1, droop: 0, tilt: 0 },
+  attentive: { hue: 0.7, ramp: 0.6, grey: 0, chaos: 0.08, breathe: 0.02, hz: 0.6, sparkle: 0.45, glow: 0.75, shiver: 0, spin: 0.6, droop: 0, tilt: 0.2 },
+  thinking: { hue: 0.75, ramp: 0.25, grey: 0, chaos: 0.55, breathe: 0.015, hz: 1.2, sparkle: 0.25, glow: 0.6, shiver: 0, spin: 2.2, droop: 0, tilt: 0 },
+  curious: { hue: 0.7, ramp: 0.65, grey: 0, chaos: 0.15, breathe: 0.03, hz: 0.5, sparkle: 0.5, glow: 0.7, shiver: 0, spin: 0.8, droop: 0, tilt: 1, hold: 1800 },
+  happy: { hue: 0.8, ramp: 0.9, grey: 0, chaos: 0.12, breathe: 0.05, hz: 0.9, sparkle: 0.9, glow: 1, shiver: 0, spin: 1.4, droop: 0, tilt: 0.3, hold: 2600 },
+  proud: { hue: 0.85, ramp: 0.95, grey: 0, chaos: 0, breathe: 0.02, hz: 0.4, sparkle: 0.35, glow: 0.95, shiver: 0, spin: 0.5, droop: 0, tilt: 0, hold: 3200 },
+  sorry: { hue: 0.5, ramp: 0.3, grey: 0.75, chaos: 0.1, breathe: 0.02, hz: 0.15, sparkle: 0, glow: 0.25, shiver: 0, spin: 0.4, droop: 1, tilt: 0, hold: 4200 },
+  mischief: { hue: 0.85, ramp: 0.8, grey: 0, chaos: 0.85, breathe: 0.03, hz: 2, sparkle: 1, glow: 0.9, shiver: 0.35, spin: 2.5, droop: 0, tilt: 0.5 },
+  tickled: { hue: 0.85, ramp: 0.95, grey: 0, chaos: 0.3, breathe: 0.06, hz: 3, sparkle: 1, glow: 1, shiver: 0.8, spin: 3, droop: 0, tilt: 0.6, hold: 1100 },
+  sleepy: { hue: 0.6, ramp: 0.15, grey: 0.2, chaos: 0.02, breathe: 0.06, hz: 0.12, sparkle: 0.03, glow: 0.2, shiver: 0, spin: 0.15, droop: 0.45, tilt: 0 },
+};
+// Lo que el motor llama de otra forma.
+const MOOD_ALIAS = { neutral: 'calm', idle: 'calm' };
+// Por si el CSS aún no ha cargado los tokens: los mismos valores.
+const MOOD_FALLBACK = {
+  attentive: '#2ee6ff', curious: '#34f5c5', thinking: '#8f5bff', happy: '#ffb23f', proud: '#ffd75e',
+  sorry: '#8a8fb3', mischief: '#ff3fd2', tickled: '#ff6f91', sleepy: '#4a3bd1',
+};
 
 const readColor = (el, name, fallback) => {
   const v = getComputedStyle(el).getPropertyValue(name).trim();
@@ -504,6 +563,13 @@ export function createOrb(canvas, { tokensFrom = canvas, reducedMotion = false, 
     uFlare: { value: 0 },
     uDim: { value: 0 },
     uAlpha: { value: 1 },
+    uTime: { value: 0 },
+    uSparkle: { value: MOODS.calm.sparkle },
+    uShine: { value: MOODS.calm.glow },
+    uRamp: { value: MOODS.calm.ramp },
+    uGrey: { value: 0 },
+    uMood: { value: palette.uLight.value.clone() },
+    uHue: { value: 0 },
     ...palette,
   };
   const points = new Points(
@@ -523,7 +589,7 @@ export function createOrb(canvas, { tokensFrom = canvas, reducedMotion = false, 
   const lineAlphaAttr = new BufferAttribute(lineAlpha, 1);
   lineGeo.setAttribute('position', linePosAttr);
   lineGeo.setAttribute('aAlpha', lineAlphaAttr);
-  const lineU = { uLines: { value: 0.35 }, uLight: palette.uLight };
+  const lineU = { uLines: { value: 0.35 }, uLineCol: { value: palette.uLight.value.clone() } };
   const lines = new LineSegments(
     lineGeo,
     new ShaderMaterial({ vertexShader: LINE_V, fragmentShader: LINE_F, uniforms: lineU, transparent: true, depthWrite: false, blending: AdditiveBlending }),
@@ -543,7 +609,43 @@ export function createOrb(canvas, { tokensFrom = canvas, reducedMotion = false, 
   let time = 0;
   let level = 0, levelTarget = 0;
   let tint = 0, tintTarget = 0, flare = 0, dim = 0, bounce = 0;
+  // Los principios de animación de Disney (Johnston y Thomas), en física
+  // pequeña y barata:
+  //  · squash & stretch — `squash`: un muelle poco amortiguado. Positivo
+  //    aplasta (aterrizar, coger impulso), negativo estira (saltar).
+  //  · follow-through / overlapping action — `drag`: el cuerpo llega y las
+  //    partículas siguen un poco más allá y vuelven, cada una con su retardo.
+  //  · anticipation — `lean`: antes de salir se echa hacia atrás.
+  //  · secondary action — un parpadeo de vez en cuando, mientras está viva.
+  const squash = { v: 0, vel: 0 };
+  const drag = { x: 0, y: 0, vx: 0, vy: 0 };
+  const lean = { x: 0, y: 0, tx: 0, ty: 0, until: 0 };
+  let nextBlink = performance.now() + 3000 + Math.random() * 4000;
+  // Muelle crítico-blando: (frecuencia, amortiguación) en unidades de mundo.
+  const springStep = (o, key, velKey, target, dt, freq, damp) => {
+    const kk = Math.pow(2 * Math.PI * freq, 2), cc = 4 * Math.PI * freq * damp;
+    o[velKey] += (-kk * (o[key] - target) - cc * o[velKey]) * dt;
+    o[key] += o[velKey] * dt;
+  };
   let thinkClock = 0;
+  // Ánimo: el de fondo (baseMood) y, encima, uno de un momento que caduca.
+  let baseMood = 'calm', moodName = 'calm', moodUntil = 0;
+  const mood = { ...MOODS.calm };
+  let moodTarget = MOODS.calm;
+  let clock = 0, sparkBoost = 0, shiverBoost = 0;
+  const moodColors = Object.fromEntries(Object.keys(MOOD_FALLBACK).map(n => [n, readColor(tokensFrom, `--component-laiya-mood-${n}`, MOOD_FALLBACK[n])]));
+  // Mientras presenta algo no se duerme, aunque nadie toque nada.
+  let awake = false;
+  const setMoodTarget = (name, { hold } = {}) => {
+    name = MOOD_ALIAS[name] || name;
+    const m = MOODS[name];
+    if (!m) return;
+    moodName = name;
+    moodTarget = m;
+    const ms = hold ?? m.hold;
+    moodUntil = ms ? performance.now() + ms : 0;
+    if (!ms) baseMood = name;
+  };
   const gaze = { x: 0, y: 0, tx: 0, ty: 0 };
   const motion = { vx: 0, vy: 0, x: 0, y: 0 };
   let raf = 0, last = performance.now(), settleUntil = 0, lastActivity = performance.now();
@@ -677,7 +779,23 @@ export function createOrb(canvas, { tokensFrom = canvas, reducedMotion = false, 
     motion.y = lerp(motion.y, motion.vy, 1 - Math.pow(0.0005, dt));
     motion.vx *= Math.pow(0.02, dt);
     motion.vy *= Math.pow(0.02, dt);
-    time += dt * cur.speed;
+    clock += dt;
+    // El ánimo se persigue, no se salta: cambia de humor en un segundo largo.
+    const km = 1 - Math.pow(0.08, dt);
+    for (const key in mood) if (key !== 'hold') mood[key] = lerp(mood[key], moodTarget[key] ?? 0, km);
+    sparkBoost = Math.max(0, sparkBoost - dt * 1.6);
+    shiverBoost = Math.max(0, shiverBoost - dt * 2.4);
+    if (moodUntil && now > moodUntil) {
+      moodUntil = 0;
+      moodName = baseMood;
+      moodTarget = MOODS[baseMood];
+    }
+    // Si nadie le hace caso, se duerme antes de que el bucle se pare.
+    if (!awake && state === 'idle' && moodName === baseMood && baseMood !== 'sleepy' && now - lastActivity > 3200) {
+      moodName = 'sleepy';
+      moodTarget = MOODS.sleepy;
+    }
+    time += dt * cur.speed * (1 + mood.chaos * 1.5);
 
     // Pensar: nube, división en tres, nube… hasta que el estado cambie.
     if (state === 'thinking' && !reducedMotion) {
@@ -696,6 +814,26 @@ export function createOrb(canvas, { tokensFrom = canvas, reducedMotion = false, 
     // emborrona la letra o el contorno.
     const flat = isFlat(shapeName);
     const amp = (cur.amp + level * 0.05) * (flat ? 0.3 : 1);
+    // Caos: turbulencia entre partículas. En las formas que se leen, poco.
+    const chaos = reducedMotion ? 0 : mood.chaos * (flat ? 0.3 : 1) * 0.28;
+    // Una forma que se lee no se hunde tanto: un «?» caído ya no pregunta.
+    const sag = mood.droop * (flat ? 0.04 : 0.16);
+
+    // Squash & stretch: vuelve a 0 con rebote. Follow-through: el arrastre
+    // persigue la velocidad del vuelo (en px/s de pantalla, y hacia abajo)
+    // y, al parar, se pasa de largo y vuelve.
+    if (!reducedMotion) {
+      springStep(squash, 'v', 'vel', 0, dt, 2.6, 0.22);
+      squash.v = Math.max(-0.45, Math.min(0.45, squash.v));
+      springStep(drag, 'x', 'vx', -motion.x * 0.00016, dt, 1.6, 0.28);
+      springStep(drag, 'y', 'vy', motion.y * 0.00016, dt, 1.6, 0.28);
+      // Parpadeo: un aplastado corto, solo despierta y sin forma que leer.
+      if (now > nextBlink) {
+        nextBlink = now + 3500 + Math.random() * 5000;
+        if (moodName !== 'sleepy' && !flat && morph >= 1) squash.vel += 2.2;
+      }
+    }
+    const dragF = flat ? 0.35 : 1;
     for (let i = 0; i < N; i++) {
       const j = i * 3;
       const d = delay[i];
@@ -711,11 +849,25 @@ export function createOrb(canvas, { tokensFrom = canvas, reducedMotion = false, 
       x += Math.sin(time * 2.1 + s) * wob;
       y += Math.cos(time * 1.7 + s * 1.3) * wob;
       z += Math.sin(time * 1.3 + s * 0.7) * wob;
+      if (chaos > 0.002) {
+        x += Math.sin(time * 3.1 + s * 1.7 + y * 2.3) * chaos;
+        y += Math.cos(time * 2.7 + s * 2.1 + x * 2.0) * chaos;
+        z += Math.sin(time * 2.3 + s * 1.1 + y * 1.7) * chaos;
+      }
+      // Hundirse: lo de arriba cae más que lo de abajo, como unos hombros.
+      if (sag > 0.002) y -= sag * (0.5 + 0.5 * Math.max(0, y)) * (0.7 + seeds[i] * 0.6);
       if (level > 0.01) {
         const w = 1 + level * (flat ? 0.03 : 0.1) * Math.sin(time * 10 + y * 5);
         x *= w;
         y *= w;
         z *= w;
+      }
+      // Overlapping action: cada partícula arrastra según su retardo; las de
+      // atrás (más retardo) se quedan más lejos.
+      if (dragF) {
+        const lag = (0.35 + d * 2.4) * dragF;
+        x += drag.x * lag;
+        y += drag.y * lag;
       }
       pos[j] = x;
       pos[j + 1] = y;
@@ -742,15 +894,37 @@ export function createOrb(canvas, { tokensFrom = canvas, reducedMotion = false, 
     pointU.uTint.value = tint;
     pointU.uFlare.value = flare;
     pointU.uDim.value = dim;
+    pointU.uTime.value = clock;
+    pointU.uSparkle.value = reducedMotion ? 0 : Math.min(1, mood.sparkle + sparkBoost);
+    pointU.uShine.value = mood.glow;
+    pointU.uRamp.value = mood.ramp;
+    pointU.uGrey.value = mood.grey;
+    // El tono viaja hacia el del ánimo; en calma no hace falta moverlo, el
+    // `hue` ya lo apaga.
+    if (moodColors[moodName]) pointU.uMood.value.lerp(moodColors[moodName], km);
+    pointU.uHue.value = mood.hue;
+    lineU.uLineCol.value.copy(palette.uLight.value).lerp(pointU.uMood.value, mood.hue);
 
     // Cuerpo: escala con el latido, estiramiento en la dirección del vuelo.
     const speed = Math.hypot(motion.x, motion.y);
     // Las formas que se leen —texto, España, el sobre…— apenas se deforman
     // ni se inclinan: un «86 %» torcido ya no dice nada.
     const stretch = reducedMotion ? 0 : Math.min(speed / 2400, flat ? 0.08 : 0.28);
-    const sc = (1 + Math.sin(bounce * Math.PI) * 0.12 + level * 0.05) * (1 - dim * 0.12) * (state === 'listening' ? 1.08 : 1);
-    group.scale.set(sc * (1 + stretch), sc * (1 - stretch * 0.5), sc);
-    group.rotation.z = stretch > 0.01 && !flat ? Math.atan2(-motion.y, motion.x) : lerp(group.rotation.z, flat ? 0 : -gaze.x * 0.2, k);
+    const breath = reducedMotion ? 0 : Math.sin(clock * Math.PI * 2 * mood.hz) * mood.breathe;
+    const sc = (1 + Math.sin(bounce * Math.PI) * 0.12 + level * 0.05 + breath) * (1 - dim * 0.12) * (state === 'listening' ? 1.08 : 1);
+    // Squash conserva el volumen: lo que baja en alto lo gana en ancho.
+    const sq = reducedMotion ? 0 : squash.v * (flat ? 0.4 : 1);
+    group.scale.set(sc * (1 + stretch) * (1 + sq * 0.6), sc * (1 - stretch * 0.5) * (1 - mood.droop * 0.06) * (1 - sq), sc);
+    // Vibrar: un temblor de alta frecuencia del cuerpo entero.
+    const shiver = reducedMotion ? 0 : (mood.shiver + shiverBoost) * 0.035;
+    // Anticipación: echarse hacia atrás un instante antes de salir.
+    const leaning = now < lean.until ? 1 : 0;
+    lean.x = lerp(lean.x, leaning ? lean.tx : 0, k * 1.6);
+    lean.y = lerp(lean.y, leaning ? lean.ty : 0, k * 1.6);
+    group.position.set(lean.x + (shiver ? (Math.random() - 0.5) * shiver : 0), lean.y + (shiver ? (Math.random() - 0.5) * shiver : 0), 0);
+    // Ladear la cabeza: curiosidad.
+    const tilt = flat ? 0 : Math.sin(clock * 1.3) * mood.tilt * 0.16;
+    group.rotation.z = stretch > 0.01 && !flat ? Math.atan2(-motion.y, motion.x) : lerp(group.rotation.z, flat ? 0 : -gaze.x * 0.2 + tilt, k);
     // Las formas planas —texto, España, el sobre, la hoja— no giran: se
     // balancean de cara, o se leerían de canto. Las de volumen sí giran.
     if (flat) {
@@ -758,7 +932,7 @@ export function createOrb(canvas, { tokensFrom = canvas, reducedMotion = false, 
       const home = Math.abs(r) > Math.PI ? r - Math.sign(r) * Math.PI * 2 : r;
       points.rotation.y = lerp(home, Math.sin(time * 0.7) * 0.18, k * 0.6);
     } else {
-      points.rotation.y += dt * (cur.spin + stretch * 3);
+      points.rotation.y += dt * (cur.spin * mood.spin + stretch * 3);
     }
     lines.rotation.y = points.rotation.y;
     gaze.x = lerp(gaze.x, gaze.tx, k * 0.5);
@@ -768,13 +942,21 @@ export function createOrb(canvas, { tokensFrom = canvas, reducedMotion = false, 
     renderer.render(scene, camera);
 
     if (!visible) return;
-    const resting = state === 'idle' && morph >= 1 && level < 0.01 && speed < 4 && now - lastActivity > 5000;
+    const settling = Math.abs(squash.v) + Math.abs(squash.vel) * 0.1 + Math.abs(drag.x) + Math.abs(drag.y) > 0.004;
+    const resting = state === 'idle' && morph >= 1 && level < 0.01 && speed < 4 && !settling && now - lastActivity > 5000;
     if ((!reducedMotion && !resting) || now < settleUntil) raf = requestAnimationFrame(frame);
   }
 
   const kick = (ms = 900) => {
     settleUntil = performance.now() + ms;
     lastActivity = performance.now();
+    // Despertar: un respingo y de vuelta al ánimo de fondo.
+    if (moodName === 'sleepy' && baseMood !== 'sleepy') {
+      moodName = baseMood;
+      moodTarget = MOODS[baseMood];
+      if (!reducedMotion) shiverBoost = 0.5;
+      flare = Math.max(flare, 0.4);
+    }
     if (!raf && visible) {
       last = performance.now();
       raf = requestAnimationFrame(frame);
@@ -814,6 +996,10 @@ export function createOrb(canvas, { tokensFrom = canvas, reducedMotion = false, 
       if (next === 'thinking') goTo('cloud', 0.7);
       else if (next === 'listening') goTo('ring', 0.8);
       else goTo(restShape, 1.1);
+      // El estado pone el ánimo de fondo; los de un momento siguen encima.
+      const bg = next === 'thinking' ? 'thinking' : next === 'listening' ? 'attentive' : 'calm';
+      if (moodUntil) baseMood = bg;
+      else setMoodTarget(bg);
       kick(1600);
     },
     // La forma con la que se queda al terminar de pensar o de hablar.
@@ -827,19 +1013,64 @@ export function createOrb(canvas, { tokensFrom = canvas, reducedMotion = false, 
       if (state !== 'thinking' && state !== 'listening') goTo(name, 1.2);
       kick(1600);
     },
-    setMood(mood) {
-      if (mood === 'happy') {
-        tintTarget = 0.6;
+    // Ánimo con nombre (MOODS). Los de un momento —happy, proud, curious,
+    // sorry, tickled— caducan solos; `hold` lo cambia.
+    setMood(name, hold) {
+      name = MOOD_ALIAS[name] || name;
+      if (name === 'happy') {
         flare = 1;
         bounce = 1;
-        setTimeout(() => (tintTarget = 0.2), 1400);
-      } else if (mood === 'curious') {
-        tintTarget = 0.35;
-      } else if (mood === 'sorry') {
+        // Exageración: un salto de verdad —se agacha y se estira—.
+        if (!reducedMotion) squash.vel -= 3.2;
+      } else if (name === 'sorry') {
         dim = 1;
         tintTarget = 0;
+      } else if (name === 'proud') {
+        flare = Math.max(flare, 0.6);
+        if (!reducedMotion) squash.vel -= 1.6;
       }
+      setMoodTarget(name, hold != null ? { hold } : {});
       kick(1800);
+    },
+    // Reacciones pequeñas: teclear la hace centellear; acercarse, curiosear;
+    // un clic encima, cosquillas.
+    react(kind) {
+      if (kind === 'type') {
+        sparkBoost = Math.min(1, sparkBoost + 0.35);
+        levelTarget = Math.max(levelTarget, 0.25);
+        kick(500);
+      } else if (kind === 'near') {
+        if (moodName === baseMood || moodName === 'sleepy') api.setMood('curious');
+        else kick(400);
+      } else if (kind === 'tickle') {
+        if (!reducedMotion) shiverBoost = 1;
+        bounce = 1;
+        api.setMood('tickled');
+      }
+    },
+    // Aterrizar: el golpe se lee en el aplastado (0–1 según la velocidad).
+    land(i = 0.6) {
+      if (reducedMotion) return;
+      squash.vel += 3.5 * Math.max(0, Math.min(1, i));
+      kick(1200);
+    },
+    // Anticipación: se agacha y se echa hacia atrás, en la dirección
+    // contraria a la del vuelo (dx, dy en pantalla), durante `ms`.
+    anticipate(dx, dy, ms = 140) {
+      if (reducedMotion) return;
+      const l = Math.hypot(dx, dy) || 1;
+      lean.tx = (-dx / l) * 0.12;
+      lean.ty = (dy / l) * 0.12;
+      lean.until = performance.now() + ms;
+      squash.vel += 2.4;
+      kick(ms + 600);
+    },
+    stay(v) {
+      awake = !!v;
+      if (awake) kick(300);
+    },
+    get mood() {
+      return moodName;
     },
     pulse(v = 0.8) {
       levelTarget = Math.max(levelTarget, Math.min(1, v));

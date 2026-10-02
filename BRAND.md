@@ -158,6 +158,24 @@ reaparece, es un error.
 Los complementarios (cian, violeta, fucsia) existen como acento y **nunca** como
 superficie dominante.
 
+**LAIYA tiene paleta propia de ánimos**, y es la única excepción a la paleta
+única. En reposo es azul de marca. Cuando siente algo vira hacia un tono:
+
+| Ánimo | Tono |
+|---|---|
+| atenta | cian `#2EE6FF` |
+| curiosa | menta `#34F5C5` |
+| pensando | violeta `#8F5BFF` |
+| contenta | ámbar `#FFB23F` |
+| orgullosa | oro `#FFD75E` |
+| apenada | gris lila `#8A8FB3` |
+| traviesa | fucsia `#FF3FD2` |
+| cosquillas | coral `#FF6F91` |
+| dormida | índigo `#4A3BD1` |
+
+Son luz de partículas sobre navy, no superficie ni texto: no se usan fuera
+del enjambre (`--component-laiya-mood-*`).
+
 **El acento se gasta una vez.** Si en una sección hay dos cosas en azul de marca,
 una de las dos no es la importante.
 

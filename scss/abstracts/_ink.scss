@@ -283,6 +283,15 @@ $follow-system: false;
   --component-laiya-orb-deep: var(--semantic-color-surface-night);
   --component-laiya-orb-light: var(--semantic-color-brand-glow);
   --component-laiya-orb-glow: var(--semantic-color-text);
+  --component-laiya-mood-attentive: var(--semantic-color-mood-attentive);
+  --component-laiya-mood-curious: var(--semantic-color-mood-curious);
+  --component-laiya-mood-thinking: var(--semantic-color-mood-thinking);
+  --component-laiya-mood-happy: var(--semantic-color-mood-happy);
+  --component-laiya-mood-proud: var(--semantic-color-mood-proud);
+  --component-laiya-mood-sorry: var(--semantic-color-mood-sorry);
+  --component-laiya-mood-mischief: var(--semantic-color-mood-mischief);
+  --component-laiya-mood-tickled: var(--semantic-color-mood-tickled);
+  --component-laiya-mood-sleepy: var(--semantic-color-mood-sleepy);
   --component-laiya-scrim: color-mix(in srgb, var(--semantic-color-surface-night) 74%, transparent);
 }
 

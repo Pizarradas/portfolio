@@ -232,12 +232,47 @@
     let last = 0;
     let lastPos = { x: 0, y: 0 };
 
+    // Arcos (principio 7): nada vivo vuela en línea recta. El muelle lleva
+    // la posición en recta y aquí se le suma una comba perpendicular que
+    // crece y se deshace con el avance —sin(π·p)—, hacia arriba, como un
+    // salto. Lo pintado es lo que cuenta para la velocidad del enjambre, así
+    // que el estiramiento sigue la curva.
+    let flight = null;
+    // Si un vuelo empieza a mitad de otro, la comba que llevaba no
+    // desaparece de golpe: se deshace en 350 ms.
+    let residual = null;
+    const painted = { x: 0, y: 0 };
+    function arcOffset() {
+      let rx = 0, ry = 0;
+      if (residual) {
+        const f = 1 - (performance.now() - residual.t0) / 350;
+        if (f <= 0) residual = null;
+        else {
+          const e = f * f * (3 - 2 * f);
+          rx = residual.x * e;
+          ry = residual.y * e;
+        }
+      }
+      if (!flight) return { x: rx, y: ry };
+      const p = orbSpring.pos;
+      const left = Math.hypot(flight.ex - p.x, flight.ey - p.y);
+      const t = Math.max(0, Math.min(1, 1 - left / flight.len));
+      const lift = Math.sin(Math.PI * t) * flight.bow;
+      return { x: flight.nx * lift + rx, y: flight.ny * lift + ry };
+    }
+
     function paintBody() {
       const p = orbSpring.pos;
       const half = bodySize() / 2;
-      body.style.transform = `translate3d(${p.x - half}px, ${p.y - half}px, 0) scale(${p.s})`;
+      const a = arcOffset();
+      painted.x = p.x + a.x;
+      painted.y = p.y + a.y;
+      body.style.transform = `translate3d(${painted.x - half}px, ${painted.y - half}px, 0) scale(${p.s})`;
     }
 
+    // Squash al aterrizar (principio 1): cuando un vuelo rápido se detiene,
+    // el golpe se lee en el aplastado del cuerpo.
+    let topSpeed = 0;
     function loop(now) {
       raf = 0;
       const dt = last ? (now - last) / 1000 : 1 / 60;
@@ -245,18 +280,60 @@
       const rest = orbSpring.step(dt);
       paintBody();
       if (orb && dt > 0) {
-        orb.velocity((orbSpring.pos.x - lastPos.x) / dt, (orbSpring.pos.y - lastPos.y) / dt);
+        const vx = (painted.x - lastPos.x) / dt, vy = (painted.y - lastPos.y) / dt;
+        orb.velocity(vx, vy);
+        const sp = Math.hypot(vx, vy);
+        topSpeed = Math.max(topSpeed, sp);
+        if (topSpeed > 500 && sp < 60) {
+          orb.land && orb.land(Math.min(1, topSpeed / 2600));
+          topSpeed = 0;
+          flight = null;
+        }
       }
-      lastPos = { x: orbSpring.pos.x, y: orbSpring.pos.y };
-      if (!rest) raf = requestAnimationFrame(loop);
-      else last = 0;
+      lastPos = { x: painted.x, y: painted.y };
+      if (!rest || residual) raf = requestAnimationFrame(loop);
+      else {
+        last = 0;
+        flight = null;
+        topSpeed = 0;
+      }
     }
 
+    // Anticipación (principio 3): antes de un vuelo largo se echa hacia
+    // atrás —un palmo, 130 ms— y solo entonces sale. Lo corto sale directo.
+    let launch = null;
     function fly(to, spring = M.flight) {
       orbSpring.params(spring);
-      if (isReduced()) orbSpring.jump(to);
-      else orbSpring.set(to);
-      if (!raf) raf = requestAnimationFrame(loop);
+      if (launch) launch.kill(), (launch = null);
+      if (isReduced()) {
+        flight = residual = null;
+        orbSpring.jump(to);
+        paintBody();
+        return;
+      }
+      const was = arcOffset();
+      if (Math.abs(was.x) + Math.abs(was.y) > 0.5) residual = { x: was.x, y: was.y, t0: performance.now() };
+      const from = orbSpring.pos;
+      const dx = to.x - from.x, dy = to.y - from.y;
+      const len = Math.hypot(dx, dy);
+      if (len > 60) {
+        // Normal hacia arriba (y negativa en pantalla); en un vuelo vertical,
+        // hacia el lado de fuera de la pantalla más cercano al centro.
+        let nx = -dy / len, ny = dx / len;
+        if (ny > 0 || (Math.abs(ny) < 0.2 && nx * (from.x - vw() / 2) < 0)) (nx = -nx), (ny = -ny);
+        flight = { ex: to.x, ey: to.y, len, nx, ny, bow: Math.min(110, len * 0.16) };
+      } else flight = null;
+      const go = () => {
+        launch = null;
+        orbSpring.set(to);
+        if (!raf) raf = requestAnimationFrame(loop);
+      };
+      if (len > 180 && orb && orb.anticipate) {
+        orb.anticipate(dx, dy, 130);
+        orbSpring.set({ x: from.x - (dx / len) * 14, y: from.y - (dy / len) * 14 });
+        if (!raf) raf = requestAnimationFrame(loop);
+        launch = gsap.delayedCall(0.13, go);
+      } else go();
       paintBody();
     }
 
@@ -748,6 +825,9 @@
       // tinte se queda alto: sobre el velo navy, el azul de núcleo no se ve.
       orb && orb.tint(0.65);
       orb && orb.flash();
+      // Una cifra hecha de partículas es para enseñarla con orgullo: quieta,
+      // nítida y brillante.
+      if (orb && /^text:.*\d/.test(step.shape || '')) orb.setMood('proud');
       if (!isReduced()) {
         hole.classList.remove('is-scanning');
         void hole.offsetWidth;
@@ -772,6 +852,7 @@
       setVeil(false);
       fly(floatPoint(), M.flight);
       orb && orb.burst();
+      orb && orb.setMood('mischief', 30000);
       const rebuild = fx.gravity();
       await speak(step.text, id);
       // Tiempo para jugar con los escombros: 5 s como mínimo y, mientras el
@@ -795,6 +876,7 @@
 
     async function play(scene) {
       const id = ++runId;
+      orb && orb.stay && orb.stay(true);
       paused = false;
       syncPause();
       killAll();
@@ -814,6 +896,9 @@
         el.foot.hidden = true;
       } catch (e) {
         if (e !== CANCEL) throw e;
+      } finally {
+        // Terminado (y no sustituido por otra escena): ya puede dormirse.
+        if (id === runId && orb && orb.stay) orb.stay(false);
       }
     }
 

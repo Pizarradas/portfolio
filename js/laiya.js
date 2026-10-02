@@ -321,15 +321,38 @@
     closeDock();
   });
 
+  // Personalidad: el puntero cerca la pone curiosa y un clic encima le hace
+  // cosquillas (sin quitarle el clic a lo que haya debajo si es un enlace o
+  // un botón). Escribir la hace centellear.
+  const nearOrb = (e, f = 0.4) => {
+    const r = stage.body.getBoundingClientRect();
+    const dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+    return Math.hypot(dx, dy) < r.width * f;
+  };
+  let lastNear = 0;
   window.addEventListener(
     'pointermove',
     e => {
       if (!orb || !stage) return;
       const r = stage.body.getBoundingClientRect();
       orb.look((e.clientX - (r.left + r.width / 2)) / (window.innerWidth / 2), -(e.clientY - (r.top + r.height / 2)) / (window.innerHeight / 2));
+      if (open && orb.react && performance.now() - lastNear > 1500 && nearOrb(e, 0.45)) {
+        lastNear = performance.now();
+        orb.react('near');
+      }
     },
     { passive: true },
   );
+  window.addEventListener(
+    'pointerdown',
+    e => {
+      if (!orb || !stage || !open || !orb.react) return;
+      if (e.target.closest && e.target.closest('a, button, input, textarea, select, label, [role="button"]')) return;
+      if (nearOrb(e, 0.32)) orb.react('tickle');
+    },
+    { passive: true },
+  );
+  el.input.addEventListener('input', () => orb && orb.react && orb.react('type'));
 
   function setState(next) {
     state = next;

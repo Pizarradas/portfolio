@@ -29,6 +29,21 @@
     --primitive-color-brand-900: #0c1869;
     --primitive-color-brand-950: #080f2f;
 
+    // LAIYA — paleta de ánimos. La única excepción a «una sola paleta», y
+    // acotada: solo la lee el enjambre de LAIYA, que es luz sobre navy y
+    // ocupa un rincón de la pantalla. Es acento emocional, nunca superficie
+    // (BRAND.md §4, «Color»). En reposo LAIYA sigue siendo azul de marca:
+    // estos tonos solo aparecen cuando siente algo.
+    --primitive-color-mood-attentive: #2ee6ff; // cian
+    --primitive-color-mood-curious: #34f5c5; // menta
+    --primitive-color-mood-thinking: #8f5bff; // violeta
+    --primitive-color-mood-happy: #ffb23f; // ámbar
+    --primitive-color-mood-proud: #ffd75e; // oro
+    --primitive-color-mood-sorry: #8a8fb3; // gris lila
+    --primitive-color-mood-mischief: #ff3fd2; // fucsia
+    --primitive-color-mood-tickled: #ff6f91; // coral
+    --primitive-color-mood-sleepy: #4a3bd1; // índigo
+
     // Neutrals
     --primitive-color-white: #ffffff;
     --primitive-color-gray-50: #f7f8fb;

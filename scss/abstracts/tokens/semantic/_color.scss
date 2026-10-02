@@ -34,6 +34,18 @@
     // de día y de noche. No es un sustituto de `primary` para texto.
     --semantic-color-brand-glow: var(--primitive-color-brand-400);
 
+    // Luz de ánimo de LAIYA: emisiva como `brand-glow`, igual de día y de
+    // noche. Solo para el enjambre; no es color de texto ni de superficie.
+    --semantic-color-mood-attentive: var(--primitive-color-mood-attentive);
+    --semantic-color-mood-curious: var(--primitive-color-mood-curious);
+    --semantic-color-mood-thinking: var(--primitive-color-mood-thinking);
+    --semantic-color-mood-happy: var(--primitive-color-mood-happy);
+    --semantic-color-mood-proud: var(--primitive-color-mood-proud);
+    --semantic-color-mood-sorry: var(--primitive-color-mood-sorry);
+    --semantic-color-mood-mischief: var(--primitive-color-mood-mischief);
+    --semantic-color-mood-tickled: var(--primitive-color-mood-tickled);
+    --semantic-color-mood-sleepy: var(--primitive-color-mood-sleepy);
+
     // Derivado. Se repite en `ink.derived` para los contextos, que son otro
     // elemento; aquí basta declararlo una vez.
     --semantic-color-focus: var(--semantic-color-primary);
