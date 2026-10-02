@@ -447,9 +447,10 @@
       R.y = Math.max(header() + pad * 0.5, R.y);
       R.h = Math.min(R.h, dockTop - G * 0.5 - R.y);
 
-      // Orbe y texto. Junto a un elemento el enjambre se encoge a la mitad:
-      // el protagonista es lo que señala, no él.
-      const near = wide() ? 0.5 : 0.36;
+      // Orbe y texto. Junto a un elemento el enjambre se encoge: el
+      // protagonista es lo que señala, no él. Pero no tanto que su forma
+      // —el año, la @, el pin— deje de leerse: 1/φ en escritorio.
+      const near = wide() ? 0.618 : 0.46;
       const ov = orbVisible() * near;
       let orbAt, capAt;
       if (columnar) {
@@ -484,7 +485,9 @@
         const tick = () => {
           if (id !== runId) return reject(CANCEL);
           const now = performance.now();
-          if (!(pausable && paused)) left -= now - t0;
+          // Con la pestaña oculta el reloj no corre: rAF está parado y las
+          // animaciones también, así que el guion espera a que vuelvan.
+          if (!document.hidden && !(pausable && paused)) left -= now - t0;
           t0 = now;
           if (left <= 0) return resolve();
           timer = setTimeout(tick, Math.min(left, 120));
@@ -614,6 +617,40 @@
       root.style.scrollBehavior = html;
     }
 
+    // Ajuste fino: lo que se calculó antes de mover nada puede no coincidir
+    // con dónde ha quedado el elemento —una sección fijada con
+    // ScrollTrigger, un sticky, una imagen que cargó tarde, una pestaña que
+    // estuvo oculta—. Se mide de verdad y el hueco se corrige sobre la marcha.
+    let current = null;
+    let plan = null;
+    function refit(node, want) {
+      if (!node || !node.isConnected) return;
+      const real = node.getBoundingClientRect();
+      const pad = gap() * 0.6;
+      const box = { x: real.left - pad, y: real.top - pad, w: real.width + pad * 2, h: real.height + pad * 2 };
+      // Si el elemento no ha quedado donde se planeó —una tarjeta que aún
+      // volvía de su sitio al medir, un ScrollTrigger—, se corrige la CÁMARA
+      // y no solo el hueco: el subtítulo y el orbe ya están colocados para
+      // ese sitio. En vertical solo si el plan no se recortó (marco alto).
+      if (want && camOn && !isReduced()) {
+        const dx = want.x - box.x;
+        const dy = Math.abs(want.h - box.h) < 4 ? want.y - box.y : 0;
+        if (Math.abs(dx) + Math.abs(dy) > 8) {
+          tween(cam, { tx: cam.tx + dx, ty: cam.ty + dy, duration: M.slow, ease: M.standard, onUpdate: paintCam });
+          box.x += dx;
+          box.y += dy;
+        }
+      }
+      const top = Math.max(header() + pad * 0.5, box.y);
+      const fix = { x: box.x, y: top, w: box.w, h: Math.min(box.h - (top - box.y), dock.getBoundingClientRect().top - gap() * 0.5 - top) };
+      if (Math.abs(fix.x - spot.x) + Math.abs(fix.y - spot.y) + Math.abs(fix.w - spot.w) + Math.abs(fix.h - spot.h) > 6) {
+        tween(spot, { ...fix, duration: isReduced() ? 0 : M.slow, ease: M.standard, onUpdate: paintSpot });
+      }
+    }
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden && root.classList.contains('syx-laiya-staging')) requestAnimationFrame(() => refit(current, plan));
+    });
+
     async function beat(step, i, total, id) {
       const box = measureCaption(step, i, total);
       if (!step.node) {
@@ -688,24 +725,14 @@
       await Promise.all(moving.map(t => new Promise(r => (t.isActive() ? t.eventCallback('onInterrupt', r).then(r) : r()))));
       guard(id);
 
-      // Ajuste fino: lo que se calculó antes de mover nada puede no coincidir
-      // con dónde ha quedado el elemento —una sección fijada con
-      // ScrollTrigger, un sticky, una imagen que cargó tarde—. Se mide de
-      // verdad y el hueco se corrige sobre la marcha.
-      const real = step.node.getBoundingClientRect();
-      const pad = gap() * 0.6;
-      const fix = {
-        x: real.left - pad,
-        y: Math.max(header() + pad * 0.5, real.top - pad),
-        w: real.width + pad * 2,
-        h: Math.min(real.height + pad * 2, dock.getBoundingClientRect().top - gap() * 0.5 - Math.max(header() + pad * 0.5, real.top - pad)),
-      };
-      if (Math.abs(fix.x - spot.x) + Math.abs(fix.y - spot.y) + Math.abs(fix.w - spot.w) + Math.abs(fix.h - spot.h) > 6) {
-        tween(spot, { ...fix, duration: isReduced() ? 0 : M.moderate, ease: M.standard, onUpdate: paintSpot });
-      }
+      // Ajuste fino sobre la posición real (ver `refit`).
+      current = step.node;
+      plan = L.spot;
+      refit(step.node, plan);
 
-      // Compás 3 — llegada: destello breve, pasada de escáner y texto.
-      orb && orb.tint(0.2);
+      // Compás 3 — llegada: destello breve, pasada de escáner y texto. El
+      // tinte se queda alto: sobre el velo navy, el azul de núcleo no se ve.
+      orb && orb.tint(0.65);
       orb && orb.flash();
       if (!isReduced()) {
         hole.classList.remove('is-scanning');
@@ -769,6 +796,7 @@
     /* ------------------------------------------------------ liberación */
 
     function releaseCamera(keepCaption = false) {
+      current = plan = null;
       killAll();
       undoFx();
       root.classList.remove('syx-laiya-staging');

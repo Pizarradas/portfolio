@@ -36,6 +36,17 @@
         );
     };
 
+    // Volver de golpe de verdad: si el CSS del elemento tiene `transition`
+    // (las tarjetas llevan `transition: all`), quitar el transform lo anima de
+    // vuelta y el escenario mide la tarjeta todavía desplazada. Se apaga la
+    // transición, se limpia, se fuerza el estilo y solo entonces se restaura.
+    const snapBack = (nodes, clear, back) => {
+      nodes.forEach(n => n.style.setProperty('transition', 'none'));
+      gsap.set(nodes, { clearProps: clear });
+      nodes.forEach(n => void n.offsetWidth);
+      back();
+    };
+
     const inView = el => {
       const r = el.getBoundingClientRect();
       return r.bottom > 0 && r.top < innerHeight && r.right > 0 && r.left < innerWidth && r.width > 0;
@@ -155,10 +166,7 @@
       // siguiente compás; entonces se vuelve de golpe, sin animar.
       return instant => {
         t.kill();
-        if (instant) {
-          gsap.set(others, { clearProps: 'transform,opacity' });
-          return back();
-        }
+        if (instant) return snapBack(others, 'transform,opacity', back);
         gsap.to(others, { x: 0, y: 0, rotate: 0, scale: 1, opacity: 1, duration: M.slow, ease: M.standard, onComplete: back });
       };
     }
@@ -209,10 +217,7 @@
       return instant => {
         removeEventListener('pointermove', move);
         gsap.killTweensOf(node, 'rotationX,rotationY');
-        if (instant) {
-          gsap.set(node, { clearProps: 'transform' });
-          return back();
-        }
+        if (instant) return snapBack([node], 'transform', back);
         gsap.to(node, { rotationX: 0, rotationY: 0, duration: M.slow, ease: M.standard, onComplete: back });
       };
     }

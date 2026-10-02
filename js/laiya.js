@@ -418,7 +418,6 @@
     help: 'text:?',
     destroy: 'cloud',
   };
-  const yearOf = s => ((s && s.when) || '').match(/\d{4}/)?.[0];
 
   // Cada respuesta se traduce a pasos sobre el DOM de ESTA página: qué nodo,
   // qué se dice, qué forma toma el enjambre y qué efectos se le aplican a la
@@ -480,10 +479,20 @@
         }
         case 'career': {
           add($('.org-role-evolution-v22__intro') || frame('role-evolution-title'), a.text, { fx: ['kinetic'] });
-          $$('.mol-career-role').forEach((node, i) => {
-            const s = K.career[i];
+          // Cada tarjeta habla de sí misma: empresa, fechas y puesto salen de
+          // su propio DOM. Los datos del gráfico (K.career) no tienen las
+          // mismas etapas —ni en el mismo orden—, así que solo aportan las
+          // fechas finas cuando la empresa coincide por nombre.
+          const norm = t => (t || '').toLowerCase().replace(/\s+/g, ' ').trim();
+          $$('.mol-career-role').forEach(node => {
+            const org = ((node.querySelector('b') || {}).textContent || '').trim();
+            if (!org) return;
+            const s = K.career.find(c => norm(c.org) === norm(org));
+            const when = (s && s.when) || ((node.querySelector('time') || {}).textContent || '').trim();
+            const role = (s && s.role) || ((node.querySelector('.mol-career-role__role') || {}).textContent || '').trim();
+            const year = (when.match(/\d{4}/) || [])[0];
             // Cada etapa, con su año hecho de partículas.
-            if (s) add(node, `${s.org}, ${s.when}. ${s.role}.`, { shape: yearOf(s) ? 'text:' + yearOf(s) : 'stairs', fx: ['scatter', 'marks'] });
+            add(node, `${org}, ${when}. ${role}.`, { shape: year ? 'text:' + year : 'stairs', fx: ['scatter', 'marks'] });
           });
           break;
         }
@@ -544,6 +553,10 @@
       const sorry = a.kind === 'none';
       steps.push({ node: null, text: a.text, blocks, shape: sorry ? 'text:?' : base, fx: sorry ? ['tremble'] : [] });
     }
+    // Un texto que anuncia algo con «:» y no lleva bloques detrás apunta a lo
+    // que está iluminado en la página: se cierra con punto para que no
+    // parezca cortado («Su postura, en sus palabras.»).
+    for (const s of steps) if (s.node && !(s.blocks && s.blocks.length) && /:\s*$/.test(s.text || '')) s.text = s.text.replace(/:\s*$/, '.');
     return { steps: steps.filter(s => s.text || s.blocks.length), mood: a.mood };
   }
 

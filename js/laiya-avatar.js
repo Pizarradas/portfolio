@@ -714,23 +714,26 @@ export function createOrb(canvas, { tokensFrom = canvas, reducedMotion = false, 
 
     // Cuerpo: escala con el latido, estiramiento en la dirección del vuelo.
     const speed = Math.hypot(motion.x, motion.y);
-    const stretch = reducedMotion ? 0 : Math.min(speed / 2400, 0.28);
+    // Las formas que se leen —texto, España, el sobre…— apenas se deforman
+    // ni se inclinan: un «86 %» torcido ya no dice nada.
+    const flat = FLAT.has(shapeName) || shapeName.startsWith('text:');
+    const stretch = reducedMotion ? 0 : Math.min(speed / 2400, flat ? 0.08 : 0.28);
     const sc = (1 + Math.sin(bounce * Math.PI) * 0.12 + level * 0.05) * (1 - dim * 0.12) * (state === 'listening' ? 1.08 : 1);
     group.scale.set(sc * (1 + stretch), sc * (1 - stretch * 0.5), sc);
-    group.rotation.z = stretch > 0.01 ? Math.atan2(-motion.y, motion.x) : lerp(group.rotation.z, -gaze.x * 0.2, k);
+    group.rotation.z = stretch > 0.01 && !flat ? Math.atan2(-motion.y, motion.x) : lerp(group.rotation.z, flat ? 0 : -gaze.x * 0.2, k);
     // Las formas planas —texto, España, el sobre, la hoja— no giran: se
     // balancean de cara, o se leerían de canto. Las de volumen sí giran.
-    if (FLAT.has(shapeName) || shapeName.startsWith('text:')) {
+    if (flat) {
       const r = points.rotation.y % (Math.PI * 2);
       const home = Math.abs(r) > Math.PI ? r - Math.sign(r) * Math.PI * 2 : r;
-      points.rotation.y = lerp(home, Math.sin(time * 0.7) * 0.32, k * 0.6);
+      points.rotation.y = lerp(home, Math.sin(time * 0.7) * 0.18, k * 0.6);
     } else {
       points.rotation.y += dt * (cur.spin + stretch * 3);
     }
     lines.rotation.y = points.rotation.y;
     gaze.x = lerp(gaze.x, gaze.tx, k * 0.5);
     gaze.y = lerp(gaze.y, gaze.ty, k * 0.5);
-    points.rotation.x = lines.rotation.x = lerp(points.rotation.x, -gaze.y * 0.5 + (shapeName === 'grid' ? 0.2 : 0), k);
+    points.rotation.x = lines.rotation.x = lerp(points.rotation.x, -gaze.y * (flat ? 0.12 : 0.5) + (shapeName === 'grid' ? 0.2 : 0), k);
 
     renderer.render(scene, camera);
 
