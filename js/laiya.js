@@ -71,6 +71,9 @@
 
   let K = null;
   let engine = null;
+  let guide = null;
+  // Lo que ya se ha citado del paso actual, para que «cuéntame más» avance.
+  let said = [];
   let stage = null;
   let orb = null;
   let open = false;
@@ -136,15 +139,24 @@
           if (!r.ok) throw new Error(r.status);
           return r.json();
         }),
+        // El recorrido es un extra: sin él LAIYA sigue contestando, solo que
+        // sin apartes dentro de los recorridos.
+        fetch(asset(`assets/laiya/tour-${LANG}.json`), { credentials: 'same-origin' })
+          .then(r => (r.ok ? r.json() : null))
+          .catch(() => null),
         loadScript('js/laiya-engine.js', () => window.LaiyaEngine),
+        loadScript('js/laiya-guide.js', () => window.LaiyaGuide),
         loadScript('js/laiya-stage.js', () => window.LaiyaStage),
         loadScript('js/laiya-fx.js', () => window.LaiyaFx),
         // GSAP ya está en la home y en algunos casos; si no, se pide aquí.
         loadScript('js/vendor/gsap.min.js', () => window.gsap),
       ])
-        .then(([k]) => {
+        .then(([k, tour]) => {
           K = k;
           engine = window.LaiyaEngine.create(K);
+          guide = tour && window.LaiyaGuide ? window.LaiyaGuide.create({ tour, norm: window.LaiyaEngine.norm, file: FILE }) : null;
+          // Las preguntas que ofrece la guía, para reconocerlas al pulsarlas.
+          if (tour) K.tourAsk = tour.copy.ask;
           setupStage();
           return K;
         })
@@ -181,6 +193,7 @@
       onGoto: goTo,
       onState: setState,
       announce,
+      onStep: stepChips,
     });
   }
 
@@ -363,8 +376,77 @@
 
   /* -------------------------------------------------------- conversación */
 
+  // Las preguntas que se pueden hacer sobre lo que LAIYA está señalando,
+  // como sugerencias: cambian con cada paso del recorrido.
+  function stepChips(step, i, total) {
+    said = [];
+    if (!guide || !step || !step.anchor) return;
+    const e = guide.entry(step.anchor);
+    if (!e) return;
+    const list = guide.next(e, null).map(guide.label);
+    if (i < total - 1) list.push(guide.label('next'));
+    if (list.length) renderSuggestions(list);
+  }
+
+  // Dentro de un recorrido: la pregunta va sobre lo que se está viendo. Las
+  // órdenes (sigue, atrás, repite, para) mueven el recorrido; el resto se
+  // contesta con frases de la página, sin mover la cámara. Devuelve false si
+  // la pregunta no es sobre esto y debe ir al motor general.
+  function askHere(question) {
+    const here = stage && stage.current();
+    if (!guide || !here || !here.anchor) return false;
+    const peers = here.steps.map(st => st.anchor).filter(Boolean);
+    const g = guide.answer(question, here.anchor, { said, peers });
+    if (!g) return false;
+    // ¿Es de verdad sobre esto, o una pregunta nueva? Las órdenes, los saltos
+    // a otro paso y las preguntas sugeridas son de la guía. Si el motor
+    // reconoce una intención propia («¿con qué herramientas trabaja?», «¿cómo
+    // usa la IA?») o un caso que no es el que se ve, manda el motor: eso
+    // abre su propio recorrido.
+    const chip = Object.values(K.tourAsk || {}).includes(question.trim());
+    if (!g.command && !g.jump && !chip) {
+      const a = engine.answer(question, { currentFile: FILE, topic, greeted: true });
+      const e = guide.entry(here.anchor) || {};
+      const strong = (a.kind === 'intent' && !['greet', 'help', 'here'].includes(a.intent)) || (a.kind === 'project' && a.focus && a.focus.file !== e.case && a.focus.file !== FILE);
+      if (strong) return false;
+    }
+    history.push({ role: 'user', text: question });
+    el.input.value = '';
+    // La pregunta era sobre otro paso del recorrido: allí se va primero.
+    if (g.jump) {
+      stage.jumpTo(peers.indexOf(g.jump) >= 0 ? here.steps.findIndex(st => st.anchor === g.jump) : -1);
+      if (!g.quote && !g.text) return true;
+    }
+    if (g.command) {
+      if (g.command === 'next') stage.next();
+      else if (g.command === 'back') stage.back();
+      else if (g.command === 'again') stage.again();
+      else stage.pause();
+      return true;
+    }
+    if (g.go && !g.quote) {
+      goTo(g.go);
+      return true;
+    }
+    track('laiya_aside', { kind: g.kind || 'free', anchor: here.anchor, page: FILE });
+    const blocks = [];
+    if (g.quote && g.quote.length) {
+      said.push(...g.quote);
+      blocks.push({ type: 'quote', text: g.quote.join(' '), cite: g.cite || '' });
+    }
+    if (g.go) blocks.push({ type: 'goto', file: g.go });
+    history.push({ role: 'ai', text: [g.text, ...(g.quote || [])].join(' ') });
+    history = history.slice(-12);
+    const chips = (g.ask || []).map(guide.label);
+    if (here.index < here.total - 1) chips.push(guide.label('next'));
+    renderSuggestions(chips);
+    stage.aside({ text: g.text, blocks });
+    return true;
+  }
+
   async function ask(question) {
     if (busy) return;
+    if (askHere(question)) return;
     busy = true;
     el.input.value = '';
     history.push({ role: 'user', text: question });
@@ -489,142 +571,88 @@
   // qué se dice, qué forma toma el enjambre y qué efectos se le aplican a la
   // página. Si lo que se pregunta no está aquí, el paso no lleva nodo:
   // LAIYA lo cuenta desde el centro con tarjetas y ofrece llevarte (portal).
+  // Qué recorrido cuenta cada intención. Los recorridos los declara el HTML
+  // (`data-laiya-tour`, ver scripts/laiya.anchors.mjs) y su texto viene de
+  // assets/laiya/tour-*.json: aquí solo se elige cuál.
+  const TOUR_OF = { projects: 'projects', selfDirected: 'selfDirected', career: 'career', tools: 'tools', ai: 'ai', person: 'person', contact: 'contact', hire: 'contact' };
+  // Un caso contado en la propia página: la apertura y, como mucho, cinco
+  // secciones, las que traen cifras o resultados primero (en su orden).
+  const CASE_TOUR_MAX = 6;
+
   function buildScene(a) {
-    const $ = s => document.querySelector(s);
-    const $$ = s => [...document.querySelectorAll(s)];
     const frame = id => stage.frameFor(id);
     const steps = [];
     const base = SHAPE_BY_INTENT[a.intent] || (a.focus && SHAPE_BY_FILE[a.focus.file]) || 'octa';
-    const add = (node, text, { blocks = [], shape = base, fx = [] } = {}) => node && steps.push({ node, text, blocks, shape, fx });
-    const onHome = FILE === 'index.html';
-    const items = ((a.blocks || []).find(b => b.type === 'projects') || { items: [] }).items;
-    const byFile = Object.fromEntries(K.pages.filter(p => p.file !== 'index.html').map(p => [p.file, p]));
-    const teaser = p => (p.description.match(/^.+?[.!?](?=\s|$)/) || [p.description])[0];
-    const cardFor = file =>
-      ($(`#work a[href="${file}"]`) || {}).closest?.('article') ||
-      ($(`.org-new-work a[href="${file}"]`) || {}).closest?.('article') ||
-      ($(`.org-illustration-showcase a[href="${file}"]`) || {}).closest?.('section') ||
-      null;
-    // Los nodos de un recorrido van en el orden del documento: la cámara
-    // baja por la página, no salta arriba y abajo.
-    const inOrder = list => list.sort((x, y) => (x.node.compareDocumentPosition(y.node) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1));
+    const add = step => step && step.node && steps.push(step);
+    const slug = f => (f || '').replace(/^case-|\.html$/g, '');
+
+    // Un paso a partir de un ancla `data-laiya`: el nodo que se encuadra, lo
+    // que dice (su ficha del recorrido, o el texto que se le pase) y la forma
+    // y los efectos que declara el propio HTML.
+    const fromAnchor = (id, over = {}) => {
+      const node = document.querySelector(`[data-laiya="${CSS.escape(id)}"]`);
+      if (!node) return null;
+      const e = guide && guide.entry(id);
+      const d = node.dataset;
+      // Una sección se encuadra por su titular: entera si cabe; si no, el
+      // mayor bloque que quepa alrededor de él.
+      const labelled = node.getAttribute('aria-labelledby');
+      const target = d.laiyaKind === 'section' && labelled ? frame(labelled) : node;
+      return {
+        node: target,
+        anchor: id,
+        text: over.text != null ? over.text : (e && e.say) || '',
+        blocks: over.blocks || [],
+        shape: over.shape || d.laiyaShape || (e && e.case && SHAPE_BY_FILE[e.case]) || base,
+        fx: over.fx || (d.laiyaFx ? d.laiyaFx.split(/\s+/) : []),
+      };
+    };
+    const tourSteps = (name, first = {}) => (guide ? guide.ids(name) : []).map((id, i) => fromAnchor(id, i === 0 ? first : {})).filter(Boolean);
 
     if (a.intent === 'destroy') {
       return { steps: [{ node: null, text: a.text, after: a.after, blocks: [], shape: 'cloud', special: 'gravity' }], mood: 'happy' };
     }
 
-    if (a.kind === 'intent' && onHome) {
-      switch (a.intent) {
-        case 'projects':
-        case 'selfDirected': {
-          const list = [];
-          // «Su trabajo» recorre los casos profesionales; los propios tienen su
-          // pregunta («¿Qué proyectos son propios?»), que va en las
-          // sugerencias. Seis tarjetas seguidas eran 35 s de recorrido.
-          const pool = (items.length ? items : Object.values(byFile)).filter(p => a.intent === 'selfDirected' || !(byFile[p.file] || p).selfDirected);
-          const files = pool.map(p => p.file);
-          const seen = new Set();
-          for (const f of files) {
-            const node = cardFor(f);
-            if (!node || seen.has(node)) continue;
-            seen.add(node);
-            const p = byFile[f];
-            list.push({
-              node,
-              text: `${p.name}${p.selfDirected ? ' — ' + K.ui.selfDirected : ''}. ${teaser(p)}`,
-              blocks: [],
-              shape: SHAPE_BY_FILE[f] || 'cube',
-              fx: ['scatter', 'marks', 'tilt'],
-            });
-          }
-          add(a.intent === 'projects' ? $('#work .mol-section-heading') : $('.org-new-work .mol-section-heading') || frame('new-work-title'), a.text, { fx: ['kinetic'] });
-          steps.push(...inOrder(list));
-          break;
-        }
-        case 'person': {
-          add(frame('about-title'), a.text, { blocks: (a.blocks || []).filter(b => b.type === 'quote'), fx: ['kinetic'] });
-          const facts = K.person.facts.map(f => `${f.label}: ${f.value}`).join('. ') + '.';
-          add($('.mol-about-facts'), facts, { shape: 'pin', fx: ['blueprint'] });
-          break;
-        }
-        case 'career': {
-          add($('.org-role-evolution-v22__intro') || frame('role-evolution-title'), a.text, { fx: ['kinetic'] });
-          // Cada tarjeta habla de sí misma: empresa, fechas y puesto salen de
-          // su propio DOM. Los datos del gráfico (K.career) no tienen las
-          // mismas etapas —ni en el mismo orden—, así que solo aportan las
-          // fechas finas cuando la empresa coincide por nombre.
-          const norm = t => (t || '').toLowerCase().replace(/\s+/g, ' ').trim();
-          $$('.mol-career-role').forEach(node => {
-            const org = ((node.querySelector('b') || {}).textContent || '').trim();
-            if (!org) return;
-            const s = K.career.find(c => norm(c.org) === norm(org));
-            const when = (s && s.when) || ((node.querySelector('time') || {}).textContent || '').trim();
-            const role = (s && s.role) || ((node.querySelector('.mol-career-role__role') || {}).textContent || '').trim();
-            const year = (when.match(/\d{4}/) || [])[0];
-            // Cada etapa, con su año hecho de partículas.
-            add(node, `${org}, ${when}. ${role}.`, { shape: year ? 'text:' + year : 'stairs', fx: ['scatter', 'marks'] });
-          });
-          break;
-        }
-        case 'tools': {
-          add(frame('tools-title'), a.text, { fx: ['kinetic'] });
-          add($('.mol-practice-list'), K.practice.map(p => p.name).join(' · ') + '.', { shape: 'text:{ }', fx: ['marks', 'tilt'] });
-          add($('.org-stack__marks'), K.tools.map(g => `${g.group}: ${g.items.join(', ')}`).join('. ') + '.', { fx: ['blueprint'] });
-          break;
-        }
-        case 'contact':
-        case 'hire':
-          add($('.org-contact__body') || frame('contact-title'), a.text, { fx: ['kinetic'] });
-          add($('.mol-contact-list'), K.person.contact.email, { shape: 'text:@', fx: ['tilt'] });
-          break;
-        case 'cv':
-          add($('.mol-contact-list'), a.text, { fx: ['tilt'] });
-          break;
-        case 'ai': {
-          add(frame('thesis-title'), a.text, { fx: ['kinetic'] });
-          const atlas = byFile['case-atlas.html'];
-          if (atlas) add(cardFor(atlas.file), `${atlas.name} — ${K.ui.selfDirected}. ${teaser(atlas)}`, { shape: 'globe', fx: ['scatter', 'tilt'] });
-          break;
-        }
-        case 'location':
-        case 'languages':
-        case 'education': {
-          const i = { location: 1, languages: 2, education: 3 }[a.intent];
-          add($(`.mol-about-facts > div:nth-child(${i})`), a.text, { fx: ['blueprint'] });
-          break;
-        }
-        case 'accessibility':
-        case 'systems':
-          add(cardFor('case-42ds.html'), a.text, { blocks: (a.blocks || []).filter(b => b.type === 'excerpt'), shape: a.intent === 'accessibility' ? 'access' : 'stack', fx: ['blueprint', 'marks'] });
-          break;
-      }
+    if (a.kind === 'intent' && TOUR_OF[a.intent]) {
+      const first = { text: a.text, shape: base };
+      if (a.intent === 'person') first.blocks = (a.blocks || []).filter(b => b.type === 'quote');
+      steps.push(...tourSteps(TOUR_OF[a.intent], first));
+    } else if (a.kind === 'intent') {
+      if (a.intent === 'cv') add(fromAnchor('contact.links', { text: a.text }));
+      else if (['location', 'languages', 'education'].includes(a.intent)) add(fromAnchor(`about.${a.intent}`, { text: a.text }));
+      else if (a.intent === 'accessibility' || a.intent === 'systems')
+        add(fromAnchor('project.42ds', { text: a.text, blocks: (a.blocks || []).filter(b => b.type === 'excerpt'), shape: a.intent === 'accessibility' ? 'access' : 'stack', fx: ['blueprint', 'marks'] }));
     }
 
     if (!steps.length && a.kind === 'project' && a.focus) {
       const shape = SHAPE_BY_FILE[a.focus.file] || base;
-      if (a.focus.file === FILE) add($('.org-case-opener') || frame($('h1') && $('h1').id), a.text, { shape, fx: ['kinetic', 'marks'] });
-      else if (onHome) add(cardFor(a.focus.file), a.text, { blocks: (a.blocks || []).map(b => (b.type === 'project' ? { ...b, compact: true } : b)), shape, fx: ['scatter', 'tilt'] });
+      if (a.focus.file === FILE) {
+        // El caso en el que ya está: la apertura y lo que más cuenta de él.
+        const ids = guide ? guide.ids('case') : [];
+        const weight = id => {
+          const t = ((guide.entry(id) || {}).s || []).map(x => x[1] || '').join(' ');
+          return (/\bresult\b/.test(t) ? 2 : 0) + (/\bnumbers\b/.test(t) ? 1 : 0);
+        };
+        const chosen = ids.slice(1).map((id, i) => [id, i, weight(id)]).sort((x, y) => y[2] - x[2] || x[1] - y[1]).slice(0, CASE_TOUR_MAX - 1).sort((x, y) => x[1] - y[1]).map(x => x[0]);
+        add(fromAnchor('case', { text: a.text, shape }) || { node: frame(document.querySelector('h1') && document.querySelector('h1').id), text: a.text, blocks: [], shape, fx: ['kinetic', 'marks'] });
+        for (const id of chosen) add(fromAnchor(id, { shape }));
+      } else add(fromAnchor(`project.${slug(a.focus.file)}`, { text: a.text, blocks: (a.blocks || []).map(b => (b.type === 'project' ? { ...b, compact: true } : b)), shape, fx: ['scatter', 'tilt'] }));
     }
 
-    if (!steps.length && (a.kind === 'section' || a.kind === 'search') && a.focus && a.focus.file === FILE && a.focus.id) {
-      // Si la sección gira en torno a una cifra, el enjambre se convierte en
-      // ella («86 %»); si no, en la forma del caso.
+    if (!steps.length && (a.kind === 'section' || a.kind === 'search') && a.focus && a.focus.id) {
+      // Si lo que se cuenta gira en torno a una cifra, el enjambre se
+      // convierte en ella («86 %»); si no, en la forma del caso.
       const figure = (((a.blocks || [])[0] || {}).text || '').match(/\d+(?:[.,]\d+)?\s?%/);
-      add(frame(a.focus.id), a.text, { shape: figure ? 'text:' + figure[0] : SHAPE_BY_FILE[FILE] || 'octa', fx: ['kinetic', 'marks'] });
-      const more = (a.blocks || []).slice(1);
-      if (more.length) steps.push({ node: null, text: '', blocks: more, shape: SHAPE_BY_FILE[FILE] || 'octa' });
-    }
-
-    // Lo que se pregunta vive en un caso, pero su tarjeta está en esta
-    // página (la portada): se señala la tarjeta, el extracto va en el
-    // subtítulo, con su enlace al caso.
-    if (!steps.length && (a.kind === 'section' || a.kind === 'search') && a.focus && a.focus.file !== FILE && onHome) {
-      const card = cardFor(a.focus.file);
-      if (card) {
-        const figure = (((a.blocks || [])[0] || {}).text || '').match(/\d+(?:[.,]\d+)?\s?%/);
-        // El extracto ya lleva su «Llévame» al caso.
-        const blocks = (a.blocks || []).slice(0, 1);
-        add(card, a.text, { blocks, shape: figure ? 'text:' + figure[0] : SHAPE_BY_FILE[a.focus.file] || base, fx: ['scatter', 'tilt'] });
+      if (a.focus.file === FILE) {
+        const id = `section.${a.focus.id.replace(/-title$/, '')}`;
+        const shape = figure ? 'text:' + figure[0] : SHAPE_BY_FILE[FILE] || 'octa';
+        add(fromAnchor(id, { text: a.text, shape }) || { node: frame(a.focus.id), anchor: id, text: a.text, blocks: [], shape, fx: ['kinetic', 'marks'] });
+        const more = (a.blocks || []).slice(1);
+        if (steps.length && more.length) steps.push({ node: null, text: '', blocks: more, shape: SHAPE_BY_FILE[FILE] || 'octa' });
+      } else {
+        // Vive en un caso cuya tarjeta está en esta página: se señala la
+        // tarjeta y el extracto va en el subtítulo, con su enlace al caso.
+        add(fromAnchor(`project.${slug(a.focus.file)}`, { text: a.text, blocks: (a.blocks || []).slice(0, 1), shape: figure ? 'text:' + figure[0] : SHAPE_BY_FILE[a.focus.file] || base, fx: ['scatter', 'tilt'] }));
       }
     }
 

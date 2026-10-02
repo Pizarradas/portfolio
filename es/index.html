@@ -91,7 +91,7 @@ addEventListener('load', function () {
 </nav>
 </header>
 <main id="main">
-<section aria-labelledby="hero-title" class="org-hero syx-span-survey" id="top">
+<section aria-labelledby="hero-title" class="org-hero syx-span-survey" data-laiya="hero" data-laiya-kind="section" data-laiya-topic="person greet" id="top">
 <canvas aria-hidden="true" class="org-hero__field"></canvas>
 <p class="atom-eyebrow">Product Design · Design Systems · Front-End · IA</p>
 <h1 id="hero-title">Estudié periodismo. Construyo los sistemas sobre los que construyen otros.</h1>
@@ -100,7 +100,7 @@ addEventListener('load', function () {
 <p class="org-hero__actions"><a class="atom-cta" href="#work">Proyectos seleccionados <span aria-hidden="true">↘</span></a><a class="atom-text-link" href="#about">Sobre mí <span aria-hidden="true">→</span></a></p>
 </div>
 </section>
-<nav aria-label="Mapa de capacidades" class="org-capability-scan">
+<nav aria-label="Mapa de capacidades" class="org-capability-scan" data-laiya="capabilities" data-laiya-kind="block" data-laiya-topic="projects">
 <a href="case-42ds.html"><b>Escala</b><span>42DS · design system multimarca</span></a>
 <a href="case-sport.html"><b>Evidencia</b><span>SPORT Cards · investigación medida</span></a>
 <a href="case-map.html"><b>De principio a fin</b><span>Mapa interactivo de medios</span></a>
@@ -109,12 +109,12 @@ addEventListener('load', function () {
 <a href="case-illustrations.html"><b>Oficio visual</b><span>Ilustraciones de SPORT · dirección de arte</span></a>
 </nav>
 <section aria-labelledby="work-title" class="org-work syx-span-showcase syx-band" id="work">
-<div class="mol-section-heading syx-bleed">
+<div class="mol-section-heading syx-bleed" data-laiya="projects" data-laiya-fx="kinetic" data-laiya-kind="block" data-laiya-topic="projects" data-laiya-tour="projects:0">
 <p class="atom-index">Proyectos</p>
 <h2 id="work-title">Proyectos seleccionados</h2>
 <p>Trabajo profesional en Prensa Ibérica: design systems, decisiones de producto guiadas por evidencia y productos interactivos para un grupo editorial multimarca.</p>
 </div>
-<article class="mol-project-card mol-project-card--featured">
+<article class="mol-project-card mol-project-card--featured" data-laiya="project.42ds" data-laiya-fx="scatter marks tilt" data-laiya-kind="card" data-laiya-topic="projects systems accessibility" data-laiya-tour="projects:1">
 <a aria-label="Leer el caso de estudio de 42DS" class="mol-project-card__frame" href="case-42ds.html">
 <div aria-label="Sistema de cabeceras multimarca de 42DS con capturas reales del proyecto" class="mol-evidence-system">
 <div class="mol-evidence-system__meta"><img alt="" class="mol-evidence-system__mark" decoding="async" height="63" loading="lazy" src="../assets/42ds-mark.svg" width="119"/><span>EVIDENCIA REAL DEL PROYECTO</span><strong>Una arquitectura compartida · múltiples identidades editoriales</strong></div>
@@ -137,7 +137,7 @@ addEventListener('load', function () {
 <p class="mol-project-card__takeaway">Arquitectura de design tokens de Figma a Style Dictionary, WCAG 2.1 AA en productos editoriales complejos y una arquitectura SCSS compartida en la que el 97 % del código es común a todas las marcas.</p></div>
 </article>
 <div class="org-project-grid">
-<article class="mol-project-card">
+<article class="mol-project-card" data-laiya="project.sport" data-laiya-fx="scatter marks tilt" data-laiya-kind="card" data-laiya-topic="projects" data-laiya-tour="projects:2">
 <a aria-label="Leer el caso de estudio de las tarjetas móviles de SPORT" class="mol-project-card__frame" href="case-sport.html">
 <div class="mol-evidence-study">
 <div aria-label="Resumen en código de la investigación sobre las tarjetas móviles de SPORT" class="mol-evidence-study__panel">
@@ -166,7 +166,7 @@ addEventListener('load', function () {
 <p class="mol-project-card__takeaway">Los criterios de altura, densidad de texto y encuadre que salieron de ahí se incorporaron a la tarjeta de noticia de 42DS, uno de los patrones centrales del sistema.</p>
 </div>
 </article>
-<article class="mol-project-card">
+<article class="mol-project-card" data-laiya="project.map" data-laiya-fx="scatter marks tilt" data-laiya-kind="card" data-laiya-topic="projects" data-laiya-tour="projects:3">
 <a aria-label="Leer el caso de estudio del mapa interactivo de medios" class="mol-project-card__frame" href="case-map.html">
 <div class="mol-evidence-live">
 <p class="mol-evidence-live__chrome"><span>Mapa interactivo de medios · desarrollo original</span><b>Código real</b></p>
@@ -185,7 +185,7 @@ addEventListener('load', function () {
 </article>
 </div>
 </section>
-<section aria-labelledby="illustration-showcase-title" class="org-illustration-showcase syx-span-survey">
+<section aria-labelledby="illustration-showcase-title" class="org-illustration-showcase syx-span-survey" data-laiya="project.illustrations" data-laiya-fx="scatter tilt" data-laiya-kind="card" data-laiya-topic="projects" data-laiya-tour="projects:9">
 <div class="org-illustration-showcase__intro">
 <p class="atom-eyebrow">OFICIO VISUAL / SPORT</p>
 <h2 id="illustration-showcase-title">Un lenguaje visual construido para seguir siendo editorial, desenfadado y reconocible.</h2>
@@ -216,13 +216,13 @@ addEventListener('load', function () {
 </figure></div>
 </section>
 <section aria-labelledby="new-work-title" class="org-new-work syx-span-survey syx-band">
-<div class="mol-section-heading syx-bleed">
+<div class="mol-section-heading syx-bleed" data-laiya="self-directed" data-laiya-fx="kinetic" data-laiya-kind="block" data-laiya-topic="selfDirected" data-laiya-tour="selfDirected:0">
 <p class="atom-index">Proyecto propio</p>
 <h2 id="new-work-title">Del pensamiento sistémico a la ejecución AI-native.</h2>
 <p>Tres proyectos personales construidos sobre SYX, mi propio design system. Están para probar hasta dónde puede llegar el desarrollo asistido por IA cuando trabaja dentro de reglas que yo defino. Están etiquetados como proyectos propios para que los casos profesionales de arriba no se confundan.</p>
 </div>
 <div class="org-new-work__grid">
-<article class="mol-register">
+<article class="mol-register" data-laiya="project.worldcup" data-laiya-fx="scatter tilt" data-laiya-kind="card" data-laiya-topic="selfDirected" data-laiya-tour="selfDirected:1">
 <div class="mol-register__media">
 <p class="mol-register__chrome"><span>syx--mundial-2026</span><a class="atom-text-link atom-text-link--compact" href="https://pizarradas.github.io/syx--mundial-2026/" rel="noopener" target="_blank">Ver el proyecto ↗</a></p>
 <div class="mol-register__frame">
@@ -244,7 +244,7 @@ addEventListener('load', function () {
 </div>
 </div>
 </article>
-<article class="mol-register">
+<article class="mol-register" data-laiya="project.atlas" data-laiya-fx="scatter tilt" data-laiya-kind="card" data-laiya-topic="selfDirected ai" data-laiya-tour="selfDirected:2 ai:1">
 <div class="mol-register__media">
 <p class="mol-register__chrome"><span>syx-atlas--reportajes/atelier</span><a class="atom-text-link atom-text-link--compact" href="https://pizarradas.github.io/syx-atlas--reportajes/reportaje-atelier.html" rel="noopener" target="_blank">Ver el proyecto ↗</a></p>
 <div class="mol-register__frame">
@@ -266,7 +266,7 @@ addEventListener('load', function () {
 </div>
 </div>
 </article>
-<article class="mol-register">
+<article class="mol-register" data-laiya="project.atlas.obsidiana" data-laiya-fx="scatter tilt" data-laiya-kind="card" data-laiya-topic="selfDirected" data-laiya-tour="selfDirected:3">
 <div class="mol-register__media">
 <p class="mol-register__chrome"><span>syx-atlas--reportajes/obsidiana</span><a class="atom-text-link atom-text-link--compact" href="https://pizarradas.github.io/syx-atlas--reportajes/reportaje-obsidiana.html" rel="noopener" target="_blank">Ver el proyecto ↗</a></p>
 <div class="mol-register__frame">
@@ -291,7 +291,7 @@ addEventListener('load', function () {
 </div>
 </section>
 <section aria-labelledby="role-evolution-title" class="org-role-evolution-v22 syx-on-night syx-span-survey">
-<header class="org-role-evolution-v22__intro">
+<header class="org-role-evolution-v22__intro" data-laiya="career" data-laiya-fx="kinetic" data-laiya-kind="block" data-laiya-topic="career" data-laiya-tour="career:0">
 <span class="atom-index">Trayectoria</span>
 <h2 id="role-evolution-title">Diecinueve años.<br/>La escala no dejó de cambiar.</h2>
 <p>Agencia, telecomunicaciones, inmobiliario y medios. El hilo conductor no son las herramientas que fui acumulando: es de cuánto producto me fui haciendo responsable, desde pantallas sueltas a sistemas compartidos, productos de principio a fin y flujos operables por IA.</p>
@@ -315,7 +315,7 @@ addEventListener('load', function () {
 <script type="application/json" id="career-tip-data">[{"org":"Buleboo Estudio","role":"Digital Designer & Front-End","where":"Madrid, España","detail":["Front-end en HTML, CSS, JavaScript y jQuery.","Diseño visual y adaptación a la identidad de cada marca.","Varios proyectos de cliente en paralelo.","Entre los clientes, Barceló Viajes y Vodafone."],"when":"Ene 2007 – May 2011","scope":"Pantallas"},{"org":"France Telecom España","role":"Senior UI/UX Designer & Front-End Developer","where":"Madrid, España","detail":["Interfaces web y móvil en productos de alto tráfico.","Desarrollo front-end en HTML, CSS y JavaScript.","Optimización de flujos y estructuras para conversión.","Trabajo con CMS en entornos corporativos complejos.","Trabajo transversal con UX, negocio y tecnología."],"when":"Abr 2012 – Dic 2021","scope":"Interfaces a escala"},{"org":"Aliseda","role":"UI/UX Designer & Front-End (Design Systems)","where":"Madrid, España","detail":["Creé Brickee, el design system interno.","Diseñé y construí componentes reutilizables en SCSS.","Definí una arquitectura front-end escalable.","Diseño e implementación de interfaces responsive."],"when":"Dic 2021 – Feb 2023","scope":"Design systems"},{"org":"Prensa Ibérica","role":"Product Designer & Front-End Engineer","where":"Madrid, España","detail":["Componentes en Figma dentro del design system 42DS.","Arquitectura de design tokens: Figma → JSON → Style Dictionary.","WCAG 2.1 AA en productos editoriales complejos.","Front-end dentro del presupuesto de CSS inline que impone AMP, en cabeceras de mucho tráfico.","Mantenimiento de un core compartido por todas las marcas del grupo."],"when":"Jul 2023 – actualidad","scope":"Sistemas multimarca"},{"org":"SYX + ATLAS","role":"Proyecto propio","where":"En curso","detail":["SYX: un design system propio en SCSS dirigido por tokens.","ATLAS: un modelo mental editorial construido sobre él.","Reglas, conocimiento y modos que mantienen el trabajo asistido por IA dentro del sistema."],"when":"2026 →","scope":"Flujos gobernados por IA"}]</script>
 </figure>
 <ol class="mol-career-list">
-<li class="mol-career-role" data-scope="1">
+<li class="mol-career-role" data-laiya="career.buleboo-estudio" data-laiya-fx="scatter marks" data-laiya-kind="role" data-laiya-shape="text:2007" data-laiya-topic="career" data-laiya-tour="career:1" data-scope="1">
 <span class="mol-career-role__num">01</span>
 <time>2007–2011</time>
 <b>Buleboo Estudio</b>
@@ -323,7 +323,7 @@ addEventListener('load', function () {
 <span class="mol-career-role__note">HTML, CSS y jQuery para clientes como Barceló Viajes y Vodafone.</span>
 <span class="mol-career-role__meta"><i>Pantallas</i><em>4.3 años</em></span>
 </li>
-<li class="mol-career-role" data-scope="2">
+<li class="mol-career-role" data-laiya="career.france-telecom-spain" data-laiya-fx="scatter marks" data-laiya-kind="role" data-laiya-shape="text:2012" data-laiya-topic="career" data-laiya-tour="career:2" data-scope="2">
 <span class="mol-career-role__num">02</span>
 <time>2012–2021</time>
 <b>France Telecom España</b>
@@ -331,7 +331,7 @@ addEventListener('load', function () {
 <span class="mol-career-role__note">Productos de alto tráfico, flujos y estructuras de conversión.</span>
 <span class="mol-career-role__meta"><i>Interfaces a escala</i><em>9.7 años</em></span>
 </li>
-<li class="mol-career-role" data-scope="3">
+<li class="mol-career-role" data-laiya="career.aliseda" data-laiya-fx="scatter marks" data-laiya-kind="role" data-laiya-shape="text:2021" data-laiya-topic="career" data-laiya-tour="career:3" data-scope="3">
 <span class="mol-career-role__num">03</span>
 <time>2021–2023</time>
 <b>Aliseda</b>
@@ -339,7 +339,7 @@ addEventListener('load', function () {
 <span class="mol-career-role__note">Creé Brickee, su design system interno, desde cero.</span>
 <span class="mol-career-role__meta"><i>Design systems</i><em>1.2 años</em></span>
 </li>
-<li class="mol-career-role" data-scope="3">
+<li class="mol-career-role" data-laiya="career.plexus-tech" data-laiya-fx="scatter marks" data-laiya-kind="role" data-laiya-shape="text:2023" data-laiya-topic="career" data-laiya-tour="career:4" data-scope="3">
 <span class="mol-career-role__num">04</span>
 <time>2023–2023</time>
 <b>Plexus Tech</b>
@@ -347,7 +347,7 @@ addEventListener('load', function () {
 <span class="mol-career-role__note">Interfaces responsive y arquitectura de componentes SCSS reutilizables.</span>
 <span class="mol-career-role__meta"><i>Design systems</i><em>0.3 años</em></span>
 </li>
-<li class="mol-career-role" data-scope="4">
+<li class="mol-career-role" data-laiya="career.prensa-iberica" data-laiya-fx="scatter marks" data-laiya-kind="role" data-laiya-shape="text:2023" data-laiya-topic="career" data-laiya-tour="career:5" data-scope="4">
 <span class="mol-career-role__num">05</span>
 <time>2023–actualidad</time>
 <b>Prensa Ibérica</b>
@@ -360,9 +360,9 @@ addEventListener('load', function () {
 </section>
 <section aria-labelledby="thesis-title" class="org-thesis syx-on-brand syx-span-survey">
 <p class="atom-index">Tesis</p>
-<div class="mol-role-thesis"><h2 id="thesis-title">Empecé usando IA para que me ayudara a escribir código. Después entendí que la palanca real no era el prompt, sino el sistema que lo rodea.</h2><p>Diseñar → Sistematizar → Escalar → Construir → Orquestar</p></div>
+<div class="mol-role-thesis" data-laiya="thesis" data-laiya-fx="kinetic" data-laiya-kind="block" data-laiya-topic="ai" data-laiya-tour="ai:0"><h2 id="thesis-title">Empecé usando IA para que me ayudara a escribir código. Después entendí que la palanca real no era el prompt, sino el sistema que lo rodea.</h2><p>Diseñar → Sistematizar → Escalar → Construir → Orquestar</p></div>
 </section>
-<section aria-labelledby="tools-title" class="org-tools syx-span-scan" id="tools">
+<section aria-labelledby="tools-title" class="org-tools syx-span-scan" data-laiya="tools" data-laiya-fx="kinetic" data-laiya-kind="section" data-laiya-topic="tools" data-laiya-tour="tools:0" id="tools">
 <div class="mol-section-heading">
 <p class="atom-index">Stack</p>
 <h2 id="tools-title">Con lo que trabajo de verdad</h2>
@@ -371,14 +371,14 @@ addEventListener('load', function () {
 <div class="org-stack">
 <div class="org-stack__practice">
 <p class="atom-eyebrow">Práctica</p>
-<ul class="mol-practice-list">
+<ul class="mol-practice-list" data-laiya="tools.practice" data-laiya-fx="marks tilt" data-laiya-kind="list" data-laiya-shape="text:{ }" data-laiya-topic="tools" data-laiya-tour="tools:1">
 <li><b>Arquitectura de design tokens</b><span>Figma → JSON → Style Dictionary, para que diseño y código lean una única fuente.</span></li>
 <li><b>WCAG 2.1 AA</b><span>Implementado en productos editoriales complejos, no como una aspiración.</span></li>
 <li><b>Arquitectura SCSS</b><span>Capas de cascada, tokens semánticos y theming multimarca.</span></li>
 <li><b>Rendimiento front-end</b><span>Peso de CSS con presupuestos duros: cores de marca de 33 KB frente al techo de 75 KB de AMP.</span></li>
 </ul>
 </div>
-<div class="org-stack__marks">
+<div class="org-stack__marks" data-laiya="tools.stack" data-laiya-fx="blueprint" data-laiya-kind="list" data-laiya-topic="tools" data-laiya-tour="tools:2">
 <p class="atom-eyebrow">Herramientas</p>
 <section class="mol-mark-group">
 <h3>Diseño &amp; fundamentos</h3>
@@ -419,7 +419,7 @@ addEventListener('load', function () {
 </div>
 </div>
 </section>
-<section aria-labelledby="about-title" class="org-about syx-span-scan" id="about">
+<section aria-labelledby="about-title" class="org-about syx-span-scan" data-laiya="about" data-laiya-fx="kinetic" data-laiya-kind="section" data-laiya-topic="person" data-laiya-tour="person:0" id="about">
 <p class="atom-index">Sobre mí</p>
 <div class="org-about__head">
 <h2 id="about-title">Diecinueve años entre la interfaz y el código que la pone en producción.</h2>
@@ -433,24 +433,24 @@ addEventListener('load', function () {
 </div>
 <button aria-controls="about-prose" aria-expanded="false" class="atom-text-link syx-fold__toggle" data-label="Leer menos" type="button">Leer más</button>
 </div>
-<dl class="mol-about-facts">
-<div><dt>Ubicación</dt><dd>Madrid, España</dd></div>
-<div><dt>Idiomas</dt><dd>Español (nativo) · Inglés (nivel de trabajo)</dd></div>
-<div><dt>Formación</dt><dd>Periodismo (Ciencias de la Información), UCM · Diseño gráfico, Escuela Arteneo</dd></div>
-<div><dt>Enfoque</dt><dd>Design systems · arquitectura front-end · producto asistido por IA</dd></div>
+<dl class="mol-about-facts" data-laiya="about.facts" data-laiya-fx="blueprint" data-laiya-kind="facts" data-laiya-shape="pin" data-laiya-topic="person location languages education" data-laiya-tour="person:1">
+<div data-laiya="about.location" data-laiya-fx="blueprint" data-laiya-kind="item" data-laiya-shape="pin" data-laiya-topic="location"><dt>Ubicación</dt><dd>Madrid, España</dd></div>
+<div data-laiya="about.languages" data-laiya-fx="blueprint" data-laiya-kind="item" data-laiya-shape="text:ES · EN" data-laiya-topic="languages"><dt>Idiomas</dt><dd>Español (nativo) · Inglés (nivel de trabajo)</dd></div>
+<div data-laiya="about.education" data-laiya-fx="blueprint" data-laiya-kind="item" data-laiya-shape="cap" data-laiya-topic="education"><dt>Formación</dt><dd>Periodismo (Ciencias de la Información), UCM · Diseño gráfico, Escuela Arteneo</dd></div>
+<div data-laiya="about.focus" data-laiya-fx="blueprint" data-laiya-kind="item" data-laiya-shape="neural" data-laiya-topic="person"><dt>Enfoque</dt><dd>Design systems · arquitectura front-end · producto asistido por IA</dd></div>
 </dl>
 </div>
 </section>
 <section aria-labelledby="contact-title" class="org-contact syx-span-scan" id="contact">
 <p class="atom-index">Contacto</p>
-<div class="org-contact__body">
+<div class="org-contact__body" data-laiya="contact" data-laiya-fx="kinetic" data-laiya-kind="block" data-laiya-topic="contact hire" data-laiya-tour="contact:0">
 <h2 id="contact-title">Si algo de esto te resulta útil, escríbeme.</h2>
 <p class="org-contact__lede">Me gusta hablar de design systems, arquitectura front-end, productos editoriales o de cómo mantener el trabajo asistido por IA dentro de un sistema y no alrededor de él.</p>
 </div>
-<ul class="mol-contact-list">
-<li><a href="mailto:profesional.pizarro@gmail.com"><span class="mol-contact-list__label">Email</span><span class="mol-contact-list__value">profesional.pizarro<wbr/>@gmail.com</span><svg aria-hidden="true" class="atom-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
-<li><a href="https://www.linkedin.com/in/joseluispizarrodesign" rel="noopener" target="_blank"><span class="mol-contact-list__label">LinkedIn</span><span class="mol-contact-list__value">joseluispizarrodesign</span><svg aria-hidden="true" class="atom-arrow atom-arrow--external" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
-<li><a href="../jose-luis-pizarro-cv-es.pdf" type="application/pdf"><span class="mol-contact-list__label">CV</span><span class="mol-contact-list__value">Descargar el PDF (1.3 MB)</span><svg aria-hidden="true" class="atom-arrow atom-arrow--down" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+<ul class="mol-contact-list" data-laiya="contact.links" data-laiya-fx="tilt" data-laiya-kind="list" data-laiya-shape="text:@" data-laiya-topic="contact hire cv" data-laiya-tour="contact:1">
+<li data-laiya="contact.email" data-laiya-kind="item" data-laiya-shape="envelope" data-laiya-topic="contact"><a href="mailto:profesional.pizarro@gmail.com"><span class="mol-contact-list__label">Email</span><span class="mol-contact-list__value">profesional.pizarro<wbr/>@gmail.com</span><svg aria-hidden="true" class="atom-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+<li data-laiya="contact.linkedin" data-laiya-kind="item" data-laiya-shape="network" data-laiya-topic="contact"><a href="https://www.linkedin.com/in/joseluispizarrodesign" rel="noopener" target="_blank"><span class="mol-contact-list__label">LinkedIn</span><span class="mol-contact-list__value">joseluispizarrodesign</span><svg aria-hidden="true" class="atom-arrow atom-arrow--external" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+<li data-laiya="contact.cv" data-laiya-kind="item" data-laiya-shape="page" data-laiya-topic="cv"><a href="../jose-luis-pizarro-cv-es.pdf" type="application/pdf"><span class="mol-contact-list__label">CV</span><span class="mol-contact-list__value">Descargar el PDF (1.3 MB)</span><svg aria-hidden="true" class="atom-arrow atom-arrow--down" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
 </ul>
 </section>
 </main>

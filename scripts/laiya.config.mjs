@@ -202,6 +202,74 @@ export const SUGGESTIONS = {
   },
 };
 
+// Dentro de un recorrido LAIYA puede contestar sobre lo que está señalando
+// sin salir de él: «¿cuándo?», «¿qué cifras?», «¿con qué?», «cuéntame más».
+// Las respuestas son frases de la propia página, ya etiquetadas por
+// build-laiya.mjs en assets/laiya/tour-*.json; aquí solo vive lo que LAIYA
+// dice con voz propia: las preguntas que ofrece y cómo presenta lo que cita.
+export const TOUR = {
+  en: {
+    ask: {
+      more: 'Tell me more',
+      when: 'When was this?',
+      numbers: 'What are the numbers?',
+      tools: 'What was it built with?',
+      who: 'Who was involved?',
+      why: 'Why?',
+      result: 'What changed?',
+      go: 'Take me to the case',
+      next: 'Carry on',
+    },
+    lead: {
+      more: 'In the page’s words:',
+      when: 'On timing, the page says:',
+      numbers: 'The figures, as published:',
+      tools: 'What it was built with:',
+      who: 'Who was involved:',
+      why: 'The reason, in the page’s words:',
+      result: 'What changed:',
+      elsewhere: 'The case itself, {case}, says:',
+    },
+    none: 'The page doesn’t say more about that here. You can carry on with the tour or ask me something else.',
+    commands: {
+      next: ['next', 'carry on', 'continue', 'go on', 'keep going', 'onwards'],
+      back: ['back', 'previous', 'go back', 'the one before'],
+      again: ['again', 'repeat', 'say that again', 'one more time'],
+      stop: ['stop', 'pause', 'wait', 'hold on'],
+    },
+  },
+  es: {
+    ask: {
+      more: 'Cuéntame más',
+      when: '¿Cuándo fue?',
+      numbers: '¿Qué cifras hay?',
+      tools: '¿Con qué se hizo?',
+      who: '¿Quién participó?',
+      why: '¿Por qué?',
+      result: '¿Qué cambió?',
+      go: 'Llévame al caso',
+      next: 'Sigue',
+    },
+    lead: {
+      more: 'En palabras de la página:',
+      when: 'Sobre las fechas, la página dice:',
+      numbers: 'Las cifras, tal como se publican:',
+      tools: 'Con qué se hizo:',
+      who: 'Quién participó:',
+      why: 'El porqué, en palabras de la página:',
+      result: 'Lo que cambió:',
+      elsewhere: 'El propio caso, {case}, dice:',
+    },
+    none: 'La página no cuenta más sobre eso aquí. Puedes seguir el recorrido o preguntarme otra cosa.',
+    commands: {
+      next: ['siguiente', 'sigue', 'continua', 'adelante', 'vale sigue', 'la siguiente', 'el siguiente'],
+      back: ['atras', 'anterior', 'vuelve', 'el anterior', 'la anterior'],
+      again: ['repite', 'otra vez', 'de nuevo', 'repitelo'],
+      stop: ['para', 'pausa', 'espera', 'detente'],
+    },
+  },
+};
+
 // El cerebro remoto es opcional. Vacío: LAIYA responde solo con el motor
 // local. Con una URL: pregunta primero al Worker (ver workers/laiya/) y, si no
 // contesta a tiempo, vuelve al motor local sin que se note.

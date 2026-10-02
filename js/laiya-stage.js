@@ -152,7 +152,7 @@
   /* ------------------------------------------------------------ escenario */
 
   function create(opt) {
-    const { gsap, reduced, file, ui, renderBlocks, onGoto, onState, announce } = opt;
+    const { gsap, reduced, file, ui, renderBlocks, onGoto, onState, announce, onStep } = opt;
     const root = document.documentElement;
     const main = document.querySelector('main') || document.body;
     const dock = opt.dock;
@@ -578,7 +578,10 @@
           // animaciones también, así que el guion espera a que vuelvan.
           if (!document.hidden && !(pausable && paused)) left -= now - t0;
           t0 = now;
-          if (left <= 0) return resolve();
+          if (left <= 0) {
+            if (pausable) skip = null;
+            return resolve();
+          }
           timer = setTimeout(tick, Math.min(left, 120));
         };
         let timer = setTimeout(tick, Math.min(ms, 120));
@@ -654,7 +657,14 @@
     }
 
     let textSince = 0;
-    async function speak(text, id) {
+    // Lo que se está diciendo ahora, para que un aparte espere a que acabe.
+    let speaking = Promise.resolve();
+    function speak(text, id) {
+      const p = say(text, id);
+      speaking = p.catch(() => {});
+      return p;
+    }
+    async function say(text, id) {
       textSince = performance.now();
       announce(text);
       onState('speaking');
@@ -874,8 +884,14 @@
       fly(centerPoint(), M.hop);
     }
 
-    async function play(scene) {
+    // La escena en curso y el paso en el que está: la guía pregunta por
+    // ellos para contestar sobre lo que se ve, y para ir atrás o repetir.
+    let scene0 = null;
+    let at = -1;
+    let beating = Promise.resolve();
+    async function play(scene, { from = 0 } = {}) {
       const id = ++runId;
+      scene0 = scene;
       orb && orb.stay && orb.stay(true);
       paused = false;
       syncPause();
@@ -883,9 +899,13 @@
       root.classList.add('syx-laiya-active');
       try {
         const steps = scene.steps;
-        for (let i = 0; i < steps.length; i++) {
+        for (let i = Math.max(0, Math.min(from, steps.length - 1)); i < steps.length; i++) {
           guard(id);
-          await beat(steps[i], i, steps.length, id);
+          at = i;
+          onStep && onStep(steps[i], i, steps.length);
+          const b = beat(steps[i], i, steps.length, id);
+          beating = b.catch(() => {});
+          await b;
           if (orb && scene.mood && i === 0) orb.setMood(scene.mood);
           const more = i < steps.length - 1;
           const extra = steps[i].blocks && steps[i].blocks.length ? 2500 : 0;
@@ -900,6 +920,52 @@
         // Terminado (y no sustituido por otra escena): ya puede dormirse.
         if (id === runId && orb && orb.stay) orb.stay(false);
       }
+    }
+
+    /* ---------------------------------------------------------- apartes */
+
+    // Un aparte: LAIYA contesta sobre lo que está señalando sin moverse. El
+    // recorrido se queda en pausa (Siguiente lo reanuda) y el subtítulo
+    // cambia de contenido en su sitio; si crece, sube lo justo para no
+    // meterse detrás de la barra.
+    async function aside({ text, blocks = [] }) {
+      const id = runId;
+      paused = true;
+      syncPause();
+      await beating;
+      await speaking;
+      if (id !== runId) return;
+      el.blocks.innerHTML = blocks.length ? renderBlocks(blocks) : '';
+      el.text.textContent = '';
+      caption.hidden = false;
+      gsap.killTweensOf(caption);
+      gsap.set(caption, { autoAlpha: 1 });
+      if (caption.dataset.docked === 'false') {
+        const r = caption.getBoundingClientRect();
+        const max = dock.getBoundingClientRect().top - gap() - r.height;
+        if (r.top > max) caption.style.transform = `translate3d(${r.left}px, ${Math.max(header() + gap(), max)}px, 0)`;
+      }
+      orb && orb.flash();
+      try {
+        await speak(text, id);
+      } catch (e) {
+        if (e !== CANCEL) throw e;
+      }
+    }
+
+    const here = () => {
+      if (!scene0 || at < 0 || !root.classList.contains('syx-laiya-staging')) return null;
+      const step = scene0.steps[at];
+      return step ? { step, index: at, total: scene0.steps.length, anchor: step.anchor || null, steps: scene0.steps } : null;
+    };
+    const jump = i => scene0 && play(scene0, { from: i });
+    function next() {
+      if (skip) {
+        paused = false;
+        syncPause();
+        return skip();
+      }
+      if (scene0 && at < scene0.steps.length - 1) jump(at + 1);
     }
 
     /* ------------------------------------------------------ liberación */
@@ -1055,6 +1121,18 @@
       },
       interrupt,
       busy: () => root.classList.contains('syx-laiya-staging'),
+      current: here,
+      aside,
+      next,
+      // Saltar a un paso de la escena en curso (la guía, cuando la pregunta
+      // nombra otro paso del recorrido).
+      jumpTo: i => scene0 && i >= 0 && i < scene0.steps.length && jump(i),
+      back: () => here() && jump(Math.max(0, at - 1)),
+      again: () => here() && jump(at),
+      pause() {
+        paused = true;
+        syncPause();
+      },
       thinking() {
         onState('thinking');
         orb && orb.tint(0);
