@@ -1,14 +1,14 @@
 @use "../abstracts/breakpoints" as *;
 @use "../abstracts/mixins" as *;
 
-// LAI-YA — átomos.
+// LAIYA — átomos.
 //
 // Las piezas mínimas de la capa: el orbe de CSS (el que se ve antes de que
-// cargue Three.js, y el único si no hay WebGL), el botón flotante que la abre,
-// el botón de herramienta, la ficha y la etiqueta de proyecto propio.
+// cargue Three.js, y el único si no hay WebGL), el cuerpo que vuela por la
+// página, el botón de herramienta, la ficha y la etiqueta de proyecto propio.
 //
-// Todo lo que aquí tiene color lo lee de la capa semántica: el botón y el
-// panel llevan `.syx-on-night` en el marcado, así que en su interior
+// Todo lo que aquí tiene color lo lee de la capa semántica: la barra y el
+// subtítulo llevan `.syx-on-night` en el marcado, así que en su interior
 // `--semantic-color-text` ya es blanco y `--semantic-color-border` ya es
 // blanco translúcido, sin variantes oscuras propias.
 
@@ -18,7 +18,7 @@
   .atom-laiya-orb {
     display: block;
     flex: none;
-    inline-size: var(--component-laiya-orb-size-launcher);
+    inline-size: var(--component-laiya-slot-size);
     aspect-ratio: 1;
     border-radius: 50%;
     background:
@@ -28,9 +28,10 @@
     box-shadow:
       0 0 0 var(--semantic-border-width) color-mix(in srgb, var(--component-laiya-orb-glow) 24%, transparent),
       0 0 var(--semantic-space-component-lg) color-mix(in srgb, var(--component-laiya-orb-light) 55%, transparent);
-    // Un ciclo de respiración en reposo, unos cuatro segundos: ni tan lento que
-    // parezca parado ni tan rápido que pida atención mientras se lee.
-    animation: laiya-breathe 4.236s var(--semantic-ease) infinite alternate;
+    // Dos respiraciones y quieto: nada se mueve solo más de 5 s junto al
+    // contenido sin forma de pararlo (WCAG 2.2.2). Al pensar o escuchar
+    // vuelve, porque entonces el movimiento es información.
+    animation: laiya-breathe 2.618s var(--semantic-ease) 2 alternate;
   }
 
   @include reduced-motion {
@@ -39,41 +40,50 @@
     }
   }
 
-  // El botón flotante. Una píldora navy con el orbe dentro: la capa se
-  // presenta como lo que es, una entidad, no como un icono de chat.
-  //
-  // Centrado abajo y no en la esquina: en la esquina tapaba la segunda acción
-  // del hero a 1440 × 900, y abajo al centro es exactamente donde se acopla
-  // la capa — el botón y la barra ocupan el mismo sitio.
-  .atom-laiya-launcher {
-    @include fixed($left: 50%, $bottom: var(--semantic-space-component-md));
-    transform: translateX(-50%);
-    z-index: var(--semantic-z-overlay);
-    display: inline-flex;
-    align-items: center;
-    gap: var(--semantic-space-component-xs);
-    min-block-size: var(--semantic-size-target-comfortable);
-    padding: var(--semantic-space-component-2xs) var(--semantic-space-component-md) var(--semantic-space-component-2xs) var(--semantic-space-component-2xs);
-    border: var(--semantic-border-width) solid var(--semantic-color-border-strong);
-    border-radius: var(--semantic-radius-pill);
-    box-shadow: var(--semantic-shadow-floating);
-    font-family: var(--semantic-font-family-ui);
-    font-size: var(--semantic-font-size-ui);
-    font-weight: var(--semantic-font-weight-strong);
-    line-height: var(--semantic-line-height-flat);
-    cursor: pointer;
-    @include transition(transform var(--semantic-duration-hover) var(--semantic-ease), box-shadow var(--semantic-duration-hover) var(--semantic-ease));
+  // El cuerpo del orbe: un lienzo fijo que el escenario mueve con transform
+  // (translate + scale, nada que provoque layout). Por encima de todo menos
+  // del portal, y sin recibir clics: el orbe señala, no tapa.
+  .atom-laiya-body {
+    @include fixed($top: 0, $left: 0);
+    // Orden de capas de la escena: penumbra (overlay) < barra y subtítulo
+    // (+1) < orbe (+2) < portal (skip). El orbe siempre por delante.
+    z-index: calc(var(--semantic-z-overlay) + 2);
+    inline-size: var(--component-laiya-body-size);
+    aspect-ratio: 1;
+    pointer-events: none;
+    transform-origin: 50% 50%;
+    will-change: transform;
   }
 
-  .atom-laiya-launcher[hidden] {
-    display: none;
+  // El orbe de CSS ocupa el 62 % central del cuerpo, igual que la esfera de
+  // Three.js dentro de su lienzo.
+  .atom-laiya-body .atom-laiya-orb {
+    @include absolute($top: 19%, $left: 19%);
+    inline-size: 62%;
   }
 
-  @include pointer {
-    .atom-laiya-launcher:hover {
-      transform: translate(-50%, calc(var(--semantic-space-component-3xs) * -1));
-      box-shadow: var(--semantic-shadow-overlay);
-    }
+  .atom-laiya-body canvas {
+    @include absolute($top: 0, $left: 0);
+    inline-size: 100%;
+    max-inline-size: none;
+    block-size: 100%;
+    opacity: 0;
+    @include transition(opacity var(--semantic-duration-reveal) var(--semantic-ease));
+  }
+
+  .atom-laiya-body[data-orb="webgl"] canvas {
+    opacity: 1;
+  }
+
+  .atom-laiya-body[data-orb="webgl"] .atom-laiya-orb {
+    visibility: hidden;
+  }
+
+  // El orbe de CSS también cambia de estado, aunque sea solo de ritmo.
+  .atom-laiya-body[data-state="thinking"] .atom-laiya-orb,
+  .atom-laiya-body[data-state="listening"] .atom-laiya-orb {
+    animation-duration: var(--semantic-duration-reveal);
+    animation-iteration-count: infinite;
   }
 
   // El botón de herramienta: un objetivo táctil cómodo con un icono de trazo.

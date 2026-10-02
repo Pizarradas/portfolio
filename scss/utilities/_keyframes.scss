@@ -7,11 +7,10 @@
   @keyframes header-card-in {from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
   @keyframes foundation-lab-in {from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
-  // LAI-YA. Los desplazamientos salen de la escala de espaciado, no de un
-  // número suelto: E(−3) para lo que entra en la charla, E(0) para el panel.
+  // LAIYA. El desplazamiento sale de la escala de espaciado, E(−3), no de
+  // un número suelto.
   @keyframes laiya-in {from{opacity:0;transform:translateY(var(--semantic-space-component-xs))}to{opacity:1;transform:none}}
-  @keyframes laiya-rise {from{opacity:0;transform:translateY(var(--semantic-space-component-md)) scale(.98)}to{opacity:1;transform:none}}
-  @keyframes laiya-fade {from{opacity:0}to{opacity:1}}
   @keyframes laiya-breathe {from{transform:scale(1)}to{transform:scale(1.06)}}
-  @keyframes laiya-ring {from{outline-offset:var(--semantic-space-component-lg);outline-color:transparent}to{outline-offset:var(--semantic-space-component-xs)}}
+  // La pasada de escáner sobre el elemento aislado: de fuera a fuera.
+  @keyframes laiya-scan {from{transform:translateX(-110%)}to{transform:translateX(340%)}}
 }

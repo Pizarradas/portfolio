@@ -1,315 +1,321 @@
 @use "../abstracts/breakpoints" as *;
 @use "../abstracts/mixins" as *;
 
-// LAI-YA — la capa.
+// LAIYA — la capa que actúa sobre la página.
 //
-// Un diálogo con dos formas, que cambia el JS con `data-mode`:
+// No hay ventana. Hay cuatro piezas que viven encima del sitio y lo usan como
+// escenario:
 //
-//   open   cubre la página con un velo navy translúcido —la página sigue ahí,
-//          desenfocada debajo: es una capa, no otra web— y un panel centrado
-//   dock   el panel se encoge a una barra al pie, el velo desaparece y la
-//          página vuelve a ser legible y navegable; la capa la señala
+//   .org-laiya-dock     la barra al pie: botón cerrado, campo de pregunta
+//                       abierto, con la ranura donde descansa el orbe
+//   .org-laiya-spot     el foco: un hueco con filete de luz y todo lo demás
+//                       en penumbra navy (patrón «obscuration», 02-proposito)
+//   .org-laiya-portal   el círculo que se abre desde el orbe para cambiar de
+//                       página y se cierra sobre él al llegar
+//   el orbe y el subtítulo, en átomos y moléculas
 //
-// Y dos momentos dentro de `open`, con `data-fresh`: antes de la primera
-// pregunta el orbe es grande y la frase de LAI-YA va centrada, como una
-// portada; en cuanto se pregunta, el orbe se hace pequeño y deja sitio a la
-// conversación.
-//
-// El panel lleva `.syx-on-night` en el marcado: todo lo que hay dentro lee
-// la capa semántica ya repuntada al navy. La raíz no, porque el velo es
-// translúcido y el contexto pintaría un fondo opaco.
+// La cámara no tiene CSS: el escenario transforma <main> con translate y
+// scale. Lo único que necesita de aquí es que nada desborde mientras dura
+// (`.syx-laiya-staging`).
 
 @layer syx.organisms {
-  .org-laiya {
-    @include fixed($top: 0, $right: 0, $bottom: 0, $left: 0);
-    z-index: var(--semantic-z-overlay);
+  /* ---------------------------------------------------------------- barra */
+
+  // Centrada abajo: en la esquina tapaba la segunda acción del hero a
+  // 1440 × 900. Cerrada es una píldora con el orbe y una palabra; abierta, el
+  // campo de pregunta. La misma pieza, que crece.
+  .org-laiya-dock {
+    @include fixed($left: 50%, $bottom: var(--semantic-space-component-md));
+    z-index: calc(var(--semantic-z-overlay) + 1);
     display: grid;
-    place-items: center;
-    padding: var(--semantic-space-component-xl) var(--semantic-space-page-inline);
+    justify-items: center;
+    gap: var(--semantic-space-component-xs);
+    inline-size: max-content;
+    max-inline-size: calc(100vw - var(--semantic-space-page-inline) * 2);
+    transform: translateX(-50%);
+    background: transparent;
   }
 
-  .org-laiya[hidden] {
+  // Abierta tiene ancho fijo y una sola columna que no crece por su
+  // contenido: sin `minmax(0, 1fr)` la columna se iba a 523px en un móvil de
+  // 390 —lo que pide el campo de texto por defecto— y la barra se salía.
+  .org-laiya-dock[data-open="true"] {
+    grid-template-columns: minmax(0, 1fr);
+    inline-size: min(calc(100vw - var(--semantic-space-page-inline) * 2), var(--semantic-measure-prose));
+  }
+
+  .org-laiya-dock__bar {
+    display: flex;
+    align-items: center;
+    gap: var(--semantic-space-component-2xs);
+    inline-size: 100%;
+    min-block-size: var(--semantic-size-target-comfortable);
+    padding: var(--semantic-space-component-2xs);
+    border: var(--semantic-border-width) solid var(--semantic-color-border-strong);
+    border-radius: var(--semantic-radius-pill);
+    background: var(--semantic-color-surface);
+    box-shadow: var(--semantic-shadow-floating);
+  }
+
+  .org-laiya-dock__slot {
+    display: grid;
+    place-items: center;
+    flex: none;
+    inline-size: var(--semantic-size-target-comfortable);
+    block-size: var(--semantic-size-target-comfortable);
+  }
+
+  // Cuando el escenario está montado el orbe de verdad descansa encima de la
+  // ranura; el de la ranura se aparta para no verse doble.
+  .org-laiya-dock[data-stage="on"] .org-laiya-dock__slot .atom-laiya-orb {
+    visibility: hidden;
+  }
+
+  .org-laiya-dock__launch {
+    padding: 0 var(--semantic-space-component-md) 0 var(--semantic-space-component-3xs);
+    min-block-size: var(--semantic-size-target-comfortable);
+    border: 0;
+    background: transparent;
+    color: var(--semantic-color-text);
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-ui);
+    font-weight: var(--semantic-font-weight-strong);
+    cursor: pointer;
+  }
+
+  // En un móvil la barra no tiene sitio para cinco botones y un campo: la
+  // lectura en voz alta, que es opcional, se queda para pantallas mayores.
+  @include until($bp-sm) {
+    .org-laiya-dock [data-laiya="voice"] {
+      display: none;
+    }
+  }
+
+  .org-laiya-dock__launch[hidden],
+  .org-laiya-dock .mol-laiya-composer[hidden],
+  .org-laiya-dock .mol-laiya-suggest[hidden] {
     display: none;
   }
 
-  .org-laiya__veil {
-    @include absolute($top: 0, $right: 0, $bottom: 0, $left: 0);
-    background: color-mix(in srgb, var(--semantic-color-surface-night) 72%, transparent);
-    -webkit-backdrop-filter: blur(var(--semantic-blur-panel));
-    backdrop-filter: blur(var(--semantic-blur-panel));
-    animation: laiya-fade var(--semantic-duration-transition) var(--semantic-ease) both;
+  .org-laiya-dock .mol-laiya-composer {
+    flex: 1;
+    min-inline-size: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
   }
 
-  .org-laiya__panel {
-    @include relative();
-    display: grid;
-    // Una columna que nunca crece por su contenido: sin `minmax(0, 1fr)` una
-    // fila de fichas o una URL larga ensanchaban el panel por encima del
-    // viewport en un móvil de 390px y cortaban el botón de cerrar.
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto auto minmax(0, 1fr) auto auto;
-    gap: var(--semantic-space-component-md);
-    inline-size: min(100%, var(--component-laiya-panel-width));
-    block-size: min(100%, var(--component-laiya-panel-height));
-    padding: var(--semantic-space-component-md) var(--semantic-space-component-lg) var(--semantic-space-component-lg);
-    border: var(--semantic-border-width) solid var(--semantic-color-border-strong);
+  .org-laiya-dock .mol-laiya-suggest {
+    justify-self: stretch;
+    justify-content: center;
+  }
+
+  // Las fichas flotan sobre la página, no sobre el navy: llevan su propio
+  // fondo para leerse sobre cualquier sección.
+  .org-laiya-dock .mol-laiya-suggest .atom-laiya-chip {
+    background: var(--semantic-color-surface);
+    box-shadow: var(--semantic-shadow-floating);
+  }
+
+  /* ----------------------------------------------------------------- foco */
+
+  // El hueco. Su sombra de 200vmax es la penumbra de toda la pantalla; el
+  // propio hueco es transparente, así que el elemento se ve tal cual es, con
+  // su contraste intacto. El filete y el resplandor son el material «luz».
+  .org-laiya-spot {
+    @include fixed($top: 0, $left: 0);
+    z-index: var(--semantic-z-overlay);
     border-radius: var(--semantic-radius-surface);
-    box-shadow: var(--semantic-shadow-overlay);
+    pointer-events: none;
+    box-shadow:
+      0 0 0 var(--semantic-border-width-strong) var(--component-laiya-orb-light),
+      0 0 var(--semantic-space-component-xl) var(--component-laiya-orb-light);
+    opacity: 0;
     overflow: hidden;
-    animation: laiya-rise var(--semantic-duration-reveal) var(--semantic-ease-emphasis) both;
+  }
+
+  .org-laiya-spot[hidden] {
+    display: none;
+  }
+
+  // La pasada de escáner al llegar: una línea de luz que barre el marco una
+  // sola vez. «Medir antes de opinar», hecho movimiento.
+  .org-laiya-spot__scan {
+    @include absolute($top: 0, $bottom: 0, $left: 0);
+    inline-size: 30%;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--component-laiya-orb-light) 30%, transparent), transparent);
+    transform: translateX(-110%);
+  }
+
+  .org-laiya-spot.is-scanning .org-laiya-spot__scan {
+    animation: laiya-scan var(--component-laiya-dur-slower) linear 1 both;
   }
 
   @include reduced-motion {
-    .org-laiya__veil,
-    .org-laiya__panel {
+    .org-laiya-spot.is-scanning .org-laiya-spot__scan {
       animation: none;
     }
   }
 
-  // En un móvil la capa es la pantalla entera: un panel flotante con cuatro
-  // márgenes de 16px se come el ancho que necesitan las tarjetas.
-  @include until($bp-md) {
-    .org-laiya[data-mode="open"] {
-      padding: 0;
-    }
+  /* ----------------------------------------------------------- lente/velo */
 
-    .org-laiya[data-mode="open"] .org-laiya__panel {
-      inline-size: 100%;
-      block-size: 100%;
-      padding-inline: var(--semantic-space-page-inline);
-      border: 0;
-      border-radius: 0;
-    }
+  // Cuatro paneles alrededor del hueco. Cada uno oscurece, desenfoca y
+  // desatura lo que tiene detrás; el hueco queda limpio.
+  .org-laiya-lens {
+    @include fixed($top: 0, $left: 0);
+    z-index: var(--semantic-z-overlay);
+    pointer-events: none;
   }
 
-  /* ----------------------------------------------------------------- barra */
-
-  .org-laiya__bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--semantic-space-component-sm);
-    margin-inline-end: calc(var(--semantic-space-component-xs) * -1);
+  .org-laiya-lens[hidden],
+  .org-laiya-veil[hidden] {
+    display: none;
   }
 
-  .org-laiya__name {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0 var(--semantic-space-component-xs);
-    margin: 0;
-    min-inline-size: 0;
+  .org-laiya-lens > i {
+    @include absolute($top: 0, $left: 0);
+    background: var(--component-laiya-scrim);
+    -webkit-backdrop-filter: var(--component-laiya-lens-filter);
+    backdrop-filter: var(--component-laiya-lens-filter);
   }
 
-  .org-laiya__name b {
-    font-family: var(--semantic-font-family-display);
-    font-size: var(--semantic-font-size-body);
-    font-weight: var(--semantic-font-weight-display);
-    letter-spacing: var(--semantic-letter-spacing-eyebrow);
-  }
-
-  .org-laiya__name span {
-    font-size: var(--semantic-font-size-caption);
-    color: var(--semantic-color-text-muted);
-  }
-
-  .org-laiya__tools {
-    display: flex;
-    gap: var(--semantic-space-component-3xs);
-  }
-
-  /* ---------------------------------------------------------------- orbe */
-
-  .org-laiya__stage {
-    display: flex;
-    align-items: center;
-    gap: var(--semantic-space-component-sm);
-  }
-
-  .org-laiya__orb {
-    @include relative();
-    flex: none;
-    inline-size: var(--component-laiya-orb-size-compact);
-    aspect-ratio: 1;
-    @include transition(inline-size var(--semantic-duration-reveal) var(--semantic-ease-emphasis));
-  }
-
-  .org-laiya__orb .atom-laiya-orb {
-    inline-size: 100%;
-  }
-
-  // El lienzo es más grande que el orbe para que el halo no se corte en el
-  // borde: el orbe ocupa el 62 % central (1/φ) y el resto es luz.
-  .org-laiya__orb canvas {
-    @include absolute($top: -31%, $left: -31%);
-    inline-size: 162%;
-    // El reset limita todo `canvas` al 100 % de su contenedor; aquí el lienzo
-    // tiene que desbordarlo a propósito.
-    max-inline-size: none;
-    block-size: 162%;
+  // El velo: la página da un paso atrás mientras LAIYA habla desde el
+  // centro.
+  .org-laiya-veil {
+    @include fixed($top: 0, $right: 0, $bottom: 0, $left: 0);
+    z-index: var(--semantic-z-overlay);
+    // Más denso que la lente: el enjambre es luz, y la luz necesita
+    // oscuridad alrededor para leerse.
+    background: radial-gradient(circle at 50% 38%, color-mix(in srgb, var(--component-laiya-orb-deep) 82%, transparent), color-mix(in srgb, var(--component-laiya-orb-deep) 92%, transparent));
+    -webkit-backdrop-filter: var(--component-laiya-veil-filter);
+    backdrop-filter: var(--component-laiya-veil-filter);
     pointer-events: none;
     opacity: 0;
-    @include transition(opacity var(--semantic-duration-reveal) var(--semantic-ease));
   }
 
-  .org-laiya[data-orb="webgl"] .org-laiya__orb canvas {
-    opacity: 1;
-  }
+  /* --------------------------------------------------------------- portal */
 
-  .org-laiya[data-orb="webgl"] .org-laiya__orb .atom-laiya-orb {
-    visibility: hidden;
-  }
-
-  // El orbe de CSS también cambia de estado, aunque sea solo de ritmo.
-  .org-laiya[data-state="thinking"] .atom-laiya-orb {
-    animation-duration: var(--semantic-duration-reveal);
-  }
-
-  .org-laiya[data-state="listening"] .atom-laiya-orb {
-    animation-duration: var(--semantic-duration-reveal);
-    animation-direction: alternate;
-  }
-
-  .org-laiya__status {
-    margin: 0;
-    font-size: var(--semantic-font-size-caption);
-    font-weight: var(--semantic-font-weight-strong);
-    letter-spacing: var(--semantic-letter-spacing-eyebrow);
-    text-transform: uppercase;
-    color: var(--semantic-color-text-muted);
-  }
-
-  // La portada: orbe grande, centrado, y la frase de LAI-YA debajo.
-  .org-laiya[data-fresh] .org-laiya__stage {
-    flex-direction: column;
-    gap: var(--semantic-space-component-lg);
-    padding-block: var(--semantic-space-component-lg) 0;
-  }
-
-  .org-laiya[data-fresh] .org-laiya__orb {
-    inline-size: var(--component-laiya-orb-size);
-  }
-
-  .org-laiya[data-fresh] .org-laiya__log {
-    align-content: center;
-    text-align: center;
-  }
-
-  .org-laiya[data-fresh] .mol-laiya-msg--ai .mol-laiya-msg__text {
-    margin-inline: auto;
-    font-size: var(--semantic-font-size-lede);
-  }
-
-  .org-laiya[data-fresh] .mol-laiya-suggest {
-    justify-content: center;
-  }
-
-  /* --------------------------------------------------------------- charla */
-
-  .org-laiya__log {
-    display: grid;
-    align-content: start;
-    gap: var(--semantic-space-component-xl);
-    min-block-size: 0;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    scrollbar-gutter: stable;
-    padding-inline-end: var(--semantic-space-component-2xs);
-  }
-
-  /* ------------------------------------------------------------- acoplada */
-
-  .org-laiya[data-mode="dock"] {
-    inset: auto 0 0;
-    place-items: end center;
-    padding: 0 var(--semantic-space-page-inline) var(--semantic-space-component-md);
+  .org-laiya-portal {
+    @include fixed($top: 0, $right: 0, $bottom: 0, $left: 0);
+    z-index: var(--semantic-z-skip);
+    background:
+      radial-gradient(circle at var(--laiya-portal-x, 50%) var(--laiya-portal-y, 50%), var(--component-laiya-orb-core), var(--component-laiya-orb-deep) 70%);
+    clip-path: circle(var(--laiya-portal-r, 0px) at var(--laiya-portal-x, 50%) var(--laiya-portal-y, 50%));
     pointer-events: none;
   }
 
-  .org-laiya[data-mode="dock"] .org-laiya__veil,
-  .org-laiya[data-mode="dock"] .org-laiya__status,
-  .org-laiya[data-mode="dock"] .mol-laiya-suggest,
-  .org-laiya[data-mode="dock"] .org-laiya__name span {
+  .org-laiya-portal[hidden] {
     display: none;
-  }
-
-  .org-laiya[data-mode="dock"] .org-laiya__panel {
-    grid-template-columns: auto minmax(0, 1fr);
-    grid-template-rows: auto auto auto;
-    grid-template-areas:
-      "stage bar"
-      "stage log"
-      "form form";
-    gap: var(--semantic-space-component-2xs) var(--semantic-space-component-sm);
-    block-size: auto;
-    padding: var(--semantic-space-component-xs) var(--semantic-space-component-sm) var(--semantic-space-component-sm) var(--semantic-space-component-md);
-    pointer-events: auto;
-  }
-
-  .org-laiya[data-mode="dock"] .org-laiya__bar {
-    grid-area: bar;
-  }
-
-  .org-laiya[data-mode="dock"] .org-laiya__stage {
-    grid-area: stage;
-    align-self: start;
-    flex-direction: row;
-    padding: var(--semantic-space-component-xs) 0 0;
-  }
-
-  .org-laiya[data-mode="dock"] .org-laiya__orb {
-    inline-size: var(--component-laiya-orb-size-dock);
-  }
-
-  .org-laiya[data-mode="dock"] .org-laiya__log {
-    grid-area: log;
-    max-block-size: var(--component-laiya-orb-size-compact);
-    text-align: start;
-  }
-
-  .org-laiya[data-mode="dock"] .mol-laiya-composer {
-    grid-area: form;
-  }
-
-  // Acoplada solo se lee la última frase de LAI-YA; el resto de la charla
-  // sigue ahí y vuelve al abrir.
-  // Se queda la cita, si la hay: una frase de LAI-YA que acaba en «en sus
-  // palabras:» no puede quedarse colgando.
-  .org-laiya[data-mode="dock"] .org-laiya__log > :not(:last-child),
-  .org-laiya[data-mode="dock"] .mol-laiya-msg > :not(.mol-laiya-msg__text, .mol-laiya-quote),
-  .org-laiya[data-mode="dock"] .mol-laiya-msg--user {
-    display: none;
-  }
-
-  .org-laiya[data-mode="dock"] .mol-laiya-msg--ai .mol-laiya-msg__text {
-    margin: 0;
-    font-size: var(--semantic-font-size-ui);
   }
 }
 
 @layer syx.utilities {
-  // El documento no se desplaza por debajo mientras la capa está abierta.
-  .syx-laiya-lock {
+  // La barra lleva `.syx-on-night` para que todo lo de dentro lea el mapa
+  // navy, pero el contenedor no debe pintar fondo: solo la píldora y las
+  // fichas lo tienen. El contexto pinta su fondo en esta misma capa, así que
+  // se anula aquí y con un selector más específico.
+  .org-laiya-dock.syx-on-night {
+    background: transparent;
+  }
+
+  // Mientras la cámara se acerca, <main> crece por encima del ancho de la
+  // ventana; sin esto aparece una barra de scroll horizontal a mitad de
+  // escena.
+  .syx-laiya-staging,
+  .syx-laiya-staging body {
+    overflow-x: clip;
+  }
+
+  // Al llegar por el portal, la página nace tapada hasta que el círculo
+  // empieza a cerrarse (lo quita el JS en ese mismo instante).
+  .syx-laiya-arriving body::after {
+    content: "";
+    @include fixed($top: 0, $right: 0, $bottom: 0, $left: 0);
+    z-index: var(--semantic-z-skip);
+    background: var(--component-laiya-orb-deep);
+  }
+
+  // Texto solo para lectores de pantalla: el subtítulo se escribe palabra a
+  // palabra, y anunciarlo así sería ruido. Aquí llega la frase entera.
+  .syx-laiya-sr {
+    @include absolute();
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    padding: 0;
     overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
   }
 
-  // La sección que LAI-YA señala en la página.
-  .syx-laiya-focus {
-    outline: var(--semantic-border-width-heavy) solid var(--component-laiya-focus-ring);
-    outline-offset: var(--semantic-space-component-xs);
-    border-radius: var(--semantic-radius-surface);
-    animation: laiya-ring var(--semantic-duration-reveal) var(--semantic-ease-emphasis) 3 alternate;
+  // Efectos sobre la página (js/laiya-fx.js) ---------------------------
+
+  // Tipografía cinética: cada palabra en su máscara.
+  .syx-laiya-word {
+    display: inline-block;
+    overflow: clip;
+    vertical-align: top;
+    padding-block-end: 0.08em;
   }
 
-  @include reduced-motion {
-    .syx-laiya-focus {
-      animation: none;
-    }
+  .syx-laiya-word > span {
+    display: inline-block;
+  }
+
+  // Cifras señaladas: un barrido de luz bajo el número.
+  .syx-laiya-mark {
+    background: linear-gradient(color-mix(in srgb, var(--component-laiya-orb-light) 45%, transparent) 0 0) no-repeat 0 92% / 0% 0.38em;
+    color: inherit;
+    @include transition(background-size var(--component-laiya-dur-slower) var(--component-laiya-ease-emphasized));
+  }
+
+  .syx-laiya-mark.is-lit {
+    background-size: 100% 0.38em;
+  }
+
+  // Rayos X: todas las cajas del bloque con su contorno y una retícula de
+  // E(1) encima. El contenido no se mueve ni cambia de color.
+  .syx-laiya-blueprint.is-on * {
+    outline: var(--semantic-border-width) dashed color-mix(in srgb, var(--component-laiya-orb-light) 70%, transparent);
+    outline-offset: calc(var(--semantic-border-width) * -1);
+  }
+
+  .syx-laiya-grid {
+    @include absolute($top: 0, $right: 0, $bottom: 0, $left: 0);
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, color-mix(in srgb, var(--component-laiya-orb-light) 22%, transparent) var(--semantic-border-width), transparent var(--semantic-border-width)),
+      linear-gradient(to bottom, color-mix(in srgb, var(--component-laiya-orb-light) 22%, transparent) var(--semantic-border-width), transparent var(--semantic-border-width));
+    background-size: 1.272rem 1.272rem;
+    opacity: 0;
+    @include transition(opacity var(--component-laiya-dur-slower) linear);
+  }
+
+  .syx-laiya-blueprint.is-on > .syx-laiya-grid {
+    opacity: 1;
+  }
+
+  // La onda que sale del orbe al llegar.
+  .syx-laiya-ripple {
+    @include fixed();
+    z-index: calc(var(--semantic-z-overlay) + 1);
+    inline-size: 2.618rem;
+    aspect-ratio: 1;
+    margin: -1.309rem 0 0 -1.309rem;
+    border: var(--semantic-border-width-strong) solid var(--component-laiya-orb-light);
+    border-radius: 50%;
+    pointer-events: none;
   }
 
   @media print {
-    .org-laiya,
-    .atom-laiya-launcher {
+    .org-laiya-dock,
+    .org-laiya-spot,
+    .org-laiya-lens,
+    .org-laiya-veil,
+    .org-laiya-portal,
+    .atom-laiya-body,
+    .mol-laiya-caption {
       display: none;
     }
   }

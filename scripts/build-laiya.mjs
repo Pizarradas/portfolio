@@ -1,9 +1,9 @@
-// Genera la base de conocimiento de LAI-YA a partir del propio sitio.
+// Genera la base de conocimiento de LAIYA a partir del propio sitio.
 //
 //   node scripts/build-laiya.mjs           escribe assets/laiya/knowledge-{en,es}.json
 //   node scripts/build-laiya.mjs --check   no escribe nada; exit 1 si están desfasados
 //
-// LAI-YA no tiene un texto propio sobre el trabajo de José: lo lee de las
+// LAIYA no tiene un texto propio sobre el trabajo de José: lo lee de las
 // páginas publicadas. Así la capa no puede contradecir al sitio ni adelantarse
 // a él — si una frase cambia en `case-sport.html`, cambia en la conversación
 // en cuanto se vuelve a ejecutar esto. Va DESPUÉS de build-i18n.mjs, porque la

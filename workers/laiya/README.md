@@ -1,6 +1,6 @@
-# LAI-YA — cerebro remoto (opcional)
+# LAIYA — cerebro remoto (opcional)
 
-LAI-YA funciona sin esto. El motor local (`js/laiya-engine.js`) entiende las
+LAIYA funciona sin esto. El motor local (`js/laiya-engine.js`) entiende las
 preguntas habituales y, para el resto, cita la sección del portfolio que
 contesta. Este Worker añade una cosa: que las respuestas abiertas las redacte
 Claude, **a partir solo de las secciones que el navegador le envía**.

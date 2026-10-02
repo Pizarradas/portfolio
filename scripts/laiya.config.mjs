@@ -1,6 +1,6 @@
-// LAI-YA — la capa conversacional del portfolio.
+// LAIYA — la capa conversacional del portfolio.
 //
-// Lo que LAI-YA dice con voz propia vive aquí, en los dos idiomas. Todo lo
+// Lo que LAIYA dice con voz propia vive aquí, en los dos idiomas. Todo lo
 // demás —casos, secciones, trayectoria, herramientas, contacto— lo extrae
 // `build-laiya.mjs` del propio marcado, así que la capa no puede afirmar nada
 // que la página no publique ya. Esa es la regla que la sostiene: BRAND.md §7.2,
@@ -11,7 +11,7 @@
 // que traducir en i18n/es.json.
 //
 // Voz: BRAND.md §3. Frases cortas, sin exclamaciones, sin emoji, sin preguntas
-// retóricas. LAI-YA habla de José en tercera persona y de sí misma en primera.
+// retóricas. LAIYA habla de José en tercera persona y de sí misma en primera.
 // Lo que la página dice en primera persona —el lede, la tesis, cada caso— no
 // lo repite como suyo: lo cita, con la atribución a la vista. Así nunca se
 // confunde la voz de la capa con la de él (BRAND.md §3, hecho frente a lectura).
@@ -31,20 +31,18 @@ export const CASE_ALIASES = {
 export const UI = {
   en: {
     locale: 'en-GB',
-    launcher: 'Ask LAI-YA',
+    launcher: 'Ask LAIYA',
     launcherHint: 'A conversational layer over this portfolio',
-    title: 'LAI-YA',
+    title: 'LAIYA',
     subtitle: 'A layer over this portfolio',
     placeholder: 'Ask about his work, his process, how to reach him…',
-    inputLabel: 'Your question for LAI-YA',
+    inputLabel: 'Your question for LAIYA',
     send: 'Send',
     mic: 'Speak your question',
     micStop: 'Stop listening',
     voiceOn: 'Read answers aloud',
     voiceOff: 'Stop reading answers aloud',
-    dock: 'Show the page — keep LAI-YA docked',
-    expand: 'Open LAI-YA',
-    close: 'Close LAI-YA',
+    close: 'Close LAIYA',
     clear: 'Start over',
     you: 'You',
     states: {
@@ -61,23 +59,24 @@ export const UI = {
     professional: 'Prensa Ibérica',
     present: 'present',
     remoteNote: 'Answer written with Claude from the portfolio text',
+    pause: 'Pause',
+    resume: 'Resume',
+    next: 'Next',
   },
   es: {
     locale: 'es-ES',
-    launcher: 'Pregunta a LAI-YA',
+    launcher: 'Pregunta a LAIYA',
     launcherHint: 'Una capa conversacional sobre este portfolio',
-    title: 'LAI-YA',
+    title: 'LAIYA',
     subtitle: 'Una capa sobre este portfolio',
     placeholder: 'Pregunta por su trabajo, su proceso, cómo contactarle…',
-    inputLabel: 'Tu pregunta para LAI-YA',
+    inputLabel: 'Tu pregunta para LAIYA',
     send: 'Enviar',
     mic: 'Dicta tu pregunta',
     micStop: 'Dejar de escuchar',
     voiceOn: 'Leer las respuestas en voz alta',
     voiceOff: 'Dejar de leer las respuestas',
-    dock: 'Ver la página con LAI-YA acoplada',
-    expand: 'Abrir LAI-YA',
-    close: 'Cerrar LAI-YA',
+    close: 'Cerrar LAIYA',
     clear: 'Empezar de nuevo',
     you: 'Tú',
     states: {
@@ -94,20 +93,23 @@ export const UI = {
     professional: 'Prensa Ibérica',
     present: 'actualidad',
     remoteNote: 'Respuesta redactada con Claude a partir del texto del portfolio',
+    pause: 'Pausa',
+    resume: 'Seguir',
+    next: 'Siguiente',
   },
 };
 
-// Lo que LAI-YA dice. Varias variantes donde la repetición se notaría: una
+// Lo que LAIYA dice. Varias variantes donde la repetición se notaría: una
 // capa que contesta siempre con la misma frase deja de parecer que escucha.
 export const VOICE = {
   en: {
     greet: [
-      'I’m LAI-YA, a layer over José’s portfolio. Ask me about his work and I’ll show you where it lives on the page.',
+      'I’m LAIYA, a layer over José’s portfolio. Ask me about his work and I’ll show you where it lives on the page.',
       'Hello. I only know what this portfolio publishes, and I can take you to any part of it.',
     ],
     greetAgain: ['Still here. What else do you want to see?', 'Go ahead.'],
     identity: [
-      'LAI-YA comes from “layer”. I’m not a separate site: I sit on top of this one and answer only with what’s already published here. If it isn’t on the page, I’ll say so.',
+      'LAIYA comes from “layer”. I’m not a separate site: I sit on top of this one and answer only with what’s already published here. If it isn’t on the page, I’ll say so.',
     ],
     person: '{name} is a {role} based in {location}. This is how he introduces himself:',
     projects: 'Six cases. Four are professional work at Prensa Ibérica; two are self-directed and labelled as such.',
@@ -127,6 +129,8 @@ export const VOICE = {
     thanks: ['You’re welcome.', 'Any time. I’ll be in the corner.'],
     bye: ['I’ll stay docked in the corner if you need me.'],
     help: 'Things I can show you:',
+    destroy: 'You asked for it. Gravity on.',
+    restore: 'Better leave it as he built it. Everything back in its place.',
     found: 'This is the closest part of the portfolio:',
     foundIn: 'In the {case} case:',
     notFound: 'That isn’t in the portfolio, and I don’t make things up. You could ask José directly, or try one of these.',
@@ -134,12 +138,12 @@ export const VOICE = {
   },
   es: {
     greet: [
-      'Soy LAI-YA, una capa sobre el portfolio de José. Pregúntame por su trabajo y te enseño dónde está en la página.',
+      'Soy LAIYA, una capa sobre el portfolio de José. Pregúntame por su trabajo y te enseño dónde está en la página.',
       'Hola. Solo sé lo que publica este portfolio, y puedo llevarte a cualquier parte de él.',
     ],
     greetAgain: ['Sigo aquí. ¿Qué más quieres ver?', 'Adelante.'],
     identity: [
-      'LAI-YA viene de «layer», capa. No soy otra web: me pongo encima de esta y solo respondo con lo que ya está publicado aquí. Si no está en la página, te lo digo.',
+      'LAIYA viene de «layer», capa. No soy otra web: me pongo encima de esta y solo respondo con lo que ya está publicado aquí. Si no está en la página, te lo digo.',
     ],
     person: '{name} es {role} y vive en {location}. Así se presenta él:',
     projects: 'Seis casos. Cuatro son trabajo profesional en Prensa Ibérica; dos son proyectos propios y van etiquetados como tales.',
@@ -159,6 +163,8 @@ export const VOICE = {
     thanks: ['De nada.', 'Cuando quieras. Me quedo en la esquina.'],
     bye: ['Me quedo acoplada en la esquina por si me necesitas.'],
     help: 'Esto es lo que puedo enseñarte:',
+    destroy: 'Tú lo has pedido. Gravedad activada.',
+    restore: 'Mejor la dejo como él la construyó. Todo en su sitio.',
     found: 'Esta es la parte del portfolio que más se acerca:',
     foundIn: 'En el caso {case}:',
     notFound: 'Eso no está en el portfolio, y no me invento nada. Puedes preguntárselo a José directamente, o probar con alguna de estas.',
@@ -175,8 +181,8 @@ export const SUGGESTIONS = {
     afterProjects: ['Tell me about 42DS', 'What did the SPORT research find?', 'What is self-directed here?'],
     afterProject: ['Show me his work', 'How does he use AI?', 'How do I contact him?'],
     afterCareer: ['Tell me about 42DS', 'Where did he study?', 'What tools does he use?'],
-    afterContact: ['Download the CV', 'Show me his work'],
-    fallback: ['Show me his work', 'Who is José?', 'How do I contact him?'],
+    afterContact: ['Download the CV', 'Show me his work', 'Break the page'],
+    fallback: ['Show me his work', 'Who is José?', 'How do I contact him?', 'Break the page'],
   },
   es: {
     start: ['¿Quién es José?', 'Enséñame su trabajo', '¿Cómo usa la IA?', '¿Cómo le contacto?'],
@@ -184,12 +190,12 @@ export const SUGGESTIONS = {
     afterProjects: ['Cuéntame 42DS', '¿Qué encontró la investigación de SPORT?', '¿Qué proyectos son propios?'],
     afterProject: ['Enséñame su trabajo', '¿Cómo usa la IA?', '¿Cómo le contacto?'],
     afterCareer: ['Cuéntame 42DS', '¿Dónde estudió?', '¿Con qué herramientas trabaja?'],
-    afterContact: ['Descargar el CV', 'Enséñame su trabajo'],
-    fallback: ['Enséñame su trabajo', '¿Quién es José?', '¿Cómo le contacto?'],
+    afterContact: ['Descargar el CV', 'Enséñame su trabajo', 'Rompe la web'],
+    fallback: ['Enséñame su trabajo', '¿Quién es José?', '¿Cómo le contacto?', 'Rompe la web'],
   },
 };
 
-// El cerebro remoto es opcional. Vacío: LAI-YA responde solo con el motor
+// El cerebro remoto es opcional. Vacío: LAIYA responde solo con el motor
 // local. Con una URL: pregunta primero al Worker (ver workers/laiya/) y, si no
 // contesta a tiempo, vuelve al motor local sin que se note.
 export const REMOTE = {

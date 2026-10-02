@@ -283,7 +283,7 @@ $follow-system: false;
   --component-laiya-orb-deep: var(--semantic-color-surface-night);
   --component-laiya-orb-light: var(--semantic-color-brand-glow);
   --component-laiya-orb-glow: var(--semantic-color-text);
-  --component-laiya-focus-ring: var(--semantic-color-primary);
+  --component-laiya-scrim: color-mix(in srgb, var(--semantic-color-surface-night) 74%, transparent);
 }
 
 // ---------------------------------------------------------------------------

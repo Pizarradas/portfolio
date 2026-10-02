@@ -1,4 +1,4 @@
-/* LAI-YA — motor local.
+/* LAIYA — motor local.
  *
  * Entiende preguntas sobre el portfolio sin salir del navegador: intenciones
  * conocidas (quién es, trabajo, trayectoria, contacto…) y, para todo lo demás,
@@ -112,6 +112,7 @@
     here: ['esta pagina', 'este caso', 'this page', 'this case', 'aqui', 'here', 'de que va esto', 'what is this'],
     thanks: ['gracias', 'thanks', 'thank you', 'genial', 'perfecto', 'great', 'perfect'],
     bye: ['adios', 'bye', 'hasta luego', 'goodbye', 'nos vemos', 'see you'],
+    destroy: ['rompe', 'rompela', 'rompe la web', 'rompe la pagina', 'destruye', 'destruyela', 'destroy', 'break', 'break it', 'break the page', 'break the site', 'gravedad', 'gravity', 'tira la web', 'smash'],
     help: ['ayuda', 'help', 'que puedo preguntar', 'what can i ask', 'que sabes', 'what do you know', 'que puedes hacer', 'what can you do', 'opciones', 'options'],
   };
 
@@ -371,6 +372,8 @@
         }),
       thanks: () => R({ text: pick('thanks', V.thanks), suggestions: S.fallback, mood: 'happy' }),
       bye: () => R({ text: pick('bye', V.bye), mood: 'happy', dock: true }),
+      // El guiño: la página se cae y LAIYA la vuelve a montar.
+      destroy: () => R({ text: V.destroy, after: V.restore, mood: 'happy' }),
       help: () => R({ text: V.help, suggestions: [...S.start, ...S.afterProjects.slice(0, 2)], mood: 'curious' }),
     };
 

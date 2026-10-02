@@ -1,34 +1,56 @@
 @use "../../fluid" as *;
 
 @layer syx.tokens {
-  // COMPONENT — LAI-YA, la capa conversacional
+  // COMPONENT — LAIYA, la capa que actúa sobre la página
   //
-  // Los tamaños salen de `scss/PROPORTIONS.md` §4, la escala de espaciado
-  // E(n) = √φⁿ. Ninguno se ha elegido a ojo:
-  //
-  //   orbe de portada   E(9) → E(10)   8.719 → 11.090rem, ganancia 1, fluido
-  //   orbe en charla    E(6)           4.236rem = φ³
-  //   orbe acoplado     E(4)           2.618rem = φ²
-  //   orbe del botón    E(2)           1.618rem = φ
-  //
-  // Los colores del orbe los lee Three.js con getComputedStyle sobre el panel,
-  // que es `.syx-on-night`: por eso los cuatro están repetidos en
-  // `ink.repoint-component-colors`, para resolverse dentro del contexto.
+  // Tamaños: escala E(n) = √φⁿ de `scss/PROPORTIONS.md` §4.
+  // Tiempos y curvas: la escala de motion de SYX
+  // (mind-system/knowledges/motion/06-sistema/escala.tokens.json). El sistema
+  // del portfolio solo tiene tres duraciones semánticas —hover, transición y
+  // revelado— y ninguna curva de salida; LAIYA necesita las de 700 y
+  // 1000 ms y la familia expressive/emphasized, así que viven aquí como tokens
+  // de componente hasta que el sistema las tenga (06-sistema/escala.md §6).
+  // `js/laiya-stage.js` los lee con getComputedStyle: una sola fuente.
 
   :root {
-    --component-laiya-orb-size: #{fluid(8.719, 11.09)};
-    --component-laiya-orb-size-compact: 4.236rem;
-    --component-laiya-orb-size-dock: 2.618rem;
-    --component-laiya-orb-size-launcher: 1.618rem;
+    // El cuerpo del enjambre: el lienzo entero. Lo que ocupan las partículas
+    // es el 62 % central (1/φ). En el centro de la pantalla va a escala 1;
+    // junto a un elemento, a la mitad. E(10) en un móvil, E(12) = φ⁶ a 1600px.
+    --component-laiya-body-size: #{fluid(11.09, 17.944)};
+    // La ranura de la barra, donde descansa: E(2) = φ.
+    --component-laiya-slot-size: 1.618rem;
 
-    // El panel abierto mide lo que mide la columna compacta del sitio, W(1),
-    // y su alto se queda en W(2): en un portátil cabe entero sin pegarse a
-    // los bordes, y en un monitor grande no se convierte en una pared.
-    --component-laiya-panel-width: var(--semantic-width-compact);
-    --component-laiya-panel-height: var(--semantic-width-read);
+    // El subtítulo junto al elemento: la medida de una entradilla. Acoplado
+    // sobre la barra puede llegar a la medida de prosa.
+    --component-laiya-caption-width: var(--semantic-measure-lede);
+    --component-laiya-caption-width-docked: var(--semantic-measure-prose);
+    // Nunca más alto que 1/φ de la pantalla: el resto es de la página.
+    --component-laiya-caption-height: 61.8dvh;
 
     // La miniatura de un caso es su tarjeta social: 1200 × 630.
     --component-laiya-thumb-ratio: 1200 / 630;
+
+    // Duraciones (escala.tokens.json): fast-02, moderate-02, slow-01,
+    // slow-02 y long-01.
+    --component-laiya-dur-fast: 110ms;
+    --component-laiya-dur-moderate: 240ms;
+    --component-laiya-dur-slow: 400ms;
+    --component-laiya-dur-slower: 700ms;
+    --component-laiya-dur-long: 1000ms;
+
+    // Curvas. `light` es el Expo out del material «luz» (03-creativa/
+    // personalidad.md): la posición de algo sin masa.
+    --component-laiya-ease-enter: cubic-bezier(0, 0, 0.3, 1);
+    --component-laiya-ease-exit: cubic-bezier(0.4, 0.14, 1, 1);
+    --component-laiya-ease-standard: cubic-bezier(0.4, 0.14, 0.3, 1);
+    --component-laiya-ease-emphasized: cubic-bezier(0.05, 0.7, 0.1, 1);
+    --component-laiya-ease-emphasized-exit: cubic-bezier(0.3, 0, 0.8, 0.15);
+    --component-laiya-ease-light: cubic-bezier(0.16, 1, 0.3, 1);
+
+    // Muelles, «duración_ms bounce» (04-teoria/springs.md). El vuelo es
+    // spatial.slow; el salto al despertar, expressive.default.
+    --component-laiya-spring-flight: 600 0.1;
+    --component-laiya-spring-hop: 450 0.25;
 
     // El orbe es luz de marca: núcleo azul, fondo navy, bandas en el azul
     // claro de la rampa y un borde que brilla en el color del texto del
@@ -38,9 +60,14 @@
     --component-laiya-orb-light: var(--semantic-color-brand-glow);
     --component-laiya-orb-glow: var(--semantic-color-text);
 
-    // El anillo con el que la capa señala una sección de la página. Azul de
-    // marca sobre el fondo claro; dentro de una banda navy o azul, el mismo
-    // token se repunta a blanco.
-    --component-laiya-focus-ring: var(--semantic-color-primary);
+    // Lo que se oscurece alrededor del elemento aislado: el navy de las
+    // bandas, translúcido para que la página siga leyéndose como contexto.
+    --component-laiya-scrim: color-mix(in srgb, var(--semantic-color-surface-night) 74%, transparent);
+
+    // La lente: lo que no es el elemento pierde nitidez y color. Un cuarto
+    // del desenfoque de los paneles de cristal: se nota, no emborrona.
+    --component-laiya-lens-filter: grayscale(1) blur(calc(var(--semantic-blur-panel) / 4));
+    // El velo, cuando LAIYA ocupa el centro: la mitad de ese desenfoque.
+    --component-laiya-veil-filter: blur(calc(var(--semantic-blur-panel) / 2));
   }
 }

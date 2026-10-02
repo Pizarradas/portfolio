@@ -1,52 +1,53 @@
 @use "../abstracts/breakpoints" as *;
 @use "../abstracts/mixins" as *;
 
-// LAI-YA — moléculas.
+// LAIYA — moléculas.
 //
-// Lo que aparece dentro de la conversación. Cada respuesta es una frase de
-// LAI-YA más uno o varios bloques que enseñan contenido del sitio: una cita,
-// una tarjeta de caso, un fragmento de sección, la trayectoria, el stack o el
-// contacto. Todo vive dentro del panel `.syx-on-night`, así que los colores
-// salen ya repuntados al contexto navy.
+// El subtítulo con el que habla LAIYA y los bloques que puede llevar cuando
+// lo que cuenta no está en la página que se ve: una cita, una tarjeta de caso,
+// un fragmento de sección, la trayectoria, el stack o el contacto. Todo vive
+// dentro de `.syx-on-night`, así que los colores salen ya repuntados al navy.
 //
 // Dos voces distintas, y se tienen que distinguir a simple vista: la de
-// LAI-YA (texto en display, sin marco) y la de José (siempre citada, con su
+// LAIYA (texto en display, sin marco) y la de José (siempre citada, con su
 // filete y su atribución). BRAND.md §3: hecho y lectura nunca en la misma
 // frase; aquí, nunca con el mismo aspecto.
 
 @layer syx.molecules {
-  /* ------------------------------------------------------------ mensajes */
+  /* ------------------------------------------------------------ subtítulo */
 
-  .mol-laiya-msg {
+  // Lo que dice LAIYA, junto al orbe. En escritorio va en una columna al
+  // lado del elemento aislado (la coloca el escenario con transform); en
+  // pantallas estrechas, o cuando no señala nada, se acopla sobre la barra.
+  .mol-laiya-caption {
+    @include fixed($top: 0, $left: 0);
+    z-index: calc(var(--semantic-z-overlay) + 1);
     display: grid;
-    gap: var(--semantic-space-component-md);
-    max-inline-size: 100%;
+    gap: var(--semantic-space-component-sm);
+    inline-size: var(--component-laiya-caption-width);
+    max-block-size: var(--component-laiya-caption-height);
+    padding: var(--semantic-space-component-md) var(--semantic-space-component-lg);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: var(--semantic-border-width) solid var(--semantic-color-border-strong);
+    border-radius: var(--semantic-radius-surface);
+    box-shadow: var(--semantic-shadow-overlay);
   }
 
-  .mol-laiya-msg[data-enter] > :not(.mol-laiya-msg__text) {
-    animation: laiya-in var(--semantic-duration-reveal) var(--semantic-ease-emphasis) both;
+  .mol-laiya-caption[hidden] {
+    display: none;
   }
 
-  .mol-laiya-msg[data-enter] > :nth-child(3) {
-    animation-delay: var(--semantic-duration-hover);
+  .mol-laiya-caption[data-docked="true"] {
+    // `--laiya-dock-clear` lo fija el escenario: la altura real de la barra,
+    // que cambia con las sugerencias.
+    inset: auto auto var(--laiya-dock-clear, var(--semantic-space-section)) 50%;
+    inline-size: min(calc(100vw - var(--semantic-space-page-inline) * 2), var(--component-laiya-caption-width-docked));
+    transform: translateX(-50%);
   }
 
-  .mol-laiya-msg[data-enter] > :nth-child(4) {
-    animation-delay: var(--semantic-duration-transition);
-  }
-
-  @include reduced-motion {
-    .mol-laiya-msg[data-enter] > * {
-      animation: none;
-    }
-  }
-
-  .mol-laiya-msg__text {
+  .mol-laiya-caption__text {
     margin: 0;
-    max-inline-size: var(--semantic-measure-lede);
-  }
-
-  .mol-laiya-msg--ai .mol-laiya-msg__text {
     font-family: var(--semantic-font-family-display);
     font-size: var(--semantic-font-size-body-lg);
     font-weight: var(--semantic-font-weight-medium);
@@ -55,43 +56,45 @@
     color: var(--semantic-color-text);
   }
 
-  .mol-laiya-msg--ai .mol-laiya-msg__text:empty {
+  .mol-laiya-caption__text:empty {
     display: none;
   }
 
-  .mol-laiya-msg--user {
-    justify-self: end;
-    gap: var(--semantic-space-component-3xs);
-    padding: var(--semantic-space-component-xs) var(--semantic-space-component-md);
-    border-radius: var(--semantic-radius-surface);
-    background: var(--semantic-color-surface-muted);
-    text-align: end;
+  .mol-laiya-caption__blocks {
+    display: grid;
+    gap: var(--semantic-space-component-sm);
   }
 
-  .mol-laiya-msg__who {
-    margin: 0;
+  .mol-laiya-caption__blocks:empty {
+    display: none;
+  }
+
+  .mol-laiya-caption__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--semantic-space-component-2xs);
+    padding-block-start: var(--semantic-space-component-xs);
+    border-block-start: var(--semantic-border-width) solid var(--semantic-color-border);
+  }
+
+  .mol-laiya-caption__foot[hidden] {
+    display: none;
+  }
+
+  .mol-laiya-caption__count {
+    margin: 0 auto 0 0;
     font-size: var(--semantic-font-size-caption);
     font-weight: var(--semantic-font-weight-strong);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
-    text-transform: uppercase;
     color: var(--semantic-color-text-muted);
-  }
-
-  .mol-laiya-msg--user .mol-laiya-msg__text {
-    font-size: var(--semantic-font-size-ui);
-    color: var(--semantic-color-text);
-  }
-
-  .mol-laiya-msg__note {
-    margin: 0;
-    font-size: var(--semantic-font-size-caption);
-    color: var(--semantic-color-text-muted);
+    font-variant-numeric: tabular-nums;
   }
 
   /* --------------------------------------------------------------- citas */
 
   // La voz de José. Filete a la izquierda y atribución: lo que dice la página
-  // en primera persona nunca se lee como si lo dijera LAI-YA.
+  // en primera persona nunca se lee como si lo dijera LAIYA.
   .mol-laiya-quote {
     margin: 0;
     padding-inline-start: var(--semantic-space-component-md);
@@ -214,11 +217,7 @@
     font-size: var(--semantic-font-size-body);
   }
 
-  .mol-laiya-project__line {
-    font-size: var(--semantic-font-size-caption);
-    line-height: var(--semantic-line-height-ui);
-    color: var(--semantic-color-text-secondary);
-  }
+
 
   @include pointer {
     .mol-laiya-project:hover {
@@ -246,7 +245,6 @@
   }
 
   .mol-laiya-case__kicker,
-  .mol-laiya-case__label,
   .mol-laiya-excerpt__source {
     margin: 0;
     font-size: var(--semantic-font-size-caption);
@@ -260,7 +258,7 @@
     margin: 0;
     max-inline-size: var(--semantic-measure-title);
     font-family: var(--semantic-font-family-display);
-    font-size: var(--semantic-font-size-lede);
+    font-size: var(--semantic-font-size-body-lg);
     font-weight: var(--semantic-font-weight-display);
     line-height: var(--semantic-line-height-title);
     letter-spacing: var(--semantic-letter-spacing-display);
@@ -291,15 +289,7 @@
     background: var(--semantic-color-surface-alt);
   }
 
-  .mol-laiya-excerpt__image {
-    display: block;
-    inline-size: 100%;
-    block-size: auto;
-    max-block-size: var(--component-laiya-orb-size);
-    object-fit: cover;
-    border-radius: var(--semantic-radius-control);
-    filter: var(--semantic-media-filter);
-  }
+
 
   .mol-laiya-excerpt__go {
     justify-self: start;
@@ -368,8 +358,7 @@
     color: var(--semantic-color-text);
   }
 
-  .mol-laiya-timeline__org span,
-  .mol-laiya-timeline__role {
+  .mol-laiya-timeline__org span {
     font-size: var(--semantic-font-size-caption);
     color: var(--semantic-color-text-secondary);
   }
@@ -381,37 +370,12 @@
     gap: var(--semantic-space-component-md);
   }
 
-  .mol-laiya-tools__practice {
-    display: grid;
-    gap: var(--semantic-space-component-xs);
-    margin: 0;
-    padding: 0;
-    list-style: none;
 
-    @include from($bp-sm) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
 
-  .mol-laiya-tools__practice li {
-    display: grid;
-    gap: var(--semantic-space-component-3xs);
-    padding: var(--semantic-space-component-sm);
-    border: var(--semantic-border-width) solid var(--semantic-color-border);
-    border-radius: var(--semantic-radius-control);
-    background: var(--semantic-color-surface-alt);
-  }
 
-  .mol-laiya-tools__practice b {
-    font-size: var(--semantic-font-size-ui);
-    color: var(--semantic-color-text);
-  }
 
-  .mol-laiya-tools__practice span {
-    font-size: var(--semantic-font-size-caption);
-    line-height: var(--semantic-line-height-ui);
-    color: var(--semantic-color-text-secondary);
-  }
+
+
 
   .mol-laiya-tools__group {
     display: grid;
