@@ -56,6 +56,7 @@ import {
   Group,
   Color,
   AdditiveBlending,
+  NormalBlending,
   ColorManagement,
 } from './vendor/three.laiya.min.js';
 
@@ -412,6 +413,7 @@ uniform float uGrey;
 uniform float uShine;
 uniform vec3 uMood;
 uniform float uHue;
+uniform float uInk;
 varying float vSeed;
 varying float vBright;
 varying float vFront;
@@ -426,6 +428,12 @@ void main(){
   // El ánimo desplaza toda la rampa (uRamp); el centelleo sube a la luz.
   float k = clamp(.3 + vSeed * .6 + uTint * .4 + vBright * .5 + (uRamp - .5) * .7 + vTwinkle * .6, 0., 1.);
   vec3 col = k < .5 ? mix(uCore, uLight, k * 2.) : mix(uLight, uGlow, (k - .5) * 2.);
+  // En tinta (tema «ma») la rampa se queda entre la tinta y la tinta tenue:
+  // subir hacia el brillo es subir hacia el azul, y con la rampa de luz media
+  // nube acababa azul. El azul queda para las partículas brillantes (el 6 %),
+  // que hacen de sello, y para el centelleo.
+  vec3 inkCol = mix(mix(uCore, uLight, k * .85), uGlow, clamp(vBright * .9 + vTwinkle * .4, 0., 1.));
+  col = mix(col, inkCol, uInk);
   // El tono del ánimo, con su propia rampa: hondo, el tono, y luz blanca.
   // Su escalón no lo mueve uRamp: si no, los ánimos claros (contenta,
   // orgullosa) se irían al blanco y perderían su tono.
@@ -529,6 +537,14 @@ export function createOrb(canvas, { tokensFrom = canvas, reducedMotion = false, 
   const group = new Group();
   scene.add(group);
 
+  // Tinta o luz (`--component-laiya-ink`). Los shaders ya escriben el color
+  // premultiplicado por su alfa, así que la mezcla normal necesita que Three
+  // lo sepa (`premultipliedAlpha`) o los bordes de cada punto se oscurecen.
+  const ink = getComputedStyle(tokensFrom).getPropertyValue('--component-laiya-ink').trim() === '1';
+  const blend = ink
+    ? { blending: NormalBlending, premultipliedAlpha: true }
+    : { blending: AdditiveBlending };
+
   const palette = {
     uDeep: { value: readColor(tokensFrom, '--component-laiya-orb-deep', '#080f2f') },
     uCore: { value: readColor(tokensFrom, '--component-laiya-orb-core', '#1e3aff') },
@@ -570,11 +586,12 @@ export function createOrb(canvas, { tokensFrom = canvas, reducedMotion = false, 
     uGrey: { value: 0 },
     uMood: { value: palette.uLight.value.clone() },
     uHue: { value: 0 },
+    uInk: { value: ink ? 1 : 0 },
     ...palette,
   };
   const points = new Points(
     geo,
-    new ShaderMaterial({ vertexShader: POINT_V, fragmentShader: POINT_F, uniforms: pointU, transparent: true, depthWrite: false, blending: AdditiveBlending }),
+    new ShaderMaterial({ vertexShader: POINT_V, fragmentShader: POINT_F, uniforms: pointU, transparent: true, depthWrite: false, ...blend }),
   );
   points.frustumCulled = false;
   group.add(points);
@@ -592,7 +609,7 @@ export function createOrb(canvas, { tokensFrom = canvas, reducedMotion = false, 
   const lineU = { uLines: { value: 0.35 }, uLineCol: { value: palette.uLight.value.clone() } };
   const lines = new LineSegments(
     lineGeo,
-    new ShaderMaterial({ vertexShader: LINE_V, fragmentShader: LINE_F, uniforms: lineU, transparent: true, depthWrite: false, blending: AdditiveBlending }),
+    new ShaderMaterial({ vertexShader: LINE_V, fragmentShader: LINE_F, uniforms: lineU, transparent: true, depthWrite: false, ...blend }),
   );
   lines.frustumCulled = false;
   group.add(lines);

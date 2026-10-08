@@ -115,8 +115,9 @@
   // calcularse. Con color se calcula: 4.83:1 sobre blanco.
   .org-case-next span {
     font-size: .75rem;
+    font-family: var(--semantic-font-family-label);
     text-transform: uppercase;
-    letter-spacing: .12em;
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     color: var(--semantic-color-text-muted);
   }
 

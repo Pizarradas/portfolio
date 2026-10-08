@@ -7,31 +7,57 @@
 // cargue Three.js, y el único si no hay WebGL), el cuerpo que vuela por la
 // página, el botón de herramienta, la ficha y la etiqueta de proyecto propio.
 //
-// Todo lo que aquí tiene color lo lee de la capa semántica: la barra y el
-// subtítulo llevan `.syx-on-night` en el marcado, así que en su interior
-// `--semantic-color-text` ya es blanco y `--semantic-color-border` ya es
-// blanco translúcido, sin variantes oscuras propias.
+// Todo lo que aquí tiene color lo lee de la capa semántica. Hasta el tema
+// «ma» la barra y el subtítulo llevaban `.syx-on-night` en el marcado y
+// leían el mapa navy; ahora leen el de la página, papel y tinta, y no
+// necesitan contexto propio.
 
 @layer syx.atoms {
-  // El orbe de CSS. Mismo material que el de Three.js, aproximado con tres
-  // gradientes: núcleo azul, luz arriba a la izquierda, sombra navy abajo.
+  // El orbe de CSS. Tema «ma»: un ensō, el círculo de un solo trazo, que
+  // empieza cargado de tinta y se va quedando seco; en el hueco del trazo,
+  // un punto azul, el sello. Es la forma en la que descansa el enjambre de
+  // Three.js, dibujada con dos pseudoelementos para que no haga falta marcado.
+  //
+  // Antes era una esfera de luz: núcleo azul, brillo arriba a la izquierda y
+  // sombra navy abajo, con su resplandor.
   .atom-laiya-orb {
+    @include relative();
     display: block;
     flex: none;
     inline-size: var(--component-laiya-slot-size);
     aspect-ratio: 1;
     border-radius: 50%;
-    background:
-      radial-gradient(circle at 34% 28%, var(--component-laiya-orb-glow) 0, transparent 22%),
-      radial-gradient(circle at 40% 35%, var(--component-laiya-orb-light) 0, transparent 58%),
-      radial-gradient(circle at 50% 70%, var(--component-laiya-orb-deep) 0, var(--component-laiya-orb-core) 72%);
-    box-shadow:
-      0 0 0 var(--semantic-border-width) color-mix(in srgb, var(--component-laiya-orb-glow) 24%, transparent),
-      0 0 var(--semantic-space-component-lg) color-mix(in srgb, var(--component-laiya-orb-light) 55%, transparent);
     // Dos respiraciones y quieto: nada se mueve solo más de 5 s junto al
     // contenido sin forma de pararlo (WCAG 2.2.2). Al pensar o escuchar
     // vuelve, porque entonces el movimiento es información.
     animation: laiya-breathe 2.618s var(--semantic-ease) 2 alternate;
+  }
+
+  // El trazo. La máscara deja un anillo del 13 % del radio; el degradado
+  // cónico abre el hueco (40°, arriba a la derecha) y adelgaza la tinta a
+  // lo largo de la vuelta.
+  .atom-laiya-orb::before {
+    content: "";
+    @include absolute($top: 0, $right: 0, $bottom: 0, $left: 0);
+    border-radius: 50%;
+    background: conic-gradient(
+      from 50deg,
+      transparent 0 40deg,
+      var(--component-laiya-orb-core) 40deg,
+      color-mix(in srgb, var(--component-laiya-orb-core) 30%, transparent) 360deg
+    );
+    -webkit-mask: radial-gradient(closest-side, transparent 86%, currentColor 87%);
+    mask: radial-gradient(closest-side, transparent 86%, currentColor 87%);
+  }
+
+  // El sello, centrado en el hueco: a 70° del norte sobre el anillo.
+  .atom-laiya-orb::after {
+    content: "";
+    @include absolute($top: 24%, $left: 83.7%);
+    inline-size: 20%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--component-laiya-orb-glow);
   }
 
   @include reduced-motion {

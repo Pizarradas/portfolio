@@ -462,10 +462,10 @@
 
   .mol-career-chart__grid .lvl {
     fill: var(--semantic-color-text-muted);
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: 13px;
     font-weight: var(--semantic-font-weight-strong);
-    letter-spacing: 0.1em;
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
   }
 
@@ -601,6 +601,7 @@
   .mol-career-tip__scope {
     font-size: var(--semantic-font-size-caption);
     font-weight: var(--semantic-font-weight-strong);
+    font-family: var(--semantic-font-family-label);
     text-transform: uppercase;
     letter-spacing: var(--semantic-letter-spacing-wide);
     color: var(--semantic-color-text-muted);
@@ -690,6 +691,7 @@
     margin-top: var(--semantic-space-component-3xs);
     font-size: var(--semantic-font-size-caption);
     font-weight: var(--semantic-font-weight-strong);
+    font-family: var(--semantic-font-family-label);
     text-transform: uppercase;
     letter-spacing: var(--semantic-letter-spacing-wide);
   }
@@ -2315,8 +2317,8 @@
     justify-content: space-between;
     gap: 1rem;
     padding: 0.8rem 1rem;
-    font: 600 0.56rem/1.25 var(--semantic-font-family-ui);
-    letter-spacing: 0.07em;
+    font: 600 0.56rem/1.25 var(--semantic-font-family-label);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
   }
 

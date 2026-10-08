@@ -283,10 +283,10 @@ $follow-system: false;
   --component-case-rule: var(--semantic-color-border, #c9c8c1);
   --component-chart-bg: var(--semantic-color-surface);
   --component-chart-border: var(--semantic-color-border);
-  --component-laiya-orb-core: var(--semantic-color-surface-brand);
-  --component-laiya-orb-deep: var(--semantic-color-surface-night);
-  --component-laiya-orb-light: var(--semantic-color-brand-glow);
-  --component-laiya-orb-glow: var(--semantic-color-text);
+  --component-laiya-orb-core: var(--semantic-color-text);
+  --component-laiya-orb-deep: var(--semantic-color-surface);
+  --component-laiya-orb-light: var(--semantic-color-text-muted);
+  --component-laiya-orb-glow: var(--semantic-color-primary);
   --component-laiya-mood-attentive: var(--semantic-color-mood-attentive);
   --component-laiya-mood-curious: var(--semantic-color-mood-curious);
   --component-laiya-mood-thinking: var(--semantic-color-mood-thinking);
@@ -296,7 +296,7 @@ $follow-system: false;
   --component-laiya-mood-mischief: var(--semantic-color-mood-mischief);
   --component-laiya-mood-tickled: var(--semantic-color-mood-tickled);
   --component-laiya-mood-sleepy: var(--semantic-color-mood-sleepy);
-  --component-laiya-scrim: color-mix(in srgb, var(--semantic-color-surface-night) 74%, transparent);
+  --component-laiya-scrim: color-mix(in srgb, var(--semantic-color-surface) 88%, transparent);
 }
 
 // ---------------------------------------------------------------------------

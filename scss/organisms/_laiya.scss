@@ -8,8 +8,8 @@
 //
 //   .org-laiya-dock     la barra al pie: botón cerrado, campo de pregunta
 //                       abierto, con la ranura donde descansa el orbe
-//   .org-laiya-spot     el foco: un hueco con filete de luz y todo lo demás
-//                       en penumbra navy (patrón «obscuration», 02-proposito)
+//   .org-laiya-spot     el foco: un hueco con filete de tinta y todo lo demás
+//                       bajo papel (patrón «obscuration», 02-proposito)
 //   .org-laiya-portal   el círculo que se abre desde el orbe para cambiar de
 //                       página y se cierra sobre él al llegar
 //   el orbe y el subtítulo, en átomos y moléculas
@@ -60,10 +60,11 @@
     inline-size: 100%;
     min-block-size: var(--semantic-size-target-comfortable);
     padding: var(--semantic-space-component-2xs);
-    border: var(--semantic-border-width) solid var(--semantic-color-border-strong);
+    // Tema «ma»: filete de tinta y sin sombra. La píldora no flota sobre la
+    // página: está escrita en ella.
+    border: var(--semantic-border-width) solid var(--semantic-color-text);
     border-radius: var(--semantic-radius-pill);
     background: var(--semantic-color-surface);
-    box-shadow: var(--semantic-shadow-floating);
   }
 
   .org-laiya-dock__slot {
@@ -119,26 +120,23 @@
     justify-content: center;
   }
 
-  // Las fichas flotan sobre la página, no sobre el navy: llevan su propio
-  // fondo para leerse sobre cualquier sección.
+  // Las fichas flotan sobre la página: llevan su propio fondo para leerse
+  // sobre cualquier sección, también sobre las bandas navy y azul.
   .org-laiya-dock .mol-laiya-suggest .atom-laiya-chip {
     background: var(--semantic-color-surface);
-    box-shadow: var(--semantic-shadow-floating);
   }
 
   /* ----------------------------------------------------------------- foco */
 
-  // El hueco. Su sombra de 200vmax es la penumbra de toda la pantalla; el
-  // propio hueco es transparente, así que el elemento se ve tal cual es, con
-  // su contraste intacto. El filete y el resplandor son el material «luz».
+  // El hueco. El propio hueco es transparente, así que el elemento se ve tal
+  // cual es, con su contraste intacto. Tema «ma»: el marco es un filete de
+  // tinta, sin resplandor; lo que antes era luz alrededor ahora es papel.
   .org-laiya-spot {
     @include fixed($top: 0, $left: 0);
     z-index: var(--semantic-z-overlay);
     border-radius: var(--semantic-radius-surface);
     pointer-events: none;
-    box-shadow:
-      0 0 0 var(--semantic-border-width-strong) var(--component-laiya-orb-light),
-      0 0 var(--semantic-space-component-xl) var(--component-laiya-orb-light);
+    box-shadow: 0 0 0 var(--semantic-border-width) var(--component-laiya-orb-core);
     opacity: 0;
     overflow: hidden;
   }
@@ -193,8 +191,8 @@
   .org-laiya-veil {
     @include fixed($top: 0, $right: 0, $bottom: 0, $left: 0);
     z-index: var(--semantic-z-overlay);
-    // Más denso que la lente: el enjambre es luz, y la luz necesita
-    // oscuridad alrededor para leerse.
+    // Más denso que la lente: el enjambre es tinta, y la tinta necesita papel
+    // limpio alrededor para leerse.
     background: radial-gradient(circle at 50% 38%, color-mix(in srgb, var(--component-laiya-orb-deep) 82%, transparent), color-mix(in srgb, var(--component-laiya-orb-deep) 92%, transparent));
     -webkit-backdrop-filter: var(--component-laiya-veil-filter);
     backdrop-filter: var(--component-laiya-veil-filter);
@@ -219,13 +217,8 @@
 }
 
 @layer syx.utilities {
-  // La barra lleva `.syx-on-night` para que todo lo de dentro lea el mapa
-  // navy, pero el contenedor no debe pintar fondo: solo la píldora y las
-  // fichas lo tienen. El contexto pinta su fondo en esta misma capa, así que
-  // se anula aquí y con un selector más específico.
-  .org-laiya-dock.syx-on-night {
-    background: transparent;
-  }
+  // Aquí se anulaba el fondo que el contexto `.syx-on-night` le pintaba a la
+  // barra. Con el tema «ma» la barra ya no lleva contexto propio.
 
   // Mientras la cámara se acerca, <main> crece por encima del ancho de la
   // ventana; sin esto aparece una barra de scroll horizontal a mitad de

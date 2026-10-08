@@ -294,11 +294,11 @@
     // El contraste ya estaba bien y sigue igual: tinta de página sobre la
     // superficie al 88 %, 19:1 en claro. El 1,17:1 que salía al medirlo era el
     // del estado apagado, no el del pie.
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-weight: 600;
     font-size: var(--semantic-font-size-caption);
     line-height: 1;
-    letter-spacing: .07em;
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
     opacity: 0;
     transform: translateY(.4rem);

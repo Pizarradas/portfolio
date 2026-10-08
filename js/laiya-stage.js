@@ -177,7 +177,7 @@
     // retira un paso hacia atrás.
     const veil = make('<div class="org-laiya-veil" aria-hidden="true" hidden></div>');
     const body = make('<div class="atom-laiya-body" aria-hidden="true"><span class="atom-laiya-orb"></span><canvas></canvas></div>');
-    const caption = make(`<div class="mol-laiya-caption syx-on-night" hidden>
+    const caption = make(`<div class="mol-laiya-caption" hidden>
 <p class="mol-laiya-caption__text" aria-hidden="true"></p>
 <div class="mol-laiya-caption__blocks"></div>
 <div class="mol-laiya-caption__foot">

@@ -20,8 +20,8 @@
 
   .mol-header-architecture__core>small {
     display: block;
-    font: 700 .56rem/1 var(--semantic-font-family-ui);
-    letter-spacing: .12em;
+    font: 700 .56rem/1 var(--semantic-font-family-label);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
     color: var(--semantic-color-primary);
   }

@@ -84,15 +84,17 @@
 
   .mol-chart-card__head span {
     font-size: .7rem;
+    font-family: var(--semantic-font-family-label);
     text-transform: uppercase;
-    letter-spacing: .1em;
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     color: var(--semantic-color-text-muted);
   }
 
   .mol-chart-card__head small {
     font-size: .7rem;
+    font-family: var(--semantic-font-family-label);
     text-transform: uppercase;
-    letter-spacing: .1em;
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     color: var(--semantic-color-text-muted);
   }
 
@@ -272,8 +274,9 @@
   .mol-research-model__criteria small {
     font-size: .55rem;
     color: var(--semantic-color-primary);
+    font-family: var(--semantic-font-family-label);
     text-transform: uppercase;
-    letter-spacing: .09em;
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
   }
 
   .mol-research-model__criteria strong {
@@ -337,9 +340,9 @@
     flex-wrap: wrap;
     gap: 1rem;
     margin-top: .55rem;
-    font: .62rem/1 var(--semantic-font-family-ui);
+    font: .62rem/1 var(--semantic-font-family-label);
     text-transform: uppercase;
-    letter-spacing: .06em;
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
   }
 
   .mol-evidence-legend span {

@@ -5,8 +5,8 @@
 //
 // El subtítulo con el que habla LAIYA y los bloques que puede llevar cuando
 // lo que cuenta no está en la página que se ve: una cita, una tarjeta de caso,
-// un fragmento de sección, la trayectoria, el stack o el contacto. Todo vive
-// dentro de `.syx-on-night`, así que los colores salen ya repuntados al navy.
+// un fragmento de sección, la trayectoria, el stack o el contacto. Desde el
+// tema «ma» todo lee el mapa de la página —papel y tinta—, no el navy.
 //
 // Dos voces distintas, y se tienen que distinguir a simple vista: la de
 // LAIYA (texto en display, sin marco) y la de José (siempre citada, con su
@@ -29,9 +29,11 @@
     padding: var(--semantic-space-component-md) var(--semantic-space-component-lg);
     overflow-y: auto;
     overscroll-behavior: contain;
-    border: var(--semantic-border-width) solid var(--semantic-color-border-strong);
+    // El fondo lo pintaba el contexto navy. Sin él, el subtítulo es una hoja
+    // de papel con un filete de tinta, encima del velo, que también es papel.
+    border: var(--semantic-border-width) solid var(--semantic-color-text);
     border-radius: var(--semantic-radius-surface);
-    box-shadow: var(--semantic-shadow-overlay);
+    background: var(--semantic-color-surface);
   }
 
   .mol-laiya-caption[hidden] {

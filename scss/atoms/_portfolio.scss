@@ -300,17 +300,16 @@
   // base (12→13px, el escalón −2→−1 de `PROPORTIONS.md` §1.2) y dejaba la línea
   // de posicionamiento del hero como el texto más pequeño de la pantalla. La
   // familia, el peso, el tracking y el interlineado se conservan tal cual.
-  .atom-eyebrow {
-    font-family: var(--component-ui-font-family);
-    font-weight: 600;
-    letter-spacing: .11em;
-    line-height: 1.35;
-  }
-
+  //
+  // Tema «ma»: la familia, el peso y el tracking que se conservaban aquí
+  // —Inter a 600 y .11em— pisaban la definición base y dejaban las etiquetas
+  // fuera del tema. Ahora leen el rol `label` y el tracking de eyebrow; solo
+  // queda el interlineado.
+  .atom-eyebrow,
   .atom-index {
-    font-family: var(--component-ui-font-family);
-    font-weight: 600;
-    letter-spacing: .11em;
+    font-family: var(--semantic-font-family-label);
+    font-weight: var(--semantic-font-weight-body);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     line-height: 1.35;
   }
 

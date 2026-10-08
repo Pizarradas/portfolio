@@ -14,8 +14,8 @@
     align-items: center;
     gap: 1rem;
     padding: .75rem .9rem;
-    font: 600 .58rem/1 var(--semantic-font-family-ui);
-    letter-spacing: .08em;
+    font: 600 .58rem/1 var(--semantic-font-family-label);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
     background: #fff;
     border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
@@ -32,8 +32,8 @@
     align-items: center;
     gap: 1rem;
     padding: .75rem .9rem;
-    font: 600 .58rem/1 var(--semantic-font-family-ui);
-    letter-spacing: .08em;
+    font: 600 .58rem/1 var(--semantic-font-family-label);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
     border-top: var(--semantic-border-width) solid var(--semantic-color-border);
     color: var(--semantic-color-text-muted);

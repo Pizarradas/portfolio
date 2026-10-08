@@ -53,6 +53,11 @@ son la misma escala mirada de cerca o de lejos.
 
 ### 1.1 La regla fluida: ganancia constante de escalones
 
+> **Tema «ma».** La banda display gana 3 escalones, no 5 (hero S(4)→S(7),
+> sección S(3)→S(5)). Es una desviación declarada en
+> `abstracts/tokens/primitives/_type.scss`: con 5, el hero de 360 px tendría
+> que empezar por debajo del titular de una tarjeta.
+
 Un token fluido no interpola entre dos números elegidos a ojo. Interpola entre
 **dos escalones de esta misma escala**:
 

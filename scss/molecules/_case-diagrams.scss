@@ -640,8 +640,8 @@
   }
 
   .mol-ai-layers__layer small {
-    font: 600 .56rem/1 var(--semantic-font-family-ui);
-    letter-spacing: .12em;
+    font: 600 .56rem/1 var(--semantic-font-family-label);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
     color: var(--semantic-color-text-muted);
   }
