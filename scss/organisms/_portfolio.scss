@@ -266,12 +266,13 @@
     grid-column: 2;
   }
 
-  // The hairline is the same device the rest of the page uses to show its grid:
-  // it separates the claim from the evidence for it without adding a component.
+  // Aquí había un filete entre el titular y la prosa. Era el único `border-
+  // bottom` de una cabecera en la home y cerraba algo que la sección ya había
+  // abierto con su propio filete dos líneas más arriba: dos filetes
+  // paralelos con solo aire entre ellos (BRAND.md §4, regla 3). En el tema
+  // «ma» separa el aire: el mismo hueco, sin línea.
   .org-about__head {
     padding-bottom: var(--semantic-space-block);
-    border-bottom: var(--semantic-border-width) solid
-      var(--semantic-color-border);
   }
 
   .org-about h2 {
@@ -405,6 +406,13 @@
     border-top: var(--semantic-border-width) solid var(--semantic-color-border);
     color: var(--semantic-color-text-muted);
     font-size: var(--semantic-font-size-ui);
+  }
+
+  // En los casos el pie llega justo debajo de la franja navy y azul del
+  // cierre: el cambio de fondo ya es el corte (regla 2) y el filete de cromo
+  // sobraba.
+  body:has(.org-case-next) .org-footer {
+    border-top-color: transparent;
   }
 
   .org-footer__contact {

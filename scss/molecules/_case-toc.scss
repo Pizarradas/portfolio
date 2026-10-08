@@ -39,6 +39,15 @@
     box-shadow: none;
   }
 
+  // BRAND.md §4, regla 2: contra una banda no se dibuja filete. En cinco de
+  // los seis casos el índice cae justo encima de la primera banda azul o navy
+  // y su filete inferior quedaba pegado al cambio de fondo, un borde de 1 px
+  // pintado sobre otro de color. El color se va; el grosor se queda, para que
+  // el índice no salte un píxel al quedarse fijo arriba.
+  .mol-case-toc:has(+ .syx-on-brand, + .syx-on-night) {
+    border-bottom-color: transparent;
+  }
+
   .mol-case-toc:has(ol:empty) {
     display: none;
   }

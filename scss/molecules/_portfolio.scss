@@ -257,6 +257,15 @@
     color: var(--semantic-color-text-muted);
     font-variant-numeric: tabular-nums;
   }
+  // Cuando la fila de metadatos abre el cuerpo de la tarjeta, su filete caía a
+  // 28 px del borde del marco: dos líneas paralelas con solo aire entre ellas
+  // (BRAND.md §4, regla 3). Manda el marco. En la destacada la fila va
+  // detrás de la franja de prueba y ahí el filete sí separa algo.
+  .mol-project-card__meta:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+
 
   .mol-project-card__meta::before {
     @include absolute($top: calc(-1 * var(--semantic-border-width-strong)), $left: 0);
@@ -381,7 +390,7 @@
     list-style: none;
     display: flex;
     flex-wrap: wrap;
-    gap: var(--semantic-space-component-xs);
+    gap: var(--semantic-space-component-xs) var(--semantic-space-component-lg);
     margin: var(--semantic-space-component-sm) 0 0;
     padding: 0;
   }
@@ -390,10 +399,11 @@
     display: inline-flex;
     align-items: center;
     gap: var(--semantic-space-component-xs);
-    padding: var(--semantic-space-component-2xs) var(--semantic-space-component-sm)
-      var(--semantic-space-component-2xs) var(--semantic-space-component-xs);
-    border: var(--semantic-border-width) solid var(--semantic-color-border);
-    border-radius: var(--semantic-radius-pill);
+    // Tema «ma»: sin píldora. Dieciséis cápsulas con borde bajo un filete de
+    // grupo dibujaban dieciséis marcos donde basta una lista; ahora cada
+    // herramienta es su icono y su nombre, y el aire entre ellas hace de
+    // separador.
+    padding: var(--semantic-space-component-3xs) 0;
     color: var(--semantic-color-text-secondary);
     @include transition(color var(--semantic-duration-hover) var(--semantic-ease), border-color var(--semantic-duration-hover) var(--semantic-ease));
   }
@@ -464,7 +474,7 @@
     fill: var(--semantic-color-text-muted);
     font-family: var(--semantic-font-family-label);
     font-size: 13px;
-    font-weight: var(--semantic-font-weight-strong);
+    font-weight: var(--semantic-font-weight-body);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
   }
@@ -505,7 +515,7 @@
     fill: var(--semantic-color-text);
     font-family: var(--semantic-font-family-ui);
     font-size: 14px;
-    font-weight: var(--semantic-font-weight-strong);
+    font-weight: var(--semantic-font-weight-medium);
   }
 
   .mol-career-chart__bars .bar-dur {
@@ -516,11 +526,11 @@
   // The index that keys each segment to the list below it.
   .mol-career-chart__bars .bar-num {
     fill: var(--semantic-color-text-muted);
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: 13px;
-    font-weight: var(--semantic-font-weight-display);
+    font-weight: var(--semantic-font-weight-body);
     font-variant-numeric: tabular-nums;
-    letter-spacing: 0.08em;
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
   }
 
   .mol-career-chart__axis line {
@@ -531,7 +541,7 @@
 
   .mol-career-chart__axis text {
     fill: var(--semantic-color-text-muted);
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: 13px;
     font-variant-numeric: tabular-nums;
   }
@@ -1707,7 +1717,11 @@
   // what colour it takes on this ground.
   .mol-register__chrome a {
     flex: none;
-    color: var(--semantic-color-primary);
+    // Tinta secundaria y sin el filete del enlace de texto: dentro de una barra
+    // que ya tiene filete inferior, el subrayado era una segunda línea a 7 px
+    // de la primera. Y el azul de esta región ya lo gastan las acciones.
+    color: var(--semantic-color-text-secondary);
+    border-bottom: 0;
   }
 
   .mol-register__frame {
@@ -1858,8 +1872,11 @@
     color: var(--semantic-color-text-muted);
   }
 
+  // 26ch, la medida de titular de frase entera: a 15ch «Mundial 2026 —
+  // Construir la experiencia que diseñé.» se partía en cuatro líneas de dos
+  // palabras.
   .mol-register__copy h3 {
-    max-width: 15ch;
+    max-width: var(--semantic-measure-title);
     margin: 0 0 var(--semantic-space-component-sm);
     font-size: var(--semantic-font-size-title);
     line-height: var(--semantic-line-height-title);
@@ -1910,7 +1927,9 @@
 
   .mol-register__spec > div {
     display: grid;
-    grid-template-columns: minmax(5rem, 7rem) minmax(0, 1fr);
+    // La pista de la etiqueta es la de las fichas de caso: en la mono,
+    // «Construido con» no cabía en 7rem y se partía en dos.
+    grid-template-columns: minmax(5rem, 9rem) minmax(0, 1fr);
     gap: var(--semantic-space-component-sm);
     align-items: baseline;
   }

@@ -184,10 +184,14 @@ const bars = ROLES.map((r, i) => {
   const w = Math.max(3, x(month(r.to)) - x0 - 3);
   const years = (month(r.to) - month(r.from)) / (1000 * 60 * 60 * 24 * 365.25);
   const num = String(i + 1).padStart(2, '0');
-  const inline = w > 150
-    ? `<text class="bar-org" x="${n(x0 + 34)}" y="${BAR.y + 22}">${esc(r.org)}</text>` +
-      `<text class="bar-dur" x="${n(x0 + w - 10)}" y="${BAR.y + 22}">${years.toFixed(1)} yr</text>`
-    : '';
+  // What fits decides what is drawn, not a fixed 150: «Prensa Ibérica» and
+  // its duration need ~210 units, and with the old threshold the two labels
+  // ran into each other on the segment. Name and duration if both fit, the
+  // name alone if only it does — the list below carries every duration.
+  const nameW = 34 + r.org.length * 8.2;
+  const org = `<text class="bar-org" x="${n(x0 + 34)}" y="${BAR.y + 22}">${esc(r.org)}</text>`;
+  const dur = `<text class="bar-dur" x="${n(x0 + w - 10)}" y="${BAR.y + 22}">${years.toFixed(1)} yr</text>`;
+  const inline = w > nameW + 74 ? org + dur : w > nameW + 10 ? org : '';
   return `<g class="bar">` +
     `<rect x="${n(x0)}" y="${BAR.y}" width="${n(w)}" height="${BAR.h}" rx="3"/>` +
     `<text class="bar-num" x="${n(x0 + 5)}" y="${BAR.y - 8}">${num}</text>` +

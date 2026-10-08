@@ -86,6 +86,13 @@
       var(--semantic-color-text);
   }
 
+  // Regla 2 otra vez: cuando el capítulo arranca justo donde termina una
+  // banda, el cambio de fondo ya es el corte y los 3 px de tinta quedaban
+  // pegados al navy, sin aire entre los dos.
+  .org-case__band + .org-case__chapter {
+    border-top-color: transparent;
+  }
+
   .org-case__chapter p {
     margin: 0;
     color: var(--semantic-color-text-muted);
