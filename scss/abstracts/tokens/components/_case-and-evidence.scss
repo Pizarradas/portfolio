@@ -162,7 +162,14 @@
     // 4rem «Self-directed» se partía en dos líneas dentro del margen. Las otras
     // declaraciones de esta molécula usaban 2–7rem, 3.5rem y 4rem, cada una con
     // su propia vertical. Ahora hay una sola.
-    --component-heading-label-track: 10rem;
+    --component-heading-label-track: 2.618rem;
+
+    // Tema «ma», edición revista: la pista de la etiqueta de sección pasa a ser
+    // el raíl vertical, E(4) = φ² en la escala de espaciado. La pista de 10rem
+    // se queda con otro nombre para lo que sigue siendo una etiqueta en
+    // horizontal: el índice de registros y los nombres de las cabeceras del
+    // panel de 42DS.
+    --component-label-track: 10rem;
 
     --component-case-rule: var(--semantic-color-border, #c9c8c1);
     --component-chart-height: 25rem;

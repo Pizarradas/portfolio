@@ -1,0 +1,141 @@
+@use "../abstracts/breakpoints" as *;
+@use "../abstracts/mixins" as *;
+
+// ---------------------------------------------------------------------------
+// Revista — la composición editorial del tema sobre kinari.
+//
+// El tema «ma» resolvió el sistema: papel, tinta, una sola nota de azul y los
+// separadores de BRAND.md §4. Esta capa no cambia ninguno de esos acuerdos;
+// cambia cómo se compone la página encima de ellos, con cuatro recursos que
+// vienen de la revista japonesa impresa:
+//
+//   1. El titular a dos voces. La primera frase va al cuerpo `hero` y la
+//      segunda baja a `display-md` en tinta secundaria: es la entradilla de la
+//      portada, escrita dentro del propio `h1`.
+//   2. Las etiquetas de sección en vertical (`@include rail`), colgadas de un
+//      filete de tinta en la pista de etiqueta. Solo donde hay pista: por debajo
+//      de ella vuelven a ser una línea horizontal.
+//   3. Los numerales como figura. 01, 02, 03 dejan de ser un prefijo de
+//      versalita y pasan a ser el número de la tarjeta, al cuerpo `figure`.
+//   4. El índice con puntos guía, como el sumario de una revista: la etiqueta,
+//      los puntos y el caso.
+//
+// Todo vive en una capa propia de utilidades para que se pueda leer —y quitar—
+// de una vez, y gana por posición de capa, sin `!important` (R02).
+// ---------------------------------------------------------------------------
+
+@layer syx.utilities {
+  // 1. Titular a dos voces -------------------------------------------------
+  //
+  // La medida sube de `title` (26ch) a `display`-ancho: a 26ch del cuerpo hero
+  // «I studied journalism.» se partía en dos y la primera voz dejaba de ser
+  // una línea. La entradilla tiene su propia medida, la de un titular.
+  .org-hero h1 {
+    max-width: none;
+  }
+
+  .org-hero__deck {
+    display: block;
+    max-width: var(--semantic-measure-title);
+    margin-top: var(--semantic-space-component-sm);
+    font-size: var(--semantic-font-size-title);
+    line-height: var(--semantic-line-height-title);
+    letter-spacing: var(--semantic-letter-spacing-display);
+    color: var(--semantic-color-text-secondary);
+  }
+
+  // 2. Etiquetas en vertical ------------------------------------------------
+  @include from($bp-md) {
+    .org-about > .atom-index,
+    .org-contact > .atom-index,
+    .org-role-evolution-v22__intro > .atom-index,
+    .org-case__chapter > .atom-index {
+      @include rail;
+    }
+  }
+
+  @include from($bp-lg) {
+    // En los casos la etiqueta es un `.atom-eyebrow`; en la home, un
+    // `.atom-index`. Las dos son el primer hijo y las dos van al riel.
+    .mol-section-heading > :is(.atom-index, .atom-eyebrow):first-child {
+      @include rail;
+      grid-row: 1 / span 2;
+    }
+
+  }
+
+  // 3. Numerales como figura -----------------------------------------------
+  //
+  // La fila de metadatos ya es una columna: el número va encima, a la
+  // izquierda, como el folio de una página.
+  .mol-project-card__meta {
+    align-items: flex-start;
+  }
+
+  .mol-project-card__meta b {
+    display: block;
+    margin: 0 0 var(--semantic-space-component-3xs);
+    font-family: var(--semantic-font-family-display);
+    font-size: var(--semantic-font-size-figure);
+    font-weight: var(--semantic-font-weight-display);
+    line-height: var(--semantic-line-height-flat);
+    letter-spacing: var(--semantic-letter-spacing-hero);
+    color: var(--semantic-color-text);
+  }
+
+  // El azul lo gasta un solo número: el del caso destacado.
+  .mol-project-card--featured .mol-project-card__meta b {
+    color: var(--semantic-color-primary);
+  }
+
+  // Los proyectos propios llevan el número un escalón por debajo: son el
+  // segundo capítulo de la home y no compiten con los tres casos.
+  .mol-register__ref b {
+    font-size: var(--semantic-font-size-title-lg);
+    line-height: var(--semantic-line-height-flat);
+    letter-spacing: var(--semantic-letter-spacing-hero);
+  }
+
+  // El número de cada caso en su portada. Va encima del titular, en el azul
+  // de la marca: es la única nota de color de la portada.
+  .org-case-opener__number {
+    margin: 0 0 var(--semantic-space-component-md);
+    font-family: var(--semantic-font-family-display);
+    font-size: var(--semantic-font-size-numeral);
+    font-weight: var(--semantic-font-weight-display);
+    line-height: var(--semantic-line-height-flat);
+    letter-spacing: var(--semantic-letter-spacing-hero);
+    color: var(--semantic-color-primary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  // 4. Índice con puntos guía ------------------------------------------------
+  @include from($bp-md) {
+    .org-capability-scan b {
+      display: flex;
+      align-items: baseline;
+      gap: var(--semantic-space-component-xs);
+    }
+
+    .org-capability-scan b::after {
+      content: "";
+      flex: 1 1 auto;
+      min-width: var(--semantic-space-component-sm);
+      border-bottom: var(--semantic-border-width) dotted
+        var(--semantic-color-text-muted);
+    }
+
+    .org-capability-scan span {
+      font-size: var(--semantic-font-size-title-sm);
+    }
+  }
+
+  // La trayectoria como horario: el año manda en la fila.
+  .mol-career-role time {
+    font-family: var(--semantic-font-family-label);
+    font-size: var(--semantic-font-size-body-lg);
+    font-weight: var(--semantic-font-weight-body);
+    letter-spacing: 0;
+    color: var(--semantic-color-text);
+  }
+}

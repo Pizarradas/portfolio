@@ -189,7 +189,7 @@
   // sección caen en la misma vertical.
   @include from($bp-md) {
     .org-capability-scan a {
-      grid-template-columns: var(--component-heading-label-track) minmax(0, 1fr);
+      grid-template-columns: var(--component-label-track) minmax(0, 1fr);
       align-items: baseline;
       gap: var(--semantic-space-component-lg);
     }

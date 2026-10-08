@@ -125,23 +125,24 @@ $follow-system: false;
 // 2. Bases — los tokens que cambian de valor entre un tema y otro
 // ---------------------------------------------------------------------------
 
-// Tema «ma»: la página es papel, no blanco. Un escalón de la rampa con sesgo
-// azul (`gray-50`), y cada superficie baja uno detrás. El blanco puro queda
-// para lo que de verdad es una hoja encima de la página: una captura, una
-// tarjeta reconstruida en código.
+// Tema «ma», edición revista: la página es kinari, algodón crudo, y cada
+// superficie baja un escalón de la misma rampa. `sheet` es la hoja que se
+// pone encima de la página —una evidencia, una ficha— y es lo único casi
+// blanco que queda.
 @mixin base-light {
-  --semantic-color-surface: var(--primitive-color-gray-50);
-  --semantic-color-surface-alt: var(--primitive-color-gray-100);
-  --semantic-color-surface-muted: var(--primitive-color-gray-200);
+  --semantic-color-surface: var(--primitive-color-kinari-100);
+  --semantic-color-surface-alt: var(--primitive-color-kinari-200);
+  --semantic-color-surface-muted: var(--primitive-color-kinari-300);
   --semantic-color-surface-inverse: var(--primitive-color-ink-1000);
+  --semantic-color-sheet: var(--primitive-color-kinari-50);
 
   --semantic-color-text: var(--primitive-color-ink-1000);
-  --semantic-color-text-secondary: var(--primitive-color-ink-700);
-  --semantic-color-text-muted: var(--primitive-color-gray-500);
+  --semantic-color-text-secondary: var(--primitive-color-sumi-700);
+  --semantic-color-text-muted: var(--primitive-color-sumi-500);
   --semantic-color-text-inverse: var(--primitive-color-white);
 
-  --semantic-color-border: var(--primitive-color-gray-200);
-  --semantic-color-border-strong: var(--primitive-color-gray-300);
+  --semantic-color-border: var(--primitive-color-kinari-300);
+  --semantic-color-border-strong: var(--primitive-color-kinari-400);
 
   --semantic-color-primary: var(--primitive-color-brand-500);
   --semantic-color-primary-soft: var(--primitive-color-brand-50);
@@ -161,6 +162,7 @@ $follow-system: false;
   --semantic-color-surface: var(--primitive-color-ink-1000);
   --semantic-color-surface-alt: var(--primitive-alpha-light-04);
   --semantic-color-surface-muted: var(--primitive-alpha-light-08);
+  --semantic-color-sheet: var(--primitive-alpha-light-08);
   // El inverso de la página también se invierte: es «lo contrario del fondo»,
   // no «negro».
   --semantic-color-surface-inverse: var(--primitive-color-white);
@@ -199,6 +201,7 @@ $follow-system: false;
 @mixin base-dark-section {
   --semantic-color-surface-alt: var(--primitive-alpha-light-04);
   --semantic-color-surface-muted: var(--primitive-alpha-light-08);
+  --semantic-color-sheet: var(--primitive-alpha-light-08);
 
   --semantic-color-text: var(--primitive-color-white);
   --semantic-color-text-secondary: var(--primitive-alpha-light-78);

@@ -30,35 +30,34 @@
 
     // Display — editorial headline sizes
     //
-    // Tema «ma». Los titulares bajan y se ponen sobre la escala de
-    // PROPORTIONS §1, `S(n) = ∛φⁿ`, que hasta ahora solo seguía el texto. El
-    // hero pasaba de 48 a 144 px: un grito. Aquí el aire lo pone el hueco
-    // alrededor del titular, no su cuerpo, y la jerarquía se sostiene con
-    // peso, retícula y filete.
+    // Tema «ma», edición revista. La primera versión del tema bajó los
+    // titulares a 49 px para que el aire hiciera la jerarquía; la revista la
+    // hace con el contraste de escala: etiquetas de 12 px en la mono contra
+    // titulares de cartel. Todos los pasos siguen sobre `S(n) = ∛φⁿ`
+    // (PROPORTIONS §1):
     //
-    //   paso         360 px        1600 px      g
-    //   display-sm   S(2) 1.378    S(3) 1.618   1   titular de tarjeta
-    //   display-md   S(3) 1.618    S(4) 1.900   1   titular de bloque
-    //   display-lg   S(3) 1.618    S(5) 2.230   2   titular de sección
-    //   display-2xl  S(4) 1.900    S(7) 3.073   3   hero
+    //   paso         360 px        1600 px       g
+    //   display-sm   S(2) 1.378    S(4) 1.900    2   titular de tarjeta
+    //   display-md   S(3) 1.618    S(6) 2.618    3   titular de caso
+    //   display-lg   S(4) 1.900    S(9) 4.236    5   titular de sección
+    //   display-2xl  S(6) 2.618    S(12) 6.854   6   portada
+    //   figure       S(7) 3.073    S(13) 8.047   6   cifra de una figura
+    //   numeral      S(9) 4.236    S(18) 17.944  9   número de caso o de pliego
     //
-    // La banda display ya no gana 5 escalones (§1.1) sino 3: es una desviación
-    // declarada del tema. A 5, el hero de 360 px tendría que empezar en S(2) y
-    // quedaría por debajo del titular de una tarjeta.
-    //
-    // `display-xl` se fue: la sección y el titular grande son ahora el mismo
-    // escalón, y dos primitivos con el mismo valor son uno de más.
-    --primitive-font-size-display-sm: #{fluid(1.378, 1.618)};
-    --primitive-font-size-display-md: #{fluid(1.618, 1.9)};
-    --primitive-font-size-display-lg: #{fluid(1.618, 2.23)};
-    --primitive-font-size-display-2xl: #{fluid(1.9, 3.073)};
+    // La portada y el numeral pasan del Δg de 5 de §1.1: son las dos piezas
+    // de cartel de la revista y no conviven con texto corrido en la misma
+    // fila. Desviación declarada.
+    --primitive-font-size-display-sm: #{fluid(1.378, 1.9)};
+    --primitive-font-size-display-md: #{fluid(1.618, 2.618)};
+    --primitive-font-size-display-lg: #{fluid(1.9, 4.236)};
+    --primitive-font-size-display-2xl: #{fluid(2.618, 6.854)};
 
-    // La cifra de una figura: «86 %», «134», «279». Era el único tamaño grande
-    // que el sistema no tenía, así que cada figura se escribía el suyo —96,
-    // 115, 58 px— y la misma clase de dato medía tres cosas distintas en tres
-    // páginas. S(6) → S(9), 42 → 68 px: por encima del hero, porque una cifra
-    // es una palabra sola y se lee de un golpe.
-    --primitive-font-size-figure: #{fluid(2.618, 4.236)};
+    // La cifra de una figura: «86 %», «134», «279». Antes cada figura se
+    // escribía su tamaño —96, 115, 58 px—.
+    --primitive-font-size-figure: #{fluid(3.073, 8.047)};
+
+    // El numeral de revista: «01», «02» en la cabecera de cada pliego.
+    --primitive-font-size-numeral: #{fluid(4.236, 17.944)};
 
     --primitive-font-weight-regular: 400;
     --primitive-font-weight-medium: 500;
@@ -66,19 +65,19 @@
     --primitive-font-weight-bold: 700;
 
     // Line height shrinks as type grows — one rule, applied consistently.
-    // `tight` es `lh(5) = 1 + φ⁻⁵` (PROPORTIONS §2): con el hero a 49 px ya no
-    // hace falta apretar a 1.02, que solo funcionaba con letra negra a 144 px.
+    // `tight` vuelve a 1.02: con la portada a 110 px, `lh(5)` dejaba entre
+    // líneas un hueco de cartel mal compuesto.
     --primitive-line-height-flat: 0.9;
-    --primitive-line-height-tight: 1.09;
+    --primitive-line-height-tight: 1.02;
     --primitive-line-height-snug: 1.18;
     --primitive-line-height-normal: 1.45;
     --primitive-line-height-relaxed: 1.6;
 
-    // Tracking tightens as type grows, for the same reason. Con el tamaño baja
-    // también el apriete: `ls(3)` para el hero y `ls(4)` para el resto de
-    // titulares (PROPORTIONS §3).
-    --primitive-letter-spacing-display-2xl: -0.0236em;
-    --primitive-letter-spacing-display: -0.0146em;
+    // Tracking tightens as type grows, for the same reason: `ls(2)` para la
+    // portada y los numerales, `ls(3)` para el resto de titulares
+    // (PROPORTIONS §3).
+    --primitive-letter-spacing-display-2xl: -0.0382em;
+    --primitive-letter-spacing-display: -0.0236em;
     --primitive-letter-spacing-tight: -0.02em;
     --primitive-letter-spacing-wide: 0.08em;
   }

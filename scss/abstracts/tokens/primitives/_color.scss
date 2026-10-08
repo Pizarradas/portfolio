@@ -45,19 +45,31 @@
     --primitive-color-mood-sleepy: #4a3bd1; // índigo
 
     // Neutrals
+    //
+    // Tema «ma», edición revista: kinari (生成り), el algodón sin blanquear.
+    // Es la tela sobre la que se tiñe el añil, así que el azul de marca y el
+    // navy no cambian: pasan a leerse como índigo sobre tela cruda. Sustituye
+    // a la rampa gris con sesgo azul, que no tenía otro lector que el mapa
+    // claro de `_ink.scss` (BRAND.md §4 recoge el cambio).
+    //
+    //   kinari-50   hoja: lo que va encima de la página (evidencias, fichas)
+    //   kinari-100  la página
+    //   kinari-200  superficie alterna
+    //   kinari-300  filete
+    //   kinari-400  filete fuerte
+    //
+    // La tinta de texto pierde el azul con el fondo: un gris de sumi cálido.
+    // Medidos sobre kinari-100 y kinari-200:
+    //   sumi-700  #4a4d57   7,27:1 · 6,64:1
+    //   sumi-500  #62656f   5,02:1 · 4,58:1
     --primitive-color-white: #ffffff;
-    --primitive-color-gray-50: #f7f8fb;
-    --primitive-color-gray-100: #eef1f6;
-    --primitive-color-gray-200: #dce1ea;
-    --primitive-color-gray-300: #cbd2dd;
-    // Tema «ma»: los dos grises de texto tiran al azul, como el resto de la
-    // rampa. Los de antes eran el gris neutro de Tailwind, el único color del
-    // sitio sin sesgo, y sobre el papel nuevo `gray-500` bajaba a 4,27:1 en
-    // `surface-alt` (falla AA). Medidos sobre `gray-50` y `gray-100`:
-    //   gray-500  #5e6679   5,41:1 · 5,08:1
-    //   ink-700   #475066   7,99:1 · 7,49:1
-    --primitive-color-gray-500: #5e6679;
-    --primitive-color-ink-700: #475066;
+    --primitive-color-kinari-50: #fbfaf6;
+    --primitive-color-kinari-100: #f1eee6;
+    --primitive-color-kinari-200: #e8e4da;
+    --primitive-color-kinari-300: #d6d0c3;
+    --primitive-color-kinari-400: #c6bfb0;
+    --primitive-color-sumi-500: #62656f;
+    --primitive-color-sumi-700: #4a4d57;
     --primitive-color-ink-1000: #080f1a;
 
     // Alpha channels for inverse surfaces, so dark sections stop hand-rolling

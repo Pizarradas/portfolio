@@ -1105,7 +1105,7 @@
   // demostrarlo.
   .mol-evidence-system__stack figure {
     display: grid;
-    grid-template-columns: var(--component-heading-label-track) minmax(0, 1fr);
+    grid-template-columns: var(--component-label-track) minmax(0, 1fr);
     align-items: center;
     min-height: 0;
     margin: 0;
