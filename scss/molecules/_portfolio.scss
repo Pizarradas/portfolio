@@ -2331,7 +2331,9 @@
   // map-live-v30.css
   .mol-map-browser {
     border: var(--semantic-border-width) solid var(--semantic-color-border);
-    background: #fff;
+    // El marco del navegador es hoja, no blanco: sobre kinari un `#fff` se
+    // leía como un recorte pegado encima de la página.
+    background: var(--semantic-color-sheet);
     overflow: hidden;
   }
 
@@ -2347,7 +2349,7 @@
   }
 
   .mol-map-browser > header {
-    background: #f5f7fa;
+    background: var(--semantic-color-surface-alt);
     border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
@@ -2362,7 +2364,7 @@
     width: 0.42rem;
     height: 0.42rem;
     border-radius: 50%;
-    background: #d6dce5;
+    background: var(--semantic-color-border-strong);
   }
 
   .mol-map-browser > header span {
@@ -2384,7 +2386,7 @@
 
   .mol-map-browser__viewport {
     height: clamp(28rem, 58vw, 48rem);
-    background: #eef1f4;
+    background: var(--semantic-color-surface-muted);
   }
 
   .mol-map-browser__viewport iframe {

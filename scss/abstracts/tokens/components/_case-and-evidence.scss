@@ -79,13 +79,21 @@
     // -art-ink` se fue al pasar `organisms/_sport.scss` a tokens semánticos,
     // que era su único lector.
     --component-art-night: #07102f;
-    --component-art-muted: #6c7484;
+    // Sobre kinari el gris frío de antes bajaba a 4.05:1. Ahora es el tenue
+    // del sistema, que ya sale de la rampa cálida.
+    --component-art-muted: var(--semantic-color-text-muted);
 
     // El contorno de un punto «dentro del umbral». Estaba en crudo dentro del
     // componente y no puede ser `--semantic-color-border`: esos 39 puntos son
     // una clase del gráfico, no una separación, y con el gris de borde dejan de
     // distinguirse del fondo a ese tamaño.
-    --component-art-dot-idle: #b8c0ce;
+    // Mezclado con el papel para que siga la rampa kinari en vez del gris
+    // azulado del tema anterior.
+    --component-art-dot-idle: color-mix(
+      in srgb,
+      var(--semantic-color-text-muted) 42%,
+      var(--semantic-color-surface)
+    );
   }
 }
 

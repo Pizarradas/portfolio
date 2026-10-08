@@ -121,9 +121,15 @@
     color: var(--semantic-color-text-muted);
   }
 
+  // `title`, no `title-lg`: con la escala de la revista `title-lg` llega a
+  // 68 px y en una celda de un tercio «Selected work» se partía en dos líneas
+  // con el interlineado del cuerpo. El paginador es navegación, no portada.
   .org-case-next strong {
-    font-size: var(--semantic-font-size-title-lg);
+    font-family: var(--semantic-font-family-display);
+    font-size: var(--semantic-font-size-title);
     font-weight: var(--semantic-font-weight-display);
+    line-height: var(--semantic-line-height-title);
+    letter-spacing: var(--semantic-letter-spacing-display);
   }
 
   // El cierre de la página, con color en vez de con otra línea.

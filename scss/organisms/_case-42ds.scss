@@ -433,17 +433,9 @@
   //
   // El arreglo de fondo sigue siendo un contexto claro que se pueda anidar
   // dentro de uno oscuro. El sistema no lo tiene todavía.
-  .org-foundation-showcase .mol-section-heading .atom-eyebrow {
-    color: var(--semantic-color-text-inverse);
-  }
-
-  .org-foundation-showcase .mol-section-heading>p:last-child {
-    color: color-mix(
-      in srgb,
-      var(--semantic-color-text-inverse) 78%,
-      transparent
-    );
-  }
+  // El encabezado ya lleva `.syx-on-night` en el marcado, así que sus colores
+  // los pone el contexto. Pintarlo aquí con `text-inverse` lo dejaba en tinta
+  // sobre navy: dentro del contexto oscuro el «inverso» es el oscuro.
 
   .org-foundation-showcase>.mol-token-lab {
     margin-bottom: 1rem;

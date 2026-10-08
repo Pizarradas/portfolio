@@ -55,13 +55,48 @@
   }
 
   @include from($bp-lg) {
-    // En los casos la etiqueta es un `.atom-eyebrow`; en la home, un
-    // `.atom-index`. Las dos son el primer hijo y las dos van al riel.
-    .mol-section-heading > :is(.atom-index, .atom-eyebrow):first-child {
+    // El riel es para índices cortos —Work, About, Act 01—. Los encabezados de
+    // los casos llevan una frase entera («Design foundations · rebuilt in
+    // code») y en vertical medía hasta 420 px: el encabezado crecía a su
+    // altura y dejaba 300 px de aire muerto antes del contenido.
+    .mol-section-heading > .atom-index:first-child {
       @include rail;
       grid-row: 1 / span 2;
     }
 
+    // Así que esa frase va encima del titular, en su misma vertical, como el
+    // antetítulo de una revista. La pista de etiqueta se queda vacía y sigue
+    // marcando el margen: el titular, la prosa del acto y el riel de «Act 01»
+    // arrancan donde arrancaban.
+    .mol-section-heading:has(> .atom-eyebrow:first-child) {
+      row-gap: 0;
+    }
+
+    .mol-section-heading > .atom-eyebrow:first-child {
+      grid-column: 2 / -1;
+      grid-row: 1;
+      margin-bottom: var(--semantic-space-component-sm);
+    }
+
+    .mol-section-heading > .atom-eyebrow:first-child ~ h2 {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    .mol-section-heading > .atom-eyebrow:first-child ~ h2 + * {
+      grid-column: 3;
+      grid-row: 2;
+    }
+  }
+
+  // Un solo cuerpo para los titulares de los tres casos, a todo ancho. Había
+  // tres reglas compitiendo —el rol `title` para la destacada, un clamp de
+  // 2.4vw desde 1200px y el `h3` base por debajo— y a 1024px la tarjeta 02
+  // ponía su titular a 50px en una columna de 320: ocho líneas. Con el
+  // numeral de figura encima, el titular ya no tiene que gritar.
+  .org-work .mol-project-card .mol-project-card__body h3 {
+    font-size: var(--semantic-font-size-title);
+    line-height: var(--semantic-line-height-title);
   }
 
   // 3. Numerales como figura -----------------------------------------------
@@ -93,6 +128,14 @@
   .mol-register__ref b {
     font-size: var(--semantic-font-size-title-lg);
     line-height: var(--semantic-line-height-flat);
+    letter-spacing: var(--semantic-letter-spacing-hero);
+  }
+
+  // Las tiras de cifras de los casos (17 MB · 57 MB · 2; 11 · 28 · 8) suben
+  // a `title-lg`: son cifras de figura, no rótulos, y a `title` quedaban por
+  // debajo de los titulares de su propia sección.
+  .mol-case-metrics dd {
+    font-size: var(--semantic-font-size-title-lg);
     letter-spacing: var(--semantic-letter-spacing-hero);
   }
 
@@ -128,6 +171,23 @@
     .org-capability-scan span {
       font-size: var(--semantic-font-size-title-sm);
     }
+  }
+
+  // Cinco empleos, cinco columnas desde `lg`. Con `auto-fit` de 13rem, entre
+  // 1002 y ~1240px cabían cuatro y Prensa Ibérica —el empleo actual— caía
+  // sola a una segunda fila.
+  @include from($bp-lg) {
+    .mol-career-list {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+  }
+
+  // Las celdas se estiran a la más alta de la fila y su retícula interna
+  // repartía ese sobrante entre sus filas: los años de las cinco columnas
+  // caían a cinco alturas distintas. Arrancando arriba forman una línea.
+  .mol-career-role {
+    align-content: start;
   }
 
   // La trayectoria como horario: el año manda en la fila.
