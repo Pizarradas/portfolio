@@ -50,8 +50,14 @@
     --primitive-color-gray-100: #eef1f6;
     --primitive-color-gray-200: #dce1ea;
     --primitive-color-gray-300: #cbd2dd;
-    --primitive-color-gray-500: #6b7280;
-    --primitive-color-ink-700: #374151;
+    // Tema «ma»: los dos grises de texto tiran al azul, como el resto de la
+    // rampa. Los de antes eran el gris neutro de Tailwind, el único color del
+    // sitio sin sesgo, y sobre el papel nuevo `gray-500` bajaba a 4,27:1 en
+    // `surface-alt` (falla AA). Medidos sobre `gray-50` y `gray-100`:
+    //   gray-500  #5e6679   5,41:1 · 5,08:1
+    //   ink-700   #475066   7,99:1 · 7,49:1
+    --primitive-color-gray-500: #5e6679;
+    --primitive-color-ink-700: #475066;
     --primitive-color-ink-1000: #080f1a;
 
     // Alpha channels for inverse surfaces, so dark sections stop hand-rolling

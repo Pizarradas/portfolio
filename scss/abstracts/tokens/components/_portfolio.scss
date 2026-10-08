@@ -88,7 +88,10 @@
     --component-hero-field-module: 132; // average px between nodes → density
     --component-hero-field-ink: 0.34; // alpha of a node at full strength
     --component-hero-field-reach: 170; // px a node can hold a link across
-    --component-eyebrow-color: var(--semantic-color-primary);
+    // Tema «ma»: la etiqueta habla en tinta tenue. El azul se gasta una vez
+    // por región (BRAND.md §4) y una etiqueta encima de cada titular lo
+    // gastaba antes de llegar a lo importante.
+    --component-eyebrow-color: var(--semantic-color-text-muted);
     --component-wordmark-accent: var(--semantic-color-primary);
     --component-selection-bg: var(--semantic-color-primary);
     --component-selection-fg: var(--semantic-color-on-primary);

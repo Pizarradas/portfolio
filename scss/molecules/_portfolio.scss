@@ -252,6 +252,7 @@
     font-size: var(--semantic-font-size-eyebrow);
     font-weight: var(--semantic-font-weight-medium);
     text-transform: uppercase;
+    font-family: var(--semantic-font-family-label);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     color: var(--semantic-color-text-muted);
     font-variant-numeric: tabular-nums;
@@ -314,6 +315,7 @@
     font-size: var(--semantic-font-size-caption);
     font-weight: var(--semantic-font-weight-display);
     text-transform: uppercase;
+    font-family: var(--semantic-font-family-label);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     color: var(--semantic-color-text-muted);
   }
@@ -364,7 +366,7 @@
   }
 
   .mol-mark-group h3 {
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-caption);
     font-weight: var(--semantic-font-weight-display);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
@@ -769,7 +771,7 @@
 
   // The label is furniture, not the link: same voice as the facts sheet.
   .mol-contact-list__label {
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-caption);
     font-weight: var(--semantic-font-weight-strong);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
@@ -905,7 +907,7 @@
     background: var(--component-work-enter-bg);
     color: var(--component-work-enter-fg);
     border-radius: var(--semantic-radius-pill);
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     font-weight: var(--semantic-font-weight-strong);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
@@ -961,7 +963,7 @@
   // patrón que `.mol-evidence-live__chrome` ya sigue: rótulo apagado, acento
   // reservado a un solo elemento.
   .mol-project-card__proof span {
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
@@ -1040,7 +1042,7 @@
 
   // Rótulo del panel, no acento: mismo criterio que en `__proof span`.
   .mol-evidence-system__meta span {
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
@@ -1100,7 +1102,7 @@
 
   .mol-evidence-system__stack figcaption {
     padding-inline: var(--semantic-space-component-md);
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
@@ -1140,7 +1142,7 @@
       var(--semantic-color-border);
     border-top: var(--semantic-border-width) solid
       var(--semantic-color-border);
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
@@ -1220,7 +1222,7 @@
   // ninguno sea el importante. Se queda donde significa algo —el resultado
   // medido— y el rótulo baja a apagado.
   .mol-evidence-study__head span {
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
@@ -1254,6 +1256,7 @@
 
   .mol-evidence-study th {
     font-size: var(--semantic-font-size-eyebrow);
+    font-family: var(--semantic-font-family-label);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
     color: var(--semantic-color-text-muted);
@@ -1304,6 +1307,7 @@
   .mol-evidence-study__bars small {
     font-size: var(--semantic-font-size-eyebrow);
     font-weight: var(--semantic-font-weight-body);
+    font-family: var(--semantic-font-family-label);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
     color: var(--semantic-color-text-muted);
@@ -1342,7 +1346,7 @@
     background: var(--semantic-color-surface-alt);
     border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
@@ -1387,7 +1391,7 @@
     padding: var(--semantic-space-component-3xs) var(--semantic-space-component-2xs);
     background: var(--semantic-color-surface);
     border: var(--semantic-border-width) solid var(--semantic-color-border);
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
@@ -1807,7 +1811,7 @@
   }
 
   .mol-register__fallback small {
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
@@ -1843,7 +1847,7 @@
   }
 
   .mol-register__ref span {
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
@@ -1908,7 +1912,7 @@
   }
 
   .mol-register__spec dt {
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
@@ -1997,7 +2001,7 @@
   }
 
   .mol-map-shift__tag {
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
@@ -2181,7 +2185,7 @@
 
   .mol-case-signature__label {
     grid-column: 1 / -1;
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     font-weight: var(--semantic-font-weight-emphasis);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);

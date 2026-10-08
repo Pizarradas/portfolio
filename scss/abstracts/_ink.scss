@@ -125,10 +125,14 @@ $follow-system: false;
 // 2. Bases — los tokens que cambian de valor entre un tema y otro
 // ---------------------------------------------------------------------------
 
+// Tema «ma»: la página es papel, no blanco. Un escalón de la rampa con sesgo
+// azul (`gray-50`), y cada superficie baja uno detrás. El blanco puro queda
+// para lo que de verdad es una hoja encima de la página: una captura, una
+// tarjeta reconstruida en código.
 @mixin base-light {
-  --semantic-color-surface: var(--primitive-color-white);
-  --semantic-color-surface-alt: var(--primitive-color-gray-50);
-  --semantic-color-surface-muted: var(--primitive-color-gray-100);
+  --semantic-color-surface: var(--primitive-color-gray-50);
+  --semantic-color-surface-alt: var(--primitive-color-gray-100);
+  --semantic-color-surface-muted: var(--primitive-color-gray-200);
   --semantic-color-surface-inverse: var(--primitive-color-ink-1000);
 
   --semantic-color-text: var(--primitive-color-ink-1000);
@@ -269,7 +273,7 @@ $follow-system: false;
   --component-work-field-line: color-mix(in srgb, var(--semantic-color-border) 65%, transparent);
   --component-link-hover-color: var(--semantic-color-primary);
   --component-text-link-rule: var(--semantic-color-border);
-  --component-eyebrow-color: var(--semantic-color-primary);
+  --component-eyebrow-color: var(--semantic-color-text-muted);
   --component-wordmark-accent: var(--semantic-color-primary);
   --component-selection-bg: var(--semantic-color-primary);
   --component-selection-fg: var(--semantic-color-on-primary);

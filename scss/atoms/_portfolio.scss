@@ -86,6 +86,7 @@
     font-size: var(--semantic-font-size-eyebrow);
     font-weight: var(--semantic-font-weight-display);
     text-transform: uppercase;
+    font-family: var(--semantic-font-family-label);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
   }
 
@@ -100,7 +101,7 @@
 
   .atom-lede {
     font-size: var(--semantic-font-size-lede);
-    line-height: var(--semantic-line-height-title);
+    line-height: var(--semantic-line-height-lede);
     color: var(--semantic-color-text-secondary);
     // ch resolves against this element's own font-size, which is the whole
     // point of setting the measure here and not on a wrapper.
@@ -150,6 +151,7 @@
   // the furniture is set in the eyebrow size.
   .atom-text-link--compact {
     font-size: var(--semantic-font-size-eyebrow);
+    font-family: var(--semantic-font-family-label);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
   }
@@ -228,7 +230,7 @@
     padding-inline-start: var(--semantic-space-component-sm);
     border-inline-start: var(--semantic-border-width) solid
       var(--semantic-color-border);
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     // The header is a single non-wrapping row; four nav labels plus this pair
     // is the widest it ever gets, and the Spanish labels are the long ones.

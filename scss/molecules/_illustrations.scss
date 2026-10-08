@@ -84,7 +84,7 @@
     padding: var(--semantic-space-component-sm) var(--semantic-space-component-md);
     border-block-start: var(--semantic-border-width) solid
       var(--semantic-color-border);
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-caption);
     line-height: var(--semantic-line-height-ui);
     text-transform: uppercase;
@@ -132,7 +132,7 @@
   }
 
   .mol-ill-card--colophon b {
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-caption);
     font-weight: var(--semantic-font-weight-emphasis);
     line-height: var(--semantic-line-height-ui);

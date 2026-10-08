@@ -12,8 +12,13 @@
       BlinkMacSystemFont, "Segoe UI", sans-serif;
     --primitive-font-family-display: "Instrument Sans", Inter, ui-sans-serif,
       system-ui, -apple-system, sans-serif;
-    --primitive-font-family-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas,
-      monospace;
+    // La mono de las etiquetas: índices, fechas, muestras, metadatos. Se sirve
+    // propia (scripts/build-fonts.mjs) porque la mono del sistema cambia de
+    // ancho y de dibujo entre Windows, macOS y Android, y aquí el ritmo de la
+    // etiqueta es parte de la retícula. El código sigue pudiendo caer a la
+    // del sistema: es el mismo stack detrás.
+    --primitive-font-family-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular",
+      Menlo, Consolas, monospace;
 
     // Text — reading sizes
     --primitive-font-size-2xs: #{fluid(0.6875, 0.75)};
@@ -24,30 +29,50 @@
     --primitive-font-size-xl: #{fluid(1.25, 1.5)};
 
     // Display — editorial headline sizes
-    --primitive-font-size-display-sm: #{fluid(1.5, 2)};
-    --primitive-font-size-display-md: #{fluid(1.75, 2.75)};
-    --primitive-font-size-display-lg: #{fluid(2, 4)};
-    --primitive-font-size-display-xl: #{fluid(2.5, 6)};
-    --primitive-font-size-display-2xl: #{fluid(3, 9)};
+    //
+    // Tema «ma». Los titulares bajan y se ponen sobre la escala de
+    // PROPORTIONS §1, `S(n) = ∛φⁿ`, que hasta ahora solo seguía el texto. El
+    // hero pasaba de 48 a 144 px: un grito. Aquí el aire lo pone el hueco
+    // alrededor del titular, no su cuerpo, y la jerarquía se sostiene con
+    // peso, retícula y filete.
+    //
+    //   paso         360 px        1600 px      g
+    //   display-sm   S(2) 1.378    S(3) 1.618   1   titular de tarjeta
+    //   display-md   S(3) 1.618    S(4) 1.900   1   titular de bloque
+    //   display-lg   S(3) 1.618    S(5) 2.230   2   titular de sección
+    //   display-2xl  S(4) 1.900    S(7) 3.073   3   hero
+    //
+    // La banda display ya no gana 5 escalones (§1.1) sino 3: es una desviación
+    // declarada del tema. A 5, el hero de 360 px tendría que empezar en S(2) y
+    // quedaría por debajo del titular de una tarjeta.
+    //
+    // `display-xl` se fue: la sección y el titular grande son ahora el mismo
+    // escalón, y dos primitivos con el mismo valor son uno de más.
+    --primitive-font-size-display-sm: #{fluid(1.378, 1.618)};
+    --primitive-font-size-display-md: #{fluid(1.618, 1.9)};
+    --primitive-font-size-display-lg: #{fluid(1.618, 2.23)};
+    --primitive-font-size-display-2xl: #{fluid(1.9, 3.073)};
 
     --primitive-font-weight-regular: 400;
     --primitive-font-weight-medium: 500;
     --primitive-font-weight-semibold: 600;
     --primitive-font-weight-bold: 700;
-    --primitive-font-weight-black: 800;
 
-    // Line height shrinks as type grows — one rule, applied consistently
+    // Line height shrinks as type grows — one rule, applied consistently.
+    // `tight` es `lh(5) = 1 + φ⁻⁵` (PROPORTIONS §2): con el hero a 49 px ya no
+    // hace falta apretar a 1.02, que solo funcionaba con letra negra a 144 px.
     --primitive-line-height-flat: 0.9;
-    --primitive-line-height-tight: 1.02;
+    --primitive-line-height-tight: 1.09;
     --primitive-line-height-snug: 1.18;
     --primitive-line-height-normal: 1.45;
     --primitive-line-height-relaxed: 1.6;
 
-    // Tracking tightens as type grows, for the same reason
-    --primitive-letter-spacing-display-2xl: -0.055em;
-    --primitive-letter-spacing-display: -0.035em;
+    // Tracking tightens as type grows, for the same reason. Con el tamaño baja
+    // también el apriete: `ls(3)` para el hero y `ls(4)` para el resto de
+    // titulares (PROPORTIONS §3).
+    --primitive-letter-spacing-display-2xl: -0.0236em;
+    --primitive-letter-spacing-display: -0.0146em;
     --primitive-letter-spacing-tight: -0.02em;
     --primitive-letter-spacing-wide: 0.08em;
-    --primitive-letter-spacing-wider: 0.12em;
   }
 }

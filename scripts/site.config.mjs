@@ -158,7 +158,7 @@ export const previewImage = file => `assets/previews/${file}`;
 // declared with its own unicode-range, so the browser fetches it if and only if
 // the page paints a character that needs it — preloading it would spend ~94 KB
 // on glyphs no page reaches.
-export const FONT_FAMILIES = { 'Instrument Sans': 'instrument-sans', Inter: 'inter' };
+export const FONT_FAMILIES = { 'Instrument Sans': 'instrument-sans', Inter: 'inter', 'JetBrains Mono': 'jetbrains-mono' };
 export const FONT_SUBSETS = ['latin', 'latin-ext'];
 export const FONT_PRELOAD = ['instrument-sans-latin.woff2', 'inter-latin.woff2'];
 export const fontFiles = () =>
