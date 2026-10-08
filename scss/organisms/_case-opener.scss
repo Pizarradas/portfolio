@@ -47,12 +47,13 @@
   // un caso es una frase entera: a 16ch se parte en seis líneas. `title` son los
   // 26ch que `PROPORTIONS.md` §6.2 dejaba reservados para justo este hueco.
   //
-  // El peso se declara porque las tres portadas anteriores lo hacían: el `h1`
-  // base corre a `display` (negra) y estas portadas siempre han ido a `emphasis`.
+  // El peso se declaraba aparte porque el `h1` base corría en negra y estas
+  // portadas iban a `emphasis`. Con el tema «ma» el rol `display` ya es 500,
+  // así que la portada de un caso vuelve a hablar como el resto de titulares.
   .org-case-opener h1 {
     max-width: var(--component-case-opener-title-measure);
     margin: 0 0 var(--semantic-space-component-lg);
-    font-weight: var(--semantic-font-weight-emphasis);
+    font-weight: var(--semantic-font-weight-display);
     font-size: var(--component-case-opener-title-size);
   }
 

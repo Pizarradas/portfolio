@@ -93,15 +93,20 @@
   // una sección de caso.
 }
 @layer syx.organisms {
+  // Tema «ma»: la cita deja la caja gris y la barra de 4 px. Queda un filete
+  // de tinta a la izquierda, del grueso de cualquier otro filete del sitio, y
+  // el aire hace el resto. Sin el `rgba(0,0,0,.04)` de fondo, además, la cita
+  // ya no se ensucia al caer dentro de una banda navy o azul.
   .mol-quote {
     font-family: var(--semantic-font-family-display);
-    font-weight: 600;
-    letter-spacing: -.045em;
-    margin-top: 2.5rem;
-    padding: 1.5rem;
-    border-left: 4px solid currentColor;
-    background: rgba(0,0,0,.04);
-    font-size: 1rem;
+    font-weight: var(--semantic-font-weight-display);
+    letter-spacing: var(--semantic-letter-spacing-display);
+    line-height: var(--semantic-line-height-title);
+    margin-top: var(--semantic-space-component-xl);
+    padding-inline-start: var(--semantic-space-component-lg);
+    border-left: var(--semantic-border-width) solid currentColor;
+    font-size: var(--semantic-font-size-body-lg);
+    max-width: var(--semantic-measure-lede);
   }
 
   // Las etiquetas iban por opacidad, que es lo que este mismo fichero ya

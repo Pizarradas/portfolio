@@ -319,7 +319,7 @@
   }
 
   .mol-targets b {
-    font: 600 1.5rem/1 var(--semantic-font-family-display);
+    font: var(--semantic-font-weight-display) 1.5rem/1 var(--semantic-font-family-display);
     letter-spacing: -.04em;
   }
 
@@ -468,8 +468,8 @@
   }
 
   .mol-inventory-visual__summary b {
-    font: 600 clamp(4rem,8vw,8rem)/.75 var(--semantic-font-family-display);
-    letter-spacing: -.07em;
+    font: var(--semantic-font-weight-display) clamp(4rem,8vw,8rem)/.75 var(--semantic-font-family-display);
+    letter-spacing: var(--semantic-letter-spacing-hero);
     color: var(--semantic-color-primary);
   }
 
@@ -647,7 +647,7 @@
   }
 
   .mol-ai-layers__layer b {
-    font: 600 clamp(1.2rem,2.5vw,2.2rem)/1 var(--semantic-font-family-display);
+    font: var(--semantic-font-weight-display) clamp(1.2rem,2.5vw,2.2rem)/1 var(--semantic-font-family-display);
     letter-spacing: -.04em;
   }
 

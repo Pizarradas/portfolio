@@ -90,7 +90,7 @@
   }
 
   .mol-browser-preview__fallback b {
-    font: 600 clamp(2rem,4vw,4rem)/1 var(--semantic-font-family-display);
+    font: var(--semantic-font-weight-display) clamp(2rem,4vw,4rem)/1 var(--semantic-font-family-display);
   }
 
   .mol-browser-preview__fallback small {

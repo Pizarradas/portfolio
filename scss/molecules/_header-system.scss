@@ -29,8 +29,8 @@
   .mol-header-architecture__core>strong {
     display: block;
     margin: .55rem 0 1rem;
-    font: 600 clamp(1.8rem,3vw,3.3rem)/1 var(--semantic-font-family-display);
-    letter-spacing: -.05em;
+    font: var(--semantic-font-weight-display) clamp(1.8rem,3vw,3.3rem)/1 var(--semantic-font-family-display);
+    letter-spacing: var(--semantic-letter-spacing-hero);
   }
 
   .mol-header-architecture__core>div {
@@ -319,8 +319,8 @@
   }
 
   .mol-header-rule-strip b {
-    font: 600 clamp(2rem,4vw,4rem)/.8 var(--semantic-font-family-display);
-    letter-spacing: -.06em;
+    font: var(--semantic-font-weight-display) clamp(2rem,4vw,4rem)/.8 var(--semantic-font-family-display);
+    letter-spacing: var(--semantic-letter-spacing-hero);
     color: var(--semantic-color-primary);
   }
 

@@ -2383,9 +2383,9 @@
 
   .mol-project-card__body h3 {
     font-family: var(--semantic-font-family-display);
-    font-weight: 600;
-    letter-spacing: -.035em;
-    line-height: 1.02;
+    font-weight: var(--semantic-font-weight-display);
+    letter-spacing: var(--semantic-letter-spacing-display);
+    line-height: var(--semantic-line-height-title);
   }
 
   .mol-project-card__meta {
