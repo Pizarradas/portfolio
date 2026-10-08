@@ -1810,6 +1810,7 @@
     font-size: var(--semantic-font-size-title);
     line-height: var(--semantic-line-height-display);
     letter-spacing: var(--semantic-letter-spacing-display);
+    font-weight: var(--semantic-font-weight-display);
   }
 
   .mol-register__fallback small {
@@ -1846,6 +1847,7 @@
     line-height: 1;
     letter-spacing: var(--semantic-letter-spacing-display);
     font-variant-numeric: tabular-nums;
+    font-weight: var(--semantic-font-weight-display);
   }
 
   .mol-register__ref span {
@@ -2015,6 +2017,7 @@
     font-size: var(--semantic-font-size-title-sm);
     line-height: var(--semantic-line-height-title);
     letter-spacing: var(--semantic-letter-spacing-display);
+    font-weight: var(--semantic-font-weight-display);
   }
 
   // The filename is set in mono because that is the register it belongs to: a
@@ -2198,7 +2201,8 @@
     font-family: var(--semantic-font-family-display);
     font-size: clamp(8rem, 20vw, 20rem);
     line-height: 0.65;
-    letter-spacing: -0.08em;
+    letter-spacing: var(--semantic-letter-spacing-hero);
+    font-weight: var(--semantic-font-weight-display);
   }
 
   .mol-case-signature__note {
@@ -2249,7 +2253,8 @@
   .mol-case-signature--flow > strong {
     font-family: var(--semantic-font-family-display);
     font-size: clamp(2.8rem, 6vw, 6rem);
-    letter-spacing: -0.05em;
+    letter-spacing: var(--semantic-letter-spacing-hero);
+    font-weight: var(--semantic-font-weight-display);
   }
 
   .mol-case-signature--flow > i {

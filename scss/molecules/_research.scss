@@ -26,7 +26,7 @@
   .mol-stat-strip strong {
     font-family: var(--semantic-font-family-display);
     font-weight: var(--semantic-font-weight-display);
-    font-size: clamp(2rem,4vw,4rem);
+    font-size: var(--semantic-font-size-figure);
     letter-spacing: var(--semantic-letter-spacing-hero);
   }
 
@@ -102,6 +102,7 @@
     font-family: var(--semantic-font-family-display);
     font-size: 1.25rem;
     letter-spacing: -.025em;
+    font-weight: var(--semantic-font-weight-display);
   }
 
 }
@@ -224,7 +225,7 @@
 
   .mol-research-model__head strong {
     font: var(--semantic-font-weight-display) 1.35rem/1.05 var(--semantic-font-family-display);
-    letter-spacing: -.035em;
+    letter-spacing: var(--semantic-letter-spacing-display);
   }
 
   .mol-research-model__metrics {
@@ -373,7 +374,7 @@
   }
 
   .mol-dot-universe__head strong {
-    font: var(--semantic-font-weight-display) clamp(3.5rem,13vw,6rem)/.8 var(--semantic-font-family-display);
+    font: var(--semantic-font-weight-display) var(--semantic-font-size-figure)/.8 var(--semantic-font-family-display);
     letter-spacing: var(--semantic-letter-spacing-hero);
   }
 

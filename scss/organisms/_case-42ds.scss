@@ -38,7 +38,7 @@
 
   .org-case42-enabled__grid b {
     font: var(--semantic-font-weight-display) 1.25rem/1 var(--semantic-font-family-display);
-    letter-spacing: -.035em;
+    letter-spacing: var(--semantic-letter-spacing-display);
   }
 
   // `justify-content: space-between` mandaba la descripción al fondo de la
@@ -249,7 +249,11 @@
 
 }
 @layer syx.organisms {
-  .org-operating-model {    background: #fff;
+  // Tema «ma»: el acto del modelo operativo era el único de la página con
+  // fondo blanco en crudo, y sobre papel se leía como otra web pegada en
+  // medio. Lee la superficie de la página como el resto de actos.
+  .org-operating-model {
+    background: var(--semantic-color-surface);
   }
 
 

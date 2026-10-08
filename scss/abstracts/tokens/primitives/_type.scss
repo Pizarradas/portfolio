@@ -53,6 +53,13 @@
     --primitive-font-size-display-lg: #{fluid(1.618, 2.23)};
     --primitive-font-size-display-2xl: #{fluid(1.9, 3.073)};
 
+    // La cifra de una figura: «86 %», «134», «279». Era el único tamaño grande
+    // que el sistema no tenía, así que cada figura se escribía el suyo —96,
+    // 115, 58 px— y la misma clase de dato medía tres cosas distintas en tres
+    // páginas. S(6) → S(9), 42 → 68 px: por encima del hero, porque una cifra
+    // es una palabra sola y se lee de un golpe.
+    --primitive-font-size-figure: #{fluid(2.618, 4.236)};
+
     --primitive-font-weight-regular: 400;
     --primitive-font-weight-medium: 500;
     --primitive-font-weight-semibold: 600;

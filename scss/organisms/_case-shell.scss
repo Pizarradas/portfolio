@@ -122,7 +122,8 @@
   }
 
   .org-case-next strong {
-    font-size: clamp(1.5rem,3vw,3rem);
+    font-size: var(--semantic-font-size-title-lg);
+    font-weight: var(--semantic-font-weight-display);
   }
 
   // El cierre de la página, con color en vez de con otra línea.
