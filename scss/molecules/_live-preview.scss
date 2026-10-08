@@ -4,7 +4,7 @@
 @layer syx.molecules {
   .mol-browser-preview {
     border: var(--semantic-border-width) solid var(--semantic-color-border);
-    background: #fff;
+    background: var(--semantic-color-sheet);
     overflow: hidden;
   }
 
@@ -14,10 +14,10 @@
     align-items: center;
     gap: 1rem;
     padding: .75rem .9rem;
-    font: 600 .58rem/1 var(--semantic-font-family-ui);
-    letter-spacing: .08em;
+    font: 600 .58rem/1 var(--semantic-font-family-label);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
-    background: #fff;
+    background: var(--semantic-color-sheet);
     border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
@@ -32,8 +32,8 @@
     align-items: center;
     gap: 1rem;
     padding: .75rem .9rem;
-    font: 600 .58rem/1 var(--semantic-font-family-ui);
-    letter-spacing: .08em;
+    font: 600 .58rem/1 var(--semantic-font-family-label);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
     border-top: var(--semantic-border-width) solid var(--semantic-color-border);
     color: var(--semantic-color-text-muted);
@@ -90,7 +90,7 @@
   }
 
   .mol-browser-preview__fallback b {
-    font: 600 clamp(2rem,4vw,4rem)/1 var(--semantic-font-family-display);
+    font: var(--semantic-font-weight-display) clamp(2rem,4vw,4rem)/1 var(--semantic-font-family-display);
   }
 
   .mol-browser-preview__fallback small {

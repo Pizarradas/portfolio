@@ -58,7 +58,7 @@
     content: counter(thesis, decimal-leading-zero);
     display: block;
     margin-bottom: var(--semantic-space-component-xs);
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     font-weight: var(--semantic-font-weight-emphasis);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
@@ -70,7 +70,7 @@
   // a lo que resume.
   .mol-case-thesis strong {
     font-family: var(--semantic-font-family-display);
-    font-weight: var(--semantic-font-weight-emphasis);
+    font-weight: var(--semantic-font-weight-display);
     font-size: var(--semantic-font-size-title-sm);
     line-height: var(--semantic-line-height-title);
     letter-spacing: var(--semantic-letter-spacing-display);
@@ -99,6 +99,7 @@
   .mol-case-metrics dt {
     font-size: var(--semantic-font-size-caption);
     text-transform: uppercase;
+    font-family: var(--semantic-font-family-label);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     color: var(--semantic-color-text-muted);
   }

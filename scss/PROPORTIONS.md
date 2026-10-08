@@ -53,6 +53,14 @@ son la misma escala mirada de cerca o de lejos.
 
 ### 1.1 La regla fluida: ganancia constante de escalones
 
+> **Tema «ma», edición revista.** La banda display vuelve a ganar escalones:
+> sección S(4)→S(9) (g = 5), portada S(6)→S(12) y cifra S(7)→S(13) (g = 6), y
+> el numeral de caso S(9)→S(18) (g = 9). Portada, cifra y numeral pasan el
+> límite de Δg = 5: son piezas de cartel que nunca comparten fila con texto
+> corrido, así que el contraste extremo es el efecto buscado. Desviación
+> declarada en `abstracts/tokens/primitives/_type.scss`; ningún otro rol puede
+> invocarla.
+
 Un token fluido no interpola entre dos números elegidos a ojo. Interpola entre
 **dos escalones de esta misma escala**:
 

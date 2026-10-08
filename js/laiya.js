@@ -90,7 +90,7 @@
   // El botón y el campo son el mismo objeto: la píldora se abre y dentro
   // aparece la pregunta. El orbe descansa en su ranura de la izquierda.
   const tpl = document.createElement('template');
-  tpl.innerHTML = `<div class="org-laiya-dock syx-on-night" data-open="false" role="region" aria-label="LAIYA">
+  tpl.innerHTML = `<div class="org-laiya-dock" data-open="false" role="region" aria-label="LAIYA">
 <div class="mol-laiya-suggest" hidden></div>
 <div class="org-laiya-dock__bar">
   <span class="org-laiya-dock__slot" aria-hidden="true"><span class="atom-laiya-orb"></span></span>

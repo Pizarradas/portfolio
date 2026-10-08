@@ -177,7 +177,7 @@
     // retira un paso hacia atrás.
     const veil = make('<div class="org-laiya-veil" aria-hidden="true" hidden></div>');
     const body = make('<div class="atom-laiya-body" aria-hidden="true"><span class="atom-laiya-orb"></span><canvas></canvas></div>');
-    const caption = make(`<div class="mol-laiya-caption syx-on-night" hidden>
+    const caption = make(`<div class="mol-laiya-caption" hidden>
 <p class="mol-laiya-caption__text" aria-hidden="true"></p>
 <div class="mol-laiya-caption__blocks"></div>
 <div class="mol-laiya-caption__foot">
@@ -302,7 +302,15 @@
     // Anticipación (principio 3): antes de un vuelo largo se echa hacia
     // atrás —un palmo, 130 ms— y solo entonces sale. Lo corto sale directo.
     let launch = null;
+    // Adónde va el orbe, aunque aún esté en el aire: lo que `dodge()` vuelve
+    // a comprobar cuando el subtítulo cambia de tamaño.
+    let aim = null;
+    // El rectángulo del subtítulo acoplado que está a punto de aparecer
+    // (lo mide `measureCaption`); se olvida al ocultarlo.
+    let pendingCap = null;
     function fly(to, spring = M.flight) {
+      to = clearOfCaption(to);
+      aim = to;
       orbSpring.params(spring);
       if (launch) launch.kill(), (launch = null);
       if (isReduced()) {
@@ -336,6 +344,62 @@
       } else go();
       paintBody();
     }
+
+    // El orbe no se posa nunca sobre el texto que está diciendo.
+    //
+    // Los recorridos ya lo cuidan (`layout` sube o encoge el orbe para que
+    // no pise el subtítulo), pero una respuesta libre deja el orbe en el
+    // centro de la pantalla y el subtítulo acoplado crece hacia arriba desde
+    // la barra: con una ficha de proyecto dentro llegaba a media pantalla y
+    // el enjambre quedaba encima de la cita. Así que cualquier destino que
+    // pise el subtítulo se recoloca, en este orden:
+    //   1. encima del subtítulo, encogido lo justo para caber;
+    //   2. al lado, en el margen más ancho;
+    //   3. si no hay aire en ningún sitio (móvil con respuesta larga), en su
+    //      ranura de la barra.
+    // La reserva es la de `layout`: el disco visible más un cuarto, porque
+    // las formas temáticas se salen de él.
+    function clearOfCaption(pt) {
+      // Solo el subtítulo acoplado: el que va en columna junto a un elemento
+      // lo coloca `layout` con el orbe ya en cuenta, y su rectángulo
+      // mientras cambia de paso sería el del paso anterior.
+      if (!pt || caption.dataset.docked !== 'true' || isReduced()) return pt;
+      const r = caption.hidden ? pendingCap : caption.getBoundingClientRect();
+      if (!r) return pt;
+      if (!r.width || !r.height) return pt;
+      const G = gap(), full = orbVisible() * 1.25, rad = (full * pt.s) / 2;
+      const hit = pt.x + rad > r.left - G * 0.5 && pt.x - rad < r.right + G * 0.5 && pt.y + rad > r.top - G * 0.5 && pt.y - rad < r.bottom + G * 0.5;
+      if (!hit) return pt;
+      const min = 0.3;
+      const above = r.top - G * 0.5 - (header() + G * 0.5);
+      if (above >= full * min) {
+        const s = Math.min(pt.s, above / full);
+        return { x: Math.min(vw() - (full * s) / 2 - G * 0.5, Math.max((full * s) / 2 + G * 0.5, pt.x)), y: r.top - G * 0.5 - (full * s) / 2, s };
+      }
+      const right = vw() - r.right, left = r.left;
+      const side = Math.max(right, left) - G;
+      if (side >= full * min) {
+        const s = Math.min(pt.s, side / full);
+        const x = right >= left ? r.right + G * 0.5 + (full * s) / 2 : r.left - G * 0.5 - (full * s) / 2;
+        return { x, y: Math.max(header() + G * 0.5 + (full * s) / 2, r.top + (full * s) / 2), s };
+      }
+      return restPoint();
+    }
+
+    // El subtítulo crece mientras se escribe y cuando llegan las fichas: si
+    // ahora pisa el destino del orbe, el orbe se aparta. Un salto corto, no
+    // un vuelo: es hacer sitio, no ir a otra parte.
+    let dodgeFrame = 0;
+    function dodge() {
+      if (dodgeFrame) return;
+      dodgeFrame = requestAnimationFrame(() => {
+        dodgeFrame = 0;
+        if (!aim) return;
+        const to = clearOfCaption(aim);
+        if (to !== aim) fly(to, M.hop);
+      });
+    }
+    if ('ResizeObserver' in window) new ResizeObserver(dodge).observe(caption);
 
     // Donde descansa: sobre la ranura del orbe en la barra de abajo.
     function restPoint() {
@@ -648,6 +712,9 @@
       caption.hidden = false;
       caption.style.visibility = 'hidden';
       const r = caption.getBoundingClientRect();
+      // Acoplado, su sitio ya es el definitivo: el orbe puede apartarse de él
+      // antes de que aparezca, en vez de llegar al centro y tener que saltar.
+      pendingCap = caption.dataset.docked === 'true' ? { left: r.left, top: r.top, right: r.right, bottom: r.bottom, width: r.width, height: r.height } : null;
       caption.style.visibility = '';
       caption.hidden = prevHidden;
       el.text.textContent = '';
@@ -710,6 +777,7 @@
     }
 
     function hideCaption(quick = false) {
+      pendingCap = null;
       gsap.killTweensOf(caption);
       if (caption.hidden) return;
       if (isReduced() || quick) {

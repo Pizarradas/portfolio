@@ -15,6 +15,7 @@
     margin-bottom: var(--semantic-space-component-2xs);
     font-size: var(--semantic-font-size-caption);
     text-transform: uppercase;
+    font-family: var(--semantic-font-family-label);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     color: var(--semantic-color-text-muted);
   }
@@ -92,15 +93,20 @@
   // una sección de caso.
 }
 @layer syx.organisms {
+  // Tema «ma»: la cita deja la caja gris y la barra de 4 px. Queda un filete
+  // de tinta a la izquierda, del grueso de cualquier otro filete del sitio, y
+  // el aire hace el resto. Sin el `rgba(0,0,0,.04)` de fondo, además, la cita
+  // ya no se ensucia al caer dentro de una banda navy o azul.
   .mol-quote {
     font-family: var(--semantic-font-family-display);
-    font-weight: 600;
-    letter-spacing: -.045em;
-    margin-top: 2.5rem;
-    padding: 1.5rem;
-    border-left: 4px solid currentColor;
-    background: rgba(0,0,0,.04);
-    font-size: 1rem;
+    font-weight: var(--semantic-font-weight-display);
+    letter-spacing: var(--semantic-letter-spacing-display);
+    line-height: var(--semantic-line-height-title);
+    margin-top: var(--semantic-space-component-xl);
+    padding-inline-start: var(--semantic-space-component-lg);
+    border-left: var(--semantic-border-width) solid currentColor;
+    font-size: var(--semantic-font-size-body-lg);
+    max-width: var(--semantic-measure-lede);
   }
 
   // Las etiquetas iban por opacidad, que es lo que este mismo fichero ya
@@ -109,13 +115,21 @@
   // calcularse. Con color se calcula: 4.83:1 sobre blanco.
   .org-case-next span {
     font-size: .75rem;
+    font-family: var(--semantic-font-family-label);
     text-transform: uppercase;
-    letter-spacing: .12em;
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     color: var(--semantic-color-text-muted);
   }
 
+  // `title`, no `title-lg`: con la escala de la revista `title-lg` llega a
+  // 68 px y en una celda de un tercio «Selected work» se partía en dos líneas
+  // con el interlineado del cuerpo. El paginador es navegación, no portada.
   .org-case-next strong {
-    font-size: clamp(1.5rem,3vw,3rem);
+    font-family: var(--semantic-font-family-display);
+    font-size: var(--semantic-font-size-title);
+    font-weight: var(--semantic-font-weight-display);
+    line-height: var(--semantic-line-height-title);
+    letter-spacing: var(--semantic-letter-spacing-display);
   }
 
   // El cierre de la página, con color en vez de con otra línea.

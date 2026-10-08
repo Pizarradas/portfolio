@@ -91,7 +91,7 @@ addEventListener('load', function () {
 </header>
 <main id="main">
 <article class="org-case org-case--sport">
-<header class="org-case-opener" data-laiya="case" data-laiya-fx="kinetic marks" data-laiya-kind="block" data-laiya-tour="case:0">
+<header class="org-case-opener" data-laiya="case" data-laiya-fx="kinetic marks" data-laiya-kind="block" data-laiya-tour="case:0"><p class="org-case-opener__number" aria-hidden="true">02</p>
 <p class="atom-eyebrow">Case study 02 · SPORT · Prensa Ibérica · 2023—2026</p>
 <h1>Product thought the cards were too tall. I started by measuring them.</h1>
 <p class="org-case-opener__lede">The question looked visual: could mobile cards show more content in the first scroll? The useful answer needed evidence — and a clear view of what we might lose by compressing them.</p>
@@ -285,7 +285,26 @@ addEventListener('load', function () {
 <script>
   window.addEventListener("DOMContentLoaded", function () {
     if (!window.echarts) return;
-    const brand = "#1E3AFF", ink = "#080F1A", muted = "#CBD2DD", cyan = "#00C8FF";
+    // Colours from the theme, not from literals: the chart was drawn in the
+    // blue-grey of the old paper and kept it on kinari. The literals stay as a
+    // fallback for a page that loads without the stylesheet.
+    const root = getComputedStyle(document.documentElement);
+    const tok = (name, fallback) => root.getPropertyValue(name).trim() || fallback;
+    const brand = tok("--semantic-color-primary", "#1E3AFF"), ink = tok("--semantic-color-text", "#080F1A");
+    const muted = tok("--semantic-color-border-strong", "#C6BFB0"), cyan = "#00C8FF";
+    const axis = tok("--semantic-color-text-muted", "#62656F"), rule = tok("--semantic-color-border", "#D6D0C3");
+    // Category labels come from the HTML fallback inside each chart. That
+    // fallback is translated by build-i18n; this script is not, so with the
+    // labels written here the Spanish page drew its bars in English.
+    const labels = id => [...document.querySelectorAll("#" + id + " .atom-chart__fallback span")]
+      .map(s => s.lastChild.textContent.trim());
+    const labelsA = labels("chart-type-a"), labelsF = labels("chart-framing");
+    // On a phone a 150px label column left the bars ~120px and the value
+    // labels ran into the next row. The column now takes at most 38 %.
+    const labelWidth = el => Math.min(150, Math.round(el.clientWidth * 0.38));
+    // And five ticks do not fit under a 150px bar: 0 % 20 %40 %60 %80 % ran
+    // together. Narrow charts mark the half and the whole.
+    const xAxisFor = el => el.clientWidth < 480 ? { ...common.xAxis, interval: 50 } : common.xAxis;
     const common = {
       animationDuration: 700,
       animationEasing: "cubicOut",
@@ -294,7 +313,7 @@ addEventListener('load', function () {
       // 56px on the right, not 20: at 100 the value label "100%" sits past the
       // end of the bar and was clipped to "10(" by the chart's own edge.
       grid: { left: 0, right: 56, top: 24, bottom: 10, containLabel: true },
-      xAxis: { type: "value", max: 100, axisLabel: { formatter: "{value}%", color: "#6B7280" }, splitLine: { lineStyle: { color: "#EEF1F6" } }, axisLine: { show: false }, axisTick: { show: false } },
+      xAxis: { type: "value", max: 100, axisLabel: { formatter: "{value}%", color: axis }, splitLine: { lineStyle: { color: rule } }, axisLine: { show: false }, axisTick: { show: false } },
       // `width` + `overflow: "break"`: the category labels are measured when the
       // chart is built, and measured in the fallback face before Inter loads
       // they came up short — "Text exceeds image height" was clipped on the left
@@ -303,20 +322,23 @@ addEventListener('load', function () {
       yAxis: { type: "category", axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: ink, fontWeight: 500, width: 150, overflow: "break", lineHeight: 16 } },
       tooltip: { trigger: "axis", axisPointer: { type: "shadow" }, valueFormatter: v => v + "%" }
     };
-    const a = echarts.init(document.getElementById("chart-type-a"));
+    const elA = document.getElementById("chart-type-a"), elF = document.getElementById("chart-framing");
+    const a = echarts.init(elA);
     a.setOption({
       ...common,
-      yAxis: { ...common.yAxis, data: ["Text exceeds threshold", "Text exceeds image height", "Image framing retained"] },
+      xAxis: xAxisFor(elA),
+      yAxis: { ...common.yAxis, axisLabel: { ...common.yAxis.axisLabel, width: labelWidth(elA) }, data: labelsA },
       series: [{ type: "bar", barWidth: 18, data: [
         { value: 86, itemStyle: { color: brand, borderRadius: [0,3,3,0] } },
         { value: 40.86, itemStyle: { color: cyan, borderRadius: [0,3,3,0] } },
         { value: 81.88, itemStyle: { color: ink, borderRadius: [0,3,3,0] } }
       ], label: { show: true, position: "right", formatter: "{c}%", color: ink, fontWeight: 600 } }]
     });
-    const f = echarts.init(document.getElementById("chart-framing"));
+    const f = echarts.init(elF);
     f.setOption({
       ...common,
-      yAxis: { ...common.yAxis, data: ["Type A · 1:1", "Type B · 16:9"] },
+      xAxis: xAxisFor(elF),
+      yAxis: { ...common.yAxis, axisLabel: { ...common.yAxis.axisLabel, width: labelWidth(elF) }, data: labelsF },
       series: [{ type: "bar", barWidth: 20, data: [
         { value: 81.88, itemStyle: { color: muted, borderRadius: [0,3,3,0] } },
         { value: 100, itemStyle: { color: brand, borderRadius: [0,3,3,0] } }

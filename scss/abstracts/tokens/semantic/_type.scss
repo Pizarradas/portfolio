@@ -12,6 +12,10 @@
     // Was consumed by typography-jlp.css but defined nowhere: a silent fallback
     // to the browser default in every place that used it.
     --semantic-font-family-mono: var(--primitive-font-family-mono);
+    // Tema «ma»: la voz de las etiquetas —eyebrow, índice de sección, fechas,
+    // muestras— es la mono. Un rol propio, no `mono` a secas, para que un tema
+    // pueda devolverlas a la sans sin tocar el código de muestra.
+    --semantic-font-family-label: var(--primitive-font-family-mono);
 
     // Roles
     --semantic-font-size-caption: var(--primitive-font-size-2xs);
@@ -24,21 +28,34 @@
     --semantic-font-size-title-sm: var(--primitive-font-size-display-sm);
     --semantic-font-size-title: var(--primitive-font-size-display-md);
     --semantic-font-size-title-lg: var(--primitive-font-size-display-lg);
-    --semantic-font-size-section: var(--primitive-font-size-display-xl);
+    --semantic-font-size-section: var(--primitive-font-size-display-lg);
     --semantic-font-size-hero: var(--primitive-font-size-display-2xl);
+    --semantic-font-size-figure: var(--primitive-font-size-figure);
+    --semantic-font-size-numeral: var(--primitive-font-size-numeral);
 
     --semantic-line-height-display: var(--primitive-line-height-tight);
     --semantic-line-height-title: var(--primitive-line-height-snug);
     --semantic-line-height-body: var(--primitive-line-height-relaxed);
     --semantic-line-height-ui: var(--primitive-line-height-normal);
+    // La entradilla corre en párrafos de tres y cuatro líneas, no en una: con
+    // el interlineado de título (1.18) las líneas se tocaban en cuanto el
+    // titular de al lado dejó de ser enorme. `normal` es el escalón que hay
+    // entre `lh(2)` y `lh(3)` de PROPORTIONS §2.
+    --semantic-line-height-lede: var(--primitive-line-height-normal);
 
     --semantic-letter-spacing-hero: var(--primitive-letter-spacing-display-2xl);
     --semantic-letter-spacing-display: var(--primitive-letter-spacing-display);
-    --semantic-letter-spacing-eyebrow: var(--primitive-letter-spacing-wider);
+    // La mono ya es ancha de por sí: con el `wider` de la sans las etiquetas se
+    // deshacían en letras sueltas.
+    --semantic-letter-spacing-eyebrow: var(--primitive-letter-spacing-wide);
 
     --semantic-font-weight-body: var(--primitive-font-weight-regular);
     --semantic-font-weight-emphasis: var(--primitive-font-weight-semibold);
-    --semantic-font-weight-display: var(--primitive-font-weight-black);
+    // Tema «ma»: titulares en 500. El 800 pedía un tamaño de cartel para no
+    // empastarse; a la escala nueva el peso medio deja ver el dibujo de la
+    // Instrument Sans. (El fichero de fuente es variable 400–700, así que el
+    // 800 de antes ya se servía como 700.)
+    --semantic-font-weight-display: var(--primitive-font-weight-medium);
     // Los dos pesos que los componentes pedían en crudo: 700 para una etiqueta
     // que tiene que leerse antes que su vecina, 500 para el estado activo de un
     // control.

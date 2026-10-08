@@ -46,16 +46,27 @@
     gap: 1rem;
   }
 
+  // Tema «ma»: el titular de la banda navy era el último que se escribía sus
+  // propios números —600, hasta 104 px, −0,06em— y lee ahora el mismo rol que
+  // cualquier titular de sección. La entradilla deja la opacidad (que también
+  // apagaba el texto del enlace o la cifra que algún día lleve dentro) y toma
+  // la tinta secundaria del contexto navy.
   .org-role-evolution-v22__intro h2 {
-    font: 600 clamp(3rem,11vw,5.5rem)/.9 var(--semantic-font-family-display);
-    letter-spacing: -.06em;
+    font-family: var(--component-section-title-font-family);
+    font-weight: var(--component-section-title-font-weight);
+    font-size: var(--semantic-font-size-section);
+    line-height: var(--component-section-title-line-height);
+    letter-spacing: var(--component-section-title-letter-spacing);
+    max-width: var(--semantic-measure-title);
     margin: 0;
   }
 
   .org-role-evolution-v22__intro p {
-    max-width: 42rem;
-    font: .9rem/1.5 var(--semantic-font-family-ui);
-    opacity: .62;
+    max-width: var(--semantic-measure-lede);
+    font-family: var(--semantic-font-family-ui);
+    font-size: var(--semantic-font-size-ui);
+    line-height: var(--semantic-line-height-ui);
+    color: var(--semantic-color-text-secondary);
   }
 
   // `.org-role-evolution-v22__conclusion` vivía aquí: el cierre de la sección
@@ -64,13 +75,12 @@
 }
 @layer syx.utilities {
   @include from($bp-md) {
+    // La etiqueta corre en la misma pista que la de `.mol-section-heading`:
+    // a 3rem «Trayectoria» se partía en tres trozos en cuanto la etiqueta pasó
+    // a la mono.
     .org-role-evolution-v22__intro {
-      grid-template-columns: 3rem minmax(0,1.4fr) minmax(18rem,.6fr);
+      grid-template-columns: var(--component-heading-label-track) minmax(0,1.4fr) minmax(18rem,.6fr);
       align-items: start;
-    }
-
-    .org-role-evolution-v22__intro h2 {
-      font-size: clamp(4rem,7vw,6.5rem);
     }
 
     .org-role-evolution-v22__intro p {

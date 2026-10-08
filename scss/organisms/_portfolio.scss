@@ -43,16 +43,15 @@
     box-shadow: none;
   }
 
+  // Tema «ma»: la portada mide su contenido. Sin `min-height`: el pliegue lo
+  // ocupa el índice de registros que viene debajo.
   .org-hero {
     @include relative();
-    min-height: calc(96svh - var(--component-header-height));
-    padding-block: var(--semantic-space-section-compact)
+    padding-block: var(--semantic-space-section)
       var(--semantic-space-section-compact);
-    padding-top: var(--semantic-space-layout-6xl);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: var(--semantic-space-section-compact);
+    gap: var(--semantic-space-block);
   }
 
   // The lattice behind the hero. It is drawn by js/hero-field.js, which reads
@@ -85,6 +84,12 @@
     color: var(--semantic-color-text-secondary);
   }
 
+  // Tema «ma»: la entradilla de la portada va un escalón por debajo de la de
+  // un caso. Al lado de un titular de 49 px, la de 24 px competía con él.
+  .org-hero .atom-lede {
+    font-size: var(--semantic-font-size-body-lg);
+  }
+
   .org-hero__footer {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
@@ -108,124 +113,89 @@
     max-width: none;
   }
 
-  // The capability map: the first thing after the hero and, until now, five
-  // spans of dead grey text defined across four stylesheets. Each cell is a
-  // link to the case it names, and the capability word carries the weight.
+  // The capability map: the first thing after the hero. Each row is a link
+  // to the case it names.
+  //
+  // Tema «ma»: deja de ser una franja de seis celdas y pasa a ser un índice,
+  // como el de un libro: una fila por registro, la etiqueta en la mono y el
+  // caso en la display, todo en el registro `survey` y con su filete. Seis
+  // columnas de 150 px partían «De principio a fin» en dos líneas y pedían
+  // `nowrap`; en filas, cada etiqueta tiene su pista y el caso respira.
+  //
+  // El hover tampoco pinta la fila de azul. El azul de esta región ya lo gasta
+  // la acción del hero (BRAND.md §4), así que aquí solo cambia de tinta el
+  // nombre del caso.
   .org-capability-scan {
     display: grid;
-    border-block: var(--semantic-border-width) solid
-      var(--semantic-color-border);
+    padding-inline: var(--semantic-pad-survey);
   }
 
-  // On small screens the five cells stack, so they are compact rows rather
-  // than tall blocks: as columns they added 640px of scroll on their own.
   .org-capability-scan a {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--semantic-space-component-sm);
-    padding: var(--semantic-space-component-sm) var(--semantic-space-gutter);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--semantic-space-component-3xs);
+    padding-block: var(--semantic-space-component-sm);
     text-decoration: none;
     border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
-    @include transition(background var(--semantic-duration-hover) var(--semantic-ease), color var(--semantic-duration-hover) var(--semantic-ease));
   }
 
-  .org-capability-scan a:last-child {
-    border-bottom: 0;
+  // El filete de apertura del índice va en tinta: es lo que dice que lo que
+  // viene es una tabla y no otra fila suelta.
+  .org-capability-scan a:first-child {
+    border-top: var(--semantic-border-width) solid var(--semantic-color-text);
   }
 
   .org-capability-scan b {
-    font-family: var(--semantic-font-family-display);
-    font-size: var(--semantic-font-size-title-sm);
-    font-weight: var(--semantic-font-weight-display);
-    letter-spacing: var(--semantic-letter-spacing-tight);
-    line-height: var(--semantic-line-height-display);
+    font-family: var(--semantic-font-family-label);
+    font-size: var(--semantic-font-size-eyebrow);
+    font-weight: var(--semantic-font-weight-body);
+    text-transform: uppercase;
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
+    line-height: var(--semantic-line-height-ui);
+    color: var(--semantic-color-text-muted);
   }
 
-  // `eyebrow`, not `caption`: at `caption` the six labels ran at 11.9px, which
-  // is below the 12px floor the audit set for any text that has a job.
+  // `body-lg`, no `title-sm`: es la lista que lleva a los casos, no sus
+  // titulares, y a ese cuerpo seis filas caben en el primer scroll.
   .org-capability-scan span {
-    font-size: var(--semantic-font-size-eyebrow);
-    font-weight: var(--semantic-font-weight-strong);
-    text-transform: uppercase;
-    letter-spacing: var(--semantic-letter-spacing-wide);
-    text-align: right;
-    color: var(--semantic-color-text-muted);
+    font-family: var(--semantic-font-family-display);
+    font-size: var(--semantic-font-size-body-lg);
+    font-weight: var(--semantic-font-weight-display);
+    letter-spacing: var(--semantic-letter-spacing-display);
+    line-height: var(--semantic-line-height-title);
+    color: var(--semantic-color-text);
     @include transition(color var(--semantic-duration-hover) var(--semantic-ease));
   }
 
-  .org-capability-scan b {
-    white-space: nowrap;
-  }
-
-  // The affordance the cell was missing at rest. Hover filled it blue and the
-  // click went to the case, but nothing said so before the pointer arrived: no
-  // arrow, no rule, no cursor cue until you were already on it. The arrow rides
-  // the label so it inherits the hover colour with it.
+  // The affordance the row would otherwise lack at rest: nothing said it was a
+  // link before the pointer arrived. The arrow rides the case name, so it
+  // inherits the hover colour with it.
   .org-capability-scan span::after {
     content: "→";
     margin-inline-start: var(--semantic-space-component-xs);
+    color: var(--semantic-color-text-muted);
   }
 
   @include pointer {
-    .org-capability-scan a:hover {
-      background: var(--semantic-color-primary);
-      color: var(--semantic-color-on-primary);
-    }
-
-    .org-capability-scan a:hover span {
-      color: var(--semantic-color-on-primary);
+    .org-capability-scan a:hover span,
+    .org-capability-scan a:hover span::after {
+      color: var(--semantic-color-primary);
     }
   }
 
+  // De tablet en adelante la etiqueta tiene su pista, la misma que la de
+  // `.mol-section-heading`, así que la etiqueta del índice y la de cada
+  // sección caen en la misma vertical.
   @include from($bp-md) {
-    // The capability strip is a survey section whose rules run the width of the
-    // page: the border is on this element, so it bleeds, while the five cells
-    // sit inside the register's padding. Same shape as the band openers, and
-    // the reason it reads as deliberate rather than as a block that failed to
-    // line up.
-    //
-    // It said `--semantic-pad-content`, a legacy alias that resolves to the
-    // same value. Named for its register instead, so the width is readable
-    // here rather than through an alias kept for the old stylesheets.
-    // Six cells, not five: `BRAND.md` §1 lists five registers and the strip
-    // was serving four of them — visual craft (the SPORT illustrations) had no
-    // cell, so the one register that shows drawing was missing from the first
-    // scroll. Audited 05/09/2026.
-    .org-capability-scan {
-      grid-template-columns: repeat(6, 1fr);
-      padding-inline: var(--semantic-pad-survey);
-    }
-
     .org-capability-scan a {
-      flex-direction: column;
-      align-items: stretch;
-      justify-content: space-between;
+      grid-template-columns: var(--component-label-track) minmax(0, 1fr);
+      align-items: baseline;
       gap: var(--semantic-space-component-lg);
-      min-height: 9.5rem;
-      padding: var(--semantic-space-component-md) var(--semantic-space-component-lg);
-      border-bottom: 0;
-      border-right: var(--semantic-border-width) solid
-        var(--semantic-color-border);
-    }
-
-    .org-capability-scan span {
-      text-align: left;
-    }
-
-    .org-capability-scan a:first-child {
-      padding-left: 0;
-    }
-
-    .org-capability-scan a:last-child {
-      border-right: 0;
-      padding-right: 0;
     }
   }
 
   @include reduced-motion {
-    .org-capability-scan a,
     .org-capability-scan span {
       @include transition-off;
     }
@@ -296,12 +266,13 @@
     grid-column: 2;
   }
 
-  // The hairline is the same device the rest of the page uses to show its grid:
-  // it separates the claim from the evidence for it without adding a component.
+  // Aquí había un filete entre el titular y la prosa. Era el único `border-
+  // bottom` de una cabecera en la home y cerraba algo que la sección ya había
+  // abierto con su propio filete dos líneas más arriba: dos filetes
+  // paralelos con solo aire entre ellos (BRAND.md §4, regla 3). En el tema
+  // «ma» separa el aire: el mismo hueco, sin línea.
   .org-about__head {
     padding-bottom: var(--semantic-space-block);
-    border-bottom: var(--semantic-border-width) solid
-      var(--semantic-color-border);
   }
 
   .org-about h2 {
@@ -437,6 +408,13 @@
     font-size: var(--semantic-font-size-ui);
   }
 
+  // En los casos el pie llega justo debajo de la franja navy y azul del
+  // cierre: el cambio de fondo ya es el corte (regla 2) y el filete de cromo
+  // sobraba.
+  body:has(.org-case-next) .org-footer {
+    border-top-color: transparent;
+  }
+
   .org-footer__contact {
     display: flex;
     flex-wrap: wrap;
@@ -520,10 +498,6 @@
   // aparecía tres veces. El organismo se queda sin marcado y se borra.
 
   @include until($bp-sm) {
-    .org-hero {
-      min-height: 84svh;
-    }
-
     .mol-project-card__meta {
       flex-direction: column;
     }
@@ -594,19 +568,16 @@
     letter-spacing: var(--component-section-title-letter-spacing);
   }
 
-  .org-hero {
-    min-height: auto;
-    padding: 4.5rem var(--semantic-space-shell-inline) 3rem;
-    gap: 2rem;
-  }
-
+  // Una sola regla para el titular a cualquier ancho: el tamaño es el rol
+  // `hero`, que ya es fluido. La medida es la de un titular de frase entera
+  // (26ch), que lo deja en tres líneas en los dos idiomas.
   .org-hero h1 {
     font-family: var(--component-hero-title-font-family);
     font-weight: var(--component-hero-title-font-weight);
-    line-height: .92;
+    line-height: var(--semantic-line-height-display);
     letter-spacing: var(--component-hero-title-letter-spacing);
-    max-width: 100%;
-    font-size: var(--semantic-font-size-hero-compact);
+    max-width: var(--semantic-measure-title);
+    font-size: var(--semantic-font-size-hero);
   }
 
   .org-hero__footer {

@@ -25,8 +25,9 @@
 
   .mol-stat-strip strong {
     font-family: var(--semantic-font-family-display);
-    font-size: clamp(2rem,4vw,4rem);
-    letter-spacing: -.055em;
+    font-weight: var(--semantic-font-weight-display);
+    font-size: var(--semantic-font-size-figure);
+    letter-spacing: var(--semantic-letter-spacing-hero);
   }
 
   .mol-stat-strip span {
@@ -83,15 +84,17 @@
 
   .mol-chart-card__head span {
     font-size: .7rem;
+    font-family: var(--semantic-font-family-label);
     text-transform: uppercase;
-    letter-spacing: .1em;
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     color: var(--semantic-color-text-muted);
   }
 
   .mol-chart-card__head small {
     font-size: .7rem;
+    font-family: var(--semantic-font-family-label);
     text-transform: uppercase;
-    letter-spacing: .1em;
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     color: var(--semantic-color-text-muted);
   }
 
@@ -99,6 +102,7 @@
     font-family: var(--semantic-font-family-display);
     font-size: 1.25rem;
     letter-spacing: -.025em;
+    font-weight: var(--semantic-font-weight-display);
   }
 
 }
@@ -220,8 +224,8 @@
   }
 
   .mol-research-model__head strong {
-    font: 600 1.35rem/1.05 var(--semantic-font-family-display);
-    letter-spacing: -.035em;
+    font: var(--semantic-font-weight-display) 1.35rem/1.05 var(--semantic-font-family-display);
+    letter-spacing: var(--semantic-letter-spacing-display);
   }
 
   .mol-research-model__metrics {
@@ -244,8 +248,8 @@
   }
 
   .mol-research-model__metrics b {
-    font: 600 2.2rem/.85 var(--semantic-font-family-display);
-    letter-spacing: -.06em;
+    font: var(--semantic-font-weight-display) 2.2rem/.85 var(--semantic-font-family-display);
+    letter-spacing: var(--semantic-letter-spacing-hero);
     color: var(--semantic-color-primary);
   }
 
@@ -271,8 +275,9 @@
   .mol-research-model__criteria small {
     font-size: .55rem;
     color: var(--semantic-color-primary);
+    font-family: var(--semantic-font-family-label);
     text-transform: uppercase;
-    letter-spacing: .09em;
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
   }
 
   .mol-research-model__criteria strong {
@@ -336,9 +341,9 @@
     flex-wrap: wrap;
     gap: 1rem;
     margin-top: .55rem;
-    font: .62rem/1 var(--semantic-font-family-ui);
+    font: .62rem/1 var(--semantic-font-family-label);
     text-transform: uppercase;
-    letter-spacing: .06em;
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
   }
 
   .mol-evidence-legend span {
@@ -369,8 +374,8 @@
   }
 
   .mol-dot-universe__head strong {
-    font: 600 clamp(3.5rem,13vw,6rem)/.8 var(--semantic-font-family-display);
-    letter-spacing: -.07em;
+    font: var(--semantic-font-weight-display) var(--semantic-font-size-figure)/.8 var(--semantic-font-family-display);
+    letter-spacing: var(--semantic-letter-spacing-hero);
   }
 
   .mol-dot-universe__head span {

@@ -252,10 +252,20 @@
     font-size: var(--semantic-font-size-eyebrow);
     font-weight: var(--semantic-font-weight-medium);
     text-transform: uppercase;
+    font-family: var(--semantic-font-family-label);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     color: var(--semantic-color-text-muted);
     font-variant-numeric: tabular-nums;
   }
+  // Cuando la fila de metadatos abre el cuerpo de la tarjeta, su filete caía a
+  // 28 px del borde del marco: dos líneas paralelas con solo aire entre ellas
+  // (BRAND.md §4, regla 3). Manda el marco. En la destacada la fila va
+  // detrás de la franja de prueba y ahí el filete sí separa algo.
+  .mol-project-card__meta:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+
 
   .mol-project-card__meta::before {
     @include absolute($top: calc(-1 * var(--semantic-border-width-strong)), $left: 0);
@@ -314,6 +324,7 @@
     font-size: var(--semantic-font-size-caption);
     font-weight: var(--semantic-font-weight-display);
     text-transform: uppercase;
+    font-family: var(--semantic-font-family-label);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     color: var(--semantic-color-text-muted);
   }
@@ -364,7 +375,7 @@
   }
 
   .mol-mark-group h3 {
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-caption);
     font-weight: var(--semantic-font-weight-display);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
@@ -379,7 +390,7 @@
     list-style: none;
     display: flex;
     flex-wrap: wrap;
-    gap: var(--semantic-space-component-xs);
+    gap: var(--semantic-space-component-xs) var(--semantic-space-component-lg);
     margin: var(--semantic-space-component-sm) 0 0;
     padding: 0;
   }
@@ -388,10 +399,11 @@
     display: inline-flex;
     align-items: center;
     gap: var(--semantic-space-component-xs);
-    padding: var(--semantic-space-component-2xs) var(--semantic-space-component-sm)
-      var(--semantic-space-component-2xs) var(--semantic-space-component-xs);
-    border: var(--semantic-border-width) solid var(--semantic-color-border);
-    border-radius: var(--semantic-radius-pill);
+    // Tema «ma»: sin píldora. Dieciséis cápsulas con borde bajo un filete de
+    // grupo dibujaban dieciséis marcos donde basta una lista; ahora cada
+    // herramienta es su icono y su nombre, y el aire entre ellas hace de
+    // separador.
+    padding: var(--semantic-space-component-3xs) 0;
     color: var(--semantic-color-text-secondary);
     @include transition(color var(--semantic-duration-hover) var(--semantic-ease), border-color var(--semantic-duration-hover) var(--semantic-ease));
   }
@@ -460,10 +472,10 @@
 
   .mol-career-chart__grid .lvl {
     fill: var(--semantic-color-text-muted);
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: 13px;
-    font-weight: var(--semantic-font-weight-strong);
-    letter-spacing: 0.1em;
+    font-weight: var(--semantic-font-weight-body);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
   }
 
@@ -503,7 +515,7 @@
     fill: var(--semantic-color-text);
     font-family: var(--semantic-font-family-ui);
     font-size: 14px;
-    font-weight: var(--semantic-font-weight-strong);
+    font-weight: var(--semantic-font-weight-medium);
   }
 
   .mol-career-chart__bars .bar-dur {
@@ -514,11 +526,11 @@
   // The index that keys each segment to the list below it.
   .mol-career-chart__bars .bar-num {
     fill: var(--semantic-color-text-muted);
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: 13px;
-    font-weight: var(--semantic-font-weight-display);
+    font-weight: var(--semantic-font-weight-body);
     font-variant-numeric: tabular-nums;
-    letter-spacing: 0.08em;
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
   }
 
   .mol-career-chart__axis line {
@@ -529,7 +541,7 @@
 
   .mol-career-chart__axis text {
     fill: var(--semantic-color-text-muted);
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: 13px;
     font-variant-numeric: tabular-nums;
   }
@@ -599,6 +611,7 @@
   .mol-career-tip__scope {
     font-size: var(--semantic-font-size-caption);
     font-weight: var(--semantic-font-weight-strong);
+    font-family: var(--semantic-font-family-label);
     text-transform: uppercase;
     letter-spacing: var(--semantic-letter-spacing-wide);
     color: var(--semantic-color-text-muted);
@@ -688,6 +701,7 @@
     margin-top: var(--semantic-space-component-3xs);
     font-size: var(--semantic-font-size-caption);
     font-weight: var(--semantic-font-weight-strong);
+    font-family: var(--semantic-font-family-label);
     text-transform: uppercase;
     letter-spacing: var(--semantic-letter-spacing-wide);
   }
@@ -769,7 +783,7 @@
 
   // The label is furniture, not the link: same voice as the facts sheet.
   .mol-contact-list__label {
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-caption);
     font-weight: var(--semantic-font-weight-strong);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
@@ -905,7 +919,7 @@
     background: var(--component-work-enter-bg);
     color: var(--component-work-enter-fg);
     border-radius: var(--semantic-radius-pill);
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     font-weight: var(--semantic-font-weight-strong);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
@@ -961,7 +975,7 @@
   // patrón que `.mol-evidence-live__chrome` ya sigue: rótulo apagado, acento
   // reservado a un solo elemento.
   .mol-project-card__proof span {
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
@@ -1040,7 +1054,7 @@
 
   // Rótulo del panel, no acento: mismo criterio que en `__proof span`.
   .mol-evidence-system__meta span {
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
@@ -1091,7 +1105,7 @@
   // demostrarlo.
   .mol-evidence-system__stack figure {
     display: grid;
-    grid-template-columns: var(--component-heading-label-track) minmax(0, 1fr);
+    grid-template-columns: var(--component-label-track) minmax(0, 1fr);
     align-items: center;
     min-height: 0;
     margin: 0;
@@ -1100,7 +1114,7 @@
 
   .mol-evidence-system__stack figcaption {
     padding-inline: var(--semantic-space-component-md);
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
@@ -1140,7 +1154,7 @@
       var(--semantic-color-border);
     border-top: var(--semantic-border-width) solid
       var(--semantic-color-border);
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
@@ -1220,7 +1234,7 @@
   // ninguno sea el importante. Se queda donde significa algo —el resultado
   // medido— y el rótulo baja a apagado.
   .mol-evidence-study__head span {
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
@@ -1254,6 +1268,7 @@
 
   .mol-evidence-study th {
     font-size: var(--semantic-font-size-eyebrow);
+    font-family: var(--semantic-font-family-label);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
     color: var(--semantic-color-text-muted);
@@ -1304,6 +1319,7 @@
   .mol-evidence-study__bars small {
     font-size: var(--semantic-font-size-eyebrow);
     font-weight: var(--semantic-font-weight-body);
+    font-family: var(--semantic-font-family-label);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
     color: var(--semantic-color-text-muted);
@@ -1342,7 +1358,7 @@
     background: var(--semantic-color-surface-alt);
     border-bottom: var(--semantic-border-width) solid
       var(--semantic-color-border);
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
@@ -1387,7 +1403,7 @@
     padding: var(--semantic-space-component-3xs) var(--semantic-space-component-2xs);
     background: var(--semantic-color-surface);
     border: var(--semantic-border-width) solid var(--semantic-color-border);
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
@@ -1701,7 +1717,11 @@
   // what colour it takes on this ground.
   .mol-register__chrome a {
     flex: none;
-    color: var(--semantic-color-primary);
+    // Tinta secundaria y sin el filete del enlace de texto: dentro de una barra
+    // que ya tiene filete inferior, el subrayado era una segunda línea a 7 px
+    // de la primera. Y el azul de esta región ya lo gastan las acciones.
+    color: var(--semantic-color-text-secondary);
+    border-bottom: 0;
   }
 
   .mol-register__frame {
@@ -1804,10 +1824,11 @@
     font-size: var(--semantic-font-size-title);
     line-height: var(--semantic-line-height-display);
     letter-spacing: var(--semantic-letter-spacing-display);
+    font-weight: var(--semantic-font-weight-display);
   }
 
   .mol-register__fallback small {
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
@@ -1840,18 +1861,22 @@
     line-height: 1;
     letter-spacing: var(--semantic-letter-spacing-display);
     font-variant-numeric: tabular-nums;
+    font-weight: var(--semantic-font-weight-display);
   }
 
   .mol-register__ref span {
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
     color: var(--semantic-color-text-muted);
   }
 
+  // 26ch, la medida de titular de frase entera: a 15ch «Mundial 2026 —
+  // Construir la experiencia que diseñé.» se partía en cuatro líneas de dos
+  // palabras.
   .mol-register__copy h3 {
-    max-width: 15ch;
+    max-width: var(--semantic-measure-title);
     margin: 0 0 var(--semantic-space-component-sm);
     font-size: var(--semantic-font-size-title);
     line-height: var(--semantic-line-height-title);
@@ -1902,13 +1927,15 @@
 
   .mol-register__spec > div {
     display: grid;
-    grid-template-columns: minmax(5rem, 7rem) minmax(0, 1fr);
+    // La pista de la etiqueta es la de las fichas de caso: en la mono,
+    // «Construido con» no cabía en 7rem y se partía en dos.
+    grid-template-columns: minmax(5rem, 9rem) minmax(0, 1fr);
     gap: var(--semantic-space-component-sm);
     align-items: baseline;
   }
 
   .mol-register__spec dt {
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
@@ -1997,7 +2024,7 @@
   }
 
   .mol-map-shift__tag {
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
@@ -2009,6 +2036,7 @@
     font-size: var(--semantic-font-size-title-sm);
     line-height: var(--semantic-line-height-title);
     letter-spacing: var(--semantic-letter-spacing-display);
+    font-weight: var(--semantic-font-weight-display);
   }
 
   // The filename is set in mono because that is the register it belongs to: a
@@ -2181,7 +2209,7 @@
 
   .mol-case-signature__label {
     grid-column: 1 / -1;
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-eyebrow);
     font-weight: var(--semantic-font-weight-emphasis);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
@@ -2192,7 +2220,8 @@
     font-family: var(--semantic-font-family-display);
     font-size: clamp(8rem, 20vw, 20rem);
     line-height: 0.65;
-    letter-spacing: -0.08em;
+    letter-spacing: var(--semantic-letter-spacing-hero);
+    font-weight: var(--semantic-font-weight-display);
   }
 
   .mol-case-signature__note {
@@ -2243,7 +2272,8 @@
   .mol-case-signature--flow > strong {
     font-family: var(--semantic-font-family-display);
     font-size: clamp(2.8rem, 6vw, 6rem);
-    letter-spacing: -0.05em;
+    letter-spacing: var(--semantic-letter-spacing-hero);
+    font-weight: var(--semantic-font-weight-display);
   }
 
   .mol-case-signature--flow > i {
@@ -2301,7 +2331,9 @@
   // map-live-v30.css
   .mol-map-browser {
     border: var(--semantic-border-width) solid var(--semantic-color-border);
-    background: #fff;
+    // El marco del navegador es hoja, no blanco: sobre kinari un `#fff` se
+    // leía como un recorte pegado encima de la página.
+    background: var(--semantic-color-sheet);
     overflow: hidden;
   }
 
@@ -2311,13 +2343,13 @@
     justify-content: space-between;
     gap: 1rem;
     padding: 0.8rem 1rem;
-    font: 600 0.56rem/1.25 var(--semantic-font-family-ui);
-    letter-spacing: 0.07em;
+    font: 600 0.56rem/1.25 var(--semantic-font-family-label);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
   }
 
   .mol-map-browser > header {
-    background: #f5f7fa;
+    background: var(--semantic-color-surface-alt);
     border-bottom: var(--semantic-border-width) solid var(--semantic-color-border);
   }
 
@@ -2332,7 +2364,7 @@
     width: 0.42rem;
     height: 0.42rem;
     border-radius: 50%;
-    background: #d6dce5;
+    background: var(--semantic-color-border-strong);
   }
 
   .mol-map-browser > header span {
@@ -2354,7 +2386,7 @@
 
   .mol-map-browser__viewport {
     height: clamp(28rem, 58vw, 48rem);
-    background: #eef1f4;
+    background: var(--semantic-color-surface-muted);
   }
 
   .mol-map-browser__viewport iframe {
@@ -2379,9 +2411,9 @@
 
   .mol-project-card__body h3 {
     font-family: var(--semantic-font-family-display);
-    font-weight: 600;
-    letter-spacing: -.035em;
-    line-height: 1.02;
+    font-weight: var(--semantic-font-weight-display);
+    letter-spacing: var(--semantic-letter-spacing-display);
+    line-height: var(--semantic-line-height-title);
   }
 
   .mol-project-card__meta {

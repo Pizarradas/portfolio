@@ -15,5 +15,6 @@ export {
   Group,
   Color,
   AdditiveBlending,
+  NormalBlending,
   ColorManagement,
 } from 'three';

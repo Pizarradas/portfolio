@@ -1,4 +1,4 @@
-// Downloads the two brand faces from Google Fonts and self-hosts them.
+// Downloads the three brand faces from Google Fonts and self-hosts them.
 //
 //   node scripts/build-fonts.mjs           download woff2 + write the @font-face partial
 //   node scripts/build-fonts.mjs --check   download nothing, exit 1 if a file is missing
@@ -12,7 +12,9 @@
 //
 // Variable faces, one file per family per subset: `wght@400..700` covers every
 // weight the site uses (400, 500, 600, 700) in a single download, where the
-// static cut would be four.
+// static cut would be four. JetBrains Mono only carries labels — indices,
+// dates, samples — so it asks for 400..500 and is not preloaded: none of it
+// is the LCP element.
 //
 // Only latin and latin-ext are kept. The site is English and Spanish; cyrillic,
 // greek and vietnamese are ~60% of what Google would serve and no page can
@@ -36,7 +38,7 @@ const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36';
 
 const CSS_URL =
-  'https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&family=Inter:wght@400..700&display=swap';
+  'https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&family=Inter:wght@400..700&family=JetBrains+Mono:wght@400..500&display=swap';
 
 // Which families, which subsets and which of them get preloaded all live in
 // site.config.mjs: build-i18n.mjs writes the preload tags and must not import

@@ -87,3 +87,18 @@
     pointer-events: none;
   }
 }
+
+// El raíl de revista (tema «ma», edición revista). La etiqueta de una
+// sección deja de ser una palabra en horizontal al principio de una pista de
+// 10rem y pasa a correr en vertical, de arriba abajo, junto a un filete de
+// tinta: el lomo del pliego. Lo usan las etiquetas que viven en la pista
+// `--component-heading-label-track`.
+@mixin rail {
+  writing-mode: vertical-rl;
+  justify-self: start;
+  align-self: start;
+  margin: 0;
+  padding-inline-start: var(--semantic-space-component-sm);
+  border-inline-start: var(--semantic-border-width) solid var(--semantic-color-text);
+  white-space: nowrap;
+}

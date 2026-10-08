@@ -37,7 +37,6 @@
     --semantic-space-case-inline: var(--semantic-space-shell-inline);
     --semantic-space-case-block: var(--semantic-space-shell-block);
     --semantic-width-case-max: none;
-    --semantic-font-size-hero-compact: clamp(2.55rem, 12.5vw, 3.45rem);
 
     // Portada de un caso interior.
     //
@@ -48,8 +47,8 @@
     // de tope— contra los 144px del titular de la home. Una página interior
     // gritaba más fuerte que la portada del sitio.
     //
-    // La escala de una portada interior es la de `section` (display-xl,
-    // 40→96px): un escalón por debajo del `hero` de la home, que es exactamente
+    // La escala de una portada interior es la de `section` (display-lg,
+    // 26→36px en el tema «ma»): por debajo del `hero` de la home, que es exactamente
     // la relación que hay entre las dos páginas. Ninguna variante la sube; lo
     // que cambia entre casos es la composición, no el cuerpo de letra.
     //
@@ -80,13 +79,21 @@
     // -art-ink` se fue al pasar `organisms/_sport.scss` a tokens semánticos,
     // que era su único lector.
     --component-art-night: #07102f;
-    --component-art-muted: #6c7484;
+    // Sobre kinari el gris frío de antes bajaba a 4.05:1. Ahora es el tenue
+    // del sistema, que ya sale de la rampa cálida.
+    --component-art-muted: var(--semantic-color-text-muted);
 
     // El contorno de un punto «dentro del umbral». Estaba en crudo dentro del
     // componente y no puede ser `--semantic-color-border`: esos 39 puntos son
     // una clase del gráfico, no una separación, y con el gris de borde dejan de
     // distinguirse del fondo a ese tamaño.
-    --component-art-dot-idle: #b8c0ce;
+    // Mezclado con el papel para que siga la rampa kinari en vez del gris
+    // azulado del tema anterior.
+    --component-art-dot-idle: color-mix(
+      in srgb,
+      var(--semantic-color-text-muted) 42%,
+      var(--semantic-color-surface)
+    );
   }
 }
 
@@ -125,7 +132,10 @@
   :root {
     --primitive-font-family-instrument: "Instrument Sans","Helvetica Neue",Arial,sans-serif;
     --primitive-font-family-inter: "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    --primitive-font-family-mono: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+    // Aquí se volvía a declarar `--primitive-font-family-mono` con otra pila,
+    // y como este bloque va después de los primitivos ganaba él: la mono del
+    // sistema la decidía un fichero de componentes. Se fue con el tema «ma»,
+    // que necesita que la mono sea la que dice `primitives/_type.scss`.
     --primitive-font-weight-regular: 400;
     --primitive-font-weight-medium: 500;
     --primitive-font-weight-semibold: 600;
@@ -135,15 +145,18 @@
     --semantic-font-family-ui: var(--primitive-font-family-inter);
     --semantic-font-family-code: var(--primitive-font-family-mono);
     --component-hero-title-font-family: var(--semantic-font-family-display);
-    --component-hero-title-font-weight: var(--primitive-font-weight-semibold);
-    --component-hero-title-letter-spacing: -.052em;
+    // Tema «ma»: los titulares de la home dejan de llevar sus propios números
+    // (600 y −0,052em, −0,04em, −0,05em) y leen el rol semántico, que es el
+    // que cambia con el tema. Antes un tema no podía llegar hasta aquí.
+    --component-hero-title-font-weight: var(--semantic-font-weight-display);
+    --component-hero-title-letter-spacing: var(--semantic-letter-spacing-hero);
     --component-section-title-font-family: var(--semantic-font-family-display);
-    --component-section-title-font-weight: var(--primitive-font-weight-semibold);
-    --component-section-title-line-height: 1;
-    --component-section-title-letter-spacing: -.04em;
+    --component-section-title-font-weight: var(--semantic-font-weight-display);
+    --component-section-title-line-height: var(--semantic-line-height-display);
+    --component-section-title-letter-spacing: var(--semantic-letter-spacing-display);
     --component-metric-font-family: var(--semantic-font-family-display);
-    --component-metric-font-weight: var(--primitive-font-weight-semibold);
-    --component-metric-letter-spacing: -.05em;
+    --component-metric-font-weight: var(--semantic-font-weight-display);
+    --component-metric-letter-spacing: var(--semantic-letter-spacing-hero);
     --component-body-font-family: var(--semantic-font-family-body);
     --component-body-font-weight: var(--primitive-font-weight-regular);
     --component-body-line-height: 1.62;
@@ -157,7 +170,14 @@
     // 4rem «Self-directed» se partía en dos líneas dentro del margen. Las otras
     // declaraciones de esta molécula usaban 2–7rem, 3.5rem y 4rem, cada una con
     // su propia vertical. Ahora hay una sola.
-    --component-heading-label-track: 10rem;
+    --component-heading-label-track: 2.618rem;
+
+    // Tema «ma», edición revista: la pista de la etiqueta de sección pasa a ser
+    // el raíl vertical, E(4) = φ² en la escala de espaciado. La pista de 10rem
+    // se queda con otro nombre para lo que sigue siendo una etiqueta en
+    // horizontal: el índice de registros y los nombres de las cabeceras del
+    // panel de 42DS.
+    --component-label-track: 10rem;
 
     --component-case-rule: var(--semantic-color-border, #c9c8c1);
     --component-chart-height: 25rem;

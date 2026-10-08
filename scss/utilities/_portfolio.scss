@@ -613,96 +613,29 @@
   // y ≥1200) se retiran: le daban a Work 144px cuando el resto de la home
   // corre en `--semantic-space-section`, que es lo que ya declara el organismo.
 
-  // El titular tenía cuatro reglas cuyos rangos no se tocaban: `≤700`, la base,
-  // `768–1199` y `≥1200`. Entre 701 y 767px no aplicaba ninguna de las tres
-  // últimas y caía a `--semantic-font-size-hero-compact`, que es el tamaño de
-  // las páginas de caso: 86.4px a 700px de ancho pasaban a 55.2px a 720px, un
-  // 36 % menos por ensanchar la ventana 20px. Y al recuperar a 768px seguía un
-  // 22 % por debajo de lo que medía a 700, así que no volvía a alcanzar los
-  // 86.4px hasta ~1108px: el titular encogía según crecía la pantalla.
+  // Aquí vivían tres tramos del hero —`< 768`, `768–1199` y `≥ 1200`— con
+  // seis `clamp()` en crudo para el titular (de 52 a 144 px), un `:lang(es)`
+  // que lo bajaba un escalón para que cupiera en tres líneas, otro tamaño
+  // para la entradilla y un `min-height` de 88svh que estiraba la portada
+  // hasta el pliegue.
   //
-  // El techo pasa a ser $bp-md, que es donde empieza la regla siguiente, y cada
-  // tramo arranca en el valor con el que termina el anterior. La curva sigue
-  // teniendo tres tramos con tres pendientes —unificarla en una sola es trabajo
-  // de la banda tipográfica, que mueve la página entera— pero ya es continua y
-  // no decrece en ningún punto.
-  @include until($bp-md) {
-    .org-hero h1 {
-      font-size: clamp(3.3rem,14vw,5.4rem);
-    }
-
-  }
-
+  // El tema «ma» los retira. El titular lee `--semantic-font-size-hero`, que
+  // ya es una sola curva continua de 30 a 49 px (PROPORTIONS §1), así que no
+  // hacen falta tramos, ni la excepción del español. Y la portada mide lo que
+  // mide su contenido: lo que queda de pantalla lo ocupa el índice de los
+  // registros, que es lo que BRAND.md §1 pide en el primer scroll.
   @media (min-width:768px) and (max-width:1199px) {
-    .org-hero {
-      min-height: calc(88svh - var(--component-header-height));
-      padding-block: clamp(5.5rem,9vw,8rem) clamp(3.5rem,6vw,5rem);
-      gap: clamp(3rem,6vw,5rem);
-    }
-
-    .org-hero h1 {
-      max-width: 15ch;
-      // Arranca en 5.4rem, el techo del tramo anterior, en vez de en 4.2rem.
-      font-size: clamp(5.4rem,7.8vw,6.8rem);
-      line-height: .9;
-    }
-
     .org-hero__footer {
       grid-template-columns: minmax(0,34rem) auto;
       gap: 2rem;
     }
 
-    .org-hero .atom-lede {
-      font-size: clamp(1.15rem,1.7vw,1.45rem);
-      line-height: 1.45;
-    }
-
   }
   @media (min-width:1200px) {
-    // 88svh, como el tramo anterior, y no 94: con 94 el hero terminaba 17px
-    // por debajo de una ventana de 854px de alto y las acciones —la única
-    // salida del hero— quedaban cortadas por el pliegue (auditado 05/09/2026).
-    //
-    // El ritmo vertical pasa a tokens de sección: con `clamp(7rem,9vw,10rem)`
-    // arriba y `clamp(4rem,7vw,7rem)` de hueco, a 1400×854 la fila de acciones
-    // terminaba en ~870px. Con `section` arriba y `section-compact` de hueco y
-    // abajo —escalones 6→8 y 5→7 de `PROPORTIONS.md` §4.2— cabe en el pliegue.
-    .org-hero {
-      min-height: calc(88svh - var(--component-header-height));
-      padding-block: var(--semantic-space-section) var(--semantic-space-section-compact);
-      gap: var(--semantic-space-section-compact);
-    }
-
-    .org-hero h1 {
-      max-width: 13.5ch;
-      // 5.85rem = 93.6px, que es lo que da el tramo anterior en su último píxel
-      // (7.8vw a 1199px = 93.5px). Con 5.8rem había un escalón hacia abajo de
-      // 0.7px justo al cruzar los 1200.
-      font-size: clamp(5.85rem,7.6vw,9rem);
-      line-height: .88;
-      letter-spacing: -.062em;
-    }
-
-    // En español el titular es un 30 % más largo («Construyo los sistemas
-    // sobre los que construyen otros») y a este tamaño pasa a cuatro líneas,
-    // que empujan la entradilla y las acciones fuera del pliegue. Un escalón
-    // tipográfico menos (÷∛φ, `PROPORTIONS.md` §1) y una medida un poco más
-    // ancha lo devuelven a tres líneas. Solo el `h1`: el resto del hero es
-    // igual en los dos idiomas.
-    .org-hero h1:lang(es) {
-      max-width: 18ch;
-      font-size: clamp(4.98rem,6.47vw,7.67rem);
-    }
-
     .org-hero__footer {
       grid-template-columns: minmax(0,38rem) auto;
       gap: 4rem;
       align-items: end;
-    }
-
-    .org-hero .atom-lede {
-      font-size: clamp(1.35rem,1.45vw,1.8rem);
-      line-height: 1.45;
     }
 
   }

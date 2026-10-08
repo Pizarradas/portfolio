@@ -52,13 +52,24 @@
     --component-laiya-spring-flight: 600 0.1;
     --component-laiya-spring-hop: 450 0.25;
 
-    // El orbe es luz de marca: núcleo azul, fondo navy, bandas en el azul
-    // claro de la rampa y un borde que brilla en el color del texto del
-    // contexto (blanco sobre navy).
-    --component-laiya-orb-core: var(--semantic-color-surface-brand);
-    --component-laiya-orb-deep: var(--semantic-color-surface-night);
-    --component-laiya-orb-light: var(--semantic-color-brand-glow);
-    --component-laiya-orb-glow: var(--semantic-color-text);
+    // Tema «ma»: LAIYA deja de ser luz sobre navy y pasa a ser tinta sobre
+    // papel. El cuerpo del enjambre es la tinta del texto, el fondo es el de
+    // la página, las bandas y los hilos van en tinta tenue y lo único azul es
+    // el brillo: las partículas más encendidas, que hacen de sello.
+    //
+    // Antes: núcleo azul de marca, fondo navy, bandas en `brand-glow` y un
+    // borde en el blanco del contexto navy. Se recupera cambiando estas
+    // cuatro líneas y `--component-laiya-ink`.
+    --component-laiya-orb-core: var(--semantic-color-text);
+    --component-laiya-orb-deep: var(--semantic-color-surface);
+    --component-laiya-orb-light: var(--semantic-color-text-muted);
+    --component-laiya-orb-glow: var(--semantic-color-primary);
+    // Cómo se funde el enjambre con lo que tiene detrás. `1` es tinta: mezcla
+    // normal, las partículas tapan. `0` es luz: mezcla aditiva, que solo se ve
+    // sobre fondo oscuro —sobre papel, sumar color lleva al blanco y el
+    // enjambre desaparece—. Lo lee `js/laiya-avatar.js` una vez, al crear el
+    // orbe.
+    --component-laiya-ink: 1;
 
     // Ánimos: el color hacia el que vira el enjambre cuando siente algo
     // (`MOODS` en `js/laiya-avatar.js`). En reposo no se usa ninguno.
@@ -72,9 +83,10 @@
     --component-laiya-mood-tickled: var(--semantic-color-mood-tickled);
     --component-laiya-mood-sleepy: var(--semantic-color-mood-sleepy);
 
-    // Lo que se oscurece alrededor del elemento aislado: el navy de las
-    // bandas, translúcido para que la página siga leyéndose como contexto.
-    --component-laiya-scrim: color-mix(in srgb, var(--semantic-color-surface-night) 74%, transparent);
+    // Lo que se aparta alrededor del elemento aislado. En el tema «ma» no se
+    // oscurece: se cubre de papel, como una hoja de calco encima de la
+    // página, y lo aislado queda nítido y a su contraste de siempre.
+    --component-laiya-scrim: color-mix(in srgb, var(--semantic-color-surface) 88%, transparent);
 
     // La lente: lo que no es el elemento pierde nitidez y color. Un cuarto
     // del desenfoque de los paneles de cristal: se nota, no emborrona.

@@ -153,13 +153,16 @@ reaparece, es un error.
 | Azul de marca | `#1E3AFF` | acento, un solo elemento por región |
 | Navy | `#080f2f` | bandas a sangre, secciones invertidas |
 | Tinta | `#080f1a` | texto |
-| Neutros | rampa gris con **sesgo azul** | superficies y bordes |
+| Kinari | `#F1EEE6` | papel de la página |
+| Neutros | rampa **kinari** (crudo cálido) y **sumi** (gris tinta) | superficies, texto secundario y bordes |
 
 Los complementarios (cian, violeta, fucsia) existen como acento y **nunca** como
 superficie dominante.
 
 **LAIYA tiene paleta propia de ánimos**, y es la única excepción a la paleta
-única. En reposo es azul de marca. Cuando siente algo vira hacia un tono:
+única. En reposo es tinta sobre papel —un enjambre de partículas de tinta que
+descansa como un ensō abierto— y el único azul de marca es el sello: las
+partículas más encendidas. Cuando siente algo vira hacia un tono:
 
 | Ánimo | Tono |
 |---|---|
@@ -173,17 +176,46 @@ superficie dominante.
 | cosquillas | coral `#FF6F91` |
 | dormida | índigo `#4A3BD1` |
 
-Son luz de partículas sobre navy, no superficie ni texto: no se usan fuera
-del enjambre (`--component-laiya-mood-*`).
+Son color de partícula, no superficie ni texto: no se usan fuera del enjambre
+(`--component-laiya-mood-*`). Los tonos claros (oro, menta) pierden presencia
+sobre papel; es aceptable porque nunca llevan información sola: el ánimo
+también se ve en el movimiento.
 
 **El acento se gasta una vez.** Si en una sección hay dos cosas en azul de marca,
 una de las dos no es la importante.
 
 ### Tipografía
 
-**Instrument Sans** para display, **Inter** para cuerpo e interfaz. Los tamaños,
-interlineados y tracking no se eligen: se calculan. Ver
-[`scss/PROPORTIONS.md`](scss/PROPORTIONS.md).
+**Instrument Sans** para display, **Inter** para cuerpo e interfaz y
+**JetBrains Mono** para las etiquetas —índices, fechas, muestras, metadatos—,
+nunca para texto corrido. Los titulares van en 500: el sitio no grita, el aire
+alrededor del titular hace la jerarquía. Los tamaños, interlineados y tracking
+no se eligen: se calculan. Ver [`scss/PROPORTIONS.md`](scss/PROPORTIONS.md).
+
+### Tema «ma», edición revista
+
+Desde octubre de 2026 el sitio corre en el tema «ma» (間, el intervalo). La
+primera versión puso papel con sesgo azul, titulares contenidos (el hero en
+49 px), etiquetas en mono y LAIYA en tinta. La edición revista se queda con todo
+eso y cambia dos cosas:
+
+- **El papel es kinari** (生成り, el crudo del algodón sin teñir), `#F1EEE6`, y
+  los neutros dejan el sesgo azul por una rampa cálida. El azul de marca y la
+  tinta no cambian; sobre crudo el azul se lee más como sello.
+- **La jerarquía la hace el contraste de escala**, no solo el aire: etiquetas
+  de 12 px en la mono contra una portada de hasta 110 px y numerales de cartel
+  —01, 02…— en la cabecera de cada caso y de cada tarjeta.
+
+Y añade cuatro recursos de revista impresa, todos en
+`scss/utilities/_revista.scss`: el titular a dos voces (la segunda frase del
+`h1` baja a entradilla), las etiquetas de sección en vertical colgadas de un
+filete de tinta (`@include rail`), los numerales como figura y el índice con
+puntos guía. El azul se sigue gastando una vez: en la home, el número del caso
+destacado; en un caso, su numeral.
+
+La paleta de marca, las dos bandas y los cuatro niveles de filete no cambian.
+Lo que el tema mueve vive en los tokens; ningún componente sabe en qué tema
+está.
 
 ### Imagen
 

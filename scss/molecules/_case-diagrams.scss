@@ -62,7 +62,7 @@
     max-width: none;
     margin: 0;
     padding: var(--semantic-space-component-sm) var(--semantic-space-component-md);
-    font-family: var(--semantic-font-family-ui);
+    font-family: var(--semantic-font-family-label);
     font-size: var(--semantic-font-size-caption);
     letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
@@ -319,8 +319,8 @@
   }
 
   .mol-targets b {
-    font: 600 1.5rem/1 var(--semantic-font-family-display);
-    letter-spacing: -.04em;
+    font: var(--semantic-font-weight-display) 1.5rem/1 var(--semantic-font-family-display);
+    letter-spacing: var(--semantic-letter-spacing-display);
   }
 
   .mol-targets small {
@@ -377,6 +377,7 @@
   .mol-pipeline b {
     font-family: var(--semantic-font-family-display);
     font-size: 1.3rem;
+    font-weight: var(--semantic-font-weight-display);
   }
 
   .mol-pipeline small {
@@ -468,8 +469,8 @@
   }
 
   .mol-inventory-visual__summary b {
-    font: 600 clamp(4rem,8vw,8rem)/.75 var(--semantic-font-family-display);
-    letter-spacing: -.07em;
+    font: var(--semantic-font-weight-display) var(--semantic-font-size-figure)/.75 var(--semantic-font-family-display);
+    letter-spacing: var(--semantic-letter-spacing-hero);
     color: var(--semantic-color-primary);
   }
 
@@ -640,15 +641,15 @@
   }
 
   .mol-ai-layers__layer small {
-    font: 600 .56rem/1 var(--semantic-font-family-ui);
-    letter-spacing: .12em;
+    font: 600 .56rem/1 var(--semantic-font-family-label);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
     color: var(--semantic-color-text-muted);
   }
 
   .mol-ai-layers__layer b {
-    font: 600 clamp(1.2rem,2.5vw,2.2rem)/1 var(--semantic-font-family-display);
-    letter-spacing: -.04em;
+    font: var(--semantic-font-weight-display) clamp(1.2rem,2.5vw,2.2rem)/1 var(--semantic-font-family-display);
+    letter-spacing: var(--semantic-letter-spacing-display);
   }
 
   .mol-ai-layers__layer em {

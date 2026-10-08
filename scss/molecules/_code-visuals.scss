@@ -347,9 +347,9 @@
     background: var(--semantic-color-primary-soft);
     border-right: var(--semantic-border-width) solid var(--semantic-color-border);
     color: var(--semantic-color-primary);
-    font: 700 .65rem/1 var(--semantic-font-family-ui);
+    font: var(--semantic-font-weight-body) .65rem/1 var(--semantic-font-family-label);
     text-transform: uppercase;
-    letter-spacing: .08em;
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
   }
 
   .mol-anatomy-card__content {
@@ -423,10 +423,10 @@
     padding: .4rem .55rem;
     background: #080f1a;
     color: #fff;
-    font: 600 .56rem/1 var(--semantic-font-family-ui);
+    font: var(--semantic-font-weight-body) .56rem/1 var(--semantic-font-family-label);
     font-style: normal;
     text-transform: uppercase;
-    letter-spacing: .07em;
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
   }
 
   .mol-anatomy-pin--1 {
@@ -518,14 +518,14 @@
   }
 
   .mol-token-lab__header>div:first-child>span {
-    font: 700 .56rem/1 var(--semantic-font-family-ui);
-    letter-spacing: .12em;
+    font: var(--semantic-font-weight-body) .56rem/1 var(--semantic-font-family-label);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     color: var(--semantic-color-primary);
   }
 
   .mol-token-lab__header h3 {
-    font: 600 clamp(1.6rem,3vw,3rem)/.95 var(--semantic-font-family-display);
-    letter-spacing: -.045em;
+    font: var(--semantic-font-weight-display) var(--semantic-font-size-title-lg)/var(--semantic-line-height-display) var(--semantic-font-family-display);
+    letter-spacing: var(--semantic-letter-spacing-display);
     margin: .45rem 0 0;
   }
 
@@ -657,14 +657,14 @@
   }
 
   .mol-grid-lab__header>div:first-child>span {
-    font: 700 .56rem/1 var(--semantic-font-family-ui);
-    letter-spacing: .12em;
+    font: var(--semantic-font-weight-body) .56rem/1 var(--semantic-font-family-label);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     color: var(--semantic-color-primary);
   }
 
   .mol-grid-lab__header h3 {
-    font: 600 clamp(1.6rem,3vw,3rem)/.95 var(--semantic-font-family-display);
-    letter-spacing: -.045em;
+    font: var(--semantic-font-weight-display) var(--semantic-font-size-title-lg)/var(--semantic-line-height-display) var(--semantic-font-family-display);
+    letter-spacing: var(--semantic-letter-spacing-display);
     margin: .45rem 0 0;
   }
 
@@ -685,7 +685,7 @@
     border-top: var(--semantic-border-width) solid var(--semantic-color-border);
     border-left: var(--semantic-border-width) solid var(--semantic-color-border);
     margin-top: 1rem;
-    background: #fff;
+    background: var(--semantic-color-surface);
   }
 
   .mol-grid-lab__metrics span {
@@ -704,8 +704,8 @@
   }
 
   .mol-grid-lab__metrics b {
-    font: 600 1.25rem/1 var(--semantic-font-family-display);
-    letter-spacing: -.04em;
+    font: var(--semantic-font-weight-display) 1.25rem/1 var(--semantic-font-family-display);
+    letter-spacing: var(--semantic-letter-spacing-display);
   }
 
   .mol-grid-lab__viewport[data-grid-mode="xs"] .mol-grid-content--hero {
@@ -857,8 +857,8 @@
   }
 
   .mol-token-hero small {
-    font: 600 .58rem/1 var(--semantic-font-family-ui);
-    letter-spacing: .12em;
+    font: var(--semantic-font-weight-body) .58rem/1 var(--semantic-font-family-label);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
     opacity: .7;
   }
@@ -869,8 +869,8 @@
   }
 
   .mol-token-hero strong {
-    font: 600 clamp(3rem,6vw,6rem)/.8 var(--semantic-font-family-display);
-    letter-spacing: -.065em;
+    font: var(--semantic-font-weight-display) clamp(3rem,6vw,6rem)/.8 var(--semantic-font-family-display);
+    letter-spacing: var(--semantic-letter-spacing-hero);
   }
 
   .mol-token-hero i {
@@ -915,8 +915,8 @@
   .mol-token-groups section>small {
     display: block;
     padding: .65rem 0;
-    font: 700 .58rem/1 var(--semantic-font-family-ui);
-    letter-spacing: .1em;
+    font: var(--semantic-font-weight-body) .58rem/1 var(--semantic-font-family-label);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
     color: var(--semantic-color-text-muted);
   }
@@ -984,8 +984,8 @@
   }
 
   .mol-token-application>small {
-    font: 700 .56rem/1 var(--semantic-font-family-ui);
-    letter-spacing: .1em;
+    font: var(--semantic-font-weight-body) .56rem/1 var(--semantic-font-family-label);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
     color: var(--semantic-color-text-muted);
   }
@@ -1103,8 +1103,8 @@
 
   .mol-grid-content small {
     display: block;
-    font: 700 .52rem/1 var(--semantic-font-family-ui);
-    letter-spacing: .1em;
+    font: var(--semantic-font-weight-body) .52rem/1 var(--semantic-font-family-label);
+    letter-spacing: var(--semantic-letter-spacing-eyebrow);
     text-transform: uppercase;
     opacity: .7;
   }
