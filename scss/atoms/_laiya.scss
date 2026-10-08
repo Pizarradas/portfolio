@@ -33,21 +33,31 @@
     animation: laiya-breathe 2.618s var(--semantic-ease) 2 alternate;
   }
 
-  // El trazo. La máscara deja un anillo del 13 % del radio; el degradado
-  // cónico abre el hueco (40°, arriba a la derecha) y adelgaza la tinta a
-  // lo largo de la vuelta.
+  // El trazo. La forma la da un arco SVG en la máscara y el color, el
+  // degradado cónico, que adelgaza la tinta a lo largo de la vuelta.
+  //
+  // Antes la forma también salía de degradados: una máscara radial con el
+  // borde entre el 86 % y el 87 % del radio —0,13 px en un orbe de 26 px,
+  // o sea un corte duro— y el hueco abierto por un paso seco del cónico. A
+  // 1× y a 1,25× el anillo salía con el borde dentado y los extremos
+  // cortados a escuadra. Un trazo vectorial lo suaviza el rasterizador y
+  // acaba en punta redonda, como un pincel.
+  //
+  // Geometría (viewBox 100): radio 44, grueso 8. El arco va de 98° a 42°
+  // desde el norte, en el sentido del reloj; con los remates redondos el
+  // hueco queda entre ~47° y ~93°, y el sello (a 70°) cae en medio.
   .atom-laiya-orb::before {
     content: "";
     @include absolute($top: 0, $right: 0, $bottom: 0, $left: 0);
-    border-radius: 50%;
     background: conic-gradient(
       from 50deg,
       transparent 0 40deg,
       var(--component-laiya-orb-core) 40deg,
       color-mix(in srgb, var(--component-laiya-orb-core) 30%, transparent) 360deg
     );
-    -webkit-mask: radial-gradient(closest-side, transparent 86%, currentColor 87%);
-    mask: radial-gradient(closest-side, transparent 86%, currentColor 87%);
+    $enso: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M93.57 56.12A44 44 0 1 1 79.44 17.3' fill='none' stroke='%23000' stroke-width='8' stroke-linecap='round'/%3E%3C/svg%3E";
+    -webkit-mask: url($enso) center / 100% 100% no-repeat;
+    mask: url($enso) center / 100% 100% no-repeat;
   }
 
   // El sello, centrado en el hueco: a 70° del norte sobre el anillo.
